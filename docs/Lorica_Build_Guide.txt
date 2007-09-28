@@ -1,0 +1,99 @@
+Info
+====
+For the newest and most comprehensive documentation, please refer to the online documentation found at:
+
+  http://trac.brutus.net/lorica
+
+Prerequisite
+============
+The following environment variables must be created
+  %LORICA_ROOT%
+
+Commands
+========
+Open a console and make LORICA_ROOT\src the current directory and execute the
+following commands.
+
+%ACE_ROOT%\bin\mwc -type vc8 OCI/AsynchProxyTools.mpc
+%ACE_ROOT%\bin\mwc -type vc8 proxy/proxy.mpc
+%ACE_ROOT%\bin\mwc -type vc8 lorica/lorica_Client.mpc
+%ACE_ROOT%\bin\mwc -type vc8 lorica/lorica_EvaluatorBase.mpc
+%ACE_ROOT%\bin\mwc -type vc8 lorica/lorica_GenericEvaluator.mpc
+
+ACE project
+===========
+Lorica depends on ACE/TAO so we need to modify the TAO_ACE project.
+In VC open the project TAO_ACE solution and under 'Build-->Batch Build...' add
+the following projects (all should be added both to release and debug mode for
+win32)
+
+EndpointPolicy
+IFR_Service
+DynamicAny
+DynamicInterface
+tap_ifr_exe
+
+Click the 'Rebuild' button.
+
+DLL export files
+================
+As some of the projects are windows DLLfiles we need to generate some glue code (export directives) using a ACE tool. Preform the following steps to build Lorica:
+
+1) In a terminal make '%LORICA_ROOT%\src\OCI' the current directory and execute this command
+     %ACE_ROOT%\bin\generate_export_file.pl OCI_AsynchProxyTools > AsynchProxyTools_Export.h
+2) In a terminal make '%LORICA_ROOT%\src\lorica' the current directory and execute the commands
+     %ACE_ROOT%\bin\generate_export_file.pl Lorica_Client > Client_Export.h
+     %ACE_ROOT%\bin\generate_export_file.pl Lorica_EvaluatorBase > EvaluatorBase_Export.h
+     %ACE_ROOT%\bin\generate_export_file.pl Lorica_GenericEvaluator > GenericEvaluator_Export.h
+
+Visual Studio
+=============
+The solutions need to be build in a specific order. To avoid linking problems use the same configuration for all projects.
+
+1) OCI\AsynchProxyTools
+2) lorica\lorica_Client
+3) lorica\lorica_EvaluatorBase (before this can be build 'TAO_SSLIOP.lib'
+and 'TAO_SSLIOPd.lib' need to be added to the project link dependencies)
+4) lorica\lorica_GenericEvaluator
+5) proxy\proxy
+
+The follwing project files are NOT used
+ OCI\OCI
+
+Run the proxy project
+=====================
+For windows to be able to load the required libraries the 'PATH' environment
+variable need to be updated to include %LORICA_ROOT%\lib. Remember to restart
+Visual Studio after updating the environment variables.
+
+Last step before hitting the run button is to create a 'lorica.conf' file in the
+proxy folder. For information on how to configure Lorica please see 'Lorica_Dev_Guide'.
+
+You should now be able to run Lorica from within visual studio.
+
+Using Generic Evaluator
+=======================
+The generic evaluator module makes use of a interface repository when rewriting
+references. Lorica can use an existing interface repository or create its own.
+To enable the creation of a Lorica specific interface repository add the following
+to lorica.conf
+
+  Collocate_IFR yes
+  IFR_CmdOption -o
+  IFR_CmdOption ifr.ior
+
+Now, when the proxy is running you can access the interface repository at the IOR
+found in the file 'ifr.ior'.
+The repository is initially empty so the generic evaluator will reject all objects.
+To remedy this we need to populate the interface repository with the IDL files 
+containing the interfaces we need Lorica to rewrite. This is done with the following
+command (please note you need a visual studio environment for this to work):
+
+  tao_ifr -ORBInitRef InterfaceRepository=file://path\to\proxy\ifr.ior AddThis.idl
+
+Lorica will now be able to rewrite object with the interfaces defined within 'AddThis.idl'
+using the generic evaluator.
+
+------------------------------------------
+Rasmus Maagaard <rasmusmaagaard@omesc.com>
+OMC, September 2007

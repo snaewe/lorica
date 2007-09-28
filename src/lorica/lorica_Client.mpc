@@ -1,0 +1,42 @@
+//
+//    Lorica project file. 
+//    Copyright (C) 2007 OMC Denmark ApS.
+//
+//    This program is free software; you can redistribute it and/or modify
+//    it under the terms of the GNU General Public License as published by
+//    the Free Software Foundation; either version 2 of the License, or
+//    (at your option) any later version.
+//
+//    This program is distributed in the hope that it will be useful,
+//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//    GNU General Public License for more details.
+//
+//    You should have received a copy of the GNU General Public License
+//    along with this program; if not, write to the Free Software
+//    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
+//
+
+project : taolib_with_idl, loricacommon, portableserver {
+  sharedname = lorica_Client
+  dynamicflags = LORICA_CLIENT_BUILD_DLL
+
+  idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
+  idlflags += -Wb,export_macro=Lorica_Client_Export
+  idlflags += -Wb,export_include=lorica/Client_Export.h
+
+  IDL_Files {
+    ServerAgent.idl
+    ReferenceMapper.idl
+  }
+
+  source_files {
+   ServerAgentC.cpp
+   ServerAgentS.cpp
+   ServerAgent_impl.cpp
+   ReferenceMapperC.cpp
+   ReferenceMapperS.cpp
+   debug.cpp
+  }
+
+}
