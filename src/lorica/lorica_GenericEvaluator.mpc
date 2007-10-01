@@ -18,9 +18,8 @@
 //
 
 project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice, loricacommon, ifr_client{
-
   dynamicflags = LORICA_GENERICEVALUATOR_BUILD_DLL
-  after += lorica_Client lorica_EvaluatorBase AsynchProxyTools
+  after += lorica_EvaluatorBase lorica_Client AsynchProxyTools
   libs += lorica_Client lorica_EvaluatorBase OCI_AsynchProxyTools
   sharedName = lorica_GenericEvaluator
 
@@ -33,5 +32,4 @@ project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice,
     GenericMapper.cpp
     IFRService.cpp
   }
-
 }

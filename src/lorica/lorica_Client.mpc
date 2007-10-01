@@ -20,6 +20,7 @@
 project : taolib_with_idl, loricacommon, portableserver {
   sharedname = lorica_Client
   dynamicflags = LORICA_CLIENT_BUILD_DLL
+  after += AsynchProxyTools
 
   idlflags   += -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h
   idlflags += -Wb,export_macro=Lorica_Client_Export
@@ -38,5 +39,4 @@ project : taolib_with_idl, loricacommon, portableserver {
    ReferenceMapperS.cpp
    debug.cpp
   }
-
 }

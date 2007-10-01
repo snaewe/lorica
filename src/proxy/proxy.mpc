@@ -18,6 +18,8 @@
 //
 
 project : loricacommon, ssliop, taoexe, iortable, messaging, endpointpolicy, dynamicinterface, ifr_client {
+  after += lorica_GenericEvaluator lorica_EvaluatorBase lorica_Client AsynchProxyTools
+
   avoids += wince
   exename = lorica_proxy
   install = $(LORICA_ROOT)/bin
