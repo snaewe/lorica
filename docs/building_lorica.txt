@@ -14,11 +14,11 @@ Commands
 Open a console and make LORICA_ROOT\src the current directory and execute the
 following commands.
 
-%ACE_ROOT%\bin\mwc -type vc8 OCI/AsynchProxyTools.mpc
-%ACE_ROOT%\bin\mwc -type vc8 proxy/proxy.mpc
-%ACE_ROOT%\bin\mwc -type vc8 lorica/lorica_Client.mpc
-%ACE_ROOT%\bin\mwc -type vc8 lorica/lorica_EvaluatorBase.mpc
-%ACE_ROOT%\bin\mwc -type vc8 lorica/lorica_GenericEvaluator.mpc
+%ACE_ROOT%\bin\mpc -type vc8 OCI\AsynchProxyTools.mpc
+%ACE_ROOT%\bin\mpc -type vc8 proxy\proxy.mpc
+%ACE_ROOT%\bin\mpc -type vc8 lorica\lorica_Client.mpc
+%ACE_ROOT%\bin\mpc -type vc8 lorica\lorica_EvaluatorBase.mpc
+%ACE_ROOT%\bin\mpc -type vc8 lorica\lorica_GenericEvaluator.mpc
 
 ACE project
 ===========
@@ -57,9 +57,6 @@ and 'TAO_SSLIOPd.lib' need to be added to the project link dependencies)
 4) lorica\lorica_GenericEvaluator
 5) proxy\proxy
 
-The follwing project files are NOT used
- OCI\OCI
-
 Run the proxy project
 =====================
 For windows to be able to load the required libraries the 'PATH' environment
@@ -67,33 +64,10 @@ variable need to be updated to include %LORICA_ROOT%\lib. Remember to restart
 Visual Studio after updating the environment variables.
 
 Last step before hitting the run button is to create a 'lorica.conf' file in the
-proxy folder. For information on how to configure Lorica please see 'Lorica_Dev_Guide'.
+proxy folder. For information on how to configure Lorica please see 'LoricaDevelopmentGuide'.
 
 You should now be able to run Lorica from within visual studio.
 
-Using Generic Evaluator
-=======================
-The generic evaluator module makes use of a interface repository when rewriting
-references. Lorica can use an existing interface repository or create its own.
-To enable the creation of a Lorica specific interface repository add the following
-to lorica.conf
-
-  Collocate_IFR yes
-  IFR_CmdOption -o
-  IFR_CmdOption ifr.ior
-
-Now, when the proxy is running you can access the interface repository at the IOR
-found in the file 'ifr.ior'.
-The repository is initially empty so the generic evaluator will reject all objects.
-To remedy this we need to populate the interface repository with the IDL files 
-containing the interfaces we need Lorica to rewrite. This is done with the following
-command (please note you need a visual studio environment for this to work):
-
-  tao_ifr -ORBInitRef InterfaceRepository=file://path\to\proxy\ifr.ior AddThis.idl
-
-Lorica will now be able to rewrite object with the interfaces defined within 'AddThis.idl'
-using the generic evaluator.
-
 ------------------------------------------
 Rasmus Maagaard <rasmusmaagaard@omesc.com>
-OMC, September 2007
+OMC, October 2007
