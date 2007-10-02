@@ -30,7 +30,7 @@
 #include "tao/IFR_Client_Adapter.h"
 
 #include "lorica/IFRService.h"
-#include "lorica/GenericEvaluator_Export.h"
+#include "lorica/Lorica_GenericEvaluator_Export.h"
 
 namespace OCI_APT
 {

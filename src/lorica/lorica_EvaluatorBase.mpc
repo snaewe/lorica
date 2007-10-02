@@ -40,4 +40,8 @@ project: anytypecode, loricacommon, portableserver, dynamicinterface, ifr_client
     Config.cpp
     FileConfig.cpp
   }
+
+  DLL_EXPORT_Files {
+    Lorica_EvaluatorBase
+  }
 }

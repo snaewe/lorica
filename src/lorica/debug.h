@@ -21,7 +21,7 @@
 
 #ifndef LORICA_DEBUG_H
 #define LORICA_DEBUG_H
-#include "Client_Export.h"
+#include "Lorica_Client_Export.h"
 
 extern Lorica_Client_Export unsigned int Lorica_debug_level;
 

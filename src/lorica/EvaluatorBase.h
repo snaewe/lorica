@@ -27,7 +27,7 @@
 #include <tao/PortableServer/POAC.h>
 #include <tao/DynamicInterface/Server_Request.h>
 
-#include "lorica/EvaluatorBase_Export.h"
+#include "lorica/Lorica_EvaluatorBase_Export.h"
 
 class ACE_Message_Block;
 

@@ -63,7 +63,7 @@
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 
-#include "OCI/AsynchProxyTools_Export.h"
+#include "OCI/OCI_AsynchProxyTools_Export.h"
 
 namespace OCI_APT
 {

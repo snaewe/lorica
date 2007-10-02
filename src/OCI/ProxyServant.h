@@ -60,7 +60,7 @@
 #define TAO_PROXY_SERVANT
 
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
-#include "OCI/AsynchProxyTools_Export.h"
+#include "OCI/OCI_AsynchProxyTools_Export.h"
 #include "tao/SystemException.h"
 
 class TAO_AMH_DSI_Response_Handler;

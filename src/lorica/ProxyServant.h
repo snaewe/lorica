@@ -24,7 +24,7 @@
 
 #include "tao/PortableServer/PS_CurrentC.h"
 #include "OCI/ProxyServant.h"
-#include "lorica/EvaluatorBase_Export.h"
+#include "lorica/Lorica_EvaluatorBase_Export.h"
 #include <string>
 
 namespace Lorica

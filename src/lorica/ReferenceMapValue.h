@@ -25,7 +25,7 @@
 #include <string>
 
 #include "lorica/ServerAgentC.h"
-#include "lorica/EvaluatorBase_Export.h"
+#include "lorica/Lorica_EvaluatorBase_Export.h"
 
 namespace Lorica
 {

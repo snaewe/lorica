@@ -26,7 +26,7 @@
 #include "ace/Service_Object.h"
 #include "tao/PortableServer/POAManagerC.h"
 #include "tao/PortableServer/POAC.h"
-#include "lorica/EvaluatorBase_Export.h"
+#include "lorica/Lorica_EvaluatorBase_Export.h"
 #include <string>
 
 namespace Lorica

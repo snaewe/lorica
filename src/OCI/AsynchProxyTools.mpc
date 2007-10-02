@@ -60,6 +60,10 @@ project(AsynchProxyTools) : orbsvcslib, loricacommon, dynamicinterface, messagin
   sharedname   = OCI_AsynchProxyTools
   dynamicflags = OCI_ASYNCHPROXYTOOLS_BUILD_DLL
 
+  DLL_EXPORT_Files {
+    OCI_AsynchProxyTools
+  }
+
   IDL_Files {
   }
 
@@ -70,7 +74,7 @@ project(AsynchProxyTools) : orbsvcslib, loricacommon, dynamicinterface, messagin
   }
 
   Header_Files {
-    AsynchProxyTools_Export.h
+    OCI_AsynchProxyTools_Export.h
     ProxyReplyHandler.h
     ProxyServant.h
     OperationTable.h

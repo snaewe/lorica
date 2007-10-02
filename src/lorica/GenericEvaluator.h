@@ -27,7 +27,7 @@
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/ORB.h"
 
-#include "lorica/GenericEvaluator_Export.h"
+#include "lorica/Lorica_GenericEvaluator_Export.h"
 
 namespace Lorica
 {

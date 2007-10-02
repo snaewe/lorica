@@ -29,7 +29,7 @@
 #include "ace/Mutex.h"
 
 #include <string>
-#include "lorica/EvaluatorBase_Export.h"
+#include "lorica/Lorica_EvaluatorBase_Export.h"
 #include "lorica/ReferenceMapValue.h"
 #include "lorica/RMVByMapped.h"
 #include "lorica/RMVByNative.h"
