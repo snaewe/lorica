@@ -2,30 +2,41 @@
 # from inside the enclave. This includes connections used to
 # register new object references for mapping, or for clients
 # tunneling new connections through the proxy.
-Internal_Address brutus.omc.vmware:952/ssl_port=954
+
+#Internal_Address localhost:1950/ssl_port=2950
+Internal_Address localhost:1950
 
 # The hostname and port used to listen for connections coming
 # from outside the protected enclave.
-External_Address brutus.omc.vmware:953/ssl_port=955
+
+#External_Address localhost:1960/ssl_port=2960
+External_Address brutus.localhost:1960
 
 # Takes a yes/no value indicating that the Null evaluator may
 # support any type not explicitly handled by any other evaluator.
 # This option should only be used for debugging.
+
 Null_Evaluator_Any no
 
 # Takes a yes/no value indicating that the Generic evaluator is
 # to be loaded. The Generic evaluator supports any type defined
 # in the Interface Repository ID. 
+
 Generic_Evaluator yes
 
 # The Generic evaluator makes use of the Interface Repository
 # (IFR) you may obtain a performnace boost by collocating the
 # IFR with the proxy instance (default is yes).
+
 Collocate_IFR yes
 
-# Takes IFR command line options. E.g., -p for persistence.
+# IFR command line options. E.g., -p for persistence.
+
 IFR_CmdOption -o
 IFR_CmdOption ifr.ior
+IFR_CmdOption -p
+IFR_CmdOption -b ifr_cache
 
 # Enables SSL
-ORB_Option -ORBSvcConf ssliop.conf
+
+#ORB_Option -ORBSvcConf ssliop.conf
