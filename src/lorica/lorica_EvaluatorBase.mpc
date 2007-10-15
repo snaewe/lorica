@@ -23,6 +23,14 @@ project: anytypecode, loricacommon, portableserver, dynamicinterface, ifr_client
   libs += lorica_Client OCI_AsynchProxyTools
   sharedName = lorica_EvaluatorBase
 
+  DLL_EXPORT_Files {
+    Lorica_EvaluatorBase
+  }
+  
+  verbatim(gnuace, bottom) {
+    Lorica_EvaluatorBase:
+  }
+
   source_files {
     RMVByMapped.cpp
     RMVByNative.cpp

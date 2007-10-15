@@ -23,6 +23,14 @@ project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice,
   libs += lorica_Client lorica_EvaluatorBase OCI_AsynchProxyTools
   sharedName = lorica_GenericEvaluator
 
+  DLL_EXPORT_Files {
+    Lorica_GenericEvaluator
+  }
+  
+  verbatim(gnuace, bottom) {
+    Lorica_GenericEvaluator:
+  }
+
   source_files {
     GenericLoader.cpp
     GenericEvaluator.cpp
