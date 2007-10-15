@@ -10,7 +10,7 @@ Internal_Address localhost:1950
 # from outside the protected enclave.
 
 #External_Address localhost:1960/ssl_port=2960
-External_Address brutus.localhost:1960
+External_Address localhost:1960
 
 # Takes a yes/no value indicating that the Null evaluator may
 # support any type not explicitly handled by any other evaluator.
