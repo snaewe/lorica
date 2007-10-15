@@ -31,6 +31,14 @@ project : taolib_with_idl, loricacommon, portableserver {
     ReferenceMapper.idl
   }
 
+  DLL_EXPORT_Files {
+    Lorica_Client
+  }
+  
+  verbatim(gnuace, bottom) {
+    Lorica_Client:
+  }
+
   source_files {
    ServerAgentC.cpp
    ServerAgentS.cpp
@@ -38,9 +46,5 @@ project : taolib_with_idl, loricacommon, portableserver {
    ReferenceMapperC.cpp
    ReferenceMapperS.cpp
    debug.cpp
-  }
-
-  DLL_EXPORT_Files {
-    Lorica_Client
   }
 }

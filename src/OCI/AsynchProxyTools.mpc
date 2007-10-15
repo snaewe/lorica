@@ -56,15 +56,16 @@
 //   3. mailto:support@ociweb.com
 //
 
-project(AsynchProxyTools) : orbsvcslib, loricacommon, dynamicinterface, messaging, valuetype, anytypecode, ifr_client {
+project(AsynchProxyTools) : loricacommon, orbsvcslib, dynamicinterface, messaging, valuetype, anytypecode, ifr_client {
   sharedname   = OCI_AsynchProxyTools
   dynamicflags = OCI_ASYNCHPROXYTOOLS_BUILD_DLL
 
   DLL_EXPORT_Files {
     OCI_AsynchProxyTools
   }
-
-  IDL_Files {
+  
+  verbatim(gnuace, bottom) {
+    OCI_AsynchProxyTools:
   }
 
   Source_Files {

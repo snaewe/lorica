@@ -23,9 +23,6 @@ project: anytypecode, loricacommon, portableserver, dynamicinterface, ifr_client
   libs += lorica_Client OCI_AsynchProxyTools
   sharedName = lorica_EvaluatorBase
 
-  IDL_Files {
-  }
-
   source_files {
     RMVByMapped.cpp
     RMVByNative.cpp
@@ -39,9 +36,5 @@ project: anytypecode, loricacommon, portableserver, dynamicinterface, ifr_client
     NullProxyMapper.cpp
     Config.cpp
     FileConfig.cpp
-  }
-
-  DLL_EXPORT_Files {
-    Lorica_EvaluatorBase
   }
 }

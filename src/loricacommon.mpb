@@ -22,16 +22,10 @@ project {
   libpaths += $(LORICA_ROOT)/lib
   includes += $(LORICA_ROOT)/src
 
-  specific {
-    export_cmd		= $(ACE_ROOT)/bin/generate_export_file.pl
-    export_cmd_dep	= $(ACE_ROOT)/bin/generate_export_file.pl
-  }
-
   Define_Custom(DLL_EXPORT) {
     automatic			= 1
-    dependent			= $(EXPORT_CMD_DEP)
-    command				= $(EXPORT_CMD)
-    output_option			= >
+    command			= $(ACE_ROOT)/bin/generate_export_file.pl
+    output_option		= >
     header_pre_extension	= _Export
     header_outputext		= .h
   }
