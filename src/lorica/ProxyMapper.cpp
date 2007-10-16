@@ -399,7 +399,7 @@ Lorica::ProxyMapper::add_native (CORBA::Object_ptr native,
 			Lorica::ReferenceMapValue_var rmv;
 			if (!mapped_values_->find (index,rmv.out()))
 				ACE_ERROR ((LM_ERROR,
-					    "(%P|%t) ProxyMapper::add_native error, "
+					    "(%P|%t) Lorica::ProxyMapper::add_native error, "
 					    "an already mapped value could not be found\n"));
 
 			return rmv.release();
@@ -408,12 +408,12 @@ Lorica::ProxyMapper::add_native (CORBA::Object_ptr native,
 		{
 			if (Lorica_debug_level > 2)
 				ACE_DEBUG ((LM_DEBUG,
-					    "(%P|%t) ProxyMapper::add_native, a reverse mapped "
+					    "(%P|%t) Lorica::ProxyMapper::add_native, a reverse mapped "
 					    "reference is to be mapped\n"));
 			Lorica::ReferenceMapValue_var rmv;
 			if (!mapped_values_->find (index,rmv.out()))
 				ACE_ERROR ((LM_ERROR,
-					    "(%P|%t) ProxyMapper::add_native error, "
+					    "(%P|%t) Lorica::ProxyMapper::add_native error, "
 					    "an already mapped value could not be found\n"));
 
 			return rmv->reverse();
@@ -421,7 +421,8 @@ Lorica::ProxyMapper::add_native (CORBA::Object_ptr native,
 		case NOT_MAPPED:
 		{
 			if (Lorica_debug_level > 2)
-				ACE_DEBUG ((LM_DEBUG,"add_native called, "
+				ACE_DEBUG ((LM_DEBUG,
+					    "(%P|%t) Lorica::ProxyMapper::add_native called, "
 					    "native is not mapped\n"));
 			return this->add_native_unchecked(native,
 							  typeId,

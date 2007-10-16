@@ -450,17 +450,16 @@ Lorica::GenericEvaluator::proxify (PortableServer::POA_ptr req_poa,
 		default:
 			break;
 		} /* End of Switch Statement */
-	} /* End of try block */
 	catch (CORBA::Exception& Ex)
 	{
 		ACE_ERROR ((LM_ERROR,
-			    "[Lorica::GenericEvaluator::proxify] caught: %s\n", Ex._name ()));
+			    "(%P|%t) Lorica::GenericEvaluator::proxify caught: %s\n", Ex._name ()));
 		throw;
 	}
 	catch (...)
 	{
 		ACE_ERROR ((LM_ERROR,
-			    "Unknown exception is caught\n"));
+			    "(%P|%t) Lorica::GenericEvaluator::proxify caught unknown exception\n"));
 		throw;
 	}
 

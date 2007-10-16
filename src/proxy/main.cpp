@@ -102,14 +102,14 @@ Lorica::Service_Loader::print_usage_and_die (void)
 {
 	ACE_DEBUG ((LM_INFO,
 		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -i -r -s -k -d -f -c \n")
+		    ACE_TEXT(" -i -r -s -k -d -f -c -l\n")
 		    ACE_TEXT(" -i: Install this program as an NT service\n")
 		    ACE_TEXT(" -r: Remove this program from the Service Manager\n")
 		    ACE_TEXT(" -s: Start the service\n")
 		    ACE_TEXT(" -k: Stop the service\n")
 		    ACE_TEXT(" -d: Debug; run as a regular application\n")
 		    ACE_TEXT(" -f: <required; default:lorica.conf> Configuration file.\n")
-		    ACE_TEXT(" -c: <level; default:10> Turn on CORBA debugging"),
+		    ACE_TEXT(" -c: <level; default:10> Turn on CORBA debugging\n")
 		    ACE_TEXT(" -l: <level; default:10> Turn on Lorica debugging"),
 		    program_name.c_str(),
 		    0));
@@ -159,7 +159,6 @@ Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 				Lorica_debug_level = ACE_OS::atoi (tmp);
 			}
 			break;
-
 		case 'h':
 		default:
 			print_usage_and_die ();
