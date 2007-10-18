@@ -450,6 +450,7 @@ Lorica::GenericEvaluator::proxify (PortableServer::POA_ptr req_poa,
 		default:
 			break;
 		} /* End of Switch Statement */
+	} /* End of Try Statement */
 	catch (CORBA::Exception& Ex)
 	{
 		ACE_ERROR ((LM_ERROR,
