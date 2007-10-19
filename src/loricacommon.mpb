@@ -23,7 +23,7 @@ project {
   includes += $(LORICA_ROOT)/src
 
   Define_Custom(DLL_EXPORT) {
-    automatic			= 1
+    automatic			= 0
     command			= $(ACE_ROOT)/bin/generate_export_file.pl
     output_option		= >
     header_pre_extension	= _Export

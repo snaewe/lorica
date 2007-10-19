@@ -56,7 +56,7 @@
 //   3. mailto:support@ociweb.com
 //
 
-project(AsynchProxyTools) : loricacommon, orbsvcslib, dynamicinterface, messaging, valuetype, anytypecode, ifr_client {
+project(AsynchProxyTools) : orbsvcslib, dynamicinterface, messaging, valuetype, anytypecode, ifr_client, loricacommon {
   sharedname   = OCI_AsynchProxyTools
   dynamicflags = OCI_ASYNCHPROXYTOOLS_BUILD_DLL
 
