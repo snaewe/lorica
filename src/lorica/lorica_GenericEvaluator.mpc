@@ -37,4 +37,8 @@ project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice,
     GenericMapper.cpp
     IFRService.cpp
   }
+
+  header_Files {
+   Lorica_GenericEvaluator_Export.h
+  }
 }

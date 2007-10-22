@@ -31,6 +31,7 @@ project: anytypecode, portableserver, dynamicinterface, ifr_client, security, ss
     Lorica_EvaluatorBase:
   }
 
+
   source_files {
     RMVByMapped.cpp
     RMVByNative.cpp
@@ -45,4 +46,9 @@ project: anytypecode, portableserver, dynamicinterface, ifr_client, security, ss
     Config.cpp
     FileConfig.cpp
   }
+
+  header_Files {
+    Lorica_EvaluatorBase_Export.h
+  }
+
 }
