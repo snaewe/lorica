@@ -80,3 +80,10 @@ OCI_APT::ProxyReplyHandler::handle_excep (TAO_InputCDR &incoming,
 {
 	this->handle_excep_i (incoming, reply_status);
 }
+
+void
+OCI_APT::ProxyReplyHandler::handle_location_forward (TAO_InputCDR &incoming,
+						     CORBA::ULong reply_status)
+{
+	this->handle_location_forward_i (incoming, reply_status);
+}

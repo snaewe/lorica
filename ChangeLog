@@ -1,3 +1,27 @@
+Mon Oct 22 03:50:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/ProxyReplyHandler.h:
+        * src/OCI/ProxyReplyHandler.cpp:
+        * src/OCI/ProxyServant.cpp:
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Fixed memory leaks related to the AMH_DSI_Reply_Handler code.
+          This was highlighted in DOC bugzilla entry 3093.
+
+          Also added all the support functionality necessary for mapping
+          and forwarding Location Forward exceptions. The functionality is
+          currently disabled pending additional code changes to the TAO
+          Messaging and DynamicInterface libraries.
+
+        * tests/genericEvaluator/forward:
+
+          Added a new test for validating the Location Forward exception
+          handling feature, once it is finally activated.
+
 Tue Sep 18 21:40:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/main.cpp:

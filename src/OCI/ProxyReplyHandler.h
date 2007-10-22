@@ -83,10 +83,14 @@ namespace OCI_APT
 		virtual void handle_response (TAO_InputCDR &incoming);
 		virtual void handle_excep (TAO_InputCDR &incoming,
 					   CORBA::ULong reply_status);
+		virtual void handle_location_forward (TAO_InputCDR &incoming,
+						      CORBA::ULong reply_status);
 
 		virtual void handle_response_i (TAO_InputCDR &incoming) = 0;
 		virtual void handle_excep_i (TAO_InputCDR &incoming,
 					     CORBA::ULong reply_status) = 0;
+		virtual void handle_location_forward_i (TAO_InputCDR &incoming,
+							CORBA::ULong reply_status) = 0;
 	};
 }
 

@@ -105,16 +105,10 @@ OCI_APT::ProxyServant::_dispatch (TAO_ServerRequest &request,
 		 CORBA::ServerRequest (request));
 	try
 	{
-		TAO_AMH_DSI_Response_Handler_ptr rh_ptr = 0;
-		ACE_NEW (rh_ptr, TAO_AMH_DSI_Response_Handler(request));
+		TAO_AMH_DSI_Response_Handler_var rh;
+		ACE_NEW (rh, TAO_AMH_DSI_Response_Handler(request));
 
-		TAO_AMH_DSI_Response_Handler_var rh = rh_ptr;
-
-		// init the handler
-		TAO_AMH_BUFFER_ALLOCATOR* amh_allocator =
-			request.orb()->orb_core ()->lane_resources().
-			amh_response_handler_allocator();
-		rh->init (request, amh_allocator);
+		rh->init (request, 0);
 		// Delegate to user.
 		this->invoke (dsi_request,
 			      rh.in());
@@ -172,6 +166,7 @@ OCI_APT::ProxyServant::invoke_get_interface (CORBA::ServerRequest_ptr request)
 	theResult.type (CORBA::_tc_Object);
 	theResult <<= theIntDef.in ();
 	request->set_result (theResult);
+	CORBA::release (args);
 #endif
 }
 
