@@ -60,7 +60,6 @@ project: orbsvcslib, dynamicinterface, messaging, valuetype, anytypecode, ifr_cl
   dynamicflags = OCI_ASYNCHPROXYTOOLS_BUILD_DLL
   sharedname   = OCI_AsynchProxyTools
 
-
   DLL_EXPORT_Files {
     OCI_AsynchProxyTools
   }

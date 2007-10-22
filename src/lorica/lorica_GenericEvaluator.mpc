@@ -19,7 +19,7 @@
 
 project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice, ifr_client, loricacommon {
   dynamicflags = LORICA_GENERICEVALUATOR_BUILD_DLL
-  after += lorica_EvaluatorBase lorica_Client AsynchProxyTools
+  after += lorica_Client lorica_EvaluatorBase AsynchProxyTools
   libs += lorica_Client lorica_EvaluatorBase OCI_AsynchProxyTools
   sharedName = lorica_GenericEvaluator
 
@@ -31,14 +31,13 @@ project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice,
     Lorica_GenericEvaluator:
   }
 
+  IDL_Files {
+  }
+
   source_files {
     GenericLoader.cpp
     GenericEvaluator.cpp
     GenericMapper.cpp
     IFRService.cpp
-  }
-
-  header_Files {
-   Lorica_GenericEvaluator_Export.h
   }
 }
