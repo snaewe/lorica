@@ -17,7 +17,7 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice, ifr_client, loricacommon {
+project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice, ifr_client, security, ssliop, loricacommon {
   dynamicflags = LORICA_GENERICEVALUATOR_BUILD_DLL
   after += lorica_Client lorica_EvaluatorBase AsynchProxyTools
   libs += lorica_Client lorica_EvaluatorBase OCI_AsynchProxyTools
