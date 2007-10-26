@@ -172,19 +172,13 @@ Lorica::ProxyReplyHandler::handle_location_forward_i (TAO_InputCDR &incoming,
 
 	if (!mapper_.mapped_for_native (fwd.inout(),poa_.in()))
 		{
-			ACE_DEBUG ((LM_DEBUG,"Lorica::ProxyReplyHander::handle_location_forward_i could not map reference\n"));
 			TAO_AMH_DSI_Exception_Holder h
 				(new CORBA::MARSHAL(0, CORBA::COMPLETED_MAYBE));
 			response_handler_->invoke_excep(&h);
 			return;
 		}
 
-#if 0
 	bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
-	ACE_DEBUG ((LM_DEBUG,"Lorica::ProxyReplyHandler::handle_location_forward_i called, invoking on response_handler_\n"));
-
 	response_handler_->invoke_location_forward(fwd, is_perm);
-#endif
-	ACE_DEBUG ((LM_DEBUG,"Lorica::ProxyReplyHandler::handle_location_forward_i done\n"));
 
 }

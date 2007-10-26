@@ -29,12 +29,12 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
 $status = 0;
-$debug_level = '0';
+$debug = '0';
 $direct = 0;
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
-        $debug_level = '10';
+        $debug = '10';
     }
     elsif ($i eq '-direct') {
         $direct = 1;
@@ -62,14 +62,14 @@ $IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr",
                               " -ORBInitRef InterfaceRepository=file://$ifrfile ".
                               " test.idl");
 
-$SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel 10 -ORBLogfile server.log -o $origfile -m $mappedfile");
+$SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug -o $origfile -m $mappedfile");
 
 $source_key = "file://$mappedfile";
 if ($direct == 1) {
     $source_key = "file://$origfile";
 }
 
-$CL = new PerlACE::Process ("client", "-ORBDebuglevel 10 -ORBLogfile client.log -k $source_key -x");
+$CL = new PerlACE::Process ("client", "-ORBDebuglevel $debug -k $source_key -x");
 
 print "forwarding test is started\n";
 

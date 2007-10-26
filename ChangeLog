@@ -1,3 +1,15 @@
+Fri Oct 26 01:57:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+
+          Uncomment pending location handler hook and clean up development
+          debug output.
+
+        * tests/genericEvaluator/forward/run_test.pl:
+        * tests/genericEvaluator/forward/test.conf:
+
+          Clean up the test run to output directly to console.
+
 Mon Oct 22 03:50:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/OCI/ProxyReplyHandler.h:
