@@ -1,3 +1,12 @@
+Thu Nov  1 00:48:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+
+          Swap the sense of the mapped ior generated for forwarded
+          references. The ProxyReplyHandler was mapping relative to the
+          inside peer's perspective, but it needs to be from the outside
+          peer's perspective.
+
 Fri Oct 26 01:57:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ProxyReplyHandler.cpp:

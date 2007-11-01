@@ -170,13 +170,18 @@ Lorica::ProxyReplyHandler::handle_location_forward_i (TAO_InputCDR &incoming,
 			return;
 		}
 
-	if (!mapper_.mapped_for_native (fwd.inout(),poa_.in()))
+	PortableServer::POA_var op = mapper_.other_POA (poa_.in());
+	if (!mapper_.mapped_for_native (fwd.inout(),op.in()))
 		{
 			TAO_AMH_DSI_Exception_Holder h
 				(new CORBA::MARSHAL(0, CORBA::COMPLETED_MAYBE));
 			response_handler_->invoke_excep(&h);
 			return;
 		}
+
+	CORBA::ORB_var orb = mapper_.orb();
+	CORBA::String_var ior = orb->object_to_string (fwd.in());
+	ACE_DEBUG ((LM_DEBUG, "forwarding IOR: %s\n", ior.in()));
 
 	bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
 	response_handler_->invoke_location_forward(fwd, is_perm);
