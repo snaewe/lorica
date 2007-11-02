@@ -45,6 +45,6 @@ project (GenericEvaluator BasicCollocate Server): dynamicinterface, pi_server, p
     server.cpp
     testC.cpp
     testS.cpp
-    TestServer_Impl.cpp
+    TestServer_impl.cpp
   }
 }
