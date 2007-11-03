@@ -1,3 +1,11 @@
+Fri Nov  2 23:23:07 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/OperationTable.cpp (add_interface):
+
+          For each new interface, iterate over the list of attributes
+          adding _get_<name> methods for each and _set_<name> methods for
+          any non-readonly attributes.
+
 Thu Nov  1 00:48:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ProxyReplyHandler.cpp:
