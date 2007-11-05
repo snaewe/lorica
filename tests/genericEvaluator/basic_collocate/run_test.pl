@@ -1,5 +1,5 @@
 #
-#    Lorica test script. 
+#    Lorica test script.
 #    Copyright (C) 2007 OMC Denmark ApS.
 #
 #    This program is free software; you can redistribute it and/or modify
@@ -40,7 +40,7 @@ foreach $i (@ARGV) {
 $mappedfile = PerlACE::LocalFile ("mapped.ior");
 unlink $mappedfile;
 
-$origfile = PerlACE::LocalFile ("orig.ior");
+$origfile = PerlACE::LocalFile ("direct.ior");
 unlink $origfile;
 
 $pidfile = PerlACE::LocalFile ("lorica.pid");
@@ -95,8 +95,8 @@ if ($proxy != 0) {
     $status = 1;
 }
 
-unlink $mappedfile;
-unlink $origfile;
+#unlink $mappedfile;
+#unlink $origfile;
 unlink $pidfile;
 
 exit $status;

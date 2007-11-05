@@ -68,8 +68,9 @@ Lorica::ProxyReplyHandler::handle_response_i (TAO_InputCDR &incoming)
 				this->out_args_->_tao_incoming_cdr (incoming,
 								    CORBA::ARG_OUT | CORBA::ARG_INOUT,
 								    lazy_evaluation);
+			PortableServer::POA_var op = mapper_.other_POA (poa_.in());
 			this->evaluator_->evaluate_reply (this->operation_.c_str(),
-							  this->poa_.in(),
+							  op.in(),
 							  this->out_args_.in(),
 							  this->result_.in());
 		}

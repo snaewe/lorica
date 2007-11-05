@@ -37,6 +37,9 @@ public:
 	// ctor
 
 	// = The Simple_Server methods.
+	CORBA::Short s ();
+	void s (CORBA::Short s);
+
 	CORBA::Boolean any_test (const CORBA::Any &a);
 
 	CORBA::Long struct_test (CORBA::Long x,
@@ -45,6 +48,8 @@ public:
 				 char *&name);
 
 	CORBA::Object_ptr echo_object (CORBA::Object_ptr obj);
+
+	void give_union (const Test_Union& arg);
 
 	void raise_user_exception ();
 

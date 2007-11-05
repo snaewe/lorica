@@ -1,3 +1,19 @@
+Mon Nov  5 23:22:27 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+
+          Reversed the sense of the POA used for mapping out args and
+          return values.
+
+        * tests/genericEvaluator/basic_collocate/client.cpp:
+        * tests/genericEvaluator/basic_collocate/run_test.pl:
+        * tests/genericEvaluator/basic_collocate/test.conf:
+        * tests/genericEvaluator/basic_collocate/test.idl:
+        * tests/genericEvaluator/basic_collocate/test_i.h:
+        * tests/genericEvaluator/basic_collocate/test_i.cpp:
+
+          Extended the test to include passing an IOR in an out argument.
+
 Fri Nov  2 23:23:07 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/OCI/OperationTable.cpp (add_interface):

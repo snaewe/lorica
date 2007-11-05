@@ -44,6 +44,19 @@ Simple_Server_i::timeout_check()
 	}
 }
 
+CORBA::Short
+Simple_Server_i::s ()
+{
+	return 500;
+}
+
+void
+Simple_Server_i::s (CORBA::Short s)
+{
+	ACE_DEBUG ((LM_DEBUG,
+		    "Simple_Server_i::s got %d\n",s));
+}
+
 CORBA::Boolean
 Simple_Server_i::any_test (const CORBA::Any &a)
 {
@@ -74,6 +87,18 @@ Simple_Server_i::any_test (const CORBA::Any &a)
 	return success;
 }
 
+void
+Simple_Server_i::give_union (const Test_Union& arg)
+{
+	if (arg._d() == 1)
+	{
+		CORBA::String_var ior = orb_->object_to_string (arg.obj());
+		ACE_DEBUG ((LM_DEBUG,"arg.ior = %s\n", ior.in()));
+	}
+
+}
+
+
 CORBA::Long
 Simple_Server_i::struct_test (CORBA::Long x,
 			      const Structure& the_in_structure,
@@ -85,7 +110,7 @@ Simple_Server_i::struct_test (CORBA::Long x,
 	Structure *tmp;
 	ACE_NEW_RETURN (tmp, Structure (the_in_structure), -1);
 	the_out_structure = tmp;
-
+	the_out_structure->obj = _this();
 	if (TAO_debug_level > 0)
 	{
 		ACE_DEBUG ((LM_DEBUG,

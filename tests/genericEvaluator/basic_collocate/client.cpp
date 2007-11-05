@@ -25,6 +25,7 @@
 #include "ace/Task.h"
 
 const char *ior = "file://mapped.ior";
+const char *direct = "file://direct.ior";
 
 int niterations = 1;
 int do_shutdown = 0;
@@ -103,8 +104,22 @@ do_primary_test (CORBA::ORB_var &orb, Simple_Server_var &server)
 			return;
 		}
 
+		CORBA::Short x = server->s();
+		ACE_ERROR ((LM_ERROR,"Server->s() returned %d\n", x));
+		server->s(510);
 		Structure the_in_structure;
+		the_in_structure.i = x;
 		the_in_structure.seq.length (10);
+		the_in_structure.obj = CORBA::Object::_duplicate(server.in());
+		Structure_var out_struct;
+		CORBA::String_var name = CORBA::string_dup ("test");
+		server->struct_test (12345,
+				     the_in_structure,
+				     out_struct.out(),
+				     name.inout());
+		CORBA::String_var outior =
+			orb->object_to_string(out_struct->obj);
+		ACE_DEBUG ((LM_DEBUG,"Got outior:\n%s\n", outior.in()));
 
 		if (test_user_exception == 1)
 		{
@@ -193,6 +208,13 @@ do_primary_test (CORBA::ORB_var &orb, Simple_Server_var &server)
 	}
 }
 
+void do_union_test (Simple_Server_var &server, CORBA::Object_var& obj)
+{
+	Test_Union arg;
+	arg.obj(obj);
+	server->give_union (arg);
+}
+
 int do_shutdown_test (Simple_Server_var &server)
 {
 	ACE_DEBUG ((LM_DEBUG,
@@ -219,6 +241,8 @@ main (int argc, char *argv[])
 		return 1;
 	int result = 0;
 	do_primary_test (orb, server);
+	CORBA::Object_var obj = orb->string_to_object (direct);
+	do_union_test (server, obj);
 	if (do_shutdown)
 		result = do_shutdown_test (server);
 	server = Simple_Server::_nil();

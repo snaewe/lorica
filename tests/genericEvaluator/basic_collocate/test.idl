@@ -1,7 +1,7 @@
 /* -*- Mode: IDL; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica IDL file. 
+ *    Lorica IDL file.
  *    Copyright (C) 2007 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -25,6 +25,17 @@ struct Structure
 {
 	short i;
 	sequence<long> seq;
+	Object obj;
+};
+
+union Test_Union switch (short)
+{
+ case 0:
+	 short i;
+ case 1:
+	 Object obj;
+ default:
+	 string foo;
 };
 
 exception test_exception
@@ -36,12 +47,16 @@ exception test_exception
 
 interface Simple_Server
 {
+	attribute short s;
+
 	boolean any_test (in any a);
 
 	long struct_test (in long x,
 			  in Structure the_in_structure,
 			  out Structure the_out_structure,
 			  inout string name);
+
+	void give_union (in Test_Union arg);
 
 	Object echo_object (in Object obj);
 
