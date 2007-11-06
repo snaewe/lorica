@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
+ *    Lorica source file.
  *    Copyright (C) 2007 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -229,11 +229,18 @@ Lorica::ProxyMapper::already_mapped (CORBA::Object_ptr native,
 	if (this->native_values_ != 0)
 	{
 		TAO::ObjectKey *key = native->_key();
-
+		if (key == 0)
+			{
+				if (Lorica_debug_level > 0)
+					ACE_ERROR ((LM_ERROR,
+											"(%P|%t) Lorica::ProxyMapper::already_mapped "
+											"error - key is null\n"));
+				return MAPPER_ERROR;
+			}
 		if (Lorica_debug_level > 4)
 			ACE_DEBUG ((LM_DEBUG,
-				    "(%P|%t) Lorica::ProxyMapper::MappedStatus "
-				    "already_mapped, key len = %d, mapped id len = %d\n",
+				    "(%P|%t) Lorica::ProxyMapper::already_mapped, "
+				    "key len = %d, mapped id len = %d\n",
 				    key->length(), sizeof (mapped_object_id_)));
 
 		CORBA::Octet *buffer = key->get_buffer();
@@ -429,6 +436,10 @@ Lorica::ProxyMapper::add_native (CORBA::Object_ptr native,
 							  out_facing,
 							  require_secure);
 		}
+		case MAPPER_ERROR:
+			{
+				return 0;
+			}
 		}
 	}
 	else if (this->next_ != 0)

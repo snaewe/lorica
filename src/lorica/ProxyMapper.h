@@ -160,7 +160,8 @@ namespace Lorica
     {
       ALREADY_MAPPED,
       REVERSE_MAPPED,
-      NOT_MAPPED
+      NOT_MAPPED,
+      MAPPER_ERROR
     };
 
     virtual MappedStatus already_mapped (CORBA::Object_ptr native,

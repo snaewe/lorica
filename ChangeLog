@@ -1,3 +1,10 @@
+Tue Nov  6 02:59:28 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+          Added error detection for unmappable references.
+
 Mon Nov  5 23:22:27 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ProxyReplyHandler.cpp:
