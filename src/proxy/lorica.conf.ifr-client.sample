@@ -1,0 +1,40 @@
+# The hostname and port used to listen for connections coming
+# from inside the enclave. This includes connections used to
+# register new object references for mapping, or for clients
+# tunneling new connections through the proxy.
+
+#Internal_Address localhost:1950/ssl_port=2950
+Internal_Address localhost:1950
+
+# The hostname and port used to listen for connections coming
+# from outside the protected enclave.
+
+#External_Address localhost:1960/ssl_port=2960
+External_Address localhost:1960
+
+# Takes a yes/no value indicating that the Null evaluator may
+# support any type not explicitly handled by any other evaluator.
+# This option should only be used for debugging.
+
+Null_Evaluator_Any no
+
+# Takes a yes/no value indicating that the Generic evaluator is
+# to be loaded. The Generic evaluator supports any type defined
+# in the Interface Repository ID. 
+
+Generic_Evaluator yes
+
+# The Generic evaluator makes use of the Interface Repository
+# (IFR) you may obtain a performance boost by collocating the
+# IFR with the proxy instance (default is yes).
+
+Collocate_IFR no
+
+# Remote IFR location used be the generic evaluator. This can
+# be another Lorica instace with a collocated IFR.
+
+ORB_Option -ORBInitRef InterfaceRepository=corbaloc:iiop:remote-ifr-server.com:1960/InterfaceRepository
+
+# Enables SSL
+
+#ORB_Option -ORBSvcConf ssliop.conf
