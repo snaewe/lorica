@@ -16,14 +16,13 @@ Build instructions
 For the newest and most comprehensive documentation, please 
 refer to the online documentation found at:
 
-  http://trac.brutus.net/lorica
+  http://trac.42tools.net/lorica
 
 
-If internet access in unavailable we provide a short build 
-guide in the 'docs' directory.
+A short build guide is provided in the 'docs' directory.
 
 
 ---------------- 
-Rasmus Maagaard <rasmusmaagaard@omesc.com>
+Rasmus Maagaard <rasmusmaagaard@42tools.com>
 OMC Denmark ApS
 September 2007
