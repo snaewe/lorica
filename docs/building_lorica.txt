@@ -1,73 +1,146 @@
-Info
-====
-For the newest and most comprehensive documentation, please refer to the online documentation found at:
 
-  http://trac.brutus.net/lorica
 
-Prerequisite
-============
-The following environment variables must be created
+                    ***   Building Lorica  ***
+
+               Copyright (C) 2007-2008 OMC Denmark ApS
+
+
+Your rights
+===========
+
+Copying and distribution of this file, with or without modification, 
+are permitted in any medium without royalty provided the copyright 
+notice and this notice are preserved.
+
+
+For more information
+====================
+
+For the newest and most comprehensive documentation, please refer to the online
+documentation found at:
+
+   http://trac.brutus.net/lorica
+
+
+Linux build guide
+=================
+
+This guide is tested on PCLinuxOS but should be general enough to be usable for
+other Linux distributions, maybe with minor modifications.
+
+Before following this guide, please make sure that the following prerequisites
+are installed on your system:
+
+   * Development environment (the GNU toolchain)
+   * OpenSSL
+   * Perl
+   * ACE+TAO (including MPC) 
+   * Subversion
+
+
+Getting the source
+------------------
+
+Checkout the Lorica source from the subversion repository:
+
+   svn co http://svn.42tools.net/repos/lorica/trunk/ lorica
+
+
+Building Lorica 
+---------------
+
+Before starting, we need to modify the system environment to support Lorica:
+
+   export LORICA_ROOT="/path/to/lorica"
+   export LD_LIBRARY_PATH="$LORICA_ROOT/lib:$LD_LIBRARY_PATH"	
+   export PATH="$LORICA_ROOT/bin:$PATH"
+
+Now we can generate the Makefiles using MPC:
+
+   cd $LORICA_ROOT
+   mwc.pl -type gnuace lorica.mwc
+
+When the Makefiles are generated, Lorica can be built using the default make
+target:
+
+   cd $LORICA_ROOT
+   make
+
+When the compiler is done, the Lorica executable can be found in 
+$LORICA_ROOT/bin. 
+
+
+Test run 
+--------
+
+Before starting Lorica we need a valid configuration file, but for a test run we
+can use a simple test configuration (it should be usable in most environments) 
+which is part of the distribution:
+
+   lorica_proxy -c2 -l10 -f $LORICA_ROOT/src/proxy/lorica.conf.ifr-server.sample
+
+
+
+Visual Studio Build Guide 
+=========================
+
+This short guide will describe how to use Microsoft Visual Studio C++ for 
+building Lorica. It assumes you have read the section "Building ACE and TAO" in
+the setup_visual_studio.txt file as distributed with the brutus-server source.
+
+
+Prerequisite 
+------------
+
+The following environment variables must be created. It should point to the
+directory where the Lorica project is hosted:
+
   %LORICA_ROOT%
 
-Commands
-========
-Open a console and make LORICA_ROOT\src the current directory and execute the
-following commands.
+Also, for windows to be able to load the required libraries when running Lorica
+the PATH environment variable must include %LORICA_ROOT%\lib.
 
-%ACE_ROOT%\bin\mpc -type vc8 OCI\AsynchProxyTools.mpc
-%ACE_ROOT%\bin\mpc -type vc8 proxy\proxy.mpc
-%ACE_ROOT%\bin\mpc -type vc8 lorica\lorica_Client.mpc
-%ACE_ROOT%\bin\mpc -type vc8 lorica\lorica_EvaluatorBase.mpc
-%ACE_ROOT%\bin\mpc -type vc8 lorica\lorica_GenericEvaluator.mpc
 
-ACE project
-===========
-Lorica depends on ACE/TAO so we need to modify the TAO_ACE project.
-In VC open the project TAO_ACE solution and under 'Build-->Batch Build...' add
-the following projects (all should be added both to release and debug mode for
-win32)
+TAO/ACE project 
+---------------
 
-EndpointPolicy
-IFR_Service
-DynamicAny
-DynamicInterface
-tap_ifr_exe
+Lorica depends upon ACE/TAO so we need to modify the TAO_ACE solution. In 
+Microsoft Visual Studio load the TAO_ACE solution and open the 
+"Build-->Batch Build..." window to select the following projects:
 
-Click the 'Rebuild' button.
+    * EndpointPolicy
+    * IFR_Service
+    * DynamicAny
+    * DynamicInterface
+    * tao_ifr_exe 
 
-DLL export files
-================
-As some of the projects are windows DLLfiles we need to generate some glue code (export directives) using a ACE tool. Preform the following steps to build Lorica:
+Close the window and force a rebuild by clicking the Rebuild button.
 
-1) In a terminal make '%LORICA_ROOT%\src\OCI' the current directory and execute this command
-     %ACE_ROOT%\bin\generate_export_file.pl OCI_AsynchProxyTools > AsynchProxyTools_Export.h
-2) In a terminal make '%LORICA_ROOT%\src\lorica' the current directory and execute the commands
-     %ACE_ROOT%\bin\generate_export_file.pl Lorica_Client > Client_Export.h
-     %ACE_ROOT%\bin\generate_export_file.pl Lorica_EvaluatorBase > EvaluatorBase_Export.h
-     %ACE_ROOT%\bin\generate_export_file.pl Lorica_GenericEvaluator > GenericEvaluator_Export.h
 
-Visual Studio
-=============
-The solutions need to be build in a specific order. To avoid linking problems use the same configuration for all projects.
+Lorica project files 
+--------------------
 
-1) OCI\AsynchProxyTools
-2) lorica\lorica_Client
-3) lorica\lorica_EvaluatorBase (before this can be build 'TAO_SSLIOP.lib'
-and 'TAO_SSLIOPd.lib' need to be added to the project link dependencies)
-4) lorica\lorica_GenericEvaluator
-5) proxy\proxy
+To create the Microsoft Visual Studio project files, open a console, make
+%LORICA_ROOT% the current directory and execute the following command:
 
-Run the proxy project
-=====================
-For windows to be able to load the required libraries the 'PATH' environment
-variable need to be updated to include %LORICA_ROOT%\lib. Remember to restart
-Visual Studio after updating the environment variables.
+   %ACE_ROOT%\bin\mwc.pl -type vc8 lorica.mwc
 
-Last step before hitting the run button is to create a 'lorica.conf' file in the
-proxy folder. For information on how to configure Lorica please see 'LoricaDevelopmentGuide'.
 
-You should now be able to run Lorica from within visual studio.
+Starting Lorica 
+---------------
+
+The following steps needs to be preformed before Lorica can be started
+
+    * Lorica needs a configuration file before it can start. Create a 
+      lorica.conf file in the src/proxy directory and see LoricaConfiguration 
+      for information on configuration options.
+    * Open the Lorica solution file in Microsoft Visual Studio and right click
+      on the proxy project and select Set as StartUp project.
+    * In Microsoft Visual Studio rebuild the project (ctrl+alt+f7). 
+
+Press the green play button and watch Lorica start :-)
+
 
 ------------------------------------------
-Rasmus Maagaard <rasmusmaagaard@omesc.com>
-OMC, October 2007
+Rasmus Maagaard <rasmusmaagaard@42tools.com>
+OMC Denmark ApS, 2008

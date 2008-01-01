@@ -1,3 +1,15 @@
+2008-01-01  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/main.cpp: s/is_nt_service/is_service/g
+	(Service_Loader::print_usage_and_die)
+	(Service_Loader::parse_args): Cleanup options so to not
+	offer options that are known to be unavailable on the
+	platform in question.
+
+2008-01-01  Jules Colding  <colding@42tools.com>
+
+	* docs/building_lorica.txt: Updated.
+
 2007-12-19  Jules Colding  <colding@42tools.com>
 
 	* README: Slight change in the wording of the last

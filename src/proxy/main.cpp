@@ -59,7 +59,7 @@ namespace Lorica
 		Service_Loader (void);
 		~Service_Loader (void);
 
-		int run(int argc, ACE_TCHAR* argv[]);
+		int run (int argc, ACE_TCHAR* argv[]);
 
 		int parse_args (int argc,
 				ACE_TCHAR* argv[]);
@@ -67,7 +67,7 @@ namespace Lorica
 		int run_service ();
 		int run_standalone ();
 		void print_usage_and_die ();
-		bool is_nt_service ();
+		bool is_service ();
 		Proxy *init_proxy ();
 
 	private:
@@ -76,7 +76,6 @@ namespace Lorica
 		/// SC_NONE, SC_INSTALL, SC_REMOVE, ...
 		SERVICE_COMMAND service_command_;
 		bool debug_;
-		bool is_nt_service_;
 
 		std::string config_file_;
 		int corba_debug_level_;
@@ -87,7 +86,6 @@ Lorica::Service_Loader::Service_Loader (void)
 	: program_name (ACE_TEXT("lorica")),
 	  service_command_ (SC_NONE),
 	  debug_ (false),
-	  is_nt_service_ (false)
 	, config_file_ ("lorica.conf")
 	, corba_debug_level_ (0)
 {
@@ -100,38 +98,50 @@ Lorica::Service_Loader::~Service_Loader (void)
 void
 Lorica::Service_Loader::print_usage_and_die (void)
 {
+#if defined (ACE_WIN32)
 	ACE_DEBUG ((LM_INFO,
 		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -i -r -s -k -d -f -c -l\n")
+		    ACE_TEXT(" -i -r -t -k -d -f -c -l\n")
 		    ACE_TEXT(" -i: Install this program as an NT service\n")
 		    ACE_TEXT(" -r: Remove this program from the Service Manager\n")
 		    ACE_TEXT(" -s: Start the service\n")
 		    ACE_TEXT(" -k: Stop the service\n")
 		    ACE_TEXT(" -d: Debug; run as a regular application\n")
 		    ACE_TEXT(" -f: <required; default:lorica.conf> Configuration file.\n")
-		    ACE_TEXT(" -c: <level; default:10> Turn on CORBA debugging\n")
-		    ACE_TEXT(" -l: <level; default:10> Turn on Lorica debugging"),
+		    ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
+		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging"),
 		    program_name.c_str(),
 		    0));
+#else
+	ACE_DEBUG ((LM_INFO,
+		    ACE_TEXT("Usage: %s")
+		    ACE_TEXT(" -d -f -c -l\n")
+		    ACE_TEXT(" -d: Debug; run as a regular application\n")
+		    ACE_TEXT(" -f: <required; default:lorica.conf> Configuration file.\n")
+		    ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
+		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging"),
+		    program_name.c_str(),
+		    0));
+#endif /* ACE_WIN32 */
 	ACE_OS::exit(1);
 }
 
 int
 Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 {
-	ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("irstkdhf:c:l:"));
+#if defined (ACE_WIN32)
+	ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("irtkdf:c:l:"));
+#else
+	ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("df:c:l:"));
+#endif /* ACE_WIN32 */
+
 	int c;
 	const ACE_TCHAR *tmp;
 
 	while ((c = get_opt ()) != -1)
 		switch (c)
 		{
-		case 'c':
-			tmp = get_opt.opt_arg ();
-			if (tmp != 0) {
-				corba_debug_level_ = ACE_OS::atoi (tmp);
-			}
-			break;
+#if defined (ACE_WIN32)
 		case 'i':
 			service_command_ = SC_INSTALL;
 			break;
@@ -141,17 +151,21 @@ Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 		case 't':
 			service_command_ = SC_START;
 			break;
-		case 's':
-			is_nt_service_ = true;
-			break;
 		case 'k':
 			service_command_ = SC_STOP;
 			break;
+#endif /* ACE_WIN32 */
 		case 'd':
-			is_nt_service_ = false;
+			debug_ = true;
 			break;
 		case 'f':
 			config_file_ = get_opt.opt_arg ();
+			break;
+		case 'c':
+			tmp = get_opt.opt_arg ();
+			if (tmp != 0) {
+				corba_debug_level_ = ACE_OS::atoi (tmp);
+			}
 			break;
 		case 'l':
 			tmp = get_opt.opt_arg ();
@@ -159,7 +173,6 @@ Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 				Lorica_debug_level = ACE_OS::atoi (tmp);
 			}
 			break;
-		case 'h':
 		default:
 			print_usage_and_die ();
 			break;
@@ -322,9 +335,9 @@ Lorica::Service_Loader::run_standalone ()
 }
 
 bool
-Lorica::Service_Loader::is_nt_service ()
+Lorica::Service_Loader::is_service ()
 {
-	return is_nt_service_;
+	return !debug_;
 }
 
 
@@ -345,7 +358,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 	else if (result > 0)
 		return 0;  // No error, but we should exit anyway.
 
-	if (lorica.is_nt_service ())
+	if (lorica.is_service ())
 		result = lorica.run_service ();
 	else
 		result = lorica.run_standalone ();
