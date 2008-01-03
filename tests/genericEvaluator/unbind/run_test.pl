@@ -49,7 +49,7 @@ $PR = new PerlACE::Process ("$LORICA_ROOT/bin/lorica_proxy", "-f test.conf -l10 
 
 $IDLC = new PerlACE::Process ("$ACE_ROOT/bin/tao_ifr",
                               " -ORBInitRef InterfaceRepository=file://$ifrfile ".
-                              " test.idl");
+                              " Test.idl");
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug");
 

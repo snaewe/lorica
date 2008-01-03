@@ -86,8 +86,8 @@ Lorica::Service_Loader::Service_Loader (void)
 	: program_name (ACE_TEXT("lorica")),
 	  service_command_ (SC_NONE),
 	  debug_ (false),
-	, config_file_ ("lorica.conf")
-	, corba_debug_level_ (0)
+	  config_file_ ("lorica.conf"),
+	  corba_debug_level_ (0)
 {
 }
 
