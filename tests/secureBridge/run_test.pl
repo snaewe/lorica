@@ -45,8 +45,8 @@ unlink $epidfile;
 $wpidfile = PerlACE::LocalFile ("west_lorica.pid");
 unlink $wpidfile;
 
-$EAST = new PerlACE::Process ("../../bin/lorica_proxy", "-f east.conf");
-$WEST = new PerlACE::Process ("../../bin/lorica_proxy", "-f west.conf");
+$EAST = new PerlACE::Process ("../../bin/lorica_proxy", "-d -f east.conf");
+$WEST = new PerlACE::Process ("../../bin/lorica_proxy", "-d -f west.conf");
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile -l -ORBEndpoint iiop://:22022");
 

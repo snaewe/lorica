@@ -42,7 +42,7 @@ unlink $origfile;
 $pidfile = PerlACE::LocalFile ("lorica.pid");
 unlink $pidfile;
 
-$PR = new PerlACE::Process ("../../bin/lorica_proxy", "-f test.conf -l 1");
+$PR = new PerlACE::Process ("../../bin/lorica_proxy", "-d -f test.conf -l 1");
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile -l");
 

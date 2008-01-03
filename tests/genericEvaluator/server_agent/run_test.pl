@@ -48,7 +48,7 @@ unlink $pidfile;
 
 $ifrfile = "ifr.ior";
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/bin/lorica_proxy", "-f test.conf");
+$PR = new PerlACE::Process ("$LORICA_ROOT/bin/lorica_proxy", "-d -f test.conf");
 
 $IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr",
                               " -ORBInitRef InterfaceRepository=file://$ifrfile ".

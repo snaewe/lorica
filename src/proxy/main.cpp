@@ -181,7 +181,8 @@ Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 
 #if defined (ACE_WIN32)
 	if ((SC_NONE == service_command_) && (!debug_)) {
-		ACE_TEXT("You must use a service command if you are running in non-debug mode");
+		ACE_DEBUG ((LM_INFO,
+			ACE_TEXT("You must use a service command if you are running in non-debug mode"), 0));
 		ACE_OS::exit(1);
 	}
 #endif /* ACE_WIN32 */
