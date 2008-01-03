@@ -1,3 +1,9 @@
+2008-01-03  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
+
+        * tests/genericEvaluator/unbind:
+
+          Added a new test for validating the unbinding of mapped references. 
+
 2008-01-01  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/main.cpp: s/is_nt_service/is_service/g

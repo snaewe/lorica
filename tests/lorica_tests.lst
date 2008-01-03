@@ -35,3 +35,5 @@
 ./genericEvaluator/logging/run_test.pl
 ./genericEvaluator/persistence_ifr/run_test.pl
 ./genericEvaluator/server_agent/run_test.pl
+./genericEvaluator/union/run_test.pl
+./genericEvaluator/unbind/run_test.pl
