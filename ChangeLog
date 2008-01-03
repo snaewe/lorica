@@ -1,8 +1,13 @@
+2008-01-03  Jules Colding  <colding@omesc.com>
+
+	* src/proxy/main.cpp (Service_Loader::parse_args): Warn and exit
+	on WIN32 for non-valid startup options.
+
 2008-01-03  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
 
         * tests/genericEvaluator/unbind:
 
-          Added a new test for validating the unbinding of mapped references. 
+          Added a new test for validating the unbinding of mapped references.
 
 2008-01-01  Jules Colding  <colding@42tools.com>
 

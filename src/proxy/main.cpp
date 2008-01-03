@@ -138,7 +138,7 @@ Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 	int c;
 	const ACE_TCHAR *tmp;
 
-	while ((c = get_opt ()) != -1)
+	while ((c = get_opt ()) != -1) {
 		switch (c)
 		{
 #if defined (ACE_WIN32)
@@ -177,6 +177,14 @@ Lorica::Service_Loader::parse_args (int argc, ACE_TCHAR* argv[])
 			print_usage_and_die ();
 			break;
 		}
+	}
+
+#if defined (ACE_WIN32)
+	if ((SC_NONE == service_command_) && (!debug_)) {
+		ACE_TEXT("You must use a service command if you are running in non-debug mode");
+		ACE_OS::exit(1);
+	}
+#endif /* ACE_WIN32 */
 
 	return 0;
 }
