@@ -31,4 +31,9 @@ module Test
 	{
 		void method();
 	};
+
+	interface Third
+	{
+		void method();
+	};
 };

@@ -37,5 +37,11 @@ public:
 	virtual void method(void);
 };
 
+/// Implement the Test::Third interface
+class Third : public virtual POA_Test::Third, public virtual PortableServer::RefCountServantBase {
+public:
+	virtual void method(void);
+};
+
 #include /**/ "ace/post.h"
 #endif /* UNBIND_H */

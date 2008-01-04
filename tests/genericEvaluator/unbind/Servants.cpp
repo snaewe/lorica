@@ -32,3 +32,9 @@ Second::method(void)
 {
 	//NOP
 }
+
+void
+Third::method(void)
+{
+	//NOP
+}

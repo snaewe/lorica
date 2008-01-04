@@ -49,27 +49,35 @@ int main(int argc, char *argv[]) {
 		PortableServer::ServantBase_var first_owner_transfer(first_impl);
 		Test::First_var first = first_impl->_this();
 
-		// mapping the first object
-		CORBA::Object_var first_obj = mapper->as_server(first.in(),"First", Lorica::ServerAgent::_nil());
-		if (CORBA::is_nil (first_obj.in())) {
-			ACE_ERROR_RETURN((LM_ERROR, "Server::Lorica reference mapper returned a nil mapped reference for the first object.\n"), 1);
-		}
-
 		// getting the second original object
 		Second *second_impl;
 		ACE_NEW_RETURN(second_impl, Second(), 1);
 		PortableServer::ServantBase_var second_owner_transfer(second_impl);
 		Test::Second_var second = second_impl->_this();
 
-		// mapping the second object
-		CORBA::Object_var second_obj = mapper->as_server(second.in(),"Second", Lorica::ServerAgent::_nil());
-		if (CORBA::is_nil (second_obj.in())) {
-			ACE_ERROR_RETURN((LM_ERROR, "Server::Lorica reference mapper returned a nil mapped reference for the second object.\n"), 1);
-		}
+		// getting the third original object
+		Third *third_impl;
+		ACE_NEW_RETURN(third_impl, Third(), 1);
+		PortableServer::ServantBase_var third_owner_transfer(third_impl);
+		Test::Third_var third = third_impl->_this();
 
-		// removing object mappings from lorica
+		// mapping objects
+		ACE_DEBUG ((LM_DEBUG, "Server::Binding first object\n"));
+		CORBA::Object_var first_obj = mapper->as_server(first.in(),"First", Lorica::ServerAgent::_nil());
+		
+		ACE_DEBUG ((LM_DEBUG, "Server::Binding second object\n"));
+		CORBA::Object_var second_obj = mapper->as_server(second.in(),"Second", Lorica::ServerAgent::_nil());
+		
+		ACE_DEBUG ((LM_DEBUG, "Server::Binding third object\n"));
+		CORBA::Object_var third_obj = mapper->as_server(third.in(),"Third", Lorica::ServerAgent::_nil());
+
+		// unbinding the mapped objects
+		ACE_DEBUG ((LM_DEBUG, "Server::UnBinding first object\n"));
 		mapper->remove_server(first_obj.in());
+		ACE_DEBUG ((LM_DEBUG, "Server::UnBinding second object\n"));
 		mapper->remove_server(second_obj.in());
+		ACE_DEBUG ((LM_DEBUG, "Server::UnBinding third object\n"));
+		mapper->remove_server(third_obj.in());
 
 		return 0;
 	} catch (const CORBA::Exception& ex) {

@@ -53,9 +53,9 @@ $IDLC = new PerlACE::Process ("$ACE_ROOT/bin/tao_ifr",
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug");
 
-print "Unbind test starting\n";
+print "\nUnbind test starting\n";
 
-print "Spawning proxy\n";
+print "\nSpawning proxy\n";
 $proxy = $PR->Spawn();
 if (PerlACE::waitforfile_timed ($pidfile,
                         $PerlACE::wait_interval_for_process_creation) == -1) {
@@ -64,7 +64,7 @@ if (PerlACE::waitforfile_timed ($pidfile,
     exit 1;
 }
 
-print "Spawning idl compiler\n";
+print "\nSpawning idl compiler\n";
 $idlc_ret = $IDLC->SpawnWaitKill (60);
 if (($idlc_ret != 0) || ($? != 0)) {
   if ($idlc_ret == 0) { $idlc_ret = $?; }
@@ -72,13 +72,17 @@ if (($idlc_ret != 0) || ($? != 0)) {
   $status = 1;
 }
 
-print "Spawning server\n";
+print "\nSpawning server for the first time\n";
 $server = $SV->SpawnWaitKill (30);
-
-print "Stopping server\n";
+print "\nStopping server\n";
 $server = $SV->Kill ();
 
-print "Stopping proxy\n";
+print "\nSpawning server for the second time\n";
+$server = $SV->SpawnWaitKill (30);
+print "\nStopping server\n";
+$server = $SV->Kill ();
+
+print "\nStopping proxy\n";
 $proxy = $PR->Kill ();
 
 if ($proxy != 0) {
