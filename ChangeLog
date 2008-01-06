@@ -1,7 +1,46 @@
+Sun Jan  6 05:18:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+          Fixed a reference counting error in remove_reference which
+          caused a crash by inadvertently deleting the POA due to improper
+          reference management.
+
+          Also, provisionally removed the native_values_ map. After a code
+          review, I determined that this map is never referenced, and thus
+          redundent. The map also had a problem in that its ability to
+          distinguish object references was fundamentally flawed. This
+          flaw is related to the nature of the encapsulated object key,
+          which by spec is opaque, and due to the possible presense of
+          uninitialized CDR padding bytes impossible to reliably compare.
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+
+          Removed the DECISION_OBJECT_AVAILABLE macro. That was included
+          only for the time when the decision object code was under
+          development and thus not available in the publicly available
+          release of TAO. In fact, the flag caused alignment problems
+          because it was only set in the header when compiling
+          ReferenceMapper_i.cpp. When included in other .cpp files the
+          flag was not set, and so the affected reference was missing.
+
+        * tests/genericEvaluator/forward/forward.mpc:
+        * tests/genericEvaluator/union/union.mpc:
+
+          Fix the mpc files so that a top level makefile generation does
+          not complain about replicated project names.
+
+        * tests/genericEvaluator/forward/test_i.cpp:
+
+          This file was including the incorrect PI header. Now TAO exits
+          with an error if that header is included.
+
 2008-01-03  Jules Colding  <colding@omesc.com>
 
-	* src/proxy/main.cpp (Service_Loader::parse_args): Warn and exit
-	on WIN32 for non-valid startup options.
+        * src/proxy/main.cpp (Service_Loader::parse_args): Warn and exit
+        on WIN32 for non-valid startup options.
 
 2008-01-03  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
 
@@ -11,20 +50,20 @@
 
 2008-01-01  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp: s/is_nt_service/is_service/g
-	(Service_Loader::print_usage_and_die)
-	(Service_Loader::parse_args): Cleanup options so to not
-	offer options that are known to be unavailable on the
-	platform in question.
+        * src/proxy/main.cpp: s/is_nt_service/is_service/g
+        (Service_Loader::print_usage_and_die)
+        (Service_Loader::parse_args): Cleanup options so to not
+        offer options that are known to be unavailable on the
+        platform in question.
 
 2008-01-01  Jules Colding  <colding@42tools.com>
 
-	* docs/building_lorica.txt: Updated.
+        * docs/building_lorica.txt: Updated.
 
 2007-12-19  Jules Colding  <colding@42tools.com>
 
-	* README: Slight change in the wording of the last
-	paragraph.
+        * README: Slight change in the wording of the last
+        paragraph.
 
 Tue Nov  6 02:59:28 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
 

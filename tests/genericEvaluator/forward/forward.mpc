@@ -17,7 +17,7 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-project (GenericEvaluator BasicCollocate Client): dynamicinterface, portableserver, orbsvcsexe, loricacommon {
+project (GenericEvaluator Forward Client): dynamicinterface, portableserver, orbsvcsexe, loricacommon {
   exename = client
   IDL_Files {
     test.idl
@@ -28,7 +28,7 @@ project (GenericEvaluator BasicCollocate Client): dynamicinterface, portableserv
   }
 }
 
-project (GenericEvaluator BasicCollocate Server): dynamicinterface, pi_server, portableserver, orbsvcsexe, loricacommon {
+project (GenericEvaluator Forward Server): dynamicinterface, pi_server, portableserver, orbsvcsexe, loricacommon {
   exename = server
   libs += lorica_Client
   IDL_Files {

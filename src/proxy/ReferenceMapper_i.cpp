@@ -19,8 +19,6 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#define DECISION_OBJECT_AVAILABLE 1
-
 #include "ace/Dynamic_Service.h"
 #include "tao/ORB_Core.h"
 
@@ -35,10 +33,8 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i (CORBA::ORB_ptr orb,
 					      bool has_sec)
 	: orb_ (CORBA::ORB::_duplicate (orb)),
 	  ior_table_ (IORTable::Table::_duplicate(iort)),
-	  has_security_ (has_sec)
-#if defined (DECISION_OBJECT_AVAILABLE)
-	, access_decision_(TAO::SL2::AccessDecision::_nil())
-#endif
+	  has_security_ (has_sec),
+	  access_decision_(TAO::SL2::AccessDecision::_nil())
 {
 	this->registry_ =
 		ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
@@ -47,7 +43,6 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i (CORBA::ORB_ptr orb,
 
 	try
 	{
-#if defined (DECISION_OBJECT_AVAILABLE)
 		if (this->has_security_)
 		{
 			CORBA::Object_var obj =
@@ -62,7 +57,6 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i (CORBA::ORB_ptr orb,
 			if (Lorica_debug_level > 0)
 				ACE_DEBUG ((LM_DEBUG,"(%P|%t) Lorica::ReferenceMapper_i, "
 					    "SSLIOP not available\n"));
-#endif
 	}
 	catch (CORBA::Exception &ex)
 	{
@@ -77,7 +71,6 @@ Lorica::ReferenceMapper_i::~ReferenceMapper_i (void)
 void
 Lorica::ReferenceMapper_i::allow_insecure_access (CORBA::Object_ptr self)
 {
-#if defined (DECISION_OBJECT_AVAILABLE)
 	if (this->has_security_ && !CORBA::is_nil(this->access_decision_))
 	{
 		CORBA::String_var orbid = this->orb_->id();
@@ -87,9 +80,6 @@ Lorica::ReferenceMapper_i::allow_insecure_access (CORBA::Object_ptr self)
 			this->access_decision_->add_object(orbid.in(), poaid.in(), oid.in(),
 							   true);
 	}
-#else
-	ACE_UNUSED_ARG (self);
-#endif
 }
 
 CORBA::Object_ptr
@@ -166,10 +156,8 @@ Lorica::ReferenceMapper_i::as_server_i (bool require_secure,
 	}
 
 	rmv->require_secure_ = require_secure;
-#if defined (DECISION_OBJECT_AVAILABLE)
 	if (!require_secure)
 		this->allow_insecure_access(rmv->mapped_ref_.in());
-#endif
 	if (!CORBA::is_nil(agent))
 	{
 		rmv->agent_ = Lorica::ServerAgent::_duplicate(agent);

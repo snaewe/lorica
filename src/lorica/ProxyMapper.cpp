@@ -59,7 +59,7 @@ Lorica::ProxyMapper::ProxyMapper (Lorica_MapperRegistry &mr,
 				  const std::string &id)
 	: evaluator_head_(0),
 	  mapped_values_(0),
-	  native_values_(0),
+// 	  native_values_(0),
 	  registry_(mr),
 	  id_ (id),
 	  ref_count_ (1),
@@ -90,7 +90,7 @@ Lorica::ProxyMapper::ProxyMapper (Lorica_MapperRegistry &mr,
 	if (configuration->getBooleanValue("CacheProxyReferences",false))
 	{
 		this->mapped_values_ = new RMVByMapped;
-		this->native_values_ = new RMVByNative;
+// 		this->native_values_ = new RMVByNative;
 	}
 }
 
@@ -101,7 +101,7 @@ Lorica::ProxyMapper::~ProxyMapper (void)
 	// need to iterate over maps, remove each entry and decrement refcounts
 
 	delete this->mapped_values_;
-	delete this->native_values_;
+// 	delete this->native_values_;
 
 	if (this->next_)
 		this->next_->decr_refcount();
@@ -226,7 +226,7 @@ Lorica::ProxyMapper::already_mapped (CORBA::Object_ptr native,
 				     bool out_facing,
 				     ACE_UINT32& index)
 {
-	if (this->native_values_ != 0)
+	if (this->mapped_values_ != 0)
 	{
 		TAO::ObjectKey *key = native->_key();
 		if (key == 0)
@@ -356,7 +356,7 @@ Lorica::ProxyMapper::add_native_unchecked (CORBA::Object_ptr native,
 
 	ACE_UINT32 index = 0;
 	PortableServer::ObjectId_var oid;
-	if (this->native_values_ == 0)
+	if (this->mapped_values_ == 0)
 	{
 		CORBA::String_var nior = orb_->object_to_string (native);
 		oid = PortableServer::string_to_ObjectId(nior);
@@ -370,13 +370,10 @@ Lorica::ProxyMapper::add_native_unchecked (CORBA::Object_ptr native,
 	rmv->mapped_ref_ =
 		poa->create_reference_with_id( oid.in(), typeId.c_str() );
 	rmv->require_secure_ = require_secure;
-
 	// put new value in maps
-	if (this->native_values_ != 0)
+	if (this->mapped_values_ != 0)
 	{
-		this->native_values_->bind(native,rmv.get());
-		CORBA::String_var moid =
-			PortableServer::ObjectId_to_string(oid.in());
+// 		this->native_values_->bind(native,rmv.get());
 
 		this->mapped_values_->bind(index,rmv.get());
 	}
@@ -462,8 +459,8 @@ Lorica::ProxyMapper::remove_mapped (CORBA::Object_ptr mapped,
 		if (this->mapped_values_ != 0)
 		{
 			PortableServer::POA_var p = out_facing ?
-				this->out_facing_poa_.in() :
-				this->in_facing_poa_.in();
+				this->out_facing_poa_ :
+				this->in_facing_poa_;
 			PortableServer::ObjectId_var oid = p->reference_to_id (mapped);
 
 			CORBA::String_var idstr =
@@ -475,13 +472,13 @@ Lorica::ProxyMapper::remove_mapped (CORBA::Object_ptr mapped,
 
 			if (this->mapped_values_->unbind (ptr->index,rmv.out()))
 			{
-				CORBA::Object_ptr orig = rmv->orig_ref_;
-				ReferenceMapValue_var nrmv;
-				if (!this->native_values_->unbind(orig,nrmv.out()) &&
-				    Lorica_debug_level > 0)
-					ACE_ERROR ((LM_ERROR,
-						    "(%P|%t) Lorica::ProxyMapper::remove_mapped "
-						    "native unbind failed!\n"));
+// 				CORBA::Object_ptr orig = rmv->orig_ref_;
+// 				ReferenceMapValue_var nrmv;
+// 				if (!this->native_values_->unbind(orig,nrmv.out()) &&
+// 				    Lorica_debug_level > 0)
+// 					ACE_ERROR ((LM_ERROR,
+// 						    "(%P|%t) Lorica::ProxyMapper::remove_mapped "
+// 						    "native unbind failed!\n"));
 			}
 			return rmv.release();
 		}

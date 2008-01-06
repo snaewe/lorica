@@ -32,7 +32,7 @@
 #include "lorica/Lorica_EvaluatorBase_Export.h"
 #include "lorica/ReferenceMapValue.h"
 #include "lorica/RMVByMapped.h"
-#include "lorica/RMVByNative.h"
+//#include "lorica/RMVByNative.h"
 
 class Lorica_MapperRegistry;
 
@@ -192,7 +192,7 @@ namespace Lorica
     /// a collection of ReferenceMapValues keyed by the mapped obj's ID.
     RMVByMapped *mapped_values_;
     /// The same mapped values keyed by the stringified native OBJref
-    RMVByNative *native_values_;
+//     RMVByNative *native_values_;
 
     /// the collection of peer mappers
     Lorica_MapperRegistry &registry_;
