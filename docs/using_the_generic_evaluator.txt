@@ -1,0 +1,96 @@
+
+
+                  ***   Using The Generic Evaluator  ***
+
+                    Copyright (C) 2008 OMC Denmark ApS
+
+
+Your rights
+===========
+
+Copying and distribution of this file, with or without modification, 
+are permitted in any medium without royalty provided the copyright 
+notice and this notice are preserved.
+
+
+For more information
+====================
+
+For the newest and most comprehensive documentation, please refer to the online
+documentation found at:
+
+   http://trac.brutus.net/lorica
+
+
+Using The Generic Evaluator
+===========================
+
+The generic evaluator module makes use of an interface repository when rewriting
+references, Lorica can use an existing interface repository or create its own.
+
+
+Let Lorica create its own IFR
+-----------------------------
+
+Merely add the following to lorica.conf (see lorica_configuration for details) 
+to enable the usage and creation of a Lorica specific interface repository:
+
+    Generic_Evaluator yes
+    Collocate_IFR yes
+    IFR_CmdOption -o
+    IFR_CmdOption ifr.ior
+
+
+Now, when the proxy is running you can access the interface repository at the
+IOR found in the file 'ifr.ior'. The repository is initially empty so the 
+generic evaluator will reject all objects. To remedy this, populate the 
+interface repository with the IDL files containing the interfaces Lorica needs
+to rewrite. This is done with the following command:
+
+    %ACE_ROOT%\bin\tao_ifr -ORBInitRef InterfaceRepository=file://%LORICA_ROOT%\src\proxy\ifr.ior Test.idl
+
+
+Lorica is now able to rewrite corba objects implementing any interface defined 
+within Test.idl. It will use the Generic Evaluator to do this feat. 
+
+The default flags will make the IFR process any include files, which may lead to
+problems if an interface has been added previously. Use the '-Si' flag to
+suppress the processing of included files. A list of all options can be found in
+the documentation.
+
+
+How to use an existing IFR
+--------------------------
+
+To enable the usage of an existing interface repository add the following to
+lorica.conf (see lorica_configuration for details):
+
+    Generic_Evaluator no
+    ORB_Option -ORBInitRef InterfaceRepository=corbaloc:iiop:remote-ifr-server.com:1960/InterfaceRepository
+
+
+The remote IFR server may e.g. be another Lorica server with a collocated IFR.
+
+
+Interface Repository Cache
+--------------------------
+
+If the repository content is static, the task of populating the repository with
+the same IDL files at every restart can be skipped by using the interface
+repository persistent option. 
+
+The persistent option is enabled by added the following to the lorica.conf file:
+
+    IFR_CmdOption -p
+    IFR_CmdOption -b ifr_cache
+
+
+The first time Lorica is started the cache is empty and needs to be populated,
+this is done as described above using the tao_ifr command. Subsequently when
+Lorica is restarted the interface repository is populated with data from the
+ifr_cache file and it's state is the same as when it was last shut down.
+
+
+------------------------------------------
+Rasmus Maagaard <rasmusmaagaard@42tools.com>
+OMC Denmark ApS, 2008

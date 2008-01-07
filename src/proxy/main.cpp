@@ -107,9 +107,9 @@ Lorica::Service_Loader::print_usage_and_die (void)
 		    ACE_TEXT(" -s: Start the service\n")
 		    ACE_TEXT(" -k: Stop the service\n")
 		    ACE_TEXT(" -d: Debug; run as a regular application\n")
-		    ACE_TEXT(" -f: <required; default:lorica.conf> Configuration file.\n")
-		    ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
-		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging"),
+		    ACE_TEXT(" -f: <file> Configuration file. Required, default is \"lorica.conf\"\n")
+		    ACE_TEXT(" -c: <level> Turn on CORBA debugging, default 0\n")
+		    ACE_TEXT(" -l: <level> Turn on Lorica debugging, default 0"),
 		    program_name.c_str(),
 		    0));
 #else

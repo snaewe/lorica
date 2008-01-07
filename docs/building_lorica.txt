@@ -41,7 +41,7 @@ are installed on your system:
 Getting the source
 ------------------
 
-Checkout the Lorica source from the subversion repository:
+Checkout the Lorica source from our subversion repository:
 
    svn co http://svn.42tools.net/repos/lorica/trunk/ lorica
 
@@ -78,7 +78,6 @@ can use a simple test configuration (it should be usable in most environments)
 which is part of the distribution:
 
    lorica_proxy -c2 -l10 -f $LORICA_ROOT/src/proxy/lorica.conf.ifr-server.sample
-
 
 
 Visual Studio Build Guide 
@@ -139,6 +138,7 @@ The following steps needs to be preformed before Lorica can be started
     * In Microsoft Visual Studio rebuild the project (ctrl+alt+f7). 
 
 Press the green play button and watch Lorica start :-)
+
 
 
 ------------------------------------------
