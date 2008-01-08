@@ -25,7 +25,8 @@ fi
 
 # prepare for build
 echo '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
-echo 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
+echo 'ssl=1' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
+echo 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 
 # just build the ACE library
 echo ""
