@@ -22,8 +22,18 @@ documentation found at:
    http://trac.brutus.net/lorica
 
 
-Linux build guide
-=================
+Linux build guide - The easy one
+================================
+
+Just execute the build.sh script that is distributed with the Lorica source. It
+should take care of building ACE, TAO and Lorica while automatically downloading
+missing files.
+
+If this doesn't work for you then you have to use the hard guide...
+
+
+Linux build guide - The hard one
+================================
 
 This guide is tested on PCLinuxOS but should be general enough to be usable for
 other Linux distributions, maybe with minor modifications.
