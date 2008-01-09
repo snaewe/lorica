@@ -91,13 +91,20 @@ case "$1" in
 	echo 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 	export DYLD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$DYLD_LIBRARY_PATH"	
 	;;
-    *)
+    linux)
 	echo "assuming Linux"
 	echo '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
 	echo 'ssl=1' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
 	echo 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
 	export LD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$LD_LIBRARY_PATH"	
 	;;
+    *)
+	echo " ERROR, no platform given"
+	echo "   Usage: build.sh <PLATFORM>"
+	echo ""
+	echo "   Supported platforms: linux, leopard, tiger"
+	echo ""
+	exit 1
 esac
 
 
