@@ -71,7 +71,7 @@ fi
 if [ ! -d "$TAO_ROOT" ]; then
     $TAR xjf $ACETAO
 fi
-if [ 0 -eq $? ]; then
+if [ 0 -ne $? ]; then
     echo "\'tar xjf\' didn't work - bzip2 not supported?"
     exit 1
 fi
