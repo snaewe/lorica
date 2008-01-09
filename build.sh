@@ -23,8 +23,6 @@ ACETAO=ACE+TAO-5.6.2.tar.bz2
 export LORICA_ROOT="$(pwd)"
 export ACE_ROOT="$LORICA_ROOT/ACE_wrappers"
 export TAO_ROOT="$ACE_ROOT/TAO"
-
-export LD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$LD_LIBRARY_PATH"	
 export PATH="$LORICA_ROOT/bin:$ACE_ROOT/bin:$PATH"
 
 cmd=$(which tar)
@@ -77,9 +75,31 @@ if [ 0 -ne $? ]; then
 fi
 
 # prepare for build
-echo '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
-echo 'ssl=1' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
-echo 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+echo -n "Building ACE and TAO - "
+case "$1" in
+    leopard)
+	echo "assuming MacOS Leopard"
+	echo '#include "ace/config-macosx-leopard.h"' > $ACE_ROOT/ace/config.h
+	echo 'ssl=1' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
+	echo 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+	export DYLD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$DYLD_LIBRARY_PATH"	
+	;;
+    tiger)
+	echo "assuming MacOS Tiger"
+	echo '#include "ace/config-macosx-tiger.h"' > $ACE_ROOT/ace/config.h
+	echo 'ssl=1' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
+	echo 'include $(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+	export DYLD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$DYLD_LIBRARY_PATH"	
+	;;
+    *)
+	echo "assuming Linux"
+	echo '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
+	echo 'ssl=1' > $ACE_ROOT/include/makeinclude/platform_macros.GNU
+	echo 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+	export LD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$LD_LIBRARY_PATH"	
+	;;
+esac
+
 
 # just build the ACE library
 echo ""
