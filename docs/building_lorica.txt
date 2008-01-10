@@ -29,7 +29,7 @@ Just execute the build.sh script that is distributed with the Lorica source. It
 should take care of building ACE, TAO and Lorica while automatically downloading
 missing files.
 
-This doesn't work for you? Well, then you have to use the hard guide...
+This doesn't work for you? Well, then you have to use the hard road to Lorica...
 
 
 Linux build guide - The hard one
