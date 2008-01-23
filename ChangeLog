@@ -1,6 +1,8 @@
 2008-01-15  Jules Colding  <colding@42tools.com>
 
-	* lorica.mwc: Exclude the automake project target
+        * lorica.mwc:
+
+	  Exclude the automake project target
 
 Sun Jan  6 05:18:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -41,10 +43,18 @@ Sun Jan  6 05:18:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
           This file was including the incorrect PI header. Now TAO exits
           with an error if that header is included.
 
+2008-01-04  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
+
+        * tests/genericEvaluator/unbind:
+
+          To more clearly simulate our issue with Lorica we updated the test 
+          to run the server twice. 
+
 2008-01-03  Jules Colding  <colding@omesc.com>
 
-        * src/proxy/main.cpp (Service_Loader::parse_args): Warn and exit
-        on WIN32 for non-valid startup options.
+        * src/proxy/main.cpp (Service_Loader::parse_args):
+
+	  Warn and exit on WIN32 for non-valid startup options.
 
 2008-01-03  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
 
