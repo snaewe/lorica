@@ -1,3 +1,14 @@
+2008-01-23  Jules Colding  <colding@42tools.com>
+
+	* Lorica: Ported Lorica to use the GNU autotools on Linux
+	and Darwin. Still using MPC on WIndows though. To build on
+	Linux or Darwin please do:
+
+	./autogen.sh --enable-tao-build && make
+
+	The enable-tao-build switch will make Lorica build ACE and
+	TAO locally is the system lacks anything in that regard.
+
 2008-01-15  Jules Colding  <colding@42tools.com>
 
         * lorica.mwc:
