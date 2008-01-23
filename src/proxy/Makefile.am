@@ -97,6 +97,33 @@ lorica_LDADD = \
 	-lACE
 
 if LORICA_MUST_BUILD_ACETAO
+if LORICA_DARWIN
+TAO_LIBS = \
+	$(ACE_ROOT)/ace/libACE.dylib                            \
+	$(ACE_ROOT)/ace/SSL/libACE_SSL.dylib                    \
+	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.dylib            \
+	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.dylib           \
+	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.dylib             \
+	$(ACE_ROOT)/TAO/tao/libTAO_DynamicInterface.dylib       \
+	$(ACE_ROOT)/TAO/tao/libTAO_EndpointPolicy.dylib         \
+	$(ACE_ROOT)/TAO/TAO_IDL/libTAO_IDL_BE.dylib             \
+	$(ACE_ROOT)/TAO/TAO_IDL/libTAO_IDL_FE.dylib             \
+	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/libTAO_IFR_BE.dylib \
+	$(ACE_ROOT)/TAO/tao/libTAO_IFR_Client.dylib             \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_IFRService.dylib \
+	$(ACE_ROOT)/TAO/tao/libTAO_ImR_Client.dylib             \
+	$(ACE_ROOT)/TAO/tao/libTAO_IORTable.dylib               \
+	$(ACE_ROOT)/TAO/tao/libTAO_Messaging.dylib              \
+	$(ACE_ROOT)/TAO/tao/libTAO_PI_Server.dylib              \
+	$(ACE_ROOT)/TAO/tao/libTAO_PI.dylib                     \
+	$(ACE_ROOT)/TAO/tao/libTAO_PortableServer.dylib         \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Security.dylib   \
+	$(ACE_ROOT)/TAO/tao/libTAO.dylib                        \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_SSLIOP.dylib     \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.dylib  \
+	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.dylib        \
+	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.dylib
+else
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                    \
@@ -122,6 +149,7 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        \
 	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
+endif # LORICA_DARWIN
 ACETAO_LIBdir = $(libdir)
 ACETAO_LIB_DATA = $(TAO_LIBS)
 

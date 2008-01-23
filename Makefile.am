@@ -49,6 +49,25 @@ endif
 
 AM_CPPFLAGS = -I$(ACETAO_local_includedir) -I$(ACETAO_local_includedir)/TAO -I$(ACETAO_local_includedir)/TAO/orbsvcs
 
+if LORICA_DARWIN
+TAO_FILES = \
+        $(ACE_ROOT)/TAO/tao/libTAO_IFR_Client.dylib       \
+	$(ACE_ROOT)/TAO/tao/libTAO_DynamicInterface.dylib \
+        $(ACE_ROOT)/TAO/tao/libTAO_EndpointPolicy.dylib   \
+        $(ACE_ROOT)/TAO/tao/libTAO_Messaging.dylib        \
+        $(ACE_ROOT)/TAO/tao/libTAO_IORTable.dylib         \
+        $(ACE_ROOT)/TAO/tao/libTAO_SSLIOP.dylib           \
+        $(ACE_ROOT)/TAO/tao/libTAO_PI_Server.dylib        \
+        $(ACE_ROOT)/TAO/tao/libTAO_Security.dylib         \
+        $(ACE_ROOT)/TAO/tao/libTAO_PI.dylib               \
+        $(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.dylib     \
+        $(ACE_ROOT)/TAO/tao/libTAO_Valuetype.dylib        \
+        $(ACE_ROOT)/TAO/tao/libTAO_PortableServer.dylib   \
+        $(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.dylib      \
+        $(ACE_ROOT)/TAO/tao/libTAO.dylib                  \
+        $(ACE_ROOT)/ace/SSL/libACE_SSL.dylib              \
+        $(ACE_ROOT)/ace/libACE.dylib 
+else
 TAO_FILES = \
         $(ACE_ROOT)/TAO/tao/libTAO_IFR_Client.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)       \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicInterface.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE) \
@@ -66,6 +85,8 @@ TAO_FILES = \
         $(ACE_ROOT)/TAO/tao/libTAO.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                  \
         $(ACE_ROOT)/ace/SSL/libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
         $(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
+endif # LORICA_DARWIN
+
 else
 TAO_FILES =
 endif # LORICA_MUST_BUILD_ACETAO
@@ -76,7 +97,20 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = aclocal.m4 intltool-extract intltool-merge intltool-update iconv-detect.c Makefile *.tar.gz $(CLEAN_IN_FILES) $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
+DISTCLEANFILES = \
+	aclocal.m4        \
+	intltool-extract  \
+	intltool-merge    \
+	intltool-update   \
+	iconv-detect.c    \
+	Makefile          \
+	*.tar.gz          \
+	$(CLEAN_IN_FILES) \
+	$(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
+
+if LORICA_MUST_BUILD_ACETAO
+DISTCLEANFILES += $(ACE_ROOT)
+endif
 
 EXTRA_DIST = \
 	docs                               \
@@ -105,8 +139,8 @@ EXTRA_DIST = \
 
 all-local: tao
 
-dist-hook:
-	rm -rf $(ACE_ROOT)
+#dist-hook:
+#	rm -rf $(ACE_ROOT)
 
 release:
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
