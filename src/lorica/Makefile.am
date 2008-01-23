@@ -208,5 +208,5 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = $(BUILT_SOURCES) $(CURDIR)/*.o $(CLEAN_IN_FILES) $(EXPORT_FILES) Makefile .deps .libs .shobj
+DISTCLEANFILES = $(BUILT_SOURCES) $(CURDIR)/*.o $(CLEAN_IN_FILES) $(EXPORT_FILES) Makefile .deps .libs .shobj *.dylib
 CLEANFILES = $(CURDIR)/*.o 
