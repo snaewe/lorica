@@ -1,0 +1,5 @@
+@DH_INSTALL_default_bindir@/brutus-keyringd
+@DH_INSTALL_default_libdir@/libBrutus*.so*
+@DH_INSTALL_default_docdir@/brutus-keyring-guide
+@DH_INSTALL_default_docdir@/COPYING
+@DH_INSTALL_default_docdir@/README

@@ -1,0 +1,21 @@
+Source: brutus-keyring
+Section: net
+Priority: optional
+Maintainer: Jules Colding <colding@omesc.com>
+Standards-Version: 3.7.2
+Build-Depends: debhelper (>= 5), autotools-dev, liborbit2-dev (>= @ORBIT2_REQUIRED@), gnome-common
+
+Package: brutus-keyring-dev
+Section: netdevel
+Architecture: any
+Depends: brutus-keyring (= ${Source-Version})
+Description: Development files for brutus-keyring
+ This is the Brutus Keyring daemon development package
+ .
+
+Package: brutus-keyring
+Architecture: any
+Depends: liborbit2 (>= @ORBIT2_REQUIRED@), libidl0 (>= @LIBIDL_REQUIRED@)
+Description: Brutus Keyring
+ This is the Brutus Keyring daemon
+ .

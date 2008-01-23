@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#
 #    Lorica build script for Linux and friends
 #    Copyright (C) 2008 OMC Denmark ApS.
 #
@@ -17,7 +17,6 @@
 #    along with this program; if not, write to the Free Software
 #    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 
-
 ACETAO=ACE+TAO-5.6.2.tar.bz2
 
 export LORICA_ROOT="$(pwd)"
@@ -32,8 +31,6 @@ else
     echo "You need tar to run this script"
     exit 1
 fi
-
-cd $LORICA_ROOT
 
 #
 # get and build TAO
@@ -76,6 +73,7 @@ fi
 
 # prepare for build
 echo -n "Building ACE and TAO - "
+MAKE_TARGET=""
 case "$1" in
     leopard)
 	echo "assuming MacOS Leopard"
@@ -99,41 +97,65 @@ case "$1" in
 	export LD_LIBRARY_PATH="$LORICA_ROOT/lib:$ACE_ROOT/lib:$LD_LIBRARY_PATH"	
 	;;
     *)
-	echo " ERROR, no platform given"
+	MAKE_TARGET="$1"
+	echo " WARNING, no platform given"
 	echo "   Usage: build.sh <PLATFORM>"
 	echo ""
 	echo "   Supported platforms: linux, leopard, tiger"
 	echo ""
-	exit 1
+	echo " Assuming request to build make target \"$MAKE_TARGET\". Proceeding..."
 esac
 
-
-# just build the ACE library
 echo ""
 echo " *******************************************************"
-echo " *                 Building ACE                        *" 
+echo " *              Building ACE Library                   *" 
 echo " *******************************************************"
 echo ""
-cd $ACE_ROOT/ace
-make
+cd $ACE_ROOT/ace && make -f GNUmakefile $MAKE_TARGET
 
-# used by TAO
+
 echo ""
 echo " *******************************************************"
 echo " *                Building gperf                       *" 
 echo " *******************************************************"
 echo ""
-cd $ACE_ROOT/apps/gperf/src
-make
+cd $ACE_ROOT/apps/gperf/src && make -f GNUmakefile $MAKE_TARGET
+
+
+echo ""
+echo " *******************************************************"
+echo " *            Building ACE SSL Library                 *" 
+echo " *******************************************************"
+echo ""
+cd $ACE_ROOT/ace/SSL && make -f GNUmakefile $MAKE_TARGET
+
 
 echo ""
 echo " *******************************************************"
 echo " *                 Building TAO                        *" 
 echo " *******************************************************"
 echo ""
-cd $ACE_ROOT/TAO
-make
-
+cd $TAO_ROOT/TAO_IDL             && make -f GNUmakefile                  $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.TAO              $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.AnyTypeCode      $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.Valuetype        $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.CodecFactory     $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.PI               $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.PortableServer   $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.Messaging        $MAKE_TARGET
+cd $TAO_ROOT/orbsvcs/orbsvcs     && make -f GNUmakefile.Svc_Utils        $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.IORTable         $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.PI_Server        $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.IFR_Client       $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.TypeCodeFactory  $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.DynamicInterface $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.DynamicAny       $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.ImR_Client       $MAKE_TARGET
+cd $TAO_ROOT/orbsvcs/orbsvcs     && make -f GNUmakefile.IFRService       $MAKE_TARGET
+cd $TAO_ROOT/orbsvcs/IFR_Service && make -f GNUmakefile                  $MAKE_TARGET
+cd $TAO_ROOT/orbsvcs/orbsvcs     && make -f GNUmakefile.Security         $MAKE_TARGET
+cd $TAO_ROOT/orbsvcs/orbsvcs     && make -f GNUmakefile.SSLIOP           $MAKE_TARGET
+cd $TAO_ROOT/tao                 && make -f GNUmakefile.EndpointPolicy   $MAKE_TARGET
 
 #
 # build Lorica
@@ -146,5 +168,5 @@ echo " *******************************************************"
 echo ""
 cd $LORICA_ROOT
 $ACE_ROOT/bin/mwc.pl -type gnuace lorica.mwc
-make
+make $MAKE_TARGET
 

@@ -6,4 +6,13 @@ workspace(lorica) {
   src/lorica/lorica_EvaluatorBase.mpc
   src/lorica/lorica_GenericEvaluator.mpc
   src/proxy/proxy.mpc
+
+  // Users should not try to use the automake or gnuace project types
+  exclude(automake, gnuace) {
+    src
+  }
+
+  exclude {
+    ACE_wrappers
+  }
 }

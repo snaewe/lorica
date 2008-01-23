@@ -1,0 +1,6 @@
+brutus-keyring (!BRUTUS_KEYRINGD_VERSION!-0ubuntu1) feisty; urgency=low
+
+  * Initial release
+
+ -- Jules Colding <colding@omesc.com>  Tue, 26 Jun 2007 12:03:00 +0200
+
