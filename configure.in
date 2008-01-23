@@ -245,19 +245,17 @@ dnl Lorica install directories
 LORICA_idl_install_subdir="idl/lorica"
 AC_SUBST(LORICA_idl_install_subdir)
 
-ACETAO_LIB_SUBDIR="ACETAO-$LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE"
-AC_SUBST(ACETAO_LIB_SUBDIR)
-
-LORICA_var_dir="/var/lorica"
-
 dnl Lorica top-level source directory
 LORICA_top_dir="`pwd`"
 AC_SUBST(LORICA_top_dir)
 
 dnl Includes
-ACETAO_local_includedir="$LORICA_top_dir/$ACE_WRAPPERS_DIR"
+if test "x$ACE_ROOT" != "x"; then
+	ACETAO_local_includedir="$ACE_ROOT"
+else
+	ACETAO_local_includedir="$LORICA_top_dir/$ACE_WRAPPERS_DIR"
+fi
 AC_SUBST(ACETAO_local_includedir)
-
 ACETAO_INCLUDES="-I$ACETAO_local_includedir -I$ACETAO_local_includedir/TAO -I$ACETAO_local_includedir/TAO/orbsvcs"
 AC_SUBST(ACETAO_INCLUDES)
 
