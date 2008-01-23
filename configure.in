@@ -100,7 +100,7 @@ if test "x$enable_static_bins" = "xyes"; then
 else
 	msg_static_bins=no
 fi
-AM_CONDITIONAL([LORICA_STATIC], test x$enable_static_bins = xyes)
+AM_CONDITIONAL(LORICA_STATIC, test x$enable_static_bins = xyes)
 
 AC_ARG_ENABLE(lorica-devel,
 	      [AS_HELP_STRING([--enable-lorica-devel[[[[=no/yes]]]]], [Install development files [default=no]])],
@@ -124,20 +124,29 @@ if test "x$enable_lorica_debug" = "xyes"; then
 else
 	msg_lorica_debug=no
 fi
-AM_CONDITIONAL([LORICA_DEBUG], test x$enable_lorica_debug = xyes)
+AM_CONDITIONAL(LORICA_DEBUG, test x$enable_lorica_debug = xyes)
 
 AC_ARG_ENABLE(lorica-dist,
 	      [AS_HELP_STRING([--enable-lorica-dist[[[[=no/yes]]]]], [Is this a "make dist-<PACKAGE MANAGER>" attempt? [default=no]])],
 	      [],
 	      ,enable_lorica_dist=no)
 
-AC_ARG_WITH([acetao-includes],
-	    [AC_HELP_STRING([--with-acetao-includes=PATH], [Location of ACE and TAO headers [default="/usr/include"]])],
-            [with_acetao_includes=$withval],[with_acetao_includes="/usr/include"])
+dnl ACE_ROOT always overrides these settings
+AM_CONDITIONAL(HAVE_ACE_ROOT, false)
+if test "x$ACE_ROOT" != "x"; then
+   AM_CONDITIONAL(HAVE_ACE_ROOT, true)
+   with_acetao_includes="$ACE_ROOT"
+   with_acetao_libs="$ACE_ROOT"/lib
+   PATH="$ACE_ROOT/bin:$PATH"
+else
+   AC_ARG_WITH([acetao-includes],
+               [AC_HELP_STRING([--with-acetao-includes=PATH], [Location of ACE and TAO headers [default="/usr/include"]])],
+               [with_acetao_includes=$withval],[with_acetao_includes="/usr/include"])
 
-AC_ARG_WITH([acetao-libs],
-	    [AC_HELP_STRING([--with-acetao-libs=PATH], [Location of ACE and TAO libraries [default="/usr/lib"]])],
-            [with_acetao_libs=$withval],[with_acetao_libs=""])
+   AC_ARG_WITH([acetao-libs],
+               [AC_HELP_STRING([--with-acetao-libs=PATH], [Location of ACE and TAO libraries [default="/usr/lib"]])],
+               [with_acetao_libs=$withval],[with_acetao_libs=""])
+fi
 
 dnl
 dnl Which Linux distribution or UNIX platform?
@@ -251,12 +260,12 @@ AC_SUBST(LORICA_top_dir)
 
 dnl Includes
 if test "x$ACE_ROOT" != "x"; then
-	ACETAO_local_includedir="$ACE_ROOT"
+	ACETAO_ROOT="$ACE_ROOT"
 else
-	ACETAO_local_includedir="$LORICA_top_dir/$ACE_WRAPPERS_DIR"
+	ACETAO_ROOT="$LORICA_top_dir/$ACE_WRAPPERS_DIR"
 fi
-AC_SUBST(ACETAO_local_includedir)
-ACETAO_INCLUDES="-I$ACETAO_local_includedir -I$ACETAO_local_includedir/TAO -I$ACETAO_local_includedir/TAO/orbsvcs"
+AC_SUBST(ACETAO_ROOT)
+ACETAO_INCLUDES="-I$ACETAO_ROOT -I$ACETAO_ROOT/TAO -I$ACETAO_ROOT/TAO/orbsvcs"
 AC_SUBST(ACETAO_INCLUDES)
 
 dnl DEFS
@@ -288,7 +297,7 @@ fi
 if test "$lorica_target" = "OpenSUSE_10_3"; then
 	LORICA_CXXFLAGS="$LORICA_CXXFLAGS $RPM_OPT_FLAGS"
 fi
-if test "x$with_acetao_includes" != "x"; then
+if test "x$with_acetao_includes" != "x/usr/include"; then
    	LORICA_CXXFLAGS="$LORICA_CXXFLAGS -I$with_acetao_includes"
 fi
 AC_SUBST(LORICA_CXXFLAGS)
@@ -312,47 +321,55 @@ dnl Checks for ACE and TAO
 dnl
 AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, false)
 
-AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no)
-if test "x$HAVE_TAO_IDL" = "xno"; then
-   AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)	
-   AC_MSG_WARN([[You need the TAO IDL compiler program to build Lorica - Don't worry I'll build it myself]])
+if test "x$enable_tao_build" = "xno"; then
+   AC_MSG_NOTICE([[Checking for ACE and TAO...]])
 fi
 
-dnl ACE and TAO libraries
-AC_CHECK_LIB([ACE], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([ACE_SSL], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_AnyTypeCode], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_CodecFactory], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_DynamicAny], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_DynamicInterface], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_EndpointPolicy], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_IFR_Client], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_IFRService], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_IORTable], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_Messaging], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_PI], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_PI_Server], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_PortableServer], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_Security], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_SSLIOP], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_TypeCodeFactory], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_Valuetype], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-AC_CHECK_LIB([TAO_Svc_Utils], [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
+dnl State all used ACE and TAO headers
+ACE_HEADERS="ace/ACE.h ace/Auto_Ptr.h ace/Dynamic_Service.h ace/Get_Opt.h ace/INET_Addr.h ace/Log_Msg.h ace/Min_Max.h ace/Mutex.h ace/OS_NS_errno.h ace/OS_NS_stdio.h ace/OS_NS_stdlib.h ace/OS_NS_string.h ace/OS_NS_strings.h ace/OS_NS_unistd.h ace/Service_Config.h ace/Service_Gestalt.h ace/Signal.h ace/SString.h ace/streams.h ace/Task.h ace/Thread.h ace/Time_Value.h TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h TAO/orbsvcs/orbsvcs/IFRService/Options.h TAO/orbsvcs/orbsvcs/IOR_Multicast.h TAO/orbsvcs/orbsvcs/SecurityC.h TAO/orbsvcs/orbsvcs/SSLIOPC.h TAO/tao/AnyTypeCode/Any_Impl.h TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h TAO/tao/AnyTypeCode/NVList.h TAO/tao/corbafwd.h TAO/tao/CORBA_String.h TAO/tao/debug.h TAO/tao/DynamicAny/DynamicAnyC.h TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h TAO/tao/DynamicInterface/Request.h TAO/tao/DynamicInterface/Server_Request.h TAO/tao/EndpointPolicy/EndpointPolicy.h TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h TAO/tao/Exception.h TAO/tao/IFR_Client/IFR_BasicC.h TAO/tao/IORTable/IORTable.h TAO/tao/Messaging/AMH_Response_Handler.h TAO/tao/MProfile.h TAO/tao/Object.h TAO/tao/OctetSeqC.h TAO/tao/ORB_Constants.h TAO/tao/ORB_Core.h TAO/tao/ORBInitializer_Registry.h TAO/tao/PI/PI.h TAO/tao/PortableServer/POAManagerFactory.h TAO/tao/PortableServer/PortableServer.h TAO/tao/PortableServer/Servant_Base.h TAO/tao/Profile.h TAO/tao/Stub.h TAO/tao/SystemException.h TAO/tao/Tagged_Components.h TAO/tao/TAO_Server_Request.h TAO/tao/Thread_Lane_Resources.h"
 
-dnl ACE and TAO headers - but-ugly but needed
-ACE_HEADERS="ace/ACE.h ace/Auto_Ptr.h ace/Dynamic_Service.h ace/Get_Opt.h ace/INET_Addr.h ace/Log_Msg.h ace/Min_Max.h ace/Mutex.h ace/OS_NS_errno.h ace/OS_NS_stdio.h ace/OS_NS_stdlib.h ace/OS_NS_string.h ace/OS_NS_strings.h ace/OS_NS_unistd.h ace/Service_Config.h ace/Service_Gestalt.h ace/Signal.h ace/SString.h ace/streams.h ace/Task.h ace/Thread.h ace/Time_Value.h TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h TAO/orbsvcs/orbsvcs/IFRService/Options.h TAO/orbsvcs/orbsvcs/IOR_Multicast.h TAO/orbsvcs/orbsvcs/SecurityC.h TAO/orbsvcs/SSLIOPC.h TAO/tao/AnyTypeCode/Any_Impl.h TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h TAO/tao/AnyTypeCode/NVList.h TAO/tao/corbafwd.h TAO/tao/CORBA_String.h TAO/tao/debug.h TAO/tao/DynamicAny/DynamicAnyC.h TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h TAO/tao/DynamicInterface/Request.h TAO/tao/DynamicInterface/Server_Request.h TAO/tao/EndpointPolicy/EndpointPolicy.h TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h TAO/tao/Exception.h TAO/tao/IFR_Client/IFR_BasicC.h TAO/tao/IORTable/IORTable.h TAO/tao/Messaging/AMH_Response_Handler.h TAO/tao/MProfile.h TAO/tao/Object.h TAO/tao/OctetSeqC.h TAO/tao/ORB_Constants.h TAO/tao/ORB_Core.h TAO/tao/ORBInitializer_Registry.h TAO/tao/PI/PI.h TAO/tao/PortableServer/POAManagerFactory.h TAO/tao/PortableServer/PortableServer.h TAO/tao/PortableServer/Servant_Base.h TAO/tao/Profile.h TAO/tao/Stub.h TAO/tao/SystemException.h TAO/tao/Tagged_Components.h TAO/tao/TAO_Server_Request.h TAO/tao/Thread_Lane_Resources.h"
-for file in $ACE_HEADERS
-do
-   AC_CHECK_FILE($with_acetao_includes/$file,
-                 [],
-                 [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
-done
+dnl The order is vitally important
+ACE_LIBS="ACE ACE_SSL TAO TAO_AnyTypeCode TAO_CodecFactory TAO_Valuetype TAO_DynamicAny TAO_PI TAO_PortableServer TAO_Messaging TAO_DynamicInterface TAO_EndpointPolicy TAO_IFR_Client TAO_IORTable TAO_Svc_Utils TAO_TypeCodeFactory TAO_IFRService TAO_PI_Server TAO_Security TAO_SSLIOP "
 
-dnl Here we should fail if a rebuild really is needed
-if test "x$enable_tao_build" = "xno"; then
-   AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, false)
-   AC_MSG_WARN([[Local build of ACE and TAO disabled]])
+if test "x$enable_tao_build" = "xyes"; then
+
+   dnl We are opting to (re-)build if needed, so ACE_ROOT must exist somehwere
+   AM_CONDITIONAL(HAVE_ACE_ROOT, true)
+
+   AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $PATH)
+   if test "x$HAVE_TAO_IDL" = "xno"; then
+      AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)	
+      AC_MSG_WARN([[You need the TAO IDL compiler to build Lorica - Don't worry I'll build it myself]])
+   fi
+
+   dnl ACE and TAO libraries
+   for libfile in $ACE_LIBS
+   do
+	AC_CHECK_LIB($libfile, [main], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
+   done
+
+   dnl ACE and TAO headers
+   for headerfile in $ACE_HEADERS
+   do
+	AC_CHECK_FILE($with_acetao_includes/$headerfile, [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
+   done
+else
+   AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $PATH)
+   if test "x$HAVE_TAO_IDL" = "xno"; then
+      AC_MSG_ERROR([[You need the TAO IDL compiler to build Lorica - consider enabling tao-build]])
+   fi
+
+   dnl ACE and TAO libraries
+   for libfile in $ACE_LIBS
+   do
+	AC_CHECK_LIB($libfile, [main], [], [AC_MSG_ERROR([[You really need this library - consider enabling tao-build]])])
+   done
+
+   dnl ACE and TAO headers
+   for headerfile in $ACE_HEADERS
+   do
+	AC_CHECK_FILE($with_acetao_includes/$headerfile, [], [AC_MSG_ERROR([[You need this header to build Lorica - consider enabling tao-build]])])
+   done
 fi
 
 dnl

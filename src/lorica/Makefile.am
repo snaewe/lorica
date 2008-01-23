@@ -22,9 +22,9 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 export LORICA_ROOT = $(LORICA_top_dir)
-export ACE_ROOT = $(LORICA_ROOT)/$(ACE_WRAPPERS_DIR)
+export ACE_ROOT = $(ACETAO_ROOT)
 export TAO_ROOT = $(ACE_ROOT)/TAO
 export PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
 
@@ -34,15 +34,12 @@ else
 export LD_LIBRARY_PATH = $(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
-endif # LORICA_MUST_BUILD_ACETAO
-
-if LORICA_MUST_BUILD_ACETAO
 TAO_IDL = $(ACE_ROOT)/TAO/TAO_IDL/tao_idl
 GPERF = $(ACE_ROOT)/apps/gperf/src/gperf
 else
 TAO_IDL = tao_idl
 GPERF = gperf
-endif
+endif # HAVE_ACE_ROOT
 
 TAO_IDLFLAGS = -Sa -St -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=Lorica_Client_Export -Wb,export_include=Lorica_Client_Export.h -I$(TAO_ROOT) -g $(GPERF)
 
@@ -92,7 +89,7 @@ endif
 
 noinst_LTLIBRARIES = liblorica_Client.la
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 liblorica_Client_la_CPPFLAGS = \
 	$(LORICA_DEFS)            \
 	$(ACETAO_INCLUDES)        \
@@ -129,7 +126,7 @@ noinst_HEADERS = \
 
 noinst_LTLIBRARIES += liblorica_EvaluatorBase.la
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 liblorica_EvaluatorBase_la_CPPFLAGS = \
 	$(LORICA_DEFS)                   \
 	$(ACETAO_INCLUDES)               \
@@ -174,7 +171,7 @@ noinst_HEADERS += \
 
 noinst_LTLIBRARIES += liblorica_GenericEvaluator.la
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 liblorica_GenericEvaluator_la_CPPFLAGS = \
 	$(LORICA_DEFS)                      \
 	$(ACETAO_INCLUDES)                  \

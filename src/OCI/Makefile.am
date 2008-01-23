@@ -22,9 +22,9 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 LORICA_ROOT = $(LORICA_top_dir)
-ACE_ROOT = $(LORICA_ROOT)/$(ACE_WRAPPERS_DIR)
+ACE_ROOT = $(ACETAO_ROOT)
 TAO_ROOT = $(ACE_ROOT)/TAO
 PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
 
@@ -34,7 +34,7 @@ else
 export LD_LIBRARY_PATH = $(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
-endif # LORICA_MUST_BUILD_ACETAO
+endif # HAVE_ACE_ROOT
 
 AM_CXXFLAGS = $(LORICA_CXXFLAGS)
 
@@ -45,7 +45,7 @@ $(BUILT_SOURCES):
 
 noinst_LTLIBRARIES = libOCI_AsynchProxyTools.la
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 libOCI_AsynchProxyTools_la_CPPFLAGS =    \
 	$(LORICA_DEFS)                   \
 	$(ACETAO_INCLUDES)               \

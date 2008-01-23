@@ -22,9 +22,9 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 LORICA_ROOT = $(LORICA_top_dir)
-ACE_ROOT = $(LORICA_ROOT)/$(ACE_WRAPPERS_DIR)
+ACE_ROOT = $(ACETAO_ROOT)
 TAO_ROOT = $(ACE_ROOT)/TAO
 PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
 
@@ -34,13 +34,13 @@ else
 export LD_LIBRARY_PATH = $(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
-endif # LORICA_MUST_BUILD_ACETAO
+endif # HAVE_ACE_ROOT
 
 AM_CXXFLAGS = $(LORICA_CXXFLAGS)
 
 bin_PROGRAMS = lorica
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 lorica_CPPFLAGS =    \
 	$(LORICA_DEFS)     \
 	$(ACETAO_INCLUDES) \
@@ -66,13 +66,11 @@ else
     STATIC_FLAGS =
 endif
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 lorica_LDFLAGS = $(STATIC_FLAGS) \
-	-L$(LORICA_top_dir)/lib                     \
-	-L$(LORICA_top_dir)/$(ACE_WRAPPERS_DIR)/lib
+	-L$(ACETAO_ROOT)/lib
 else
-lorica_LDFLAGS = $(STATIC_FLAGS) \
-	-L$(LORICA_top_dir)/lib
+lorica_LDFLAGS = $(STATIC_FLAGS)
 endif
 
 lorica_LDADD = \
@@ -96,7 +94,7 @@ lorica_LDADD = \
 	-lTAO                                                   \
 	-lACE
 
-if LORICA_MUST_BUILD_ACETAO
+if HAVE_ACE_ROOT
 if LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.dylib                            \
@@ -159,7 +157,7 @@ TAO_EXECUTABLE_FILES = \
 	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr
 TAO_EXECUTABLEdir = $(bindir)
 TAO_EXECUTABLE_DATA = $(TAO_EXECUTABLE_FILES)
-endif # LORICA_MUST_BUILD_ACETAO
+endif # HAVE_ACE_ROOT
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in
