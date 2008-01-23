@@ -135,6 +135,10 @@ AC_ARG_WITH([acetao-includes],
 	    [AC_HELP_STRING([--with-acetao-includes=PATH], [Location of ACE and TAO headers [default="/usr/include"]])],
             [with_acetao_includes=$withval],[with_acetao_includes="/usr/include"])
 
+AC_ARG_WITH([acetao-libs],
+	    [AC_HELP_STRING([--with-acetao-libs=PATH], [Location of ACE and TAO libraries [default="/usr/lib"]])],
+            [with_acetao_libs=$withval],[with_acetao_libs=""])
+
 dnl
 dnl Which Linux distribution or UNIX platform?
 dnl
@@ -293,6 +297,9 @@ AC_SUBST(LORICA_CXXFLAGS)
 
 dnl LDFLAGS
 LDFLAGS=""
+if test "x$with_acetao_libs" != "x"; then
+   LDFLAGS="-L$with_acetao_libs $LDFLAGS"
+fi
 if test "x$lorica_target" = "xDarwin"; then
 	LDFLAGS="-flat_namespace $LDFLAGS"
 fi
