@@ -20,9 +20,9 @@
  */
 
 #include "ace/Dynamic_Service.h"
-#include "lorica/MapperRegistry.h"
+#include "MapperRegistry.h"
 
-#include "lorica/EvaluatorLoader.h"
+#include "EvaluatorLoader.h"
 
 Lorica_EvaluatorLoader::Lorica_EvaluatorLoader ()
 {

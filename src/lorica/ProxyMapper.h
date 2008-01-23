@@ -29,10 +29,10 @@
 #include "ace/Mutex.h"
 
 #include <string>
-#include "lorica/Lorica_EvaluatorBase_Export.h"
-#include "lorica/ReferenceMapValue.h"
-#include "lorica/RMVByMapped.h"
-//#include "lorica/RMVByNative.h"
+#include "Lorica_EvaluatorBase_Export.h"
+#include "ReferenceMapValue.h"
+#include "RMVByMapped.h"
+//#include "RMVByNative.h"
 
 class Lorica_MapperRegistry;
 

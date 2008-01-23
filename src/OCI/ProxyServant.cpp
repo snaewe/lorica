@@ -56,7 +56,7 @@
  *  3. mailto:support@ociweb.com
  */
 
-#include "OCI/ProxyServant.h"
+#include "ProxyServant.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
@@ -153,9 +153,10 @@ OCI_APT::ProxyServant::invoke(CORBA::ServerRequest_ptr request,
 }
 
 void
-OCI_APT::ProxyServant::invoke_get_interface (CORBA::ServerRequest_ptr request)
+OCI_APT::ProxyServant::invoke_get_interface(CORBA::ServerRequest_ptr request)
 	throw (CORBA::SystemException)
 {
+	request = request; // kill compiler warning
 #if 0
 	CORBA::NVList_ptr args;
 	this->orb_->create_list (0, args );
@@ -171,9 +172,10 @@ OCI_APT::ProxyServant::invoke_get_interface (CORBA::ServerRequest_ptr request)
 }
 
 void
-OCI_APT::ProxyServant::invoke_primary_interface (CORBA::ServerRequest_ptr request)
+OCI_APT::ProxyServant::invoke_primary_interface(CORBA::ServerRequest_ptr request)
 	throw (CORBA::SystemException)
 {
+	request = request; // kill compiler warning
 #if 0
 	CORBA::NVList_ptr args;
 	this->orb_->create_list (0, args);

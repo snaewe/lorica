@@ -22,11 +22,11 @@
 #ifndef NULL_PROXY_MAPPER_H
 #define NULL_PROXY_MAPPER_H
 
-#include "lorica/ProxyMapper.h"
+#include "ProxyMapper.h"
 #include <string>
 #include <vector>
 
-#include "lorica/Lorica_EvaluatorBase_Export.h"
+#include "Lorica_EvaluatorBase_Export.h"
 
 namespace Lorica
 {

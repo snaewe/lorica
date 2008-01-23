@@ -24,14 +24,14 @@
 
 #include "tao/PortableServer/PS_CurrentC.h"
 #include "OCI/ProxyServant.h"
-#include "lorica/Lorica_EvaluatorBase_Export.h"
+#include "Lorica_EvaluatorBase_Export.h"
 #include <string>
 
 namespace Lorica
 {
 	class ProxyMapper;
 
-class Lorica_EvaluatorBase_Export ProxyServant : public OCI_APT::ProxyServant
+	class Lorica_EvaluatorBase_Export ProxyServant : public OCI_APT::ProxyServant
 	{
 	public:
 		ProxyServant (ProxyMapper &pm);

@@ -24,8 +24,8 @@
 
 #include "ace/Mutex.h"
 
-#include "lorica/Lorica_EvaluatorBase_Export.h"
-#include "lorica/ReferenceMapValue.h"
+#include "Lorica_EvaluatorBase_Export.h"
+#include "ReferenceMapValue.h"
 
 namespace Lorica
 {

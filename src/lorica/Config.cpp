@@ -20,8 +20,8 @@
  */
 
 #include "Config.h"
-#include "lorica/debug.h"
-#include "ace/OS_NS_stdlib.h"
+#include "debug.h"
+#include <ace/OS_NS_stdlib.h>
 
 #include <iostream>
 

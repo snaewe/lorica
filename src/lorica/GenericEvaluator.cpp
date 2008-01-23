@@ -21,10 +21,10 @@
 
 #include "tao/SystemException.h"
 #include "tao/Exception.h"
-#include "lorica/ProxyMapper.h"
-#include "lorica/ProxyServant.h"
-#include "lorica/GenericEvaluator.h"
-#include "lorica/debug.h"
+#include "ProxyMapper.h"
+#include "ProxyServant.h"
+#include "GenericEvaluator.h"
+#include "debug.h"
 
 #include "tao/DynamicAny/DynamicAnyC.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

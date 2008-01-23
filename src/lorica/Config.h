@@ -26,7 +26,7 @@
 #include <vector>
 #include "ace/ARGV.h"
 
-#include "lorica/Lorica_EvaluatorBase_Export.h"
+#include "Lorica_EvaluatorBase_Export.h"
 
 namespace Lorica
 {

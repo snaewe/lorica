@@ -109,7 +109,7 @@ Lorica::Service_Loader::print_usage_and_die (void)
 		    ACE_TEXT(" -d: Debug; run as a regular application\n")
 		    ACE_TEXT(" -f: <file> Configuration file. Required, default is \"lorica.conf\"\n")
 		    ACE_TEXT(" -c: <level> Turn on CORBA debugging, default 0\n")
-		    ACE_TEXT(" -l: <level> Turn on Lorica debugging, default 0"),
+		    ACE_TEXT(" -l: <level> Turn on Lorica debugging, default 0\n"),
 		    program_name.c_str(),
 		    0));
 #else
@@ -119,7 +119,7 @@ Lorica::Service_Loader::print_usage_and_die (void)
 		    ACE_TEXT(" -d: Debug; run as a regular application\n")
 		    ACE_TEXT(" -f: <required; default:lorica.conf> Configuration file.\n")
 		    ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
-		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging"),
+		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging\n"),
 		    program_name.c_str(),
 		    0));
 #endif /* ACE_WIN32 */

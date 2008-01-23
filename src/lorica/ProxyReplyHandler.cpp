@@ -19,10 +19,10 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "lorica/ProxyMapper.h"
-#include "lorica/EvaluatorBase.h"
-#include "lorica/ProxyReplyHandler.h"
-#include "lorica/debug.h"
+#include "ProxyMapper.h"
+#include "EvaluatorBase.h"
+#include "ProxyReplyHandler.h"
+#include "debug.h"
 
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"

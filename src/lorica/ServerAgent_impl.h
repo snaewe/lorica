@@ -22,7 +22,7 @@
 #ifndef SERVER_AGENT_IMPL_H
 #define SERVER_AGENT_IMPL_H
 
-#include "lorica/ServerAgentS.h"
+#include "ServerAgentS.h"
 
 class ServerAgent_impl : public POA_Lorica::ServerAgent
 {

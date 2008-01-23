@@ -20,7 +20,7 @@
  */
 
 #include "ace/Mutex.h"
-#include "lorica/RMVByNative.h"
+#include "RMVByNative.h"
 
 #include "tao/Stub.h"
 #include "tao/MProfile.h"

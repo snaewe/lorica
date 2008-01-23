@@ -19,8 +19,8 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "lorica/ProxyMapper.h"
-#include "lorica/EvaluatorBase.h"
+#include "ProxyMapper.h"
+#include "EvaluatorBase.h"
 
 Lorica::EvaluatorBase::EvaluatorBase (ProxyMapper &pm)
 	: mapper_(pm),

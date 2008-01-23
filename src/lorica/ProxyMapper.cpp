@@ -19,14 +19,14 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "lorica/ProxyMapper.h"
-#include "lorica/MapperRegistry.h"
-#include "lorica/ReferenceMapValue.h"
-#include "lorica/EvaluatorBase.h"
-#include "lorica/ProxyServant.h"
-#include "lorica/Config.h"
-#include "lorica/FileConfig.h"
-#include "lorica/debug.h"
+#include "ProxyMapper.h"
+#include "MapperRegistry.h"
+#include "ReferenceMapValue.h"
+#include "EvaluatorBase.h"
+#include "ProxyServant.h"
+#include "Config.h"
+#include "FileConfig.h"
+#include "debug.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"

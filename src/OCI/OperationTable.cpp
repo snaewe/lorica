@@ -56,7 +56,7 @@
  *  3. mailto:support@ociweb.com
  */
 
-#include "OCI/OperationTable.h"
+#include "OperationTable.h"
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/corbafwd.h"
 #include "tao/CORBA_String.h"

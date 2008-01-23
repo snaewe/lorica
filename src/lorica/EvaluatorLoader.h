@@ -25,7 +25,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "tao/PortableServer/POAManagerC.h"
-#include "lorica/Lorica_EvaluatorBase_Export.h"
+#include "Lorica_EvaluatorBase_Export.h"
 
 class Lorica_MapperRegistry;
 

@@ -22,8 +22,8 @@
 #ifndef GENERIC_LOADER_H
 #define GENERIC_LOADER_H
 
-#include "lorica/EvaluatorLoader.h"
-#include "lorica/Lorica_GenericEvaluator_Export.h"
+#include "EvaluatorLoader.h"
+#include "Lorica_GenericEvaluator_Export.h"
 
 class Lorica_GenericEvaluator_Export  Lorica_GenericLoader :
 public Lorica_EvaluatorLoader

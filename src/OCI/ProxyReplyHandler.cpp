@@ -56,7 +56,7 @@
  *  3. mailto:support@ociweb.com
  */
 
-#include "OCI/ProxyReplyHandler.h"
+#include "ProxyReplyHandler.h"
 
 OCI_APT::ProxyReplyHandler::ProxyReplyHandler ()
 {

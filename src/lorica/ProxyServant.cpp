@@ -22,11 +22,11 @@
 #include "tao/DynamicInterface/Request.h"
 #include "tao/TAO_Server_Request.h"
 
-#include "lorica/ProxyMapper.h"
-#include "lorica/EvaluatorBase.h"
-#include "lorica/ProxyReplyHandler.h"
-#include "lorica/ProxyServant.h"
-#include "lorica/debug.h"
+#include "ProxyMapper.h"
+#include "EvaluatorBase.h"
+#include "ProxyReplyHandler.h"
+#include "ProxyServant.h"
+#include "debug.h"
 
 Lorica::ProxyServant::ProxyServant (ProxyMapper &pm)
   : mapper_(pm)

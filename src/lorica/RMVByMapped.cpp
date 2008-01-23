@@ -20,7 +20,7 @@
  */
 
 #include "ace/Mutex.h"
-#include "lorica/RMVByMapped.h"
+#include "RMVByMapped.h"
 
 Lorica::RMVByMapped::RMVByMapped (ACE_UINT32  page_size)
 	: high_index_(0),

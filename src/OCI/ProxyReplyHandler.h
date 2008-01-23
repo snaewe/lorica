@@ -59,8 +59,7 @@
 #ifndef TAO_PROXY_REPLY_HANDLER_H
 #define TAO_PROXY_REPLY_HANDLER_H
 
-#include "OCI/OCI_AsynchProxyTools_Export.h"
-
+#include "OCI_AsynchProxyTools_Export.h"
 
 #include "tao/DynamicInterface/DII_Reply_Handler.h"
 #include "tao/DynamicInterface/Server_Request.h"

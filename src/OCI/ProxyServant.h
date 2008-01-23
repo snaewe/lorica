@@ -60,7 +60,7 @@
 #define TAO_PROXY_SERVANT
 
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
-#include "OCI/OCI_AsynchProxyTools_Export.h"
+#include "OCI_AsynchProxyTools_Export.h"
 #include "tao/SystemException.h"
 
 class TAO_AMH_DSI_Response_Handler;
@@ -88,19 +88,15 @@ namespace OCI_APT
 			     TAO_AMH_DSI_Response_Handler_ptr rh)
 			throw (CORBA::SystemException);
 
-		void invoke_get_interface (CORBA::ServerRequest_ptr request)
+		void invoke_get_interface(CORBA::ServerRequest_ptr request)
 			throw (CORBA::SystemException);
 
-		void invoke_primary_interface (CORBA::ServerRequest_ptr request)
+		void invoke_primary_interface(CORBA::ServerRequest_ptr request)
 			throw (CORBA::SystemException);
 
-		virtual void invoke_i (CORBA::ServerRequest_ptr request,
-				       TAO_AMH_DSI_Response_Handler_ptr response_handler
-			) = 0;
-
-
+		virtual void invoke_i(CORBA::ServerRequest_ptr request,
+				      TAO_AMH_DSI_Response_Handler_ptr response_handler) = 0;
 	};
-
 }
 
 #endif // TAO_PROXY_SERVANT

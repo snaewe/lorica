@@ -19,9 +19,9 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "lorica/NullProxyMapper.h"
-#include "lorica/EvaluatorBase.h"
-#include "lorica/ProxyServant.h"
+#include "NullProxyMapper.h"
+#include "EvaluatorBase.h"
+#include "ProxyServant.h"
 
 Lorica::NullProxyMapper::NullProxyMapper (Lorica_MapperRegistry &mr)
 	:Lorica::ProxyMapper(mr,"_lorica_null"),

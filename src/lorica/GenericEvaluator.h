@@ -22,12 +22,12 @@
 #ifndef GENERIC_EVALUATOR_H
 #define GENERIC_EVALUATOR_H
 
-#include "lorica/EvaluatorBase.h"
+#include "EvaluatorBase.h"
 #include "OCI/OperationTable.h"
 #include "tao/DynamicAny/DynAnyFactory.h"
 #include "tao/ORB.h"
 
-#include "lorica/Lorica_GenericEvaluator_Export.h"
+#include "Lorica_GenericEvaluator_Export.h"
 
 namespace Lorica
 {

@@ -21,9 +21,9 @@
 
 #include "ace/Dynamic_Service.h"
 
-#include "lorica/GenericLoader.h"
-#include "lorica/GenericMapper.h"
-#include "lorica/MapperRegistry.h"
+#include "GenericLoader.h"
+#include "GenericMapper.h"
+#include "MapperRegistry.h"
 
 Lorica_GenericLoader::Lorica_GenericLoader ()
 {

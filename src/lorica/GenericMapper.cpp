@@ -19,10 +19,10 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "lorica/GenericMapper.h"
-#include "lorica/GenericEvaluator.h"
-#include "lorica/EvaluatorBase.h"
-#include "lorica/ProxyServant.h"
+#include "GenericMapper.h"
+#include "GenericEvaluator.h"
+#include "EvaluatorBase.h"
+#include "ProxyServant.h"
 
 #include "tao/ORB_Core.h"
 

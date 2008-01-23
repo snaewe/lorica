@@ -24,10 +24,10 @@
 
 #include "Config.h"
 
-#include "ace/Singleton.h"
-#include "ace/OS_NS_stdlib.h"
+#include <ace/Singleton.h>
+#include <ace/OS_NS_stdlib.h>
 
-#include "lorica/Lorica_EvaluatorBase_Export.h"
+#include "Lorica_EvaluatorBase_Export.h"
 
 #include <map>
 #include <iostream>
