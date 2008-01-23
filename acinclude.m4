@@ -58,7 +58,21 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
 	      	[],
 	      	enable_lorica_target=UNKNOWN)
 
-  dnl Determine system type
+  dnl Determine OS
+  system_name=`uname -s`
+  case "x$system_name" in
+        xDarwin)
+		AM_CONDITIONAL(LORICA_DARWIN, true)
+		enable_lorica_target=darwin
+       		;;
+	xLinux)
+		AM_CONDITIONAL(LORICA_LINUX, true)
+		;;
+ 	*)
+		;;
+  esac	
+
+  dnl Determine system sub-type
   case "x$enable_lorica_target" in
 	xfedora)
 		lorica_target=Fedora
@@ -109,21 +123,12 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
 						lorica_target="Ubuntu"
 						;;
 				esac
-			else
-				system_name=`uname -s`
-				case "x$system_name" in
-				    xDarwin)
-					lorica_target=Darwin
-					;;
-				    *)
-				    	;;
-				esac
 			fi
 		fi
 		;;
   esac
 
-  dnl Determine system sub-type
+  dnl Determine system sub-type variant
   case "x$lorica_target" in
         xDarwin)
 		AC_DEFINE([LORICA_DARWIN], [1], [Define if this is a Darwin based distribution])
