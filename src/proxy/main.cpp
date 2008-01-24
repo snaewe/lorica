@@ -123,6 +123,8 @@ become_daemon(void)
 	 * to prep the daemon process for operation
 	 */
 
+	return EXIT_DAEMON;
+
 	// change the working directory
 	if ((chdir("/")) < 0)
 		return EXIT_ERROR;
