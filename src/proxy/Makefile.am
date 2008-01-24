@@ -31,7 +31,7 @@ PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH=$(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
 else
-export LD_LIBRARY_PATH = $(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
+export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
 endif # HAVE_ACE_ROOT
@@ -74,25 +74,26 @@ lorica_LDFLAGS = $(STATIC_FLAGS)
 endif
 
 lorica_LDADD = \
-	$(LORICA_top_dir)/src/lorica/liblorica_EvaluatorBase.la \
-	$(LORICA_top_dir)/src/lorica/liblorica_Client.la        \
-	$(LORICA_top_dir)/src/OCI/libOCI_AsynchProxyTools.la    \
-	-lTAO_IFR_Client                                        \
-	-lTAO_DynamicInterface                                  \
-	-lTAO_EndpointPolicy                                    \
-	-lTAO_Messaging                                         \
-	-lTAO_IORTable                                          \
-	-lTAO_SSLIOP                                            \
-	-lTAO_PI_Server                                         \
-	-lACE_SSL                                               \
-	-lTAO_Security                                          \
-	-lTAO_PI                                                \
-	-lTAO_CodecFactory                                      \
-	-lTAO_Valuetype                                         \
-	-lTAO_PortableServer                                    \
-	-lTAO_AnyTypeCode                                       \
-	-lTAO_Codeset                                           \
-	-lTAO                                                   \
+	$(LORICA_top_dir)/src/lorica/liblorica_EvaluatorBase.la    \
+	$(LORICA_top_dir)/src/lorica/liblorica_GenericEvaluator.la \
+	$(LORICA_top_dir)/src/lorica/liblorica_Client.la           \
+	$(LORICA_top_dir)/src/OCI/libOCI_AsynchProxyTools.la       \
+	-lTAO_IFR_Client                                           \
+	-lTAO_DynamicInterface                                     \
+	-lTAO_EndpointPolicy                                       \
+	-lTAO_Messaging                                            \
+	-lTAO_IORTable                                             \
+	-lTAO_SSLIOP                                               \
+	-lTAO_PI_Server                                            \
+	-lACE_SSL                                                  \
+	-lTAO_Security                                             \
+	-lTAO_PI                                                   \
+	-lTAO_CodecFactory                                         \
+	-lTAO_Valuetype                                            \
+	-lTAO_PortableServer                                       \
+	-lTAO_AnyTypeCode                                          \
+	-lTAO_Codeset                                              \
+	-lTAO                                                      \
 	-lACE
 
 if HAVE_ACE_ROOT

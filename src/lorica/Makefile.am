@@ -170,6 +170,7 @@ noinst_HEADERS += \
 	ReferenceMapValue.h
 
 noinst_LTLIBRARIES += liblorica_GenericEvaluator.la
+#lib_LTLIBRARIES = liblorica_GenericEvaluator.la
 
 if HAVE_ACE_ROOT
 liblorica_GenericEvaluator_la_CPPFLAGS = \

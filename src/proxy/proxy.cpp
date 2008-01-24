@@ -333,20 +333,20 @@ Lorica::Proxy::configure(Config& config)
 			mreg->create_default_null_mapper();
 		}
 
-		if (config.generic_evaluator())
-		{
+		// if (config.generic_evaluator())
+		// {
 
-			if (Lorica_debug_level > 0)
-				ACE_DEBUG ((LM_DEBUG,
-					    "(%P|%t) Lorica::Proxy::configure "
-					    "Loading generic evaluator\n"));
-			this->orb_->orb_core()->configuration()->process_directive
-				(ACE_TEXT_ALWAYS_CHAR
-				 (ACE_DYNAMIC_SERVICE_DIRECTIVE("Lorica_GenericLoader",
-								"lorica_GenericEvaluator",
-								"_make_Lorica_GenericLoader",
-								"")));
-		}
+		// 	if (Lorica_debug_level > 0)
+		// 		ACE_DEBUG ((LM_DEBUG,
+		// 			    "(%P|%t) Lorica::Proxy::configure "
+		// 			    "Loading generic evaluator\n"));
+		// 	this->orb_->orb_core()->configuration()->process_directive
+		// 		(ACE_TEXT_ALWAYS_CHAR
+		// 		 (ACE_DYNAMIC_SERVICE_DIRECTIVE("Lorica_GenericLoader",
+		// 						"lorica_GenericEvaluator",
+		// 						"_make_Lorica_GenericLoader",
+		// 						"")));
+		// }
 
 		// add generic or other mappers...
 		mreg->init_mappers(this->outside_pm_,
