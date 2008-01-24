@@ -23,8 +23,8 @@
 #define LORICA_PROXY_REPLY_HANDLER_H
 
 #include "OCI/ProxyReplyHandler.h"
-#include "tao/PortableServer/POAC.h"
-#include "tao/AnyTypeCode/NVList.h"
+#include <tao/PortableServer/POAC.h>
+#include <tao/AnyTypeCode/NVList.h>
 #include <string>
 
 namespace Lorica

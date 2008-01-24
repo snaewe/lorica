@@ -19,29 +19,33 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "ProxyMapper.h"
 #include "MapperRegistry.h"
 #include "ReferenceMapValue.h"
 #include "EvaluatorBase.h"
 #include "ProxyServant.h"
-#include "Config.h"
+#include "ConfigBase.h"
 #include "FileConfig.h"
 #include "debug.h"
 
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/Object.h"
-#include "tao/Stub.h"
-#include "tao/Profile.h"
-#include "tao/Tagged_Components.h"
+#include <tao/PortableServer/PortableServer.h>
+#include <tao/PortableServer/Servant_Base.h>
+#include <tao/Object.h>
+#include <tao/Stub.h>
+#include <tao/Profile.h>
+#include <tao/Tagged_Components.h>
 
-#include "orbsvcs/SSLIOPC.h"
+#include <orbsvcs/SSLIOPC.h>
 
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/Mutex.h"
-#include "ace/INET_Addr.h"
+#include <ace/OS_NS_unistd.h>
+#include <ace/OS_NS_string.h>
+#include <ace/OS_NS_stdio.h>
+#include <ace/Mutex.h>
+#include <ace/INET_Addr.h>
 
 Lorica::MappedObjectId
 Lorica::ProxyMapper::mapped_object_id_ =

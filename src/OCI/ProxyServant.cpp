@@ -56,14 +56,18 @@
  *  3. mailto:support@ociweb.com
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "ProxyServant.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/DynamicInterface/Server_Request.h"
-#include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
-#include "tao/Messaging/AMH_Response_Handler.h"
-#include "tao/ORB_Core.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Exception.h"
+#include <tao/TAO_Server_Request.h>
+#include <tao/DynamicInterface/Server_Request.h>
+#include <tao/DynamicInterface/AMH_DSI_Response_Handler.h>
+#include <tao/Messaging/AMH_Response_Handler.h>
+#include <tao/ORB_Core.h>
+#include <tao/Thread_Lane_Resources.h>
+#include <tao/Exception.h>
 
 OCI_APT::ProxyServant::ProxyServant ()
 {

@@ -22,7 +22,7 @@
 #include "Receiver_i.h"
 #include "Client_Task.h"
 #include "Server_Task.h"
-#include "ace/Get_Opt.h"
+#include <ace/Get_Opt.h>
 
 const char *ior = "file://mapped.ior";
 

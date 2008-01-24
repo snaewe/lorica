@@ -20,12 +20,12 @@
  */
 
 #include "test_i.h"
-#include "ace/Get_Opt.h"
-#include "ace/Task.h"
+#include <ace/Get_Opt.h>
+#include <ace/Task.h>
 
 #include "server_interceptor.h"
 #include "orb_initializer.h"
-#include "tao/ORBInitializer_Registry.h"
+#include <tao/ORBInitializer_Registry.h>
 
 #include "lorica/ReferenceMapperC.h"
 const char *ior_output_file = "server.ior";

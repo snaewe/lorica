@@ -29,12 +29,12 @@
 #ifndef PROXY_H
 #define PROXY_H
 
-#include "ace/Task.h"
+#include <ace/Task.h>
 
-#include "tao/ORB.h"
-#include "tao/PortableServer/POAC.h"
-#include "tao/IORTable/IORTable.h"
-#include "tao/PortableServer/POAManagerFactoryC.h"
+#include <tao/ORB.h>
+#include <tao/PortableServer/POAC.h>
+#include <tao/IORTable/IORTable.h>
+#include <tao/PortableServer/POAManagerFactoryC.h>
 #include <string>
 
 namespace Lorica
@@ -86,7 +86,8 @@ namespace Lorica
 		IORTable::Table_var iorTable_;
 		PortableServer::POA_var admin_poa_;
 
-		std::string pidfile_;
+		std::string pid_file_;
+		std::string ior_file_;
 		bool must_shutdown_;
 	};
 

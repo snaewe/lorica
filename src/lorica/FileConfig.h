@@ -22,7 +22,7 @@
 #ifndef _FILECONFIG_
 #define _FILECONFIG_
 
-#include "Config.h"
+#include "ConfigBase.h"
 
 #include <ace/Singleton.h>
 #include <ace/OS_NS_stdlib.h>

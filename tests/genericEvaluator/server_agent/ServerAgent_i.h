@@ -23,7 +23,7 @@
 #define SERVER_AGENT_I_H
 
 #include "lorica/ServerAgentS.h"
-#include "tao/PortableServer/Servant_Base.h"
+#include <tao/PortableServer/Servant_Base.h>
 #include "lorica/ReferenceMapperC.h"
 
 class ServerAgent_i : public POA_Lorica::ServerAgent

@@ -22,11 +22,11 @@
 #ifndef PROXY_MAPPER_H
 #define PROXY_MAPPER_H
 
-#include "tao/PortableServer/PS_CurrentC.h"
-#include "tao/PortableServer/POAC.h"
-#include "tao/PortableServer/POAManagerC.h"
-#include "ace/RB_Tree.h"
-#include "ace/Mutex.h"
+#include <tao/PortableServer/PS_CurrentC.h>
+#include <tao/PortableServer/POAC.h>
+#include <tao/PortableServer/POAManagerC.h>
+#include <ace/RB_Tree.h>
+#include <ace/Mutex.h>
 
 #include <string>
 #include "Lorica_EvaluatorBase_Export.h"

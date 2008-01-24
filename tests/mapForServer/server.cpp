@@ -20,10 +20,10 @@
  */
 
 #include "Hello.h"
-#include "ace/Service_Config.h"
-#include "ace/Get_Opt.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_stdlib.h"
+#include <ace/Service_Config.h>
+#include <ace/Get_Opt.h>
+#include <ace/OS_NS_stdio.h>
+#include <ace/OS_NS_stdlib.h>
 
 #include "lorica/ReferenceMapperC.h"
 

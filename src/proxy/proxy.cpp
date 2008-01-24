@@ -19,22 +19,26 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "proxy/ReferenceMapper_i.h"
 #include "proxy/proxy.h"
 #include "lorica/FileConfig.h"
 #include "lorica/MapperRegistry.h"
 #include "lorica/debug.h"
 
-#include "tao/EndpointPolicy/IIOPEndpointValue_i.h"
-#include "tao/EndpointPolicy/EndpointPolicy.h"
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/ORB_Core.h"
+#include <tao/EndpointPolicy/IIOPEndpointValue_i.h>
+#include <tao/EndpointPolicy/EndpointPolicy.h>
+#include <tao/PortableServer/Servant_Base.h>
+#include <tao/ORB_Core.h>
 
-#include "ace/Signal.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Service_Gestalt.h"
-#include "ace/Time_Value.h"
+#include <ace/Signal.h>
+#include <ace/OS_NS_stdio.h>
+#include <ace/OS_NS_unistd.h>
+#include <ace/Service_Gestalt.h>
+#include <ace/Time_Value.h>
 
 Lorica::Proxy* Lorica::Proxy::this_ = 0;
 
@@ -76,7 +80,8 @@ Lorica::Proxy::setup_shutdown_handler (void)
 }
 
 Lorica::Proxy::Proxy ()
-	: pidfile_ (),
+	: pid_file_ (),
+	  ior_file_ (),
 	  must_shutdown_ (false)
 {
 	// nothing else to do
@@ -121,17 +126,20 @@ Lorica::Proxy::configure(Config& config)
 {
 	try
 	{
-		/// This should be OK even if multiple copies of Proxy
-		/// get created as they all create the same ORB instance
+		// This should be OK even if multiple copies of Proxy
+		// get created as they all create the same ORB instance
 		// and therefore the single ORB instance will get shutdown.
 		Lorica::Proxy::this_ = this;
 
 		std::auto_ptr<ACE_ARGV> arguments (config.get_orb_options());
 
-		this->pidfile_ = config.get_value("pidfile");
-		if (this->pidfile_.length() == 0)
-			this->pidfile_ = "lorica.pid";
-
+		this->pid_file_ = config.get_value("PID_FILE");
+		if (this->pid_file_.length() == 0)
+#ifdef ACE_WIN32
+			this->pid_file_ = "lorica.pid";
+#else
+			this->pid_file_ = LORICA_PID_FILE;
+#endif
 		// Create proxy ORB.
 		int argc = arguments->argc();
 		if (Lorica_debug_level > 2)
@@ -264,7 +272,14 @@ Lorica::Proxy::configure(Config& config)
 		std::string ior = orb_->object_to_string (refMapper_obj.in ());
 		iorTable_->bind ("lorica_reference_mapper", ior.c_str());
 
-		FILE *output_file= ACE_OS::fopen ("lorica.ior", "w");
+		this->ior_file_ = config.get_value("IOR_FILE");
+		if (this->ior_file_.length() == 0)
+#ifdef ACE_WIN32
+			this->ior_file_ = "lorica.ior";
+#else
+			this->ior_file_ = LORICA_IOR_FILE;
+#endif
+		FILE *output_file= ACE_OS::fopen (this->ior_file_.c_str(), "w");
 		if (output_file == 0)
 			ACE_ERROR ((LM_ERROR,
 				    "(%P|%t) Lorica::Proxy::configure "
@@ -365,11 +380,11 @@ Lorica::Proxy::svc (void)
 	inside_pm_->activate ();
 
 	// Output the pid file indicating we are running
-	FILE *output_file= ACE_OS::fopen (this->pidfile_.c_str(), "w");
+	FILE *output_file= ACE_OS::fopen (this->pid_file_.c_str(), "w");
 	if (output_file == 0)
 		ACE_ERROR_RETURN ((LM_ERROR,
 				   "Cannot open output file for writing PID: %s\n",
-				   this->pidfile_.c_str()),
+				   this->pid_file_.c_str()),
 				  1);
 	ACE_OS::fprintf (output_file, "%d\n", ACE_OS::getpid());
 	ACE_OS::fclose (output_file);
@@ -378,7 +393,7 @@ Lorica::Proxy::svc (void)
 		ACE_Time_Value timeout(1,0);
 		this->orb_->run(timeout);
 	}
-	ACE_OS::unlink (this->pidfile_.c_str());
+	ACE_OS::unlink (this->pid_file_.c_str());
 
 	return 0;
 }

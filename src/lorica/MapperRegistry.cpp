@@ -19,10 +19,14 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "tao/PortableServer/POAManagerFactory.h"
-#include "tao/Stub.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
-#include "orbsvcs/SecurityC.h"
+#include <tao/PortableServer/POAManagerFactory.h>
+#include <tao/Stub.h>
+
+#include <orbsvcs/SecurityC.h>
 
 #include "MapperRegistry.h"
 #include "ReferenceMapValue.h"

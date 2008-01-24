@@ -22,9 +22,9 @@
 #ifndef IFRSERVICE_H
 #define IFRSERVICE_H
 
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/ORB.h"
+#include <orbsvcs/IFRService/IFR_Service_Utils.h>
+#include <tao/PortableServer/PortableServer.h>
+#include <tao/ORB.h>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

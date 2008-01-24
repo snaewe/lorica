@@ -22,7 +22,7 @@
 #ifndef RMV_BY_MAPPED_H
 #define RMV_BY_MAPPED_H
 
-#include "ace/Mutex.h"
+#include <ace/Mutex.h>
 
 #include "Lorica_EvaluatorBase_Export.h"
 #include "ReferenceMapValue.h"

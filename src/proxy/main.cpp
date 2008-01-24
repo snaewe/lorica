@@ -27,21 +27,136 @@
 //
 //**************************************************************************
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "proxy.h"
 #include "ntsvc.h"
-#include "lorica/Config.h"
+#include "lorica/ConfigBase.h"
 #include "lorica/FileConfig.h"
 #include "lorica/debug.h"
 #include "lorica/MapperRegistry.h"
 
-#include "ace/Get_Opt.h"
-#include "ace/streams.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/SString.h"
-#include "ace/ACE.h"
+#include <ace/Get_Opt.h>
+#include <ace/streams.h>
+#include <ace/OS_NS_errno.h>
+#include <ace/SString.h>
+#include <ace/ACE.h>
 
+#ifndef ACE_WIN32
+typedef enum {
+	EXIT_DAEMON = 0, /* we are the daemon                  */
+	EXIT_OK = 1,	 /* caller must exit with EXIT_SUCCESS */
+	EXIT_ERROR = 2,	 /* caller must exit with EXIT_FAILURE */
+} daemon_exit_t;
 
-//ACE_STATIC_SVC_REQUIRE(Lorica_MapperRegistry)
+static daemon_exit_t
+become_daemon(void)
+{
+	struct sigaction sig_act;
+	struct rlimit rl;
+	pid_t pid = -1;
+	int fd0;
+	int fd1;
+	int fd2;
+	unsigned int n;
+
+	/*
+	 * A process that has terminated but has not yet been waited for is a zombie.
+	 * On the other hand, if the parent dies first, init (process 1) inherits the
+	 * child and becomes its parent.
+	 *
+	 * (*) Citation from <http://www.win.tue.nl/~aeb/linux/lk/lk-10.html>
+	 */
+
+	/* fork off the parent process to create the session daemon */
+	pid = fork();
+	switch (pid) {
+	case -1 :
+		return EXIT_ERROR;
+	case 0 :	
+		/* We are the intermediate child.
+		 * Now fork once more and try to ensure that this intermediate child
+		 * exits before the final child so that the final child is adopted
+		 * by init and does not become a zombie. This is racy as the final
+		 * child concievably could terminate (and become a zombie) before
+		 * this child exits. Knock on wood...
+		 */
+
+		if ((setsid()) < 0)
+			return EXIT_ERROR;
+
+		sig_act.sa_handler = SIG_IGN;
+		sigemptyset(&sig_act.sa_mask);
+		sig_act.sa_flags = 0;
+		if (sigaction(SIGHUP, &sig_act, NULL))
+			return EXIT_ERROR;
+
+		pid = fork();
+		switch (pid) {
+		case -1 :
+			return EXIT_ERROR;
+		case 0 :
+			break;
+		default :
+			return EXIT_OK;
+		}
+
+		/*
+		 * (0 == pid) we are the final child
+		 */
+
+		/* sleep for 1 second to give the parent plenty of time to exit */
+		ACE_OS::sleep(1);
+
+		break;
+	default :
+		/* wait for intermediate child */
+		waitpid(pid, NULL, 0);
+
+		return EXIT_OK;
+	}
+
+	/*
+	 * We are now effectively the daemon and must continue
+	 * to prep the daemon process for operation
+	 */
+
+	// change the working directory
+	if ((chdir("/")) < 0)
+		return EXIT_ERROR;
+
+ ACE_DEBUG((LM_INFO, ACE_TEXT("AAA \n")));
+	// close any and all open file descriptors
+	if (getrlimit(RLIMIT_NOFILE, &rl))
+		return EXIT_ERROR;
+ ACE_DEBUG((LM_INFO, ACE_TEXT("BBB \n")));
+	if (RLIM_INFINITY == rl.rlim_max)
+		rl.rlim_max = 1024;
+ ACE_DEBUG((LM_INFO, ACE_TEXT("CCC \n")));
+	for (n = 3; n < rl.rlim_max; n++) {
+		if (close(n) && (EBADF != errno)) {
+			ACE_DEBUG((LM_INFO, ACE_TEXT("C222 \n")));
+			return EXIT_ERROR;
+		}
+	}
+ ACE_DEBUG((LM_INFO, ACE_TEXT("DDD \n")));
+
+	return EXIT_DAEMON;
+
+	// attach file descriptors 0, 1 and 2 to /dev/null
+	fd0 = open("/dev/null", O_RDWR);
+	fd1 = dup2(fd0, 1);
+	fd2 = dup2(fd0, 2);
+ ACE_DEBUG((LM_INFO, ACE_TEXT("EEE \n")));
+	if (0 != fd0)
+		return EXIT_ERROR;
+
+ ACE_DEBUG((LM_INFO, ACE_TEXT("FFF \n")));
+	return EXIT_DAEMON;
+}
+#endif // ACE_WIN32
 
 namespace Lorica
 {
@@ -322,11 +437,29 @@ Lorica::Service_Loader::run_service ()
 			    ACE_TEXT ("Couldn't start Lorica server")));
 
 	return ret;
-#else /* ACE_WIN32 */
-	int ret  = ACE::daemonize(".",0,"lorica_proxy");
-	if (ret == 0)
-		ret = this->run_standalone();
-	return ret == 0;
+#else /* !ACE_WIN32 */
+	daemon_exit_t dstat = EXIT_DAEMON;
+
+	dstat = become_daemon();
+	switch (dstat) {
+	case EXIT_DAEMON :
+		break;
+	case EXIT_OK :
+		return EXIT_SUCCESS;
+	case EXIT_ERROR :
+	default :
+		return EXIT_FAILURE;
+	}
+
+	ACE_DEBUG((LM_INFO, ACE_TEXT("I AM DAEMON \n")));
+	{
+		std::auto_ptr<Proxy>proxy (this->init_proxy());
+
+		proxy->activate();
+		proxy->wait();
+	}
+
+	return EXIT_SUCCESS;
 #endif /* ACE_WIN32 */
 }
 
@@ -347,6 +480,11 @@ Lorica::Service_Loader::run_standalone ()
 bool
 Lorica::Service_Loader::is_service ()
 {
+	if (debug_)
+		ACE_DEBUG((LM_INFO, ACE_TEXT("debug_ == TRUE \n")));
+	else
+		ACE_DEBUG((LM_INFO, ACE_TEXT("debug_ == FALSE \n")));
+
 	return !debug_;
 }
 
@@ -358,21 +496,24 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 	int result = 0;
 	result = lorica.parse_args (argc, argv);
 	if (result < 0)
-		return 1;  // Error
+		exit(EXIT_FAILURE);  // Error
 	else if (result > 0)
-		return 0;  // No error, but we should exit anyway.
+		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
 
 	result = lorica.run_service_command ();
 	if (result < 0)
-		return 1;  // Error
+		exit(EXIT_FAILURE);  // Error
 	else if (result > 0)
-		return 0;  // No error, but we should exit anyway.
+		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
 
-	if (lorica.is_service ())
+	if (lorica.is_service ()) {
+		ACE_DEBUG((LM_INFO, ACE_TEXT("RUN_SERVICE \n")));
 		result = lorica.run_service ();
-	else
+	} else {
+		ACE_DEBUG((LM_INFO, ACE_TEXT("RUN_STANDALONE \n")));
 		result = lorica.run_standalone ();
+	}
 
-	return result;
-
+	ACE_DEBUG((LM_INFO, ACE_TEXT("TERMINATING \n")));
+	exit(result);
 }

@@ -24,8 +24,8 @@
 
 #include "EvaluatorBase.h"
 #include "OCI/OperationTable.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/ORB.h"
+#include <tao/DynamicAny/DynAnyFactory.h>
+#include <tao/ORB.h>
 
 #include "Lorica_GenericEvaluator_Export.h"
 

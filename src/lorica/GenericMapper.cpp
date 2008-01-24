@@ -19,12 +19,16 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "GenericMapper.h"
 #include "GenericEvaluator.h"
 #include "EvaluatorBase.h"
 #include "ProxyServant.h"
 
-#include "tao/ORB_Core.h"
+#include <tao/ORB_Core.h>
 
 Lorica::GenericMapper::GenericMapper (Lorica_MapperRegistry &mr)
 	: Lorica::ProxyMapper(mr,"_lorica_generic"),

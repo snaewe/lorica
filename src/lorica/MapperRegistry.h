@@ -22,10 +22,10 @@
 #ifndef MAPPER_REGISTRY_H
 #define MAPPER_REGISTRY_H
 
-#include "ace/Service_Config.h"
-#include "ace/Service_Object.h"
-#include "tao/PortableServer/POAManagerC.h"
-#include "tao/PortableServer/POAC.h"
+#include <ace/Service_Config.h>
+#include <ace/Service_Object.h>
+#include <tao/PortableServer/POAManagerC.h>
+#include <tao/PortableServer/POAC.h>
 #include "Lorica_EvaluatorBase_Export.h"
 #include <string>
 

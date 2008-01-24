@@ -168,5 +168,5 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = $(CURDIR)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica
+DISTCLEANFILES = $(CURDIR)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid
 CLEANFILES = $(CURDIR)/*.o 

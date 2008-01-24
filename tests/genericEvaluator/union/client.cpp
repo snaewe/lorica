@@ -20,9 +20,9 @@
  */
 
 #include "testC.h"
-#include "tao/debug.h"
-#include "ace/Get_Opt.h"
-#include "ace/Task.h"
+#include <tao/debug.h>
+#include <ace/Get_Opt.h>
+#include <ace/Task.h>
 
 #include "CommentRestriction_impl.h"
 #include "RestrictionContainer_impl.h"

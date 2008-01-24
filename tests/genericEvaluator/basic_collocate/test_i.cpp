@@ -20,8 +20,8 @@
  */
 
 #include "test_i.h"
-#include "tao/debug.h"
-#include "ace/OS_NS_unistd.h"
+#include <tao/debug.h>
+#include <ace/OS_NS_unistd.h>
 
 ACE_RCSID(DSI_Gateway, test_i, "test_i.cpp,v 1.5 2001/05/21 20:46:26 kitty Exp")
 

@@ -20,10 +20,10 @@
  */
 
 #include "testC.h"
-#include "tao/debug.h"
-#include "ace/Get_Opt.h"
-#include "ace/Task.h"
-#include "ace/OS_NS_unistd.h"
+#include <tao/debug.h>
+#include <ace/Get_Opt.h>
+#include <ace/Task.h>
+#include <ace/OS_NS_unistd.h>
 
 const char *ior = "file://mapped.ior";
 

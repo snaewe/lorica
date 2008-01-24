@@ -21,8 +21,8 @@
 
 #include "test_i.h"
 #include "ServerAgent_i.h"
-#include "ace/Get_Opt.h"
-#include "ace/Task.h"
+#include <ace/Get_Opt.h>
+#include <ace/Task.h>
 
 #include "lorica/ReferenceMapperC.h"
 const char *ior_output_file = "server.ior";

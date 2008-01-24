@@ -19,15 +19,19 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "tao/SystemException.h"
-#include "tao/Exception.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <tao/SystemException.h>
+#include <tao/Exception.h>
 #include "ProxyMapper.h"
 #include "ProxyServant.h"
 #include "GenericEvaluator.h"
 #include "debug.h"
 
-#include "tao/DynamicAny/DynamicAnyC.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include <tao/DynamicAny/DynamicAnyC.h>
+#include <tao/AnyTypeCode/Any_Unknown_IDL_Type.h>
 
 
 Lorica::GenericEvaluator::GenericEvaluator ( const std::string & typeId,

@@ -140,7 +140,7 @@ liblorica_EvaluatorBase_la_CPPFLAGS = \
 endif
 
 liblorica_EvaluatorBase_la_SOURCES = \
-	Config.cpp            \
+	ConfigBase.cpp        \
 	EvaluatorBase.cpp     \
 	EvaluatorLoader.cpp   \
 	FileConfig.cpp        \
@@ -156,7 +156,7 @@ liblorica_EvaluatorBase_la_SOURCES = \
 liblorica_EvaluatorBase_la_LDFLAGS = -L$(LORICA_top_dir)/lib
 
 noinst_HEADERS += \
-	Config.h            \
+	ConfigBase.h        \
 	EvaluatorBase.h     \
 	EvaluatorLoader.h   \
 	FileConfig.h        \

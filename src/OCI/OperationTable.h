@@ -59,9 +59,9 @@
 #ifndef OPERATION_TABLE_H
 #define OPERATION_TABLE_H
 
-#include "ace/Synch.h"
-#include "tao/AnyTypeCode/NVList.h"
-#include "tao/IFR_Client/IFR_BasicC.h"
+#include <ace/Synch.h>
+#include <tao/AnyTypeCode/NVList.h>
+#include <tao/IFR_Client/IFR_BasicC.h>
 
 #include "OCI_AsynchProxyTools_Export.h"
 

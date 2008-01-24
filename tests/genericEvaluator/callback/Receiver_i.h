@@ -21,7 +21,7 @@
 
 #ifndef TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_RECEIVER_I_H
 #define TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_RECEIVER_I_H
-#include "ace/pre.h"
+#include <ace/pre.h>
 
 #include "TestS.h"
 
@@ -70,5 +70,5 @@ private:
 	CORBA::ULong no_calls_;
 };
 
-#include "ace/post.h"
+#include <ace/post.h>
 #endif /*TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_RECEIVER_I_H*/

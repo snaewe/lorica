@@ -63,10 +63,12 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
   case "x$system_name" in
         xDarwin)
 		AM_CONDITIONAL(LORICA_DARWIN, true)
+		AC_DEFINE([LORICA_DARWIN], [1], [Define if this is some kind of Darwin (MacOS)])
 		enable_lorica_target=darwin
        		;;
 	xLinux)
 		AM_CONDITIONAL(LORICA_LINUX, true)
+		AC_DEFINE([LORICA_LINUX], [1], [Define if this is some kind of Linux])
 		;;
  	*)
 		;;
@@ -131,8 +133,6 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
   dnl Determine system sub-type variant
   case "x$lorica_target" in
         xDarwin)
-		AC_DEFINE([LORICA_DARWIN], [1], [Define if this is a Darwin based distribution])
-		AM_CONDITIONAL(LORICA_DARWIN, true)
 		system_release=`uname -r`
 		system_version=${system_release:0:1}
 		case "x$system_version" in
@@ -150,7 +150,6 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
 		esac
 		;;
 	xFedora)
-		AM_CONDITIONAL(LORICA_LINUX, true)
 		AM_CONDITIONAL(LORICA_FEDORA, true)
 		AC_DEFINE([LORICA_FEDORA], [1], [Define if this is a Fedora based distribution])
 		if test -f /etc/redhat-release; then
@@ -184,25 +183,21 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
 		fi
 		;;
 	xOpenSUSE_10_2)
-		AM_CONDITIONAL(LORICA_LINUX, true)
 		AM_CONDITIONAL(LORICA_SUSE, true)
 		AC_DEFINE([LORICA_SUSE], [1], [Define if this is an SUSE based distribution])
 		LORICA_DIST_RELEASE="OpenSUSE%2010.2"
 		;;
 	xOpenSUSE_10_3)
-		AM_CONDITIONAL(LORICA_LINUX, true)
 		AM_CONDITIONAL(LORICA_SUSE, true)
 		AC_DEFINE([LORICA_SUSE], [1], [Define if this is an SUSE based distribution])
 		LORICA_DIST_RELEASE="OpenSUSE%2010.3"
 		;;
 	xGentoo)
-		AM_CONDITIONAL(LORICA_LINUX, true)
 		AM_CONDITIONAL(LORICA_GENTOO, true)
 		AC_DEFINE([LORICA_GENTOO], [1], [Define if this is a Gentoo based distribution])
 		LORICA_DIST_RELEASE="Gentoo"
 		;;
 	xUbuntu)
-		AM_CONDITIONAL(LORICA_LINUX, true)
 		AM_CONDITIONAL(LORICA_DEBIAN, true)
 		AC_DEFINE([LORICA_DEBIAN], [1], [Define if this is a Debian based distribution])
 		LORICA_DIST_RELEASE="Ubuntu"

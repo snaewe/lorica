@@ -59,9 +59,9 @@
 #ifndef TAO_PROXY_SERVANT
 #define TAO_PROXY_SERVANT
 
-#include "tao/DynamicInterface/Dynamic_Implementation.h"
+#include <tao/DynamicInterface/Dynamic_Implementation.h>
 #include "OCI_AsynchProxyTools_Export.h"
-#include "tao/SystemException.h"
+#include <tao/SystemException.h>
 
 class TAO_AMH_DSI_Response_Handler;
 typedef TAO_AMH_DSI_Response_Handler * TAO_AMH_DSI_Response_Handler_ptr;

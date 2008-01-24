@@ -1,11 +1,11 @@
 // $Id$
 
 #include "server_interceptor.h"
-#include "tao/OctetSeqC.h"
-#include "ace/Log_Msg.h"
-#include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Thread.h"
+#include <tao/OctetSeqC.h>
+#include <ace/Log_Msg.h>
+#include <tao/ORB_Constants.h>
+#include <ace/OS_NS_string.h>
+#include <ace/Thread.h>
 
 ForwardTest_Request_Interceptor::ForwardTest_Request_Interceptor (void)
   : myname_ ("ForwardTest_Interceptor")

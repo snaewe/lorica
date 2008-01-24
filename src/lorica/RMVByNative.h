@@ -22,11 +22,11 @@
 #ifndef RMV_BY_NATIVE_H
 #define RMV_BY_NATIVE_H
 
-#include "ace/Mutex.h"
+#include <ace/Mutex.h>
 
 #include "Lorica_EvaluatorBase_Export.h"
 #include "ReferenceMapValue.h"
-#include "ace/RB_Tree.h"
+#include <ace/RB_Tree.h>
 
 namespace Lorica
 {

@@ -56,12 +56,16 @@
  *  3. mailto:support@ociweb.com
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "OperationTable.h"
-#include "tao/IFR_Client/IFR_BasicC.h"
-#include "tao/corbafwd.h"
-#include "tao/CORBA_String.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "ace/OS_NS_string.h"
+#include <tao/IFR_Client/IFR_BasicC.h>
+#include <tao/corbafwd.h>
+#include <tao/CORBA_String.h>
+#include <tao/AnyTypeCode/Any_Unknown_IDL_Type.h>
+#include <ace/OS_NS_string.h>
 
 
 //---------------------------------------------------------------------------

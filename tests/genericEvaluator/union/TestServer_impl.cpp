@@ -20,8 +20,8 @@
  */
 
 #include "TestServer_impl.h"
-#include "ace/OS_NS_unistd.h"
-#include "tao/debug.h"
+#include <ace/OS_NS_unistd.h>
+#include <tao/debug.h>
 
 #include "testC.h"
 

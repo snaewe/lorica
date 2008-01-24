@@ -20,7 +20,7 @@
  */
 
 #include "TestC.h"
-#include "ace/Get_Opt.h"
+#include <ace/Get_Opt.h>
 
 ACE_RCSID(Hello, client, "$Id: client.cpp 1626 2007-03-19 01:42:06Z mesnierp $")
 

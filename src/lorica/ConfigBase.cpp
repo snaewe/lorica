@@ -19,7 +19,11 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "Config.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include "ConfigBase.h"
 #include "debug.h"
 #include <ace/OS_NS_stdlib.h>
 

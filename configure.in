@@ -134,6 +134,8 @@ AC_ARG_ENABLE(lorica-dist,
 dnl ACE_ROOT always overrides these settings
 AM_CONDITIONAL(HAVE_ACE_ROOT, false)
 if test "x$ACE_ROOT" != "x"; then
+   AC_MSG_NOTICE([ACE_ROOT ($ACE_ROOT) detected - taking presedence])
+
    AM_CONDITIONAL(HAVE_ACE_ROOT, true)
    with_acetao_includes="$ACE_ROOT"
    with_acetao_libs="$ACE_ROOT"/lib
@@ -269,11 +271,13 @@ ACETAO_INCLUDES="-I$ACETAO_ROOT -I$ACETAO_ROOT/TAO -I$ACETAO_ROOT/TAO/orbsvcs"
 AC_SUBST(ACETAO_INCLUDES)
 
 dnl DEFS
+LORICA_INCLUDES="-iquote $LORICA_top_dir -iquote $LORICA_top_dir/src"
 if test "x$lorica_target" = "xDarwin"; then
-   LORICA_DEFS="-DACE_HAS_CUSTOM_EXPORT_MACROS=0 -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__ -I$LORICA_top_dir/src"
+   LORICA_DEFS="-DACE_HAS_CUSTOM_EXPORT_MACROS=0 -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__"
 else
-   LORICA_DEFS="-D_REENTRANT -DACE_HAS_AIO_CALLS -D_GNU_SOURCE -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__ -I$LORICA_top_dir/src"
+   LORICA_DEFS="-D_REENTRANT -DACE_HAS_AIO_CALLS -D_GNU_SOURCE -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__"
 fi
+LORICA_DEFS="$LORICA_DEFS $LORICA_INCLUDES"
 AC_SUBST(LORICA_DEFS)
 
 dnl CXXFLAGS
@@ -409,6 +413,11 @@ AC_SUBST(DH_INSTALL_default_libdir)
 LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_docdir, /usr/share/doc/$PACKAGE_NAME)
 AC_SUBST(DH_INSTALL_default_docdir)
 
+dnl
+dnl Misc Lorica defines
+dnl 
+AC_DEFINE_UNQUOTED([LORICA_PID_FILE], ["/var/run/lorica.pid"], [Full path to Lorica PID file])
+AC_DEFINE_UNQUOTED([LORICA_IOR_FILE], ["/var/run/lorica/lorica.ior"], [Full path to Lorica IOR file])
 
 dnl
 dnl Check if this is a distribution

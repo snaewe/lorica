@@ -19,13 +19,17 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "ace/Mutex.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <ace/Mutex.h>
 #include "RMVByNative.h"
 
-#include "tao/Stub.h"
-#include "tao/MProfile.h"
-#include "tao/Profile.h"
-#include "ace/Min_Max.h"
+#include <tao/Stub.h>
+#include <tao/MProfile.h>
+#include <tao/Profile.h>
+#include <ace/Min_Max.h>
 
 Lorica::RMVByNative::RMVByNative ()
 {

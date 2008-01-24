@@ -20,7 +20,7 @@
  */
 
 #include "TestC.h"
-#include "ace/Get_Opt.h"
+#include <ace/Get_Opt.h>
 #include "lorica/ReferenceMapperC.h"
 
 ACE_RCSID(Hello, client, "$Id: client.cpp 1877 2007-05-17 19:25:33Z mesnierp $")

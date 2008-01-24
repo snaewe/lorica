@@ -22,8 +22,8 @@
 #ifndef CLIENT_ORB_TASK_H
 #define CLIENT_ORB_TASK_H
 
-#include "tao/corba.h"
-#include "ace/Task.h"
+#include <tao/corba.h>
+#include <ace/Task.h>
 
 class Client_Orb_Task : public ACE_Task_Base
 {

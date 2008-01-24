@@ -19,11 +19,15 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "FileConfig.h"
 
-#include "ace/ACE.h"
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_strings.h"
+#include <ace/ACE.h>
+#include <ace/Log_Msg.h>
+#include <ace/OS_NS_strings.h>
 #include <fstream>
 
 Lorica::FileConfig::FileConfig ()

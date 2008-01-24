@@ -24,7 +24,7 @@
 
 #include <string>
 #include <vector>
-#include "ace/ARGV.h"
+#include <ace/ARGV.h>
 
 #include "Lorica_EvaluatorBase_Export.h"
 

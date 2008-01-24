@@ -29,13 +29,13 @@
 #ifndef NTSVC_H_
 #define NTSVC_H_
 
-#include "ace/config-all.h"
+#include <ace/config-all.h>
 
 #if defined (ACE_WIN32)
-#include "ace/Event_Handler.h"
-#include "ace/NT_Service.h"
-#include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include <ace/Event_Handler.h>
+#include <ace/NT_Service.h>
+#include <ace/Singleton.h>
+#include <ace/Synch.h>
 
 namespace Lorica
 {

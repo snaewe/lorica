@@ -19,18 +19,22 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "IFRService.h"
-#include "Config.h"
+#include "ConfigBase.h"
 #include "FileConfig.h"
 #include "debug.h"
-#include "orbsvcs/IFRService/ComponentRepository_i.h"
-#include "orbsvcs/IFRService/Options.h"
-#include "orbsvcs/IFRService/IFR_ComponentsS.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "orbsvcs/IOR_Multicast.h"
-#include "tao/IORTable/IORTable.h"
-#include "tao/ORB_Core.h"
-#include "ace/Auto_Ptr.h"
+#include <orbsvcs/IFRService/ComponentRepository_i.h>
+#include <orbsvcs/IFRService/Options.h>
+#include <orbsvcs/IFRService/IFR_ComponentsS.h>
+#include <orbsvcs/IFRService/IFR_Service_Utils.h>
+#include <orbsvcs/IOR_Multicast.h>
+#include <tao/IORTable/IORTable.h>
+#include <tao/ORB_Core.h>
+#include <ace/Auto_Ptr.h>
 
 int
 Lorica::IFRService::init (CORBA::ORB_ptr orb)

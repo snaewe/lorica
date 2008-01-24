@@ -26,8 +26,8 @@
 #include <string>
 #include <vector>
 
-#include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/IFR_Client_Adapter.h"
+#include <tao/DynamicAny/DynAnyFactory.h>
+#include <tao/IFR_Client_Adapter.h>
 
 #include "IFRService.h"
 #include "Lorica_GenericEvaluator_Export.h"

@@ -21,7 +21,7 @@
 
 #include "Sender_i.h"
 #include "Server_Task.h"
-#include "ace/Get_Opt.h"
+#include <ace/Get_Opt.h>
 #include "lorica/ReferenceMapperC.h"
 
 const char *mapped_file = "mapped.ior";

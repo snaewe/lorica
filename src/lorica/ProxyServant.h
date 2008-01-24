@@ -22,7 +22,7 @@
 #ifndef LORICA_PROXY_SERVANT_H
 #define LORICA_PROXY_SERVANT_H
 
-#include "tao/PortableServer/PS_CurrentC.h"
+#include <tao/PortableServer/PS_CurrentC.h>
 #include "OCI/ProxyServant.h"
 #include "Lorica_EvaluatorBase_Export.h"
 #include <string>

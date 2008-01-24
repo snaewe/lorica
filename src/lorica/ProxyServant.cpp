@@ -19,8 +19,12 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "tao/DynamicInterface/Request.h"
-#include "tao/TAO_Server_Request.h"
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#include <tao/DynamicInterface/Request.h>
+#include <tao/TAO_Server_Request.h>
 
 #include "ProxyMapper.h"
 #include "EvaluatorBase.h"

@@ -24,7 +24,7 @@
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
-#include "orbsvcs/SecurityLevel3C.h"
+#include <orbsvcs/SecurityLevel3C.h>
 
 /// Implement the Test::Hello interface
 class Hello

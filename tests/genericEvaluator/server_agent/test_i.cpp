@@ -20,8 +20,8 @@
  */
 
 #include "test_i.h"
-#include "tao/debug.h"
-#include "ace/OS_NS_unistd.h"
+#include <tao/debug.h>
+#include <ace/OS_NS_unistd.h>
 
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb,
 				  ServerAgent_i* agent,

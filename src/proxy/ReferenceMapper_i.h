@@ -23,8 +23,8 @@
 #define REFERENCE_MAPPER_I_H
 
 #include "lorica/ReferenceMapperS.h"
-#include "tao/IORTable/IORTable.h"
-#include "orbsvcs/SecurityLevel2C.h"
+#include <tao/IORTable/IORTable.h>
+#include <orbsvcs/SecurityLevel2C.h>
 
 class Lorica_MapperRegistry;
 

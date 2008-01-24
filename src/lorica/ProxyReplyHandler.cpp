@@ -19,14 +19,18 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "ProxyMapper.h"
 #include "EvaluatorBase.h"
 #include "ProxyReplyHandler.h"
 #include "debug.h"
 
-#include "tao/AnyTypeCode/NVList.h"
-#include "tao/AnyTypeCode/Any_Impl.h"
-#include "tao/SystemException.h"
+#include <tao/AnyTypeCode/NVList.h>
+#include <tao/AnyTypeCode/Any_Impl.h>
+#include <tao/SystemException.h>
 
 
 Lorica::ProxyReplyHandler::ProxyReplyHandler (ProxyMapper &pm,
