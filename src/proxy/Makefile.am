@@ -91,6 +91,7 @@ lorica_LDADD = \
 	-lTAO_Valuetype                                         \
 	-lTAO_PortableServer                                    \
 	-lTAO_AnyTypeCode                                       \
+	-lTAO_Codeset                                           \
 	-lTAO                                                   \
 	-lACE
 
@@ -99,6 +100,7 @@ if LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.dylib                            \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.dylib                    \
+	$(ACE_ROOT)/TAO/tao/libTAO_Codeset.dylib                \
 	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.dylib            \
 	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.dylib           \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.dylib             \
@@ -125,6 +127,7 @@ else
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                    \
+	$(ACE_ROOT)/TAO/tao/libTAO_Codeset.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                \
 	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)            \
 	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)           \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)             \

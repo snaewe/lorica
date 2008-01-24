@@ -53,6 +53,7 @@ if LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.dylib                            \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.dylib                    \
+	$(ACE_ROOT)/TAO/tao/libTAO_Codeset.dylib                \
 	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.dylib            \
 	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.dylib           \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.dylib             \
@@ -79,6 +80,7 @@ else
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                    \
+	$(ACE_ROOT)/TAO/tao/libTAO_Codeset.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                \
 	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)            \
 	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)           \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)             \
@@ -104,7 +106,7 @@ TAO_LIBS = \
 endif # LORICA_DARWIN
 
 else
-TAO_FILES =
+TAO_LIBS =
 endif # HAVE_ACE_ROOT
 
 if THIS_IS_NOT_A_DISTRIBUTION
@@ -225,10 +227,10 @@ dist-deb-prep:
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install.in $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 
-tao: $(TAO_FILES)
+tao: $(TAO_LIBS)
 
 if LORICA_MUST_BUILD_ACETAO
-$(TAO_FILES): $(ACE_ROOT)
+$(TAO_LIBS): $(ACE_ROOT)
 if LORICA_DARWIN_TIGER
 	echo '#include "ace/config-macosx-tiger.h"' > $(ACE_ROOT)/ace/config.h
 	echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
@@ -248,6 +250,7 @@ endif
 	cd $(ACE_ROOT)/ace/SSL && $(MAKE) -f GNUmakefile
 	cd $(TAO_ROOT)/TAO_IDL && $(MAKE) -f GNUmakefile
 	cd $(TAO_ROOT)/tao && $(MAKE) -f GNUmakefile.TAO
+	cd $(TAO_ROOT)/tao && $(MAKE) -f GNUmakefile.Codeset
 	cd $(TAO_ROOT)/tao && $(MAKE) -f GNUmakefile.AnyTypeCode
 	cd $(TAO_ROOT)/tao && $(MAKE) -f GNUmakefile.Valuetype
 	cd $(TAO_ROOT)/tao && $(MAKE) -f GNUmakefile.CodecFactory
@@ -276,5 +279,5 @@ if LORICA_CURL
 	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 endif
 	$(TAR) xjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
-	mv ACE_wrapper $(ACETAO_ROOT)
+	-mv $(ACE_WRAPPERS_DIR) $(ACETAO_ROOT)
 endif # LORICA_MUST_BUILD_ACETAO
