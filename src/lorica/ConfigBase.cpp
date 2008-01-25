@@ -311,17 +311,6 @@ Lorica::Config::get_ifr_options (void)
 		}
 	}
 
-	// This is not supported by IFR_Service!? IFR would not start when i had both Lorica and TAO debug enabled (Rasmus).
-	/*
-	if (this->debug_level () > 0)
-	{
-		ifr_args_.push_back ("-ORBDebuglevel");
-
-		ACE_TCHAR tmp [15];
-		ACE_OS::itoa (this->debug_level(), tmp, 10);
-		ifr_args_.push_back (tmp);
-	}
-	*/
 	return get_ifr_options_copy ();
 }
 

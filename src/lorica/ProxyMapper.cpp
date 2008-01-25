@@ -122,8 +122,6 @@ Lorica::ProxyMapper::proxy_mapper_init (PortableServer::POAManager_ptr outward,
 					PortableServer::POAManager_ptr inward,
 					CORBA::ORB_ptr orb)
 {
-	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
-
 	this->orb_ = CORBA::ORB::_duplicate(orb);
 	CORBA::Object_var obj = orb->resolve_initial_references("POACurrent");
 	this->poa_current_ = PortableServer::Current::_narrow(obj.in());
@@ -154,6 +152,7 @@ Lorica::ProxyMapper::proxy_mapper_init (PortableServer::POAManager_ptr outward,
 
 	if (this->next_ != 0)
 		return this->next_->proxy_mapper_init (outward, inward, orb);
+
 	return 1;
 }
 
@@ -187,8 +186,7 @@ Lorica::ProxyMapper::remove_mapper (Lorica::ProxyMapper *p)
 void
 Lorica::ProxyMapper::destroy_chain (void)
 {
-	if (this->next_ != 0)
-	{
+	if (this->next_ != 0) {
 		this->next_->destroy_chain ();
 		this->next_->decr_refcount();
 		this->next_ = 0;
@@ -209,20 +207,18 @@ Lorica::ProxyMapper::get_mapped_objectId(bool out_facing,
 					 ACE_UINT32 &index)
 {
 	size_t buflen = sizeof(Lorica::MappedObjectId);
-	CORBA::Octet * buffer =
-		PortableServer::ObjectId::allocbuf(buflen);
+	CORBA::Octet * buffer = PortableServer::ObjectId::allocbuf(buflen);
 	ACE_OS::memcpy(buffer, &Lorica::ProxyMapper::mapped_object_id_, buflen);
-	Lorica::MappedObjectId *ptr =
-		reinterpret_cast<Lorica::MappedObjectId *>(buffer);
+	Lorica::MappedObjectId *ptr = reinterpret_cast<Lorica::MappedObjectId *>(buffer);
+
 	ptr->in_out = out_facing ? 'O' : 'I';
 	ptr->index = this->mapped_values_->next_index();
 	index = ptr->index;
 
-	return
-		new PortableServer::ObjectId (buflen,
-					      buflen,
-					      buffer,
-					      true);
+	return new PortableServer::ObjectId(buflen,
+					    buflen,
+					    buffer,
+					    true);
 }
 
 Lorica::ProxyMapper::MappedStatus
@@ -230,8 +226,7 @@ Lorica::ProxyMapper::already_mapped (CORBA::Object_ptr native,
 				     bool out_facing,
 				     ACE_UINT32& index)
 {
-	if (this->mapped_values_ != 0)
-	{
+	if (this->mapped_values_ != 0) {
 		TAO::ObjectKey *key = native->_key();
 		if (key == 0)
 			{

@@ -1,3 +1,8 @@
+2008-01-25  Jules Colding  <colding@42tools.com>
+
+	* Lorica: Major build rework on Linux. The autotool build
+	system does now seem to work.
+
 2008-01-23  Jules Colding  <colding@42tools.com>
 
 	* Lorica: Ported Lorica to use the GNU autotools on Linux

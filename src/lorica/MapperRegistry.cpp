@@ -75,14 +75,14 @@ Lorica_MapperRegistry::add_null_mapper_type (const std::string &typeId)
 void
 Lorica_MapperRegistry::create_default_null_mapper (void)
 {
-	if (this->mappers_ready_)
-	{
+	if (this->mappers_ready_) {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t)Lorica_MapperRegistry::create_default_null_mapper "
 				    "called after mappers are ready\n"));
 		return;
 	}
+
 	if (this->null_mapper_ == 0)
 		ACE_NEW (this->null_mapper_, Lorica::NullProxyMapper(*this));
 }
@@ -90,14 +90,14 @@ Lorica_MapperRegistry::create_default_null_mapper (void)
 void
 Lorica_MapperRegistry::set_generic_mapper (Lorica::ProxyMapper *mapper)
 {
-	if (this->mappers_ready_)
-	{
+	if (this->mappers_ready_) {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t)Lorica_MapperRegistry::set_generic_mapper "
 				    "called after mappers are ready\n"));
 		return;
 	}
+
 	if (this->generic_mapper_ != 0)
 		this->generic_mapper_->decr_refcount();
 	this->generic_mapper_ = mapper;
@@ -106,14 +106,11 @@ Lorica_MapperRegistry::set_generic_mapper (Lorica::ProxyMapper *mapper)
 void
 Lorica_MapperRegistry::add_proxy_mapper (Lorica::ProxyMapper *mapper)
 {
-	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 	if (this->mappers_ready_)
 		return;
-	if (this->mappers_ == 0)
-	{
+	if (this->mappers_ == 0) {
 		this->mappers_ = mapper;
-	}
-	else
+	} else
 		this->mappers_->take_mapper(mapper);
 }
 
@@ -122,13 +119,11 @@ Lorica_MapperRegistry::remove_proxy_mapper (Lorica::ProxyMapper *mapper)
 {
 	if (this->mappers_ == 0)
 		return;
-	if (this->mappers_ == mapper)
-	{
+	if (this->mappers_ == mapper) {
 		Lorica::ProxyMapper *new_head = this->mappers_->next();
 		this->mappers_->decr_refcount();
 		this->mappers_ = new_head;
-	}
-	else
+	} else
 		this->mappers_->remove_mapper(mapper);
 }
 
@@ -138,15 +133,12 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 				     CORBA::ORB_ptr orb,
 				     bool has_security)
 {
-	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
-
 	// first, prevent multiple activation
 	if (this->mappers_ready_)
 		return;
+
 	// consolidate the mapper list, to append first the generic mapper and
 	// then the null mapper.
-
-
 	if (this->generic_mapper_ != 0) {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
@@ -165,9 +157,7 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 		this->null_mapper_ = 0;
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 	if (this->mappers_ != 0) {
-		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t)Lorica_MapperRegistry::init_mappers "
@@ -177,7 +167,6 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 
 	this->has_security_ = has_security;
 	if (has_security) {
-		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		this->sec_policies_.length(1);
 		Security::QOP qop = Security::SecQOPIntegrityAndConfidentiality;
 		CORBA::Any i_and_c;
@@ -217,8 +206,7 @@ Lorica_MapperRegistry::map_reference (CORBA::Object_ptr native,
 	Lorica::ReferenceMapValue_var rmv;
 	std::string typeId = native->_stubobj()->type_id.in();
 	//  std::string typeId(native->_interface_repository_id());
-	if (this->mappers_ != 0)
-	{
+	if (this->mappers_ != 0) {
 		if (Lorica_debug_level > 2)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t) Lorica_MapperRegistry::map_reference "
@@ -227,14 +215,13 @@ Lorica_MapperRegistry::map_reference (CORBA::Object_ptr native,
 						  typeId,
 						  out_facing,
 						  require_secure);
-	}
-	else
-	{
+	} else {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t) Lorica_MapperRegistry::map_reference "
 				    "has no mappers registered\n"));
 	}
+
 	return rmv.release();
 }
 
@@ -267,12 +254,12 @@ Lorica_MapperRegistry::poa_and_object_id (CORBA::Object_ptr ref,
 					  CORBA::OctetSeq *& poaid,
 					  PortableServer::ObjectId *& objid)
 {
-	if (this->mappers_ == 0)
-	{
+	if (this->mappers_ == 0) {
 		poaid = new CORBA::OctetSeq;
 		objid = new PortableServer::ObjectId;
 		return false;
 	}
+
 	return this->mappers_->poa_and_object_id (ref, poaid, objid);
 }
 

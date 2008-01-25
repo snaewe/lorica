@@ -320,36 +320,27 @@ Lorica::Proxy::configure(Config& config)
 		}
 
 		if (config.generic_evaluator()) {
-
-			ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 			if (Lorica_debug_level > 0)
 				ACE_DEBUG ((LM_DEBUG,
 					    "(%P|%t) Lorica::Proxy::configure "
 					    "Loading generic evaluator\n"));
-
-			ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
-
 #ifdef ACE_WIN32
-			this->orb_->orb_core()->configuration()->process_directive
-				(ACE_TEXT_ALWAYS_CHAR
-				 (ACE_DYNAMIC_SERVICE_DIRECTIVE("Lorica_GenericLoader",
-								"lorica_GenericEvaluator",
-								"_make_Lorica_GenericLoader",
-								"")));
+			this->orb_->orb_core()->configuration()->process_directive(ACE_TEXT_ALWAYS_CHAR
+										   (ACE_DYNAMIC_SERVICE_DIRECTIVE("Lorica_GenericLoader",
+														  "lorica_GenericEvaluator",
+														  "_make_Lorica_GenericLoader",
+														  "")));
 #else
 			Lorica::GenericMapper::GenericMapper *gen_eval = new Lorica::GenericMapper::GenericMapper(*mreg);
-			mreg->add_proxy_mapper (gen_eval);
+			mreg->add_proxy_mapper(gen_eval);
 #endif
-			ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		}
 
 		// add generic or other mappers...
-		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		mreg->init_mappers(this->outside_pm_,
 				   this->inside_pm_,
 				   this->orb_,
 				   config.secure_available());
-		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 	}
 	catch (CORBA::Exception &ex) {
 		ex._tao_print_exception ("(%P|%t) Lorica::Proxy::configure "
