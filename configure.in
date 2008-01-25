@@ -66,9 +66,6 @@ AC_SUBST(LIBACETAO_AGE)
 ACETAO="http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO-$LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE.tar.bz2"
 AC_SUBST(ACETAO)
 
-ACE_WRAPPERS_DIR="ACE_wrappers"
-AC_SUBST(ACE_WRAPPERS_DIR)
-
 dnl
 dnl Lorica versions and names
 dnl
@@ -132,14 +129,19 @@ AC_ARG_ENABLE(lorica-dist,
 	      ,enable_lorica_dist=no)
 
 dnl ACE_ROOT always overrides these settings
+CONF_ACE_ROOT=""
 AM_CONDITIONAL(HAVE_ACE_ROOT, false)
+AM_CONDITIONAL(HAVE_CONF_PATH, false)
+AM_CONDITIONAL(HAVE_CONF_LD_PATH, false)
 if test "x$ACE_ROOT" != "x"; then
    AC_MSG_NOTICE([ACE_ROOT ($ACE_ROOT) detected - taking presedence])
 
    AM_CONDITIONAL(HAVE_ACE_ROOT, true)
+
+   CONF_ACE_ROOT="$ACE_ROOT"
    with_acetao_includes="$ACE_ROOT"
    with_acetao_libs="$ACE_ROOT"/lib
-   PATH="$ACE_ROOT/bin:$PATH"
+   with_acetao_bins="$ACE_ROOT"/bin
 else
    AC_ARG_WITH([acetao-includes],
                [AC_HELP_STRING([--with-acetao-includes=PATH], [Location of ACE and TAO headers [default="/usr/include"]])],
@@ -148,7 +150,30 @@ else
    AC_ARG_WITH([acetao-libs],
                [AC_HELP_STRING([--with-acetao-libs=PATH], [Location of ACE and TAO libraries [default="/usr/lib"]])],
                [with_acetao_libs=$withval],[with_acetao_libs=""])
+   if test "x$with_acetao_libs" != "x"; then
+      AM_CONDITIONAL(HAVE_CONF_LD_PATH, true)
+   fi
+
+   AC_ARG_WITH([acetao-bins],
+               [AC_HELP_STRING([--with-acetao-bins=PATH], [Location of ACE and TAO binaries [default="/usr/bin"]])],
+               [with_acetao_bins=$withval],[with_acetao_bins=""])
+   if test "x$with_acetao_bins" != "x"; then
+      AM_CONDITIONAL(HAVE_CONF_PATH, true)
+   fi
 fi
+AC_SUBST(CONF_ACE_ROOT)
+
+CONF_PATH=""
+if test "x$with_acetao_bins" != "x"; then
+   CONF_PATH="$with_acetao_bins"
+fi
+AC_SUBST(CONF_PATH)
+
+CONF_LD_LIBRARY_PATH=""
+if test "x$with_acetao_libs" != "x"; then
+   CONF_LD_LIBRARY_PATH="$with_acetao_libs"
+fi
+AC_SUBST(CONF_LD_LIBRARY_PATH)
 
 dnl
 dnl Which Linux distribution or UNIX platform?
@@ -197,7 +222,11 @@ if test "x$HAVE_FIND" = "xno"; then
    AC_MSG_ERROR([[You need the find(1) program to build Lorica]])
 fi
 
-AC_CHECK_PROG(HAVE_TAO_IFR, [tao_ifr], yes, no)
+if test "x$CONF_PATH" != "x"; then
+   AC_CHECK_PROG(HAVE_TAO_IFR, [tao_ifr], yes, no)
+else
+   AC_CHECK_PROG(HAVE_TAO_IFR, [tao_ifr], yes, no, $CONF_PATH:$PATH)
+fi
 if test "x$HAVE_TAO_IFR" = "xno"; then
    AC_MSG_WARN([[You might need TAO's interface repository loader when starting Lorica]])
 fi
@@ -260,18 +289,27 @@ dnl Lorica top-level source directory
 LORICA_top_dir="`pwd`"
 AC_SUBST(LORICA_top_dir)
 
-dnl Includes
-if test "x$ACE_ROOT" != "x"; then
-	ACETAO_ROOT="$ACE_ROOT"
-else
-	ACETAO_ROOT="$LORICA_top_dir/$ACE_WRAPPERS_DIR"
+dnl Standard ACE sub-directory
+ACE_WRAPPERS_DIR="ACE_wrappers"
+AC_SUBST(ACE_WRAPPERS_DIR)
+
+dnl Effective ACE_ROOT if not taken from the environment
+if test "x$ACE_ROOT" = "x"; then
+	CONF_ACE_ROOT="$LORICA_top_dir/$ACE_WRAPPERS_DIR"
 fi
-AC_SUBST(ACETAO_ROOT)
-ACETAO_INCLUDES="-I$ACETAO_ROOT -I$ACETAO_ROOT/TAO -I$ACETAO_ROOT/TAO/orbsvcs"
+AC_SUBST(CONF_ACE_ROOT)
+
+dnl Must be searchable in <> include statements
+ACETAO_INCLUDES="-I$CONF_ACE_ROOT -I$CONF_ACE_ROOT/TAO -I$CONF_ACE_ROOT/TAO/orbsvcs"
 AC_SUBST(ACETAO_INCLUDES)
 
-dnl DEFS
+dnl Must only be searchable in "" include statements
 LORICA_INCLUDES="-iquote $LORICA_top_dir -iquote $LORICA_top_dir/src"
+if test "x$with_acetao_includes" != "x/usr/include"; then
+   	LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_INCLUDES"
+fi
+
+dnl Now set the preprocessor arguments
 if test "x$lorica_target" = "xDarwin"; then
    LORICA_DEFS="-DACE_HAS_CUSTOM_EXPORT_MACROS=0 -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__"
 else
@@ -300,9 +338,6 @@ if test "$lorica_target" = "OpenSUSE_10_2"; then
 fi
 if test "$lorica_target" = "OpenSUSE_10_3"; then
 	LORICA_CXXFLAGS="$LORICA_CXXFLAGS $RPM_OPT_FLAGS"
-fi
-if test "x$with_acetao_includes" != "x/usr/include"; then
-   	LORICA_CXXFLAGS="$LORICA_CXXFLAGS -I$with_acetao_includes"
 fi
 AC_SUBST(LORICA_CXXFLAGS)
 
@@ -337,10 +372,14 @@ ACE_LIBS="ACE ACE_SSL TAO TAO_Codeset TAO_AnyTypeCode TAO_CodecFactory TAO_Value
 
 if test "x$enable_tao_build" = "xyes"; then
 
-   dnl We are opting to (re-)build if needed, so ACE_ROOT must exist somehwere
+   dnl We are opting to (re-)build if needed, so ACE_ROOT must exist somewhere
    AM_CONDITIONAL(HAVE_ACE_ROOT, true)
 
-   AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $PATH)
+   if test "x$CONF_PATH" = "x"; then
+      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no)
+   else
+      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $CONF_PATH:$PATH)
+   fi
    if test "x$HAVE_TAO_IDL" = "xno"; then
       AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)	
       AC_MSG_WARN([[You need the TAO IDL compiler to build Lorica - Don't worry I'll build it myself]])
@@ -357,8 +396,14 @@ if test "x$enable_tao_build" = "xyes"; then
    do
 	AC_CHECK_FILE($with_acetao_includes/$headerfile, [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
    done
+
 else
-   AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $PATH)
+
+   if test "x$CONF_PATH" = "x"; then
+      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no)
+   else
+      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $CONF_PATH:$PATH)
+   fi
    if test "x$HAVE_TAO_IDL" = "xno"; then
       AC_MSG_ERROR([[You need the TAO IDL compiler to build Lorica - consider enabling tao-build]])
    fi

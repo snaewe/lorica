@@ -24,19 +24,32 @@
 
 if HAVE_ACE_ROOT
 export LORICA_ROOT = $(LORICA_top_dir)
-export ACE_ROOT = $(ACETAO_ROOT)
+export ACE_ROOT = $(CONF_ACE_ROOT)
 export TAO_ROOT = $(ACE_ROOT)/TAO
 export PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
 
 if LORICA_DARWIN
-export DYLD_LIBRARY_PATH=$(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
+export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
 else
-export LD_LIBRARY_PATH = $(LORICA_ROOT)/lib:$(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
+export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
 TAO_IDL = $(ACE_ROOT)/TAO/TAO_IDL/tao_idl
 GPERF = $(ACE_ROOT)/apps/gperf/src/gperf
+else # !HAVE_ACE_ROOT
+
+if HAVE_CONF_PATH
+export PATH = $(CONF_PATH):$(ENV_PATH)
+endif
+
+if HAVE_CONF_LD_PATH
+if LORICA_DARWIN
+export DYLD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_DYLD_LIBRARY_PATH)
 else
+export LD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_LD_LIBRARY_PATH)
+endif
+endif
+
 TAO_IDL = tao_idl
 GPERF = gperf
 endif # HAVE_ACE_ROOT
