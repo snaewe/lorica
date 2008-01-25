@@ -122,6 +122,8 @@ Lorica::ProxyMapper::proxy_mapper_init (PortableServer::POAManager_ptr outward,
 					PortableServer::POAManager_ptr inward,
 					CORBA::ORB_ptr orb)
 {
+	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+
 	this->orb_ = CORBA::ORB::_duplicate(orb);
 	CORBA::Object_var obj = orb->resolve_initial_references("POACurrent");
 	this->poa_current_ = PortableServer::Current::_narrow(obj.in());
@@ -133,10 +135,8 @@ Lorica::ProxyMapper::proxy_mapper_init (PortableServer::POAManager_ptr outward,
 	policies.length(4);
 	policies[0] = root->create_id_assignment_policy(PortableServer::USER_ID);
 	policies[1] = root->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID);
-	policies[2] =
-		root->create_servant_retention_policy (PortableServer::NON_RETAIN);
-	policies[3] =
-		root->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
+	policies[2] = root->create_servant_retention_policy (PortableServer::NON_RETAIN);
+	policies[3] = root->create_request_processing_policy (PortableServer::USE_DEFAULT_SERVANT);
 
 	// initialize the POAs using the supplied Managers
 

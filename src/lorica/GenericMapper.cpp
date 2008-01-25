@@ -42,14 +42,14 @@ Lorica::GenericMapper::~GenericMapper (void)
 
 
 int
-Lorica::GenericMapper::proxy_mapper_init
-(PortableServer::POAManager_ptr outward,
- PortableServer::POAManager_ptr inward,
- CORBA::ORB_ptr orb)
+Lorica::GenericMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
+					 PortableServer::POAManager_ptr inward,
+					 CORBA::ORB_ptr orb)
 {
+	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+
 	this->orb_ = CORBA::ORB::_duplicate(orb);
-	CORBA::Object_var obj =
-		orb->resolve_initial_references ("DynAnyFactory");
+	CORBA::Object_var obj = orb->resolve_initial_references ("DynAnyFactory");
 	dynAnyFact_ = DynamicAny::DynAnyFactory::_narrow (obj.in ());
 	obj = orb->resolve_initial_references ("POACurrent");
 	poa_current_ = PortableServer::Current::_narrow(obj.in());
@@ -59,9 +59,7 @@ Lorica::GenericMapper::proxy_mapper_init
 	// Collocate the IFR Service.
 	ifr_.init (orb);
 
-	ifr_client_ =
-		ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance
-		(TAO_ORB_Core::ifr_client_adapter_name ());
+	ifr_client_ = ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance(TAO_ORB_Core::ifr_client_adapter_name());
 
 	if (ifr_client_ == 0)
 	{

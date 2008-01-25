@@ -28,6 +28,9 @@
 #include "lorica/FileConfig.h"
 #include "lorica/MapperRegistry.h"
 #include "lorica/debug.h"
+#ifndef ACE_WIN32
+#include "lorica/GenericMapper.h"
+#endif
 
 #include <tao/EndpointPolicy/IIOPEndpointValue_i.h>
 #include <tao/EndpointPolicy/EndpointPolicy.h>
@@ -99,8 +102,7 @@ Lorica::Proxy::open (void *args)
 	try {
 		config->init (config_file_, corba_debug_level_);
 	}
-	catch (const FileConfig::InitError& )
-	{
+	catch (const FileConfig::InitError& ) {
 		ACE_ERROR((LM_ERROR,
 			   ACE_TEXT("Proxy could not read config file %s.\n"),
 			   config_file_));
@@ -110,8 +112,7 @@ Lorica::Proxy::open (void *args)
 	try {
 		this->configure(*config);
 	}
-	catch (const Lorica::Proxy::InitError& )
-	{
+	catch (const Lorica::Proxy::InitError& ) {
 		ACE_ERROR((LM_ERROR,
 			   ACE_TEXT("Proxy configuration failed.\n")));
 		return 0;
@@ -124,8 +125,7 @@ void
 Lorica::Proxy::configure(Config& config)
 	throw (InitError)
 {
-	try
-	{
+	try {
 		// This should be OK even if multiple copies of Proxy
 		// get created as they all create the same ORB instance
 		// and therefore the single ORB instance will get shutdown.
@@ -138,12 +138,11 @@ Lorica::Proxy::configure(Config& config)
 #ifdef ACE_WIN32
 			this->pid_file_ = "lorica.pid";
 #else
-			this->pid_file_ = LORICA_PID_FILE;
+		this->pid_file_ = LORICA_PID_FILE;
 #endif
 		// Create proxy ORB.
 		int argc = arguments->argc();
-		if (Lorica_debug_level > 2)
-		{
+		if (Lorica_debug_level > 2) {
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t) Lorica::Proxy::configure "
 				    "passing %d args to ORB_init:\n", argc));
@@ -154,8 +153,7 @@ Lorica::Proxy::configure(Config& config)
 
 		// test that we have any security functionality
 
-		ACE_Service_Repository * repo =
-			orb_->orb_core()->configuration()->current_service_repository();
+		ACE_Service_Repository * repo = orb_->orb_core()->configuration()->current_service_repository();
 		config.secure_available (repo->find("SSLIOP_Factory") == 0);
 
 		CORBA::Object_var obj = orb_->resolve_initial_references("RootPOA");
@@ -197,8 +195,7 @@ Lorica::Proxy::configure(Config& config)
 				    "(%P|%t) Lorica::Proxy::configure "
 				    "Setting up External PM with %d endpoints\n",
 				    ex_points.size()));
-		for (size_t count = 0; count < ex_points.size(); count++)
-		{
+		for (size_t count = 0; count < ex_points.size(); count++) {
 			std::string inter = ex_points[count].hostname_;
 			if (!ex_points[count].alias_.empty())
 				inter = ex_points[count].alias_;
@@ -221,8 +218,7 @@ Lorica::Proxy::configure(Config& config)
 				    "(%P|%t) Lorica::Proxy::configure "
 				    "Setting up Internal PM with %d endpoints\n",
 				    in_points.size()));
-		for (size_t count = 0; count < in_points.size(); count++)
-		{
+		for (size_t count = 0; count < in_points.size(); count++) {
 			std::string inter = in_points[count].hostname_;
 			if (!in_points[count].alias_.empty())
 				inter = in_points[count].alias_;
@@ -231,9 +227,8 @@ Lorica::Proxy::configure(Config& config)
 							       in_points[count].port_);
 		}
 		policy_value <<= list;
-		policies[0] =
-			orb_->create_policy (EndpointPolicy::ENDPOINT_POLICY_TYPE,
-					     policy_value);
+		policies[0] = orb_->create_policy (EndpointPolicy::ENDPOINT_POLICY_TYPE,
+						   policy_value);
 		inside_pm_ = pmf_->create_POAManager ("InsidePOAManager",
 						      policies);
 
@@ -247,22 +242,18 @@ Lorica::Proxy::configure(Config& config)
 						    inside_pm_.in(),
 						    policies);
 
-		try
-		{
-			ReferenceMapper_i *refMapper =
-				new ReferenceMapper_i (orb_.in(),
-						       iorTable_.in(),
-						       config.secure_available());
+		try {
+			ReferenceMapper_i *refMapper = new ReferenceMapper_i (orb_.in(),
+									      iorTable_.in(),
+									      config.secure_available());
 			PortableServer::ServantBase_var refMapperServant = refMapper;
 
-			PortableServer::ObjectId_var oid =
-				admin_poa_->activate_object (refMapperServant.in());
+			PortableServer::ObjectId_var oid = admin_poa_->activate_object (refMapperServant.in());
 			obj = admin_poa_->id_to_reference (oid.in());
 
 			//          refMapper->allow_insecure_access (obj.in());
 		}
-		catch (CORBA::Exception &ex)
-		{
+		catch (CORBA::Exception &ex) {
 			ex._tao_print_exception("activating mapper object");
 			throw InitError();
 		}
@@ -277,22 +268,20 @@ Lorica::Proxy::configure(Config& config)
 #ifdef ACE_WIN32
 			this->ior_file_ = "lorica.ior";
 #else
-			this->ior_file_ = LORICA_IOR_FILE;
+		this->ior_file_ = LORICA_IOR_FILE;
 #endif
 		FILE *output_file= ACE_OS::fopen (this->ior_file_.c_str(), "w");
-		if (output_file == 0)
+		if (output_file == 0) {
 			ACE_ERROR ((LM_ERROR,
 				    "(%P|%t) Lorica::Proxy::configure "
 				    "Cannot open output file for writing IOR: %s\n",
 				    "lorica.ior"));
-		else
-		{
+		} else {
 			ACE_OS::fprintf (output_file, "%s", ior.c_str());
 			ACE_OS::fclose (output_file);
 		}
 
-		if (!setup_shutdown_handler ())
-		{
+		if (!setup_shutdown_handler ()) {
 			ACE_ERROR ((LM_ERROR,
 				    "(%P|%t) Lorica::Proxy::configure "
 				    "Could not set up shutdown handler\n"));
@@ -301,31 +290,28 @@ Lorica::Proxy::configure(Config& config)
 
 
 		// Initialize the mapper registry
-		Lorica_MapperRegistry *mreg =
-			ACE_Dynamic_Service<Lorica_MapperRegistry>::instance
+		Lorica_MapperRegistry *mreg = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance
 			(this->orb_->orb_core()->configuration(),"MapperRegistry");
 
 		std::string ne_ids = config.null_eval_type_ids();
-		if (!ne_ids.empty())
-		{
+		if (!ne_ids.empty()) {
 
-			if (Lorica_debug_level > 2)
+			if (Lorica_debug_level > 2) {
 				ACE_DEBUG ((LM_DEBUG,
 					    "(%P|%t) Lorica::Proxy::configure "
 					    "adding type ids for null evaluator: %s\n",
 					    ne_ids.c_str()));
+			}
+
 			size_t space = ne_ids.find(' ');
 			size_t start = 0;
-			while (space != std::string::npos)
-			{
+			while (space != std::string::npos) {
 				mreg->add_null_mapper_type(ne_ids.substr(start,space - start));
 				start = space+1;
 				space =  ne_ids.find(' ',start);
 			}
 			mreg->add_null_mapper_type(ne_ids.substr(start));
-		}
-		else if (config.null_eval_any())
-		{
+		} else if (config.null_eval_any()) {
 			if (Lorica_debug_level > 2)
 				ACE_DEBUG ((LM_DEBUG,
 					    "(%P|%t) Lorica::Proxy::configure "
@@ -333,35 +319,44 @@ Lorica::Proxy::configure(Config& config)
 			mreg->create_default_null_mapper();
 		}
 
-		// if (config.generic_evaluator())
-		// {
+		if (config.generic_evaluator()) {
 
-		// 	if (Lorica_debug_level > 0)
-		// 		ACE_DEBUG ((LM_DEBUG,
-		// 			    "(%P|%t) Lorica::Proxy::configure "
-		// 			    "Loading generic evaluator\n"));
-		// 	this->orb_->orb_core()->configuration()->process_directive
-		// 		(ACE_TEXT_ALWAYS_CHAR
-		// 		 (ACE_DYNAMIC_SERVICE_DIRECTIVE("Lorica_GenericLoader",
-		// 						"lorica_GenericEvaluator",
-		// 						"_make_Lorica_GenericLoader",
-		// 						"")));
-		// }
+			ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+			if (Lorica_debug_level > 0)
+				ACE_DEBUG ((LM_DEBUG,
+					    "(%P|%t) Lorica::Proxy::configure "
+					    "Loading generic evaluator\n"));
+
+			ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+
+#ifdef ACE_WIN32
+			this->orb_->orb_core()->configuration()->process_directive
+				(ACE_TEXT_ALWAYS_CHAR
+				 (ACE_DYNAMIC_SERVICE_DIRECTIVE("Lorica_GenericLoader",
+								"lorica_GenericEvaluator",
+								"_make_Lorica_GenericLoader",
+								"")));
+#else
+			Lorica::GenericMapper::GenericMapper *gen_eval = new Lorica::GenericMapper::GenericMapper(*mreg);
+			mreg->add_proxy_mapper (gen_eval);
+#endif
+			ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+		}
 
 		// add generic or other mappers...
+		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		mreg->init_mappers(this->outside_pm_,
 				   this->inside_pm_,
 				   this->orb_,
 				   config.secure_available());
+		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 	}
-	catch (CORBA::Exception &ex)
-	{
+	catch (CORBA::Exception &ex) {
 		ex._tao_print_exception ("(%P|%t) Lorica::Proxy::configure "
 					 "Caught a CORBA exception\n");
 		throw InitError();
 	}
-	catch (...)
-	{
+	catch (...) {
 		ACE_ERROR ((LM_ERROR,
 			    "(%P|%t) Lorica::Proxy::configure "
 			    "Caught an otherwise unknown exception\n"));
@@ -381,15 +376,16 @@ Lorica::Proxy::svc (void)
 
 	// Output the pid file indicating we are running
 	FILE *output_file= ACE_OS::fopen (this->pid_file_.c_str(), "w");
-	if (output_file == 0)
+	if (output_file == 0) {
 		ACE_ERROR_RETURN ((LM_ERROR,
 				   "Cannot open output file for writing PID: %s\n",
 				   this->pid_file_.c_str()),
 				  1);
+	}
 	ACE_OS::fprintf (output_file, "%d\n", ACE_OS::getpid());
 	ACE_OS::fclose (output_file);
-	while (! this->must_shutdown_)
-	{
+
+	while (! this->must_shutdown_) {
 		ACE_Time_Value timeout(1,0);
 		this->orb_->run(timeout);
 	}

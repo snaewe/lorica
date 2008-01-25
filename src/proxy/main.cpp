@@ -56,11 +56,11 @@ become_daemon(void)
 {
 	struct sigaction sig_act;
 	struct rlimit rl;
+	unsigned int n;
 	pid_t pid = -1;
 	int fd0;
 	int fd1;
 	int fd2;
-	unsigned int n;
 
 	/*
 	 * A process that has terminated but has not yet been waited for is a zombie.
@@ -123,27 +123,21 @@ become_daemon(void)
 	 * to prep the daemon process for operation
 	 */
 
-	return EXIT_DAEMON;
+return EXIT_DAEMON;
 
 	// change the working directory
 	if ((chdir("/")) < 0)
 		return EXIT_ERROR;
 
- ACE_DEBUG((LM_INFO, ACE_TEXT("AAA \n")));
 	// close any and all open file descriptors
 	if (getrlimit(RLIMIT_NOFILE, &rl))
 		return EXIT_ERROR;
- ACE_DEBUG((LM_INFO, ACE_TEXT("BBB \n")));
 	if (RLIM_INFINITY == rl.rlim_max)
 		rl.rlim_max = 1024;
- ACE_DEBUG((LM_INFO, ACE_TEXT("CCC \n")));
 	for (n = 3; n < rl.rlim_max; n++) {
-		if (close(n) && (EBADF != errno)) {
-			ACE_DEBUG((LM_INFO, ACE_TEXT("C222 \n")));
+		if (close(n) && (EBADF != errno))
 			return EXIT_ERROR;
-		}
 	}
- ACE_DEBUG((LM_INFO, ACE_TEXT("DDD \n")));
 
 	return EXIT_DAEMON;
 
@@ -151,11 +145,9 @@ become_daemon(void)
 	fd0 = open("/dev/null", O_RDWR);
 	fd1 = dup2(fd0, 1);
 	fd2 = dup2(fd0, 2);
- ACE_DEBUG((LM_INFO, ACE_TEXT("EEE \n")));
 	if (0 != fd0)
 		return EXIT_ERROR;
 
- ACE_DEBUG((LM_INFO, ACE_TEXT("FFF \n")));
 	return EXIT_DAEMON;
 }
 #endif // ACE_WIN32

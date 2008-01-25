@@ -106,6 +106,7 @@ Lorica_MapperRegistry::set_generic_mapper (Lorica::ProxyMapper *mapper)
 void
 Lorica_MapperRegistry::add_proxy_mapper (Lorica::ProxyMapper *mapper)
 {
+	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 	if (this->mappers_ready_)
 		return;
 	if (this->mappers_ == 0)
@@ -137,14 +138,16 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 				     CORBA::ORB_ptr orb,
 				     bool has_security)
 {
+	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+
 	// first, prevent multiple activation
 	if (this->mappers_ready_)
 		return;
 	// consolidate the mapper list, to append first the generic mapper and
 	// then the null mapper.
 
-	if (this->generic_mapper_ != 0)
-	{
+
+	if (this->generic_mapper_ != 0) {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t)Lorica_MapperRegistry::init_mappers "
@@ -153,8 +156,7 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 		this->generic_mapper_ = 0;
 	}
 
-	if (this->null_mapper_ != 0)
-	{
+	if (this->null_mapper_ != 0) {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t)Lorica_MapperRegistry::init_mappers "
@@ -163,8 +165,9 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 		this->null_mapper_ = 0;
 	}
 
-	if (this->mappers_ != 0)
-	{
+	ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
+	if (this->mappers_ != 0) {
+		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG ((LM_DEBUG,
 				    "(%P|%t)Lorica_MapperRegistry::init_mappers "
@@ -173,8 +176,8 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 	}
 
 	this->has_security_ = has_security;
-	if (has_security)
-	{
+	if (has_security) {
+		ACE_DEBUG((LM_INFO, ACE_TEXT("LORICA - %s(%s:%d)\n"), __FILE__, __FUNCTION__, __LINE__));
 		this->sec_policies_.length(1);
 		Security::QOP qop = Security::SecQOPIntegrityAndConfidentiality;
 		CORBA::Any i_and_c;
@@ -183,9 +186,9 @@ Lorica_MapperRegistry::init_mappers (PortableServer::POAManager_ptr outward,
 		// Create the Security::QOPPolicy.
 		sec_policies_[0] =
 			orb->create_policy (Security::SecQOPPolicy, i_and_c);
-	}
-	else
+	} else
 		this->sec_policies_.length(0);
+
 
 	this->mappers_ready_ = true;
 }
