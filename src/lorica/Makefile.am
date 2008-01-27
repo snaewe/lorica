@@ -121,7 +121,7 @@ liblorica_Client_la_SOURCES = \
 	ServerAgent_impl.cpp  \
 	debug.cpp
 
-liblorica_Client_la_LDFLAGS = -L$(LORICA_top_dir)/lib
+liblorica_Client_la_LDFLAGS =
 
 noinst_HEADERS = \
 	ReferenceMapper.idl  \
@@ -166,7 +166,7 @@ liblorica_EvaluatorBase_la_SOURCES = \
 	RMVByNative.cpp       \
 	ReferenceMapValue.cpp
 
-liblorica_EvaluatorBase_la_LDFLAGS = -L$(LORICA_top_dir)/lib
+liblorica_EvaluatorBase_la_LDFLAGS =
 
 noinst_HEADERS += \
 	ConfigBase.h        \
@@ -204,7 +204,7 @@ liblorica_GenericEvaluator_la_SOURCES = \
 	GenericMapper.cpp    \
 	IFRService.cpp
 
-liblorica_GenericEvaluator_la_LDFLAGS = -L$(LORICA_top_dir)/lib
+liblorica_GenericEvaluator_la_LDFLAGS =
 
 noinst_HEADERS += \
 	GenericEvaluator.h \

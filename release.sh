@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #  
-#  Release script for Evolution Brutus Keyring.
-#  Copyright (C) 2007 OMC Denmark ApS
+#  Release script for Lorica.
+#  Copyright (C) 2008 OMC Denmark ApS
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ else
     action="$1"
 fi
 
-product=brutus-keyring
+product=lorica
 
 prepare
 

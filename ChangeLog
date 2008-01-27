@@ -1,3 +1,8 @@
+2008-01-26  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/Makefile.am: Install lorica in /usr/sbin
+	by default.
+
 2008-01-25  Jules Colding  <colding@42tools.com>
 
 	* Lorica: Major build rework on Linux. The autotool build

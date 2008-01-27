@@ -61,26 +61,26 @@ noinst_LTLIBRARIES = libOCI_AsynchProxyTools.la
 
 if HAVE_ACE_ROOT
 libOCI_AsynchProxyTools_la_CPPFLAGS = \
-	$(LORICA_DEFS)                   \
-	$(ACETAO_INCLUDES)               \
+	$(LORICA_DEFS)     \
+	$(ACETAO_INCLUDES) \
 	-DOCI_ASYNCHPROXYTOOLS_BUILD_DLL
 else
 libOCI_AsynchProxyTools_la_CPPFLAGS = \
-	$(LORICA_DEFS)                   \
+	$(LORICA_DEFS) \
 	-DOCI_ASYNCHPROXYTOOLS_BUILD_DLL
 endif
 
 libOCI_AsynchProxyTools_la_SOURCES = \
-	ProxyReplyHandler.cpp \
-	ProxyServant.cpp      \
+	ProxyReplyHandler.cpp        \
+	ProxyServant.cpp             \
 	OperationTable.cpp
 
-libOCI_AsynchProxyTools_la_LDFLAGS = -L$(LORICA_top_dir)/lib
+libOCI_AsynchProxyTools_la_LDFLAGS =
 
 noinst_HEADERS = \
 	OCI_AsynchProxyTools_Export.h \
-	OperationTable.h \
-	ProxyReplyHandler.h \
+	OperationTable.h              \
+	ProxyReplyHandler.h           \
 	ProxyServant.h
 
 

@@ -45,13 +45,12 @@ DOCS="COPYING README INSTALL docs/building_lorica docs/using_the_generic_evaluat
 src_compile() {
 	LORICA_ECONF="--enable-lorica-dist=yes \
 		--enable-lorica-devel=yes \
-		--enable-lorica-devel=yes \
 		--enable-lorica-target=gentoo \
 		$(use_enable tao tao-build yes) \
 		$(use_enable debug lorica-debug yes)"
 
 	econf ${LORICA_ECONF} || die "econf failed"
-	emake || die "emake failed"
+	emake -j1 || die "emake failed"
 }
 
 src_install() {
@@ -62,6 +61,6 @@ src_install() {
 pkg_postinst() {
 	elog "Lorica has been installed or updated."
 	ewarn
-	ewarn "Please restart the Lorica daemon"
+	ewarn "Please restart the Lorica daemon if it is running"
 	ewarn
 }
