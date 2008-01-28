@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -25,22 +25,22 @@
 #include <ace/Service_Config.h>
 #include <ace/Service_Object.h>
 #include <tao/PortableServer/POAManagerC.h>
+
 #include "Lorica_EvaluatorBase_Export.h"
 
 class Lorica_MapperRegistry;
 
-class Lorica_EvaluatorBase_Export  Lorica_EvaluatorLoader :
-public ACE_Service_Object
-{
+class Lorica_EvaluatorBase_Export  Lorica_EvaluatorLoader : public ACE_Service_Object {
 public:
-	Lorica_EvaluatorLoader ();
-	virtual ~Lorica_EvaluatorLoader();
+	Lorica_EvaluatorLoader(void);
+
+	virtual ~Lorica_EvaluatorLoader(void);
 
 	/// Shared object initializer
-	int init (int argc, ACE_TCHAR *argv[]);
+	int init(int argc, ACE_TCHAR *argv[]);
 
 	/// Shared object finalizer
-	int fini (void);
+	int fini(void);
 
 protected:
 	Lorica_MapperRegistry *mapperRegistry_;

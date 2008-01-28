@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -37,82 +37,81 @@ namespace Lorica
 	class ProxyMapper;
 	class ProxyServant;
 
-	class Lorica_EvaluatorBase_Export EvaluatorBase
-	{
+	class Lorica_EvaluatorBase_Export EvaluatorBase {
 	public:
-		EvaluatorBase (ProxyMapper &pm);
+		EvaluatorBase(ProxyMapper &pm);
 
-		EvaluatorBase (const std::string &typeId,
-			       ProxyMapper &pm);
-		virtual ~EvaluatorBase (void);
+		EvaluatorBase(const std::string &typeId,
+			      ProxyMapper &pm);
 
-		/// multiple evaluators may be associated with a single mapper as
-		/// a linked list. This way a single evaluator is responsible for
-		/// a single type.
+		virtual ~EvaluatorBase(void);
 
-		/// Add a new evaluator to the list
-		void add_evaluator (EvaluatorBase *eb);
+		// multiple evaluators may be associated with a single mapper as
+		// a linked list. This way a single evaluator is responsible for
+		// a single type.
 
-		/// Find the appropriate evaluator for the given type. Might be
-		/// this one.  Recursively calls down the change, returns null if
-		/// no evaluators are found for the type.
-		EvaluatorBase *find_evaluator (const std::string &typeId);
+		// Add a new evaluator to the list
+		void add_evaluator(EvaluatorBase *eb);
 
-		/// Returns the typeId for this evaluator.
-		const std::string & type_id (void) const;
+		// Find the appropriate evaluator for the given type. Might be
+		// this one.  Recursively calls down the change, returns null if
+		// no evaluators are found for the type.
+		EvaluatorBase *find_evaluator(const std::string &typeId);
 
-		/// The subclassible parts of the evaluator.
+		// Returns the typeId for this evaluator.
+		const std::string & type_id(void) const;
 
-		/// Evaluate_request takes an operation name string as an in, and
-		/// a NVList reference as an in-out. The NVList represents any in
-		/// or inout arguments associated with the operation.  As supplied
-		/// by the ProxyServant, this list is un-preprocessed, ie it
-		/// contains only the CDR Input Stream containing the payload
-		/// portion of the request message and a zero-length sequence of
-		/// NamedValues as the argument list.  By default, this method is
-		/// a no-op, simply returning the unmodified argument
-		/// list. Subclassers may, based on the operation name, extract
-		/// the arguments any way they wish to validate the data contained
-		/// within or map object references with the assistance of the
-		/// associated ProxyMapper. Returns true if the arguments mapped
-		/// correctly (and further processing is allowed), or false if the
-		/// request should not be forwarded to the target object.
-		virtual bool evaluate_request (const char * operation,
-					       PortableServer::POA_ptr req_poa,
-					       CORBA::ServerRequest_ptr request,
-					       CORBA::NVList_ptr args,
-					       CORBA::NVList_ptr &out_args,
-					       CORBA::NamedValue_ptr &result) const;
+		// The subclassible parts of the evaluator.
 
-		/// Evaluate_reply takes the operation name, inout or out arguments
-		/// and the operation result. As with Evaluate_request, it is up to
-		/// the subclasser to extract the argument values as needed, based
-		/// on the operation.
-		virtual bool evaluate_reply (const char *operation,
-					     PortableServer::POA_ptr req_poa,
-					     CORBA::NVList_ptr args,
-					     CORBA::NamedValue_ptr result) const;
+		// Evaluate_request takes an operation name string as an in, and
+		// a NVList reference as an in-out. The NVList represents any in
+		// or inout arguments associated with the operation.  As supplied
+		// by the ProxyServant, this list is un-preprocessed, ie it
+		// contains only the CDR Input Stream containing the payload
+		// portion of the request message and a zero-length sequence of
+		// NamedValues as the argument list.  By default, this method is
+		// a no-op, simply returning the unmodified argument
+		// list. Subclassers may, based on the operation name, extract
+		// the arguments any way they wish to validate the data contained
+		// within or map object references with the assistance of the
+		// associated ProxyMapper. Returns true if the arguments mapped
+		// correctly (and further processing is allowed), or false if the
+		// request should not be forwarded to the target object.
+		virtual bool evaluate_request(const char *operation,
+					      PortableServer::POA_ptr req_poa,
+					      CORBA::ServerRequest_ptr request,
+					      CORBA::NVList_ptr args,
+					      CORBA::NVList_ptr &out_args,
+					      CORBA::NamedValue_ptr &result) const;
 
-		/// Evaluate_exception takes the opration name and the exception
-		/// payload. Only user exceptions are evaluated, the system exceptions
-		/// are handled by the caller.
-		virtual bool evaluate_exception (const char *oprartion,
-						 PortableServer::POA_ptr req_poa,
-						 const char * ex_type,
-						 TAO_InputCDR &incoming,
-						 TAO_OutputCDR &encap) const;
+		// Evaluate_reply takes the operation name, inout or out arguments
+		// and the operation result. As with Evaluate_request, it is up to
+		// the subclasser to extract the argument values as needed, based
+		// on the operation.
+		virtual bool evaluate_reply(const char *operation,
+					    PortableServer::POA_ptr req_poa,
+					    CORBA::NVList_ptr args,
+					    CORBA::NamedValue_ptr result) const;
+
+		// Evaluate_exception takes the opration name and the exception
+		// payload. Only user exceptions are evaluated, the system exceptions
+		// are handled by the caller.
+		virtual bool evaluate_exception(const char *operation,
+						PortableServer::POA_ptr req_poa,
+						const char *ex_type,
+						TAO_InputCDR &incoming,
+						TAO_OutputCDR &encap) const;
 
 	protected:
-		/// The mapper for this evaluator
+		// The mapper for this evaluator
 		mutable ProxyMapper &mapper_;
 
 	private:
-		/// The local copy of the ID
+		// The local copy of the ID
 		std::string id_;
 
-		/// The next evaluator in the list.
-		EvaluatorBase * next_;
-
+		// The next evaluator in the list.
+		EvaluatorBase *next_;
 	};
 }
 

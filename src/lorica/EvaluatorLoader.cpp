@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -24,31 +24,31 @@
 #endif
 
 #include <ace/Dynamic_Service.h>
-#include "MapperRegistry.h"
 
+#include "MapperRegistry.h"
 #include "EvaluatorLoader.h"
 
-Lorica_EvaluatorLoader::Lorica_EvaluatorLoader ()
+Lorica_EvaluatorLoader::Lorica_EvaluatorLoader(void)
 {
 }
 
-Lorica_EvaluatorLoader::~Lorica_EvaluatorLoader()
+Lorica_EvaluatorLoader::~Lorica_EvaluatorLoader(void)
 {
 }
 
 int
-Lorica_EvaluatorLoader::init (int, ACE_TCHAR *[] )
+Lorica_EvaluatorLoader::init(int,
+			     ACE_TCHAR *[])
 {
 
-	this->mapperRegistry_ =
-		ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
+	this->mapperRegistry_ = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
 
 	return 1;
 }
 
-/// Shared object finalizer
+// Shared object finalizer
 int
-Lorica_EvaluatorLoader::fini (void)
+Lorica_EvaluatorLoader::fini(void)
 {
 	return 1;
 }
