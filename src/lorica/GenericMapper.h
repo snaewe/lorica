@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -22,13 +22,12 @@
 #ifndef GENERIC_MAPPER_H
 #define GENERIC_MAPPER_H
 
-#include "ProxyMapper.h"
 #include <string>
 #include <vector>
-
 #include <tao/DynamicAny/DynAnyFactory.h>
 #include <tao/IFR_Client_Adapter.h>
 
+#include "ProxyMapper.h"
 #include "IFRService.h"
 #include "Lorica_GenericEvaluator_Export.h"
 
@@ -42,34 +41,34 @@ namespace Lorica
 {
 	class EvaluatorBase;
 
-class Lorica_GenericEvaluator_Export GenericMapper : public ProxyMapper
-	{
+	class Lorica_GenericEvaluator_Export GenericMapper : public ProxyMapper {
 	public:
-		GenericMapper (Lorica_MapperRegistry &);
-		virtual ~GenericMapper (void);
+		GenericMapper(Lorica_MapperRegistry & mr);
 
-		/// Initializer specific to proxy mappers. Called by the main during
-		/// program initialization.
-		virtual int proxy_mapper_init (PortableServer::POAManager_ptr outward,
-					       PortableServer::POAManager_ptr inward,
-					       CORBA::ORB_ptr orb);
+		virtual ~GenericMapper(void);
 
-		/// Returns the evaluator associated with a given type ID. Returns null
-		/// if the type is unknown.
-		virtual  EvaluatorBase * evaluator_for (const std::string &typeId);
+		// Initializer specific to proxy mappers. Called by the main during
+		// program initialization.
+		virtual int proxy_mapper_init(PortableServer::POAManager_ptr outward,
+					      PortableServer::POAManager_ptr inward,
+					      CORBA::ORB_ptr orb);
 
-		OCI_APT::ArgList * add_operation (const std::string &typeId,
-						  const char *operation);
+		// Returns the evaluator associated with a given type ID. Returns null
+		// if the type is unknown.
+		virtual EvaluatorBase *evaluator_for(const std::string & typeId);
+
+		OCI_APT::ArgList *add_operation(const std::string & typeId,
+						const char *operation);
 
 	protected:
-		virtual ProxyServant * make_default_servant (void);
+		virtual ProxyServant *make_default_servant(void);
 
 	private:
-		/// a linked list of evaluators known by this mapper
+		// a linked list of evaluators known by this mapper
 		typedef std::vector<std::string> ListType;
 		ListType typeIdList;
 
-		OCI_APT::OperationTable* optable_;
+		OCI_APT::OperationTable *optable_;
 		CORBA::ORB_var orb_;
 		DynamicAny::DynAnyFactory_var dynAnyFact_;
 		Lorica::IFRService ifr_;

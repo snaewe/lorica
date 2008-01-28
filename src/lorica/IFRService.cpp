@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -23,10 +23,6 @@
 #include "config.h"
 #endif
 
-#include "IFRService.h"
-#include "ConfigBase.h"
-#include "FileConfig.h"
-#include "debug.h"
 #include <orbsvcs/IFRService/ComponentRepository_i.h>
 #include <orbsvcs/IFRService/Options.h>
 #include <orbsvcs/IFRService/IFR_ComponentsS.h>
@@ -36,68 +32,66 @@
 #include <tao/ORB_Core.h>
 #include <ace/Auto_Ptr.h>
 
+#include "IFRService.h"
+#include "ConfigBase.h"
+#include "FileConfig.h"
+#include "debug.h"
+
 int
-Lorica::IFRService::init (CORBA::ORB_ptr orb)
+Lorica::IFRService::init(CORBA::ORB_ptr orb)
 {
-	Lorica::Config *config = Lorica::FileConfig::instance ();
-	if  (!config->collocate_ifr())
-	{
+	Lorica::Config *config = Lorica::FileConfig::instance();
+
+	if (!config->collocate_ifr()) {
 		this->my_ifr_server_ = 0;
 		return 0;
 	}
 
-	ACE_ARGV *arguments = config->get_ifr_options ();
-	int argc = arguments->argc ();
+	ACE_ARGV *arguments = config->get_ifr_options();
+	int argc = arguments->argc();
 
-	if (Lorica_debug_level > 0)
-	{
-		ACE_DEBUG ((LM_DEBUG,
-			    "(%P|%t) Lorica::IFRService::init "
-			    "passing %d args to ifr_server's orb_init:\n", argc));
+	if (Lorica_debug_level > 0) {
+		ACE_DEBUG((LM_DEBUG,
+			   "(%P|%t) Lorica::IFRService::init "
+			   "passing %d args to ifr_server's orb_init:\n", argc));
 		for (int i = 0; i < argc; i++)
 			ACE_DEBUG((LM_DEBUG,"  %s\n", arguments->argv()[i]));
 	}
 
 	int result;
-	try
-	{
-		ACE_NEW_RETURN (this->my_ifr_server_,
-				TAO_IFR_Server,
-				-1);
+	try {
+		ACE_NEW_RETURN(this->my_ifr_server_,
+			       TAO_IFR_Server,
+			       -1);
 
-		result = this->my_ifr_server_->init_with_orb (argc,
-							      arguments->argv (),
-							      orb);
+		result = this->my_ifr_server_->init_with_orb(argc,
+							     arguments->argv(),
+							     orb);
 
 		if (result != 0)
-		{
 			return result;
-		}
-
 	}
-	catch (const CORBA::Exception& ex)
-	{
+	catch (const CORBA::Exception & ex) {
 		if (Lorica_debug_level > 0)
-			ex._tao_print_exception ("Lorica::IFRService::init");
-
+			ex._tao_print_exception("Lorica::IFRService::init");
 		throw;
 	}
+
 	return 0;
 }
 
 int
-Lorica::IFRService::fini (void)
+Lorica::IFRService::fini(void)
 {
-	try
-	{
+	try {
 		if (this->my_ifr_server_)
-			this->my_ifr_server_->fini ();
+			this->my_ifr_server_->fini();
 	}
-	catch (const CORBA::Exception& ex)
-	{
+	catch (const CORBA::Exception& ex) {
 		if (Lorica_debug_level > 0)
-			ex._tao_print_exception ("Lorica::IFR_Service::fini");
+			ex._tao_print_exception("Lorica::IFR_Service::fini");
 		throw;
 	}
+
 	return 0;
 }

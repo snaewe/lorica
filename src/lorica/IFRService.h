@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -32,18 +32,18 @@
 
 namespace Lorica
 {
-	class IFRService
-	{
+	class IFRService {
 	public:
 		/// Initialize the IFR service.
-		int init (CORBA::ORB_ptr orb);
+		int init(CORBA::ORB_ptr orb);
 
 		/// Shut down the IFR Service.
-		int fini (void);
+		int fini(void);
 
 	private:
 		/// IFR Server instance.
 		TAO_IFR_Server *my_ifr_server_;
 	};
 }
+
 #endif /* IFRSERVICE_H */

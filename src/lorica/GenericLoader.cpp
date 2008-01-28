@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -29,38 +29,39 @@
 #include "GenericMapper.h"
 #include "MapperRegistry.h"
 
-Lorica_GenericLoader::Lorica_GenericLoader ()
+Lorica_GenericLoader::Lorica_GenericLoader(void)
 {
 }
 
-Lorica_GenericLoader::~Lorica_GenericLoader()
+Lorica_GenericLoader::~Lorica_GenericLoader(void)
 {
 }
 
 int
-Lorica_GenericLoader::init (int argc, ACE_TCHAR * argv[])
+Lorica_GenericLoader::init(int argc,
+			   ACE_TCHAR *argv[])
 {
-	this->Lorica_EvaluatorLoader::init (argc, argv);
+	this->Lorica_EvaluatorLoader::init(argc, argv);
 
-	Lorica::ProxyMapper *mapper =
-		new Lorica::GenericMapper(*this->mapperRegistry_);
-	this->mapperRegistry_->set_generic_mapper (mapper);
+	Lorica::ProxyMapper *mapper = new Lorica::GenericMapper(*this->mapperRegistry_);
+
+	this->mapperRegistry_->set_generic_mapper(mapper);
 
 	return 1;
 }
 
-/// Shared object finalizer
+// Shared object finalizer
 int
-Lorica_GenericLoader::fini (void)
+Lorica_GenericLoader::fini(void)
 {
 	return this->Lorica_EvaluatorLoader::fini();
 }
 
-ACE_STATIC_SVC_DEFINE (Lorica_GenericLoader,
-		       ACE_TEXT ("Lorica_GenericLoader"),
-		       ACE_SVC_OBJ_T,
-		       &ACE_SVC_NAME (Lorica_GenericLoader),
-		       ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
-		       0)
+ACE_STATIC_SVC_DEFINE(Lorica_GenericLoader,
+		      ACE_TEXT ("Lorica_GenericLoader"),
+		      ACE_SVC_OBJ_T,
+		      &ACE_SVC_NAME (Lorica_GenericLoader),
+		      ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
+		      0)
 
-ACE_FACTORY_DEFINE (Lorica_GenericEvaluator, Lorica_GenericLoader)
+ACE_FACTORY_DEFINE(Lorica_GenericEvaluator, Lorica_GenericLoader)

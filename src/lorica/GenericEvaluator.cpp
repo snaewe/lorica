@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
+ *    Lorica source file.
  *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -23,171 +23,171 @@
 #include "config.h"
 #endif
 
+#include <tao/AnyTypeCode/Any_Unknown_IDL_Type.h>
+#include <tao/DynamicAny/DynamicAnyC.h>
 #include <tao/SystemException.h>
 #include <tao/Exception.h>
+
 #include "ProxyMapper.h"
 #include "ProxyServant.h"
 #include "GenericEvaluator.h"
 #include "debug.h"
 
-#include <tao/DynamicAny/DynamicAnyC.h>
-#include <tao/AnyTypeCode/Any_Unknown_IDL_Type.h>
-
-
-Lorica::GenericEvaluator::GenericEvaluator ( const std::string & typeId,
-					     CORBA::InterfaceDef_ptr idef,
-					     OCI_APT::OperationTable* ot,
-					     DynamicAny::DynAnyFactory_ptr df,
-					     ProxyMapper &pm)
-	: Lorica::EvaluatorBase (typeId, pm),
-	  intDef_ (CORBA::InterfaceDef::_duplicate(idef)),
+Lorica::GenericEvaluator::GenericEvaluator(const std::string & typeId,
+					   CORBA::InterfaceDef_ptr idef,
+					   OCI_APT::OperationTable* ot,
+					   DynamicAny::DynAnyFactory_ptr df,
+					   ProxyMapper &pm)
+	: Lorica::EvaluatorBase(typeId, pm),
+	  intDef_(CORBA::InterfaceDef::_duplicate(idef)),
 	  optable_(ot),
-	  dynAnyFact_ (DynamicAny::DynAnyFactory::_duplicate (df))
+	  dynAnyFact_(DynamicAny::DynAnyFactory::_duplicate(df))
 {
 }
 
-Lorica::GenericEvaluator::~GenericEvaluator ()
+Lorica::GenericEvaluator::~GenericEvaluator(void)
 {
 }
 
 bool
-Lorica::GenericEvaluator::evaluate_request (const char * operation,
-					    PortableServer::POA_ptr req_poa,
-					    CORBA::ServerRequest_ptr request,
-					    CORBA::NVList_ptr args,
-					    CORBA::NVList_ptr &out_args,
-					    CORBA::NamedValue_ptr &result) const
+Lorica::GenericEvaluator::evaluate_request(const char *operation,
+					   PortableServer::POA_ptr req_poa,
+					   CORBA::ServerRequest_ptr request,
+					   CORBA::NVList_ptr args,
+					   CORBA::NVList_ptr & out_args,
+					   CORBA::NamedValue_ptr &result) const
 {
-	/// get argument list
-	const std::string & rep_id = this->type_id ();
+	// get argument list
+	const std::string & rep_id = this->type_id();
 
 	if (Lorica_debug_level > 4)
-		ACE_DEBUG ((LM_DEBUG,
-			    "(%P|%t) Lorica::GenericEvaluator::evaluate_request "
-			    "GenericEvaluator::evaluate_request, op = %s, type = %s\n",
-			    operation, rep_id.c_str()));
+		ACE_DEBUG((LM_DEBUG,
+			   "(%P|%t) Lorica::GenericEvaluator::evaluate_request "
+			   "GenericEvaluator::evaluate_request, op = %s, type = %s\n",
+			   operation, rep_id.c_str()));
 
-	OCI_APT::ArgList *arg_list =  this->optable_->find (operation,
-							    rep_id.c_str ());
-	if (arg_list == 0)
-	{
-		try
-		{
+	OCI_APT::ArgList *arg_list = this->optable_->find(operation,
+							  rep_id.c_str());
+	if (arg_list == 0) {
+		try {
 			arg_list = this->optable_->add_interface(this->intDef_.in(),
 								 operation);
 		}
-		catch (CORBA::SystemException &sysEx)
-		{
+		catch (CORBA::SystemException &sysEx) {
 			if (arg_list)
 				arg_list->remove_ref();
-			sysEx._tao_print_system_exception ();
+
+			sysEx._tao_print_system_exception();
+
 			throw;
 		}
 	}
 
 	CORBA::TypeCode_var result_tc;
 	bool is_oneway = false;
-	arg_list->prepare_request (args, result_tc, is_oneway);
+	arg_list->prepare_request(args, result_tc, is_oneway);
 
 	request->arguments(args);
 
-	/// proxify the IN/INOUT arguments
-	PortableServer::POA_var other_poa = this->mapper_.other_POA (req_poa);
-	this->proxify_params (req_poa, args, arg_list, CORBA::ARG_IN);
+	// proxify the IN/INOUT arguments
+	PortableServer::POA_var other_poa = this->mapper_.other_POA(req_poa);
+	this->proxify_params(req_poa, args, arg_list, CORBA::ARG_IN);
 
-	if (!is_oneway)
-	{
+	if (!is_oneway) {
 		CORBA::ORB_var orb = this->mapper_.orb();
+
 		// The operation is not a one-way, therefore we must prepare
 		// a list of inout and out args that will be used to marshal
 		// the response to the client after hearing back from the delegate.
 		// Since we are using AMI/AMH model, the reply processing will happen
 		// in possibly a different thread, but certainly a different stack.
-		orb->create_list (0,out_args);
-		for (CORBA::ULong i = 0; i < args->count(); i++)
-		{
+		orb->create_list(0, out_args);
+		for (CORBA::ULong i = 0; i < args->count(); i++) {
 			CORBA::NamedValue_ptr item = args->item(i);
-			if (item->flags() == CORBA::ARG_INOUT ||
-			    item->flags() == CORBA::ARG_OUT)
-				out_args->add_value (item->name(),
-						     *item->value(),
-						     item->flags());
+
+			if (item->flags() == CORBA::ARG_INOUT
+			    || item->flags() == CORBA::ARG_OUT)
+				out_args->add_value(item->name(),
+						    *item->value(),
+						    item->flags());
 		}
 
-		if (result_tc->kind() != CORBA::tk_null &&
-		    result_tc->kind() != CORBA::tk_void)
-		{
-			orb->create_named_value (result);
+		if ((result_tc->kind() != CORBA::tk_null)
+		    && (result_tc->kind() != CORBA::tk_void)) {
+			orb->create_named_value(result);
 
 			TAO::Unknown_IDL_Type *ut = 0;
-			ACE_NEW_RETURN (ut, TAO::Unknown_IDL_Type(result_tc.in()), false);
+			ACE_NEW_RETURN(ut, TAO::Unknown_IDL_Type(result_tc.in()), false);
+
 			CORBA::Any typed_any;
 			typed_any.replace(ut);
 
 			*(result->value()) = typed_any;
 		}
 	}
+
 	return true;
 }
 
 bool
-Lorica::GenericEvaluator::evaluate_reply (const char *operation,
-					  PortableServer::POA_ptr req_poa,
-					  CORBA::NVList_ptr args,
-					  CORBA::NamedValue_ptr result) const
+Lorica::GenericEvaluator::evaluate_reply(const char *operation,
+					 PortableServer::POA_ptr req_poa,
+					 CORBA::NVList_ptr args,
+					 CORBA::NamedValue_ptr result) const
 {
-	const std::string & rep_id = this->type_id ();
-	OCI_APT::ArgList *arg_list =  this->optable_->find (operation,
-							    rep_id.c_str ());
-	this->proxify_result  (req_poa, result, arg_list);
+	const std::string & rep_id = this->type_id();
+	OCI_APT::ArgList *arg_list = this->optable_->find(operation,
+							  rep_id.c_str());
+	this->proxify_result(req_poa, result, arg_list);
 
-	/// proxify the OUT arguments
-	this->proxify_params (req_poa, args, arg_list, CORBA::ARG_OUT);
+	// proxify the OUT arguments
+	this->proxify_params(req_poa, args, arg_list, CORBA::ARG_OUT);
+
 	return true;
 }
 
 
 bool
-Lorica::GenericEvaluator::evaluate_exception (const char *operation,
-					      PortableServer::POA_ptr req_poa,
-					      const char * ex_type,
-					      TAO_InputCDR &incoming,
-					      TAO_OutputCDR &encap) const
+Lorica::GenericEvaluator::evaluate_exception(const char *operation,
+					     PortableServer::POA_ptr req_poa,
+					     const char *ex_type,
+					     TAO_InputCDR & incoming,
+					     TAO_OutputCDR & encap) const
 {
 	if (Lorica_debug_level > 4)
-		ACE_DEBUG ((LM_DEBUG,
-			    "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-			    "invoked, operation = %s\n", operation));
-	const std::string & rep_id = this->type_id ();
-	OCI_APT::ArgList *arg_list =  this->optable_->find (operation,
-							    rep_id.c_str ());
+		ACE_DEBUG((LM_DEBUG,
+			   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
+			   "invoked, operation = %s\n", operation));
+
+	const std::string & rep_id = this->type_id();
+	OCI_APT::ArgList *arg_list = this->optable_->find(operation,
+							  rep_id.c_str());
 	CORBA::Any_var any;
 	OCI_APT::Arg *excep = arg_list->find_exception(ex_type, any.out());
-	if (excep == 0)
-	{
+
+
+	if (excep == 0) {
 		if (Lorica_debug_level > 0)
-			ACE_ERROR ((LM_ERROR,
-				    "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-				    "could not find exception type %s\n", ex_type));
+			ACE_ERROR((LM_ERROR,
+				   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
+				   "could not find exception type %s\n", ex_type));
 		return false;
 	}
 
 	any->impl()->_tao_decode(incoming);
-	this->proxify_exception (req_poa, any.inout (), excep);
+	this->proxify_exception(req_poa, any.inout(), excep);
 
-	if (any->impl()->marshal_value(encap))
-	{
+	if (any->impl()->marshal_value(encap)) {
 		if (Lorica_debug_level > 4)
-			ACE_DEBUG ((LM_DEBUG,
-				    "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-				    "Marshal_value succeeded, buflen = %d\n",
-				    encap.length()));
-	}
-	else
-		if (Lorica_debug_level > 0)
-			ACE_DEBUG ((LM_DEBUG,
-				    "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-				    "Marshal_value failed\n"));
+			ACE_DEBUG((LM_DEBUG,
+				   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
+				   "Marshal_value succeeded, buflen = %d\n",
+				   encap.length()));
+	} else if (Lorica_debug_level > 0)
+		ACE_DEBUG((LM_DEBUG,
+			   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
+			   "Marshal_value failed\n"));
+
 	return true;
 }
 

@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
+ *    Lorica header file.
  *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -22,70 +22,69 @@
 #ifndef GENERIC_EVALUATOR_H
 #define GENERIC_EVALUATOR_H
 
-#include "EvaluatorBase.h"
-#include "OCI/OperationTable.h"
 #include <tao/DynamicAny/DynAnyFactory.h>
 #include <tao/ORB.h>
 
+#include "EvaluatorBase.h"
+#include "OCI/OperationTable.h"
 #include "Lorica_GenericEvaluator_Export.h"
 
-namespace Lorica
+namespace Lorica 
 {
-class Lorica_GenericEvaluator_Export GenericEvaluator : public EvaluatorBase
-	{
+	class Lorica_GenericEvaluator_Export GenericEvaluator : public EvaluatorBase {
 	public:
-		GenericEvaluator (const std::string &id,
-				  CORBA::InterfaceDef_ptr,
-				  OCI_APT::OperationTable*,
-				  DynamicAny::DynAnyFactory_ptr,
-				  ProxyMapper &pm);
+		GenericEvaluator(const std::string & id,
+				 CORBA::InterfaceDef_ptr idef,
+				 OCI_APT::OperationTable *ot,
+				 DynamicAny::DynAnyFactory_ptr df,
+				 ProxyMapper & pm);
 
-		virtual ~GenericEvaluator ();
+		virtual ~GenericEvaluator(void);
 
-		bool evaluate_request (const char * operation,
-				       PortableServer::POA_ptr req_poa,
-				       CORBA::ServerRequest_ptr request,
-				       CORBA::NVList_ptr args,
-				       CORBA::NVList_ptr &out_args,
-				       CORBA::NamedValue_ptr &result) const;
+		bool evaluate_request(const char *operation,
+				      PortableServer::POA_ptr req_poa,
+				      CORBA::ServerRequest_ptr request,
+				      CORBA::NVList_ptr args,
+				      CORBA::NVList_ptr & out_args,
+				      CORBA::NamedValue_ptr & result) const;
 
-		bool evaluate_reply (const char *operation,
-				     PortableServer::POA_ptr req_poa,
-				     CORBA::NVList_ptr args,
-				     CORBA::NamedValue_ptr result) const;
+		bool evaluate_reply(const char *operation,
+				    PortableServer::POA_ptr req_poa,
+				    CORBA::NVList_ptr args,
+				    CORBA::NamedValue_ptr result) const;
 
-		virtual bool evaluate_exception (const char *operation,
-						 PortableServer::POA_ptr req_poa,
-						 const char * ex_type,
-						 TAO_InputCDR &,
-						 TAO_OutputCDR &) const;
+		virtual bool evaluate_exception(const char *operation,
+						PortableServer::POA_ptr req_poa,
+						const char *ex_type,
+						TAO_InputCDR & incoming,
+						TAO_OutputCDR & encap) const;
 
 
 	private:
 		CORBA::InterfaceDef_var intDef_;
-		mutable OCI_APT::OperationTable* optable_;
+		mutable OCI_APT::OperationTable *optable_;
 		DynamicAny::DynAnyFactory_var dynAnyFact_;
 
-		bool has_objref (CORBA::TypeCode_ptr tc) const;
+		bool has_objref(CORBA::TypeCode_ptr tc) const;
 
-		void proxify_params (PortableServer::POA_ptr req_poa,
-				     CORBA::NVList_ptr params,
-				     OCI_APT::ArgList * arglist,
-				     CORBA::Flags direction) const;
+		void proxify_params(PortableServer::POA_ptr req_poa,
+				    CORBA::NVList_ptr params,
+				    OCI_APT::ArgList *arglist,
+				    CORBA::Flags direction) const;
 
-		void proxify_result (PortableServer::POA_ptr req_poa,
-				     CORBA::NamedValue_ptr nv,
-				     OCI_APT::ArgList *arg_list) const;
+		void proxify_result(PortableServer::POA_ptr req_poa,
+				    CORBA::NamedValue_ptr nv,
+				    OCI_APT::ArgList *arg_list) const;
 
-		void proxify_exception (PortableServer::POA_ptr req_poa,
-					CORBA::Any &value,
-					OCI_APT::Arg *exception) const;
+		void proxify_exception(PortableServer::POA_ptr req_poa,
+				       CORBA::Any & value,
+				       OCI_APT::Arg *exception) const;
 
-		void proxify_any (PortableServer::POA_ptr req_poa,
-				  CORBA::Any &any) const;
+		void proxify_any(PortableServer::POA_ptr req_poa,
+				 CORBA::Any & any) const;
 
-		bool proxify (PortableServer::POA_ptr,
-			      DynamicAny::DynAny_ptr &theDynAny) const;
+		bool proxify(PortableServer::POA_ptr,
+			     DynamicAny::DynAny_ptr & theDynAny) const;
 	};
 }
 

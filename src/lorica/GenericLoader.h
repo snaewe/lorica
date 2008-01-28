@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -25,21 +25,19 @@
 #include "EvaluatorLoader.h"
 #include "Lorica_GenericEvaluator_Export.h"
 
-class Lorica_GenericEvaluator_Export  Lorica_GenericLoader :
-public Lorica_EvaluatorLoader
-{
+class Lorica_GenericEvaluator_Export Lorica_GenericLoader : public Lorica_EvaluatorLoader {
 public:
-	Lorica_GenericLoader ();
-	virtual ~Lorica_GenericLoader();
+	Lorica_GenericLoader(void);
+	virtual ~Lorica_GenericLoader(void);
 
-	/// Shared object initializer
-	int init (int argc, ACE_TCHAR *argv[]);
+	// Shared object initializer
+	int init(int argc, ACE_TCHAR *argv[]);
 
-	/// Shared object finalizer
-	int fini (void);
+	// Shared object finalizer
+	int fini(void);
 };
 
-ACE_STATIC_SVC_DECLARE_EXPORT (Lorica_GenericEvaluator, Lorica_GenericLoader)
-ACE_FACTORY_DECLARE (Lorica_GenericEvaluator, Lorica_GenericLoader)
+ACE_STATIC_SVC_DECLARE_EXPORT(Lorica_GenericEvaluator, Lorica_GenericLoader)
+ACE_FACTORY_DECLARE(Lorica_GenericEvaluator, Lorica_GenericLoader)
 
 #endif // GENERIC_LOADER_H

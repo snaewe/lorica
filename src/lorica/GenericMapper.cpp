@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -23,23 +23,22 @@
 #include "config.h"
 #endif
 
+#include <tao/ORB_Core.h>
+
 #include "GenericMapper.h"
 #include "GenericEvaluator.h"
 #include "EvaluatorBase.h"
 #include "ProxyServant.h"
 
-#include <tao/ORB_Core.h>
-
-Lorica::GenericMapper::GenericMapper (Lorica_MapperRegistry &mr)
+Lorica::GenericMapper::GenericMapper(Lorica_MapperRegistry & mr)
 	: Lorica::ProxyMapper(mr,"_lorica_generic"),
 	  typeIdList()
 {
 }
 
-Lorica::GenericMapper::~GenericMapper (void)
+Lorica::GenericMapper::~GenericMapper(void)
 {
 }
-
 
 int
 Lorica::GenericMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
@@ -47,37 +46,36 @@ Lorica::GenericMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
 					 CORBA::ORB_ptr orb)
 {
 	this->orb_ = CORBA::ORB::_duplicate(orb);
-	CORBA::Object_var obj = orb->resolve_initial_references ("DynAnyFactory");
+	CORBA::Object_var obj = orb->resolve_initial_references("DynAnyFactory");
 
-	dynAnyFact_ = DynamicAny::DynAnyFactory::_narrow (obj.in ());
-	obj = orb->resolve_initial_references ("POACurrent");
+	dynAnyFact_ = DynamicAny::DynAnyFactory::_narrow(obj.in());
+	obj = orb->resolve_initial_references("POACurrent");
 	poa_current_ = PortableServer::Current::_narrow(obj.in());
 
 	this->optable_ = new OCI_APT::OperationTable();
 
 	// Collocate the IFR Service.
-	ifr_.init (orb);
+	ifr_.init(orb);
 
 	ifr_client_ = ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance(TAO_ORB_Core::ifr_client_adapter_name());
 
 	if (ifr_client_ == 0)
-		throw ::CORBA::INTF_REPOS ();
+		throw ::CORBA::INTF_REPOS();
 
 	return this->Lorica::ProxyMapper::proxy_mapper_init(outward,inward,orb);
 }
 
-OCI_APT::ArgList *
-Lorica::GenericMapper::add_operation (const std::string &typeId,
-				      const char *operation)
+OCI_APT::ArgList*
+Lorica::GenericMapper::add_operation(const std::string & typeId,
+				     const char *operation)
 {
-	CORBA::InterfaceDef_var intDef =
-		this->ifr_client_->get_interface (this->orb_, typeId.c_str());
+	CORBA::InterfaceDef_var intDef = this->ifr_client_->get_interface(this->orb_, typeId.c_str());
 
-	if ( CORBA::is_nil (intDef.in()))
-	{
-		ACE_ERROR ((LM_ERROR,
-			    ACE_TEXT ("[Lorica::ProxyServantArgList] ")
-			    ACE_TEXT ("_get_interface returned nil\n")));
+	if (CORBA::is_nil(intDef.in())) {
+		ACE_ERROR((LM_ERROR,
+			   ACE_TEXT ("[Lorica::ProxyServantArgList] ")
+			   ACE_TEXT ("_get_interface returned nil\n")));
+
 		throw CORBA::BAD_OPERATION(CORBA::OMGVMCID | 2,
 					   CORBA::COMPLETED_NO);
 	}
@@ -85,40 +83,37 @@ Lorica::GenericMapper::add_operation (const std::string &typeId,
 	return this->optable_->add_interface(intDef.in(), operation);
 }
 
-Lorica::EvaluatorBase *
-Lorica::GenericMapper::evaluator_for (const std::string &typeId)
+Lorica::EvaluatorBase*
+Lorica::GenericMapper::evaluator_for(const std::string & typeId)
 {
 	Lorica::EvaluatorBase *eval = 0;
+
 	if (this->evaluator_head_ != 0)
-		eval = this->evaluator_head_->find_evaluator (typeId);
+		eval = this->evaluator_head_->find_evaluator(typeId);
 
-	if (eval == 0)
-	{
-		try
-		{
-			CORBA::InterfaceDef_var intDef =
-				this->ifr_client_->get_interface (this->orb_, typeId.c_str());
+	if (eval == 0) {
+		try {
+			CORBA::InterfaceDef_var intDef = this->ifr_client_->get_interface(this->orb_, typeId.c_str());
 
-			if (! CORBA::is_nil (intDef.in()))
-			{
-				eval = new Lorica::GenericEvaluator (typeId,
-								     intDef.in(),
-								     optable_,
-								     dynAnyFact_.in(),
-								     *this);
+			if (!CORBA::is_nil(intDef.in())) {
+				eval = new Lorica::GenericEvaluator(typeId,
+								    intDef.in(),
+								    optable_,
+								    dynAnyFact_.in(),
+								    *this);
 				this->add_evaluator(eval);
 			}
 		}
-		catch (CORBA::Exception &ex)
-		{
+		catch (CORBA::Exception &ex) {
 			ex._tao_print_exception ("get_interface exception:");
 		}
 	}
+
 	return eval;
 }
 
-Lorica::ProxyServant *
-Lorica::GenericMapper::make_default_servant (void)
+Lorica::ProxyServant*
+Lorica::GenericMapper::make_default_servant(void)
 {
-	return new Lorica::ProxyServant (*this);
+	return new Lorica::ProxyServant(*this);
 }

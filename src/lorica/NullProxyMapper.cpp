@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -27,38 +27,38 @@
 #include "EvaluatorBase.h"
 #include "ProxyServant.h"
 
-Lorica::NullProxyMapper::NullProxyMapper (Lorica_MapperRegistry &mr)
-	:Lorica::ProxyMapper(mr,"_lorica_null"),
+Lorica::NullProxyMapper::NullProxyMapper(Lorica_MapperRegistry & mr)
+	:Lorica::ProxyMapper(mr, "_lorica_null"),
 	 typeIdList()
 {
 	this->add_evaluator(new Lorica::EvaluatorBase(*this));
 }
 
-Lorica::NullProxyMapper::~NullProxyMapper (void)
+Lorica::NullProxyMapper::~NullProxyMapper(void)
 {
 }
 
 void
-Lorica::NullProxyMapper::add_type_id (const std::string &typeId)
+Lorica::NullProxyMapper::add_type_id(const std::string & typeId)
 {
 	this->typeIdList.push_back(typeId);
 }
 
 Lorica::EvaluatorBase *
-Lorica::NullProxyMapper::evaluator_for (const std::string &typeId)
+Lorica::NullProxyMapper::evaluator_for(const std::string & typeId)
 {
 	if (typeIdList.size() == 0)
 		return this->evaluator_head_;
-	for (ListType::const_iterator iter = typeIdList.begin();
-	     iter != typeIdList.end();
-	     iter++)
+
+	for (ListType::const_iterator iter = typeIdList.begin(); iter != typeIdList.end(); iter++)
 		if (typeId == *iter)
 			return this->evaluator_head_;
+
 	return 0;
 }
 
 Lorica::ProxyServant *
-Lorica::NullProxyMapper::make_default_servant (void)
+Lorica::NullProxyMapper::make_default_servant(void)
 {
-	return new Lorica::ProxyServant (*this);
+	return new Lorica::ProxyServant(*this);
 }
