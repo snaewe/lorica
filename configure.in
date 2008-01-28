@@ -75,6 +75,7 @@ AC_SUBST(LORICA_NAME)
 LORICA_VERSION=AC_PACKAGE_VERSION
 AC_SUBST(LORICA_VERSION)
 
+
 dnl
 dnl Configure options
 dnl
@@ -398,7 +399,6 @@ if test "x$enable_tao_build" = "xyes"; then
    done
 
 else
-
    if test "x$CONF_PATH" = "x"; then
       AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no)
    else
@@ -463,6 +463,9 @@ dnl Misc Lorica defines
 dnl 
 AC_DEFINE_UNQUOTED([LORICA_PID_FILE], ["/var/run/lorica.pid"], [Full path to Lorica PID file])
 AC_DEFINE_UNQUOTED([LORICA_IOR_FILE], ["/var/run/lorica/lorica.ior"], [Full path to Lorica IOR file])
+AC_DEFINE_UNQUOTED([LORICA_EXE_NAME], ["lorica"], [Lorica executable name])
+AC_DEFINE_UNQUOTED([IFR_SERVICE_EXE_NAME], ["ifr_service"], [IFR Service executable name])
+
 
 dnl
 dnl Check if this is a distribution
