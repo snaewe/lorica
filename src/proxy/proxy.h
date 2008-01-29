@@ -2,7 +2,7 @@
 
 /*
  *    Lorica header file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -29,17 +29,15 @@
 #ifndef PROXY_H
 #define PROXY_H
 
+#include <string>
 #include <ace/Task.h>
-
 #include <tao/ORB.h>
 #include <tao/PortableServer/POAC.h>
 #include <tao/IORTable/IORTable.h>
 #include <tao/PortableServer/POAManagerFactoryC.h>
-#include <string>
 
 namespace Lorica
 {
-
 	// Forward declarations.
 	class Config;
 
@@ -50,34 +48,33 @@ namespace Lorica
  * threaded.
  */
 
-	class Proxy : public ACE_Task_Base
-	{
+	class Proxy : public ACE_Task_Base {
 	public:
-		class InitError {};
+		class InitError{};
 
-	public:
-		Proxy ();
-		virtual ~Proxy (void);
+		Proxy(void);
+
+		virtual ~Proxy(void);
 
 		// load configuration based on supplied config file
-		virtual void configure (Config& config) throw (InitError);
+		virtual void configure(Config & config)
+			throw (InitError);
 
 		// ACE Task base generic initializer - args[0] is config file name
-		virtual int open (void *args = 0);
+		virtual int open(void *args = 0);
 
 		// ACE Task base executable method.
-		virtual int svc (void);
+		virtual int svc(void);
 
-		void shutdown (void);
+		void shutdown(void);
 
 	private:
-		bool setup_shutdown_handler (void);
+		bool setup_shutdown_handler(void);
 
 		static Proxy* this_;
 
-		friend int signal_handler (int signum);
+		friend int signal_handler(int signum);
 
-	private:
 		CORBA::ORB_var orb_;
 		PortableServer::POA_var root_poa_;
 		PortableServer::POAManagerFactory_var pmf_;
@@ -91,7 +88,7 @@ namespace Lorica
 		bool must_shutdown_;
 	};
 
-	int signal_handler (int signum);
+	int signal_handler(int signum);
 
 }  /* namespace Lorica */
 

@@ -51,8 +51,7 @@ namespace Lorica
 		ACE_UINT32 hostid;
 	};
 
-	class Lorica_EvaluatorBase_Export ProxyMapper
-	{
+	class Lorica_EvaluatorBase_Export ProxyMapper {
 	public:
 		ProxyMapper(Lorica_MapperRegistry &, const std::string &id);
 		virtual ~ProxyMapper(void);

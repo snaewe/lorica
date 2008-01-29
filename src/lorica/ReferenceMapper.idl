@@ -2,7 +2,7 @@
 
 /*
  *    Lorica IDL file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -34,46 +34,49 @@ module Lorica
 		exception SecurityNotAvailable { };
 
 		// Map a reference that a server would publish to clients outside the
-		// enclave. The arguments are -
-		//   orig - the original object reference
-		//   corbaloc_name - if not "", use this name to create a binding in
-		//     the proxy's IOR table.
-		//   agent - the server agent used to receive messages related to
-		//     the reference being mapped.
-		Object as_server (in Object orig,
-				  in string corbaloc_name,
-				  in Lorica::ServerAgent agent);
+		// enclave. The arguments are:
+		//
+		//   orig:          The original object reference
+		///
+		//   corbaloc_name: If not "", use this name to create a binding in
+		//                  the proxy's IOR table.
+		//
+		//   agent:         The server agent used to receive messages related
+		//                  to the reference being mapped.
+		//
+		Object as_server(in Object orig,
+				 in string corbaloc_name,
+				 in Lorica::ServerAgent agent);
 
 		// The same as "as_server" however in this form, the mapped reference
 		// will require secure access. If security is not available an execption
 		// is raised.
-		Object as_secure_server (in Object orig,
-					 in string corbaloc_name,
-					 in Lorica::ServerAgent agent)
+		Object as_secure_server(in Object orig,
+					in string corbaloc_name,
+					in Lorica::ServerAgent agent)
 			raises (SecurityNotAvailable);
 
 		// Map a reference that a client inside an enclave would use to reach
 		// servers on the outside. This is necessary only when the interface
 		// associated with the supplied reference may be used to pass object
 		// references.
-		Object as_client (in Object orig);
+		Object as_client(in Object orig);
 
 		// Remove a previously mapped server reference. This will unbind the
 		// reference from the IOR table, if previously bound. This should
 		// probably generate an error if the mapped reference is not known.
-		void remove_server (in Object mapped);
+		void remove_server(in Object mapped);
 
 		// Remove a previously mapped client reference. Client references are
 		// counted, as many clients may wish to communicate with the same server.
 		// This should probably return an error if the mapped reference is not
 		// known.
-		void remove_client (in Object mapped);
+		void remove_client(in Object mapped);
 
 		// Returns true if the proxy is capable of supporting secure invocations.
 		// This status depends on the configuration of the proxy. If SSLIOP is
 		// not installed, then a current won't be available and thus no security
 		// support is available.
-		boolean supports_security ();
-
+		boolean supports_security();
 	};
 };

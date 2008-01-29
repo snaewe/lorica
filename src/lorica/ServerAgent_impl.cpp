@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -25,17 +25,17 @@
 
 #include "ServerAgent_impl.h"
 
-ServerAgent_impl::ServerAgent_impl ()
+ServerAgent_impl::ServerAgent_impl(void)
 {
 }
 
-ServerAgent_impl::~ServerAgent_impl ()
+ServerAgent_impl::~ServerAgent_impl(void)
 {
 }
 
 void
-ServerAgent_impl::error_occured (CORBA::Long code,
-				 const char *message)
+ServerAgent_impl::error_occured(CORBA::Long code,
+				const char *message)
 {
 	ACE_DEBUG ((LM_INFO,
 		    "ERROR occurred in the proxy.\n"
@@ -46,8 +46,7 @@ ServerAgent_impl::error_occured (CORBA::Long code,
 }
 
 void
-ServerAgent_impl::proxy_disconnect ()
+ServerAgent_impl::proxy_disconnect()
 {
-	ACE_DEBUG((LM_INFO,
-		   "The proxy is shutting down\n"));
+	ACE_DEBUG((LM_INFO, "The proxy is shutting down\n"));
 }

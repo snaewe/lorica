@@ -2,7 +2,7 @@
 
 /*
  *    Lorica header file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -22,9 +22,10 @@
 #ifndef REFERENCE_MAPPER_I_H
 #define REFERENCE_MAPPER_I_H
 
-#include "lorica/ReferenceMapperS.h"
 #include <tao/IORTable/IORTable.h>
 #include <orbsvcs/SecurityLevel2C.h>
+
+#include "lorica/ReferenceMapperS.h"
 
 class Lorica_MapperRegistry;
 
@@ -35,36 +36,40 @@ namespace Lorica
 	// ReferenceMapper converts supplied object references into proxy managed
 	// references that may be exported by servers or used by internal clients.
 
-	class ReferenceMapper_i : public virtual POA_Lorica::ReferenceMapper
-	{
+	class ReferenceMapper_i : public virtual POA_Lorica::ReferenceMapper {
 	public:
-		class InitError {};
+		class InitError {
+		};
 
 	public:
-		ReferenceMapper_i (CORBA::ORB_ptr,
-				   IORTable::Table_ptr,
-				   bool has_sec);
+		ReferenceMapper_i(CORBA::ORB_ptr orb,
+				  IORTable::Table_ptr iort,
+				  bool has_sec);
 
-		virtual ~ReferenceMapper_i (void);
+		virtual ~ReferenceMapper_i(void);
 
 
-		// enclave. The arguments are -
-		//   orig - the original object reference
-		//   corbaloc_name - if not "", use this name to create a binding in
-		//     the proxy's IOR table.
-		//   agent - the server agent used to receive messages related to
-		//     the reference being mapped.
-		CORBA::Object_ptr as_server (CORBA::Object_ptr orig,
-					     const char *corbaloc_name,
-					     Lorica::ServerAgent_ptr agent)
+		// The arguments are:
+		//
+		//   orig:           The original object reference
+		//
+		//   corbaloc_name:  If not "", use this name to create a binding in
+		//                   the proxy's IOR table.
+		//
+		//   agent:          The server agent used to receive messages related to
+		//                   the reference being mapped.
+		//
+		CORBA::Object_ptr as_server(CORBA::Object_ptr orig,
+					    const char *corbaloc_name,
+					    Lorica::ServerAgent_ptr agent)
 			throw (CORBA::SystemException);
 
 		// The same as "as_server" however in this form, the mapped reference
 		// will require secure access. If security is not available an execption
 		// is raised.
-		CORBA::Object_ptr as_secure_server (CORBA::Object_ptr orig,
-						    const char *corbaloc_name,
-						    Lorica::ServerAgent_ptr agent)
+		CORBA::Object_ptr as_secure_server(CORBA::Object_ptr orig,
+						   const char *corbaloc_name,
+						   Lorica::ServerAgent_ptr agent)
 			throw (CORBA::SystemException,
 			       Lorica::ReferenceMapper::SecurityNotAvailable);
 
@@ -72,42 +77,42 @@ namespace Lorica
 		// servers on the outside. This is necessary only when the interface
 		// associated with the supplied reference may be used to pass object
 		// references.
-		CORBA::Object_ptr as_client (CORBA::Object_ptr orig)
+		CORBA::Object_ptr as_client(CORBA::Object_ptr orig)
 			throw (CORBA::SystemException);
 
 		// Remove a previously mapped server reference. This will unbind the
 		// reference from the IOR table, if previously bound. This should
 		// probably generate an error if the mapped reference is not known.
-		void remove_server (CORBA::Object_ptr mapped)
+		void remove_server(CORBA::Object_ptr mapped)
 			throw (CORBA::SystemException);
 
 		// Remove a previously mapped client reference. Client references are
 		// counted, as many clients may wish to communicate with the same server.
 		// This should probably return an error if the mapped reference is not
 		// known.
-		void remove_client (CORBA::Object_ptr mapped)
+		void remove_client(CORBA::Object_ptr mapped)
 			throw (CORBA::SystemException);
 
 		// Returns true if the proxy is capable of supporting secure invocations.
 		// This status depends on the configuration of the proxy. If SSLIOP is
 		// not installed, then a current won't be available and thus no security
 		// support is available.
-		CORBA::Boolean supports_security (void)
+		CORBA::Boolean supports_security(void)
 			throw (CORBA::SystemException);
 
 		// Internal access to the registry, used to initialize the mappers.
-		Lorica_MapperRegistry *registry (void);
+		Lorica_MapperRegistry *registry(void);
 
 		// Add the supplied reference to the AccessDecision object's list of
 		// allowed objects.
-		void allow_insecure_access (CORBA::Object_ptr self);
+		void allow_insecure_access(CORBA::Object_ptr self);
 
 	private:
 
-		CORBA::Object_ptr as_server_i (bool require_secure,
-					       CORBA::Object_ptr orig,
-					       const char *corbaloc_name,
-					       Lorica::ServerAgent_ptr agent)
+		CORBA::Object_ptr as_server_i(bool require_secure,
+					      CORBA::Object_ptr orig,
+					      const char *corbaloc_name,
+					      Lorica::ServerAgent_ptr agent)
 			throw (CORBA::SystemException);
 
 		Lorica_MapperRegistry *registry_;

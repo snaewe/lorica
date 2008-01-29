@@ -2,7 +2,7 @@
 
 /*
  *    Lorica header file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -22,46 +22,48 @@
 #ifndef LORICA_PROXY_REPLY_HANDLER_H
 #define LORICA_PROXY_REPLY_HANDLER_H
 
-#include "OCI/ProxyReplyHandler.h"
 #include <tao/PortableServer/POAC.h>
 #include <tao/AnyTypeCode/NVList.h>
 #include <string>
 
+#include "OCI/ProxyReplyHandler.h"
+
 namespace Lorica
 {
-  class ProxyMapper;
-  class EvaluatorBase;
+	class ProxyMapper;
+	class EvaluatorBase;
 
-class ProxyReplyHandler : public OCI_APT::ProxyReplyHandler
-  {
-  public:
-    ProxyReplyHandler (ProxyMapper &pm,
-		       const char *operation,
-		       PortableServer::POA_ptr poa,
-		       const Lorica::EvaluatorBase *eval,
-		       CORBA::NVList_ptr out_args,
-		       CORBA::NamedValue_ptr result,
-		       TAO_AMH_DSI_Response_Handler_ptr resp);
+	class ProxyReplyHandler : public OCI_APT::ProxyReplyHandler {
+	public:
+		ProxyReplyHandler(ProxyMapper & pm,
+				  const char *operation,
+				  PortableServer::POA_ptr poa,
+				  const Lorica::EvaluatorBase *eval,
+				  CORBA::NVList_ptr out_args,
+				  CORBA::NamedValue_ptr result,
+				  TAO_AMH_DSI_Response_Handler_ptr resp);
 
-    ~ProxyReplyHandler(void);
+		~ProxyReplyHandler(void);
 
-    /// The code that actually processes the request message
-    void handle_response_i (TAO_InputCDR &incoming);
-    void handle_excep_i (TAO_InputCDR &incoming,
-			 CORBA::ULong reply_status);
-    void handle_location_forward_i (TAO_InputCDR &incoming,
+		// The code that actually processes the request message
+		void handle_response_i(TAO_InputCDR & incoming);
+
+		void handle_excep_i(TAO_InputCDR & incoming,
 				    CORBA::ULong reply_status);
 
-  private:
-    /// The Proxy Mapper associated with this servant
-    ProxyMapper &mapper_;
-    std::string operation_;
-    PortableServer::POA_var poa_;
-    const EvaluatorBase *evaluator_;
-    CORBA::NVList_var out_args_;
-    CORBA::NamedValue_var result_;
-    TAO_AMH_DSI_Response_Handler_var response_handler_;
-  };
+		void handle_location_forward_i(TAO_InputCDR & incoming,
+					       CORBA::ULong reply_status);
+
+	private:
+		/// The Proxy Mapper associated with this servant
+		ProxyMapper & mapper_;
+		std::string operation_;
+		PortableServer::POA_var poa_;
+		const EvaluatorBase *evaluator_;
+		CORBA::NVList_var out_args_;
+		CORBA::NamedValue_var result_;
+		TAO_AMH_DSI_Response_Handler_var response_handler_;
+	};
 }
 
 #endif // LORICA_PROXY_REPLY_HANDLER_H

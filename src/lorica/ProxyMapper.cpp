@@ -45,14 +45,13 @@
 #include "FileConfig.h"
 #include "debug.h"
 
-Lorica::MappedObjectId
-Lorica::ProxyMapper::mapped_object_id_ = {
-	.magic = {'L','R','C','A'},
-	.version = '\x01',
-	.in_out = '0',
-	.pid = 0,
-	.index = 0,
-	.hostid = 0,
+Lorica::MappedObjectId Lorica::ProxyMapper::mapped_object_id_ = {
+	{'L', 'R', 'C', 'A'},
+	'\x01',
+	'0',
+	0,
+	0,
+	0,
 };
 
 Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
@@ -452,10 +451,10 @@ Lorica::ProxyMapper::remove_mapped(CORBA::Object_ptr mapped,
 			PortableServer::POA_var p = out_facing ? this->out_facing_poa_ : this->in_facing_poa_;
 			PortableServer::ObjectId_var oid = p->reference_to_id(mapped);
 
-			CORBA::String_var idstr = PortableServer::ObjectId_to_string(oid.in());
+			CHECKME // CORBA::String_var idstr = PortableServer::ObjectId_to_string(oid.in());
 
 			Lorica::ReferenceMapValue_var rmv;
-			Lorica::MappedObjectId *ptr = reinterpret_cast<Lorica::MappedObjectId *>(oid->get_buffer());
+			CHECKME // Lorica::MappedObjectId *ptr = reinterpret_cast<Lorica::MappedObjectId *>(oid->get_buffer());
 
 			return rmv.release();
 		}

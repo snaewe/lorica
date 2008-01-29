@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -29,50 +29,59 @@
 
 namespace Lorica
 {
-	class Lorica_EvaluatorBase_Export ReferenceMapValue
-	{
+	class Lorica_EvaluatorBase_Export ReferenceMapValue {
 	public:
-		ReferenceMapValue (void);
-		~ReferenceMapValue (void);
-		CORBA::Object_var orig_ref_;
-		CORBA::Object_var mapped_ref_;
-		std::string ior_table_name_;
-		bool        require_secure_;
-		Lorica::ServerAgent_var agent_;
+		ReferenceMapValue(void);
+
+		~ReferenceMapValue(void);
 
 		ReferenceMapValue *reverse(void);
 
-		void incr_refcount();
-		long decr_refcount();
+		void incr_refcount(void);
 
-		long refcount() const;
+		long decr_refcount(void);
+
+		long refcount(void) const;
+
+		CORBA::Object_var orig_ref_;
+		CORBA::Object_var mapped_ref_;
+		std::string ior_table_name_;
+		bool require_secure_;
+		Lorica::ServerAgent_var agent_;
 
 	private:
 		long ref_count_;
 	};
 
-	class Lorica_EvaluatorBase_Export ReferenceMapValue_var
-	{
+	class Lorica_EvaluatorBase_Export ReferenceMapValue_var {
 	public:
-		ReferenceMapValue_var (void);
-		ReferenceMapValue_var (ReferenceMapValue *rmv);
-		ReferenceMapValue_var (const ReferenceMapValue_var &rmv);
-		~ReferenceMapValue_var (void);
+		ReferenceMapValue_var(void);
 
-		ReferenceMapValue_var &operator= (const ReferenceMapValue_var &rmv);
+		ReferenceMapValue_var(ReferenceMapValue *rmv);
 
-		void set (ReferenceMapValue *rmv);
-		ReferenceMapValue* get (void) const;
+		ReferenceMapValue_var(const ReferenceMapValue_var &rmv);
 
-		const ReferenceMapValue* in (void) const;
-		ReferenceMapValue*& out (void);
-		ReferenceMapValue*& inout (void);
+		~ReferenceMapValue_var(void);
 
-		ReferenceMapValue* release (void);
+		ReferenceMapValue_var &operator= (const ReferenceMapValue_var & rmv);
+
+		void set(ReferenceMapValue *rmv);
+
+		ReferenceMapValue *get(void) const;
+
+		const ReferenceMapValue *in(void) const;
+
+		ReferenceMapValue *& out(void);
+
+		ReferenceMapValue *& inout(void);
+
+		ReferenceMapValue *release(void);
 
 		ReferenceMapValue_var &operator= (ReferenceMapValue *rmv);
-		const ReferenceMapValue * operator->() const;
-		ReferenceMapValue * operator->();
+
+		const ReferenceMapValue *operator->(void) const;
+
+		ReferenceMapValue *operator->(void);
 
 	private:
 		ReferenceMapValue *ptr_;

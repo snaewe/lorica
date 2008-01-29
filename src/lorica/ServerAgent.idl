@@ -1,7 +1,7 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica IDL file. 
+ *    Lorica IDL file.
  *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
@@ -31,9 +31,10 @@ module Lorica
 	{
 		// Operation used to provide information to the server regarding
 		// errors related to object references associated with this agent
-		void error_occured (in long code, in string message);
+		void error_occured(in long code,
+				   in string message);
 
 		// Operation called by lorica when the proxy is shutting down.
-		oneway void proxy_disconnect ();
+		oneway void proxy_disconnect();
 	};
 };

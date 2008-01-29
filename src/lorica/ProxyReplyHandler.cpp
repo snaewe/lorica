@@ -23,14 +23,15 @@
 #include "config.h"
 #endif
 
-#include <tao/AnyTypeCode/NVList.h>
-#include <tao/AnyTypeCode/Any_Impl.h>
-#include <tao/SystemException.h>
-
 #include "ProxyMapper.h"
 #include "EvaluatorBase.h"
 #include "ProxyReplyHandler.h"
 #include "debug.h"
+
+#include <tao/AnyTypeCode/NVList.h>
+#include <tao/AnyTypeCode/Any_Impl.h>
+#include <tao/SystemException.h>
+
 
 Lorica::ProxyReplyHandler::ProxyReplyHandler(ProxyMapper & pm,
 					     const char *operation,
@@ -47,7 +48,6 @@ Lorica::ProxyReplyHandler::ProxyReplyHandler(ProxyMapper & pm,
 	  result_(result), // take ownership of this too
 	  response_handler_(TAO_AMH_DSI_Response_Handler::_duplicate(resp))
 {
-
 }
 
 Lorica::ProxyReplyHandler::~ProxyReplyHandler(void)
@@ -57,7 +57,7 @@ Lorica::ProxyReplyHandler::~ProxyReplyHandler(void)
 
 // The code that actually processes the request message
 void
-Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR &incoming)
+Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR & incoming)
 {
 	try {
 		bool lazy_evaluation = true;
@@ -65,7 +65,8 @@ Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR &incoming)
 		if (this->result_)
 			this->result_->value()->impl()->_tao_decode(incoming);
 
-		if (this->out_args_.ptr() == 0 && Lorica_debug_level > 0)
+		if ((this->out_args_.ptr() == 0)
+		    && (Lorica_debug_level > 0))
 			ACE_DEBUG((LM_DEBUG,"out args is null!\n"));
 		else
 			this->out_args_->_tao_incoming_cdr(incoming,
@@ -77,7 +78,7 @@ Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR &incoming)
 						 this->out_args_.in(),
 						 this->result_.in());
 	}
-	catch (CORBA::SystemException &ex) {
+	catch (CORBA::SystemException & ex) {
 		TAO_AMH_DSI_Exception_Holder h(ex._tao_duplicate());
 		response_handler_->invoke_excep(&h);
 	}
@@ -95,7 +96,7 @@ Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR &incoming)
 }
 
 void
-Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR &incoming,
+Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 					  CORBA::ULong reply_status)
 {
 	TAO_InputCDR for_reading (incoming);
@@ -108,10 +109,9 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR &incoming,
 	}
 
 	if (Lorica_debug_level > 0)
-		ACE_DEBUG((LM_DEBUG,"handle_excep_i: id = %s\n",id.in()));
+		ACE_DEBUG((LM_DEBUG,"handle_excep_i: id = %s\n", id.in()));
 
 	if (reply_status == TAO_AMI_REPLY_USER_EXCEPTION) {
-
 		TAO_OutputCDR encap;
 		this->evaluator_->evaluate_exception(this->operation_.c_str(),
 						     this->poa_.in(),
@@ -148,16 +148,19 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR &incoming,
 		TAO_AMH_DSI_Exception_Holder h(ex);
 		response_handler_->invoke_excep(&h);
 	} else {
+		if (Lorica_debug_level > 0)
+			ACE_DEBUG((LM_DEBUG,"ignoring reply_status %ul\n", reply_status));
 	}
 }
 
 
 void
-Lorica::ProxyReplyHandler::handle_location_forward_i(TAO_InputCDR &incoming,
+Lorica::ProxyReplyHandler::handle_location_forward_i(TAO_InputCDR & incoming,
 						     CORBA::ULong reply_status)
 {
 	TAO_InputCDR for_reading(incoming);
 	CORBA::Object_var fwd;
+
 	if ((for_reading >> fwd) == 0) {
 		TAO_AMH_DSI_Exception_Holder h(new CORBA::MARSHAL(0, CORBA::COMPLETED_MAYBE));
 		response_handler_->invoke_excep(&h);

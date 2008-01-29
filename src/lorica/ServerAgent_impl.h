@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -27,10 +27,13 @@
 class ServerAgent_impl : public POA_Lorica::ServerAgent
 {
 public:
-	ServerAgent_impl ();
-	virtual ~ServerAgent_impl ();
-	virtual void error_occured (CORBA::Long code,
-				    const char *message);
-	virtual void proxy_disconnect ();
+	ServerAgent_impl(void);
+
+	virtual ~ServerAgent_impl(void);
+
+	virtual void error_occured(CORBA::Long code,
+				   const char *message);
+
+	virtual void proxy_disconnect(void);
 };
 #endif /* SERVER_AGENT_IMPL_H */

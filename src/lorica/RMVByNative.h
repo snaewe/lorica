@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file. 
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -23,38 +23,39 @@
 #define RMV_BY_NATIVE_H
 
 #include <ace/Mutex.h>
+#include <ace/RB_Tree.h>
 
 #include "Lorica_EvaluatorBase_Export.h"
 #include "ReferenceMapValue.h"
-#include <ace/RB_Tree.h>
 
 namespace Lorica
 {
-
-	class Lorica_EvaluatorBase_Export RMVByNative
-	{
+	class Lorica_EvaluatorBase_Export RMVByNative {
 	public:
-		RMVByNative ();
-		virtual ~RMVByNative (void);
+		RMVByNative(void);
 
-		bool bind (CORBA::Object_ptr key, ReferenceMapValue *value);
+		virtual ~RMVByNative(void);
 
-		bool rebind (CORBA::Object_ptr key, ReferenceMapValue *value);
+		bool bind(CORBA::Object_ptr key,
+			  ReferenceMapValue *value);
 
-		bool find (CORBA::Object_ptr key, ReferenceMapValue *&value);
+		bool rebind(CORBA::Object_ptr key,
+			    ReferenceMapValue *value);
 
-		bool unbind (CORBA::Object_ptr key, ReferenceMapValue *&value);
+		bool find(CORBA::Object_ptr key,
+			  ReferenceMapValue *& value);
+
+		bool unbind(CORBA::Object_ptr key,
+			    ReferenceMapValue *& value);
 
 
-		class ObjRefLessThan
-		{
+		class ObjRefLessThan {
 		public:
-			int operator () (const CORBA::Object_ptr lhs,
-					 const CORBA::Object_ptr rhs) const;
+			int operator() (const CORBA::Object_ptr lhs,
+					const CORBA::Object_ptr rhs) const;
 		};
 
 	private:
-
 		typedef ACE_RB_Tree<CORBA::Object_ptr,
 			ReferenceMapValue *,
 			ObjRefLessThan,
