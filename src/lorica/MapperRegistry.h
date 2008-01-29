@@ -123,13 +123,10 @@ private:
 
 	// when security is availble this is a list of policies to override
 	// on individual client-side objects.
-
 	CORBA::PolicyList sec_policies_;
 };
 
-static int
-Lorica_Requires_Mapper_Registry_Initializer = Lorica_MapperRegistry::initialize();
-
+static int Lorica_Requires_Mapper_Registry_Initializer = Lorica_MapperRegistry::initialize();
 
 ACE_STATIC_SVC_DECLARE_EXPORT(Lorica_EvaluatorBase, Lorica_MapperRegistry)
 ACE_FACTORY_DECLARE(Lorica_EvaluatorBase, Lorica_MapperRegistry)

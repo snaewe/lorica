@@ -50,9 +50,10 @@ Lorica::NullProxyMapper::evaluator_for(const std::string & typeId)
 	if (typeIdList.size() == 0)
 		return this->evaluator_head_;
 
-	for (ListType::const_iterator iter = typeIdList.begin(); iter != typeIdList.end(); iter++)
+	for (ListType::const_iterator iter = typeIdList.begin(); iter != typeIdList.end(); iter++) {
 		if (typeId == *iter)
 			return this->evaluator_head_;
+	}
 
 	return 0;
 }

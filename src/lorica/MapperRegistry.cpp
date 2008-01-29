@@ -80,10 +80,12 @@ void
 Lorica_MapperRegistry::create_default_null_mapper(void)
 {
 	if (this->mappers_ready_) {
-		if (Lorica_debug_level > 0)
+		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
 				   "(%P|%t)Lorica_MapperRegistry::create_default_null_mapper "
 				   "called after mappers are ready\n"));
+		}
+
 		return;
 	}
 
@@ -95,10 +97,12 @@ void
 Lorica_MapperRegistry::set_generic_mapper(Lorica::ProxyMapper *mapper)
 {
 	if (this->mappers_ready_) {
-		if (Lorica_debug_level > 0)
+		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
 				   "(%P|%t)Lorica_MapperRegistry::set_generic_mapper "
 				   "called after mappers are ready\n"));
+		}
+
 		return;
 	}
 
@@ -146,30 +150,33 @@ Lorica_MapperRegistry::init_mappers(PortableServer::POAManager_ptr outward,
 	// consolidate the mapper list, to append first the generic mapper and
 	// then the null mapper.
 	if (this->generic_mapper_ != 0) {
-		if (Lorica_debug_level > 0)
+		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
 				   "(%P|%t)Lorica_MapperRegistry::init_mappers "
 				   "adding generic mapper\n"));
+		}
 
 		this->add_proxy_mapper(this->generic_mapper_);
 		this->generic_mapper_ = 0;
 	}
 
 	if (this->null_mapper_ != 0) {
-		if (Lorica_debug_level > 0)
+		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
 				   "(%P|%t)Lorica_MapperRegistry::init_mappers "
 				   "adding null mapper\n"));
+		}
 
 		this->add_proxy_mapper (this->null_mapper_);
 		this->null_mapper_ = 0;
 	}
 
 	if (this->mappers_ != 0) {
-		if (Lorica_debug_level > 0)
+		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
 				   "(%P|%t)Lorica_MapperRegistry::init_mappers "
 				   "calling mapper init on the root.\n"));
+		}
 
 		this->mappers_->proxy_mapper_init(outward, inward, orb);
 	}
@@ -216,10 +223,11 @@ Lorica_MapperRegistry::map_reference(CORBA::Object_ptr native,
 	//  std::string typeId(native->_interface_repository_id());
 
 	if (this->mappers_ != 0) {
-		if (Lorica_debug_level > 2)
+		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
 				   "(%P|%t) Lorica_MapperRegistry::map_reference "
 				   "adding %s\n",typeId.c_str()));
+		}
 
 		rmv = this->mappers_->add_native(native,
 						 typeId,
@@ -245,10 +253,11 @@ Lorica_MapperRegistry::remove_reference(CORBA::Object_ptr mapped,
 	std::string typeId = mapped->_stubobj()->type_id.in();
 
 	//  std::string typeId(mapped->_interface_repository_id());
-	if (this->mappers_ != 0)
+	if (this->mappers_ != 0) {
 		rmv = this->mappers_->remove_mapped(mapped,
 						    typeId,
 						    out_facing);
+	}
 
 	return rmv.release();
 }
@@ -280,5 +289,4 @@ ACE_STATIC_SVC_DEFINE(Lorica_MapperRegistry,
 		      &ACE_SVC_NAME(Lorica_MapperRegistry),
 		      ACE_Service_Type::DELETE_THIS | ACE_Service_Type::DELETE_OBJ,
 		      0)
-
 ACE_FACTORY_DEFINE(Lorica_EvaluatorBase, Lorica_MapperRegistry)
