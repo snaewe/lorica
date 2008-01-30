@@ -442,20 +442,19 @@ Lorica::ProxyMapper::add_native(CORBA::Object_ptr native,
 
 Lorica::ReferenceMapValue *
 Lorica::ProxyMapper::remove_mapped(CORBA::Object_ptr mapped,
-				   const std::string & typeId,
-				   bool out_facing)
+				    const std::string & typeId,
+				    bool out_facing)
 {
 	// Are we handling this type id?
 	if (this->evaluator_for (typeId) != 0) {
 		if (this->mapped_values_ != 0) {
 			PortableServer::POA_var p = out_facing ? this->out_facing_poa_ : this->in_facing_poa_;
 			PortableServer::ObjectId_var oid = p->reference_to_id(mapped);
-
-			CHECKME // CORBA::String_var idstr = PortableServer::ObjectId_to_string(oid.in());
-
+			Lorica::MappedObjectId *ptr = reinterpret_cast<Lorica::MappedObjectId *>(oid->get_buffer());
+ 	
 			Lorica::ReferenceMapValue_var rmv;
-			CHECKME // Lorica::MappedObjectId *ptr = reinterpret_cast<Lorica::MappedObjectId *>(oid->get_buffer());
-
+			this->mapped_values_->unbind(ptr->index, rmv.out());
+			
 			return rmv.release();
 		}
 
@@ -465,6 +464,7 @@ Lorica::ProxyMapper::remove_mapped(CORBA::Object_ptr mapped,
 
 	return 0;
 }
+
 
 CORBA::Object_ptr
 Lorica::ProxyMapper::current_native(Lorica::ServerAgent_ptr & agent)
