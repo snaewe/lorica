@@ -31,6 +31,8 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
+
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
 #include <ace/OS_NS_errno.h>
@@ -52,7 +54,8 @@ typedef enum {
 } daemon_exit_t;
 
 static daemon_exit_t
-become_daemon(void)
+become_daemon(const bool NoFork,
+	      const bool Debug)
 {
 	struct sigaction sig_act;
 	struct rlimit rl;
@@ -69,6 +72,9 @@ become_daemon(void)
 	 *
 	 * (*) Citation from <http://www.win.tue.nl/~aeb/linux/lk/lk-10.html>
 	 */
+
+	if (NoFork)
+		goto fork_done;
 
 	/* fork off the parent process to create the session daemon */
 	pid = fork();
@@ -117,34 +123,40 @@ become_daemon(void)
 
 		return EXIT_OK;
 	}
+fork_done:
 
 	/*
 	 * We are now effectively the daemon and must continue
 	 * to prep the daemon process for operation
 	 */
 
-	// change the working directory
-	if ((chdir("/")) < 0)
-		return EXIT_ERROR;
-
-	return EXIT_DAEMON;
+	if (!Debug) { // change the working directory
+		if ((chdir("/")) < 0)
+			return EXIT_ERROR;
+	}
 
 	// close any and all open file descriptors
 	if (getrlimit(RLIMIT_NOFILE, &rl))
 		return EXIT_ERROR;
 	if (RLIM_INFINITY == rl.rlim_max)
 		rl.rlim_max = 1024;
-	for (n = 3; n < rl.rlim_max; n++) {
+	for (n = 0; n < rl.rlim_max; n++) {
+		if (Debug) {
+			if (STDOUT_FILENO == n)
+				continue;
+			if (STDERR_FILENO == n)
+				continue;
+		}
 		if (close(n) && (EBADF != errno))
 			return EXIT_ERROR;
 	}
 
-	return EXIT_DAEMON;
-
-	// attach file descriptors 0, 1 and 2 to /dev/null
-	fd0 = open("/dev/null", O_RDWR);
-	fd1 = dup2(fd0, 1);
-	fd2 = dup2(fd0, 2);
+	if (!Debug) { // attach file descriptors STDIN_FILENO(0), STDOUT_FILENO(1) and STDERR_FILENO(2) to /dev/null
+		fd0 = open("/dev/null", O_RDWR);
+		fd1 = dup2(fd0, 1);
+		fd2 = dup2(fd0, 2);
+	} else
+		fd0 = open("/dev/null", O_RDWR);
 	if (0 != fd0)
 		return EXIT_ERROR;
 
@@ -164,7 +176,7 @@ namespace Lorica
 			SC_STOP
 		};
 
-		Service_Loader(void);
+		Service_Loader(const char *progname);
 
 		~Service_Loader(void);
 
@@ -191,17 +203,23 @@ namespace Lorica
 
 		/// SC_NONE, SC_INSTALL, SC_REMOVE, ...
 		SERVICE_COMMAND service_command_;
+		bool no_fork_;
 		bool debug_;
 		std::string config_file_;
 		int corba_debug_level_;
 	};
 }
 
-Lorica::Service_Loader::Service_Loader(void)
-	: program_name (ACE_TEXT(LORICA_EXE_NAME)),
+Lorica::Service_Loader::Service_Loader(const char *progname)
+	: program_name(progname),
 	  service_command_(SC_NONE),
+	  no_fork_(false),
 	  debug_(false),
-	  config_file_("lorica.conf"), // FIXME
+#ifdef ACE_WIN32
+	  config_file_("lorica.conf"),
+#else
+	  config_file_(LORICA_CONF_FILE),
+#endif
 	  corba_debug_level_(0)
 {
 }
@@ -222,7 +240,7 @@ Lorica::Service_Loader::print_usage_and_die(void)
 		    ACE_TEXT(" -s: Start the service\n")
 		    ACE_TEXT(" -k: Stop the service\n")
 		    ACE_TEXT(" -d: Debug; run as a regular application\n")
-		    ACE_TEXT(" -f: <file> Configuration file. Required, default is \"lorica.conf\"\n")
+		    ACE_TEXT(" -f: <file> Configuration file, default is \"lorica.conf\"\n")
 		    ACE_TEXT(" -c: <level> Turn on CORBA debugging, default 0\n")
 		    ACE_TEXT(" -l: <level> Turn on Lorica debugging, default 0\n"),
 		    program_name.c_str(),
@@ -230,9 +248,10 @@ Lorica::Service_Loader::print_usage_and_die(void)
 #else
 	ACE_DEBUG ((LM_INFO,
 		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -d -f -c -l\n")
-		    ACE_TEXT(" -d: Debug; run as a regular application\n")
-		    ACE_TEXT(" -f: <required; default:lorica.conf> Configuration file.\n")
+		    ACE_TEXT(" -n -d -f -c -l -n\n")
+		    ACE_TEXT(" -n: No fork - Run as a regular application\n")
+		    ACE_TEXT(" -d: Debug - Use current directory as working directory\n")
+		    ACE_TEXT(" -f: <file> Configuration file, default is \"/etc/lorica.conf\"\n")
 		    ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
 		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging\n"),
 		    program_name.c_str(),
@@ -248,8 +267,8 @@ Lorica::Service_Loader::parse_args(int argc,
 #if defined (ACE_WIN32)
 	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("irtkdf:c:l:"));
 #else
-	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("df:c:l:"));
-#endif /* ACE_WIN32 */
+	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("ndf:c:l:"));
+#endif
 
 	int c;
 	const ACE_TCHAR *tmp;
@@ -269,27 +288,29 @@ Lorica::Service_Loader::parse_args(int argc,
 		case 'k':
 			service_command_ = SC_STOP;
 			break;
-#endif /* ACE_WIN32 */
+#else /* !ACE_WIN32 */
+		case 'n':
+			no_fork_ = true;
+			break;
+#endif
 		case 'd':
 			debug_ = true;
 			break;
 		case 'f':
-			config_file_ = get_opt.opt_arg ();
+			config_file_ = get_opt.opt_arg();
 			break;
 		case 'c':
-			tmp = get_opt.opt_arg ();
-			if (tmp != 0) {
-				corba_debug_level_ = ACE_OS::atoi (tmp);
-			}
+			tmp = get_opt.opt_arg();
+			if (tmp != 0)
+				corba_debug_level_ = ACE_OS::atoi(tmp);
 			break;
 		case 'l':
-			tmp = get_opt.opt_arg ();
-			if (tmp != 0) {
-				Lorica_debug_level = ACE_OS::atoi (tmp);
-			}
+			tmp = get_opt.opt_arg();
+			if (tmp != 0)
+				Lorica_debug_level = ACE_OS::atoi(tmp);
 			break;
 		default:
-			print_usage_and_die ();
+			print_usage_and_die();
 			break;
 		}
 	}
@@ -416,32 +437,40 @@ Lorica::Service_Loader::init_proxy(void)
 int
 Lorica::Service_Loader::run_service(void)
 {
-#if defined (ACE_WIN32)
-	ofstream *output_file = new ofstream(ACE_TEXT("lorica.log"), ios::out);
-	if (output_file && (output_file->rdstate() == ios::goodbit))
-		ACE_LOG_MSG->msg_ostream(output_file, 1);
+	if (debug_) {
+		size_t len = strlen(program_name.c_str());
+		char *name = (char*)malloc(len + 4 + 1);
+		snprintf(name, len + 4 + 1, "%s.log", program_name.c_str());
 
-	ACE_LOG_MSG->open(program_name.c_str(),
-			  ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM,
-			  0);
-	ACE_DEBUG ((LM_INFO, ACE_TEXT ("%T (%t): Starting Lorica server.\n")));
+		ofstream *output_file = new ofstream(ACE_TEXT(name), ios::out);
+		free(name);
+
+		if (output_file && (output_file->rdstate() == ios::goodbit))
+			ACE_LOG_MSG->msg_ostream(output_file, 1);
+
+		ACE_LOG_MSG->open(program_name.c_str(), ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
+	} else
+		ACE_LOG_MSG->open(program_name.c_str(), ACE_Log_Msg::SYSLOG);
+
+#if defined (ACE_WIN32)
+	ACE_DEBUG((LM_INFO, ACE_TEXT ("%T (%t): Starting Lorica server.\n")));
 	Lorica::SERVICE::instance()->proxy(init_proxy());
-	ACE_NT_SERVICE_RUN (Lorica,
-			    Lorica::SERVICE::instance(),
-			    ret);
+	ACE_NT_SERVICE_RUN(Lorica,
+			   Lorica::SERVICE::instance(),
+			   ret);
 	if (ret == 0) {
-		ACE_ERROR ((LM_ERROR,
-			    ACE_TEXT ("%p\n"),
-			    ACE_TEXT ("Couldn't start Lorica server")));
+		ACE_ERROR((LM_ERROR,
+			   ACE_TEXT ("%p\n"),
+			   ACE_TEXT ("Couldn't start Lorica server")));
 	}
 
 	return ret;
 
 #else /* !ACE_WIN32 */
 
-	daemon_exit_t dstat = EXIT_DAEMON;
+	daemon_exit_t dstat = EXIT_ERROR;
 
-	dstat = become_daemon();
+	dstat = become_daemon(no_fork_, debug_);
 	switch (dstat) {
 	case EXIT_DAEMON :
 		break;
@@ -452,7 +481,6 @@ Lorica::Service_Loader::run_service(void)
 		return EXIT_FAILURE;
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("I AM DAEMON \n")));
 	{
 		std::auto_ptr<Proxy>proxy (this->init_proxy());
 
@@ -481,20 +509,14 @@ Lorica::Service_Loader::run_standalone(void)
 bool
 Lorica::Service_Loader::is_service(void)
 {
-	if (debug_)
-		ACE_DEBUG((LM_INFO, ACE_TEXT("debug_ == TRUE \n")));
-	else
-		ACE_DEBUG((LM_INFO, ACE_TEXT("debug_ == FALSE \n")));
-
-	return !debug_;
+	return !no_fork_;
 }
-
 
 int
 ACE_TMAIN(int argc,
 	  ACE_TCHAR *argv[])
 {
-	Lorica::Service_Loader lorica;
+	Lorica::Service_Loader lorica(argv[0]);
 	int result = 0;
 
 	result = lorica.parse_args(argc, argv);
@@ -509,13 +531,10 @@ ACE_TMAIN(int argc,
 	else if (result > 0)
 		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
 
-	if (lorica.is_service()) {
-		ACE_DEBUG((LM_INFO, ACE_TEXT("RUN_SERVICE \n")));
+	if (lorica.is_service())
 		result = lorica.run_service ();
-	} else {
-		ACE_DEBUG((LM_INFO, ACE_TEXT("RUN_STANDALONE \n")));
+	else
 		result = lorica.run_standalone ();
-	}
 
 	ACE_DEBUG((LM_INFO, ACE_TEXT("TERMINATING \n")));
 	exit(result);

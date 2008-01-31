@@ -102,7 +102,7 @@ Lorica::Proxy::open(void *args)
 
 	Lorica::FileConfig *config = Lorica::FileConfig::instance();
 	try {
-		config->init (config_file_, corba_debug_level_);
+		config->init(config_file_, corba_debug_level_);
 	}
 	catch (const FileConfig::InitError & ex) {
 		ACE_ERROR((LM_ERROR,
