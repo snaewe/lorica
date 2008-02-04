@@ -161,6 +161,7 @@ endif
 	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && $(MAKE) -f GNUmakefile.Security
 	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && $(MAKE) -f GNUmakefile.SSLIOP
 	cd $(TAO_ROOT)/tao                 && $(MAKE) -f GNUmakefile.EndpointPolicy
+	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
 
 $(ACE_ROOT):
 if LORICA_WGET
