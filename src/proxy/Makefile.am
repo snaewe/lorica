@@ -200,19 +200,24 @@ ACETAO_LIBdir = $(libdir)
 ACETAO_LIB_DATA = $(TAO_LIBS)
 
 $(ACE_ROOT)/apps/gperf/src/tao_gperf:
-	cd ../../acetao && $(MAKE)
 	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
 
 $(ACE_ROOT)/TAO/TAO_IDL/tao_idl:
-	cd ../../acetao && $(MAKE)
 
 $(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr:
-	cd ../../acetao && $(MAKE)
 
-bin_PROGRAMS = \
-	$(ACE_ROOT)/apps/gperf/src/tao_gperf        \
+TAO_EXECUTABLES = \
 	$(ACE_ROOT)/TAO/TAO_IDL/tao_idl             \
+	$(ACE_ROOT)/apps/gperf/src/tao_gperf        \
 	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr
+
+TAO_EXECUTABLESdir = ${bindir}
+TAO_EXECUTABLES_DATA = $(TAO_EXECUTABLES)
+
+install-data-hook:
+	chmod 755 $(bindir)/tao_idl
+	chmod 755 $(bindir)/tao_gperf
+	chmod 755 $(bindir)/tao_ifr
 
 endif # HAVE_ACE_ROOT
 

@@ -42,6 +42,11 @@ endif
 
 AM_CPPFLAGS = $(ACETAO_INCLUDES)
 
+TAO_EXECUTABLES = \
+	$(ACE_ROOT)/apps/gperf/src/gperf            \
+	$(ACE_ROOT)/TAO/TAO_IDL/tao_idl             \
+	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr
+
 if LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.dylib                            \
@@ -112,16 +117,19 @@ export LD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_LD_LIBRARY_PATH)
 endif
 endif
 
+TAO_EXECUTABLES =
 TAO_LIBS =
 endif # HAVE_ACE_ROOT
+
+TAO_FILES = $(TAO_EXECUTABLES) $(TAO_LIBS)
 
 .NOTPARALLEL:
 
 if LORICA_MUST_BUILD_ACETAO
 
-all-local: $(TAO_LIBS)
+all-local: $(TAO_FILES)
 
-$(TAO_LIBS): $(ACE_ROOT)
+$(TAO_FILES): $(ACE_ROOT)
 if LORICA_DARWIN_TIGER
 	@echo '#include "ace/config-macosx-tiger.h"' > $(ACE_ROOT)/ace/config.h
 	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
@@ -161,7 +169,6 @@ endif
 	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && $(MAKE) -f GNUmakefile.Security
 	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && $(MAKE) -f GNUmakefile.SSLIOP
 	cd $(TAO_ROOT)/tao                 && $(MAKE) -f GNUmakefile.EndpointPolicy
-	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
 
 $(ACE_ROOT):
 if LORICA_WGET
@@ -172,6 +179,7 @@ if LORICA_CURL
 endif
 	$(TAR) --overwrite -xjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 	-mv -f $(ACE_WRAPPERS_DIR) $(CONF_ACE_ROOT)
+
 endif # LORICA_MUST_BUILD_ACETAO
 
 if THIS_IS_NOT_A_DISTRIBUTION
