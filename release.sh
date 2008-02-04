@@ -23,7 +23,7 @@
 prepare ()
 {
     make distclean
-    ./autogen.sh
+    ./autogen.sh --enable-tao-build
 }
 
 if [ $# -eq 0 ]; then

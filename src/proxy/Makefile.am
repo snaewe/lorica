@@ -200,14 +200,19 @@ ACETAO_LIBdir = $(libdir)
 ACETAO_LIB_DATA = $(TAO_LIBS)
 
 $(ACE_ROOT)/apps/gperf/src/tao_gperf:
+	cd ../../acetao && $(MAKE)
 	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
 
-TAO_EXECUTABLE_FILES = \
+$(ACE_ROOT)/TAO/TAO_IDL/tao_idl:
+	cd ../../acetao && $(MAKE)
+
+$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr:
+	cd ../../acetao && $(MAKE)
+
+bin_PROGRAMS = \
 	$(ACE_ROOT)/apps/gperf/src/tao_gperf        \
 	$(ACE_ROOT)/TAO/TAO_IDL/tao_idl             \
 	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr
-TAO_EXECUTABLEdir = $(bindir)
-TAO_EXECUTABLE_DATA = $(TAO_EXECUTABLE_FILES)
 
 endif # HAVE_ACE_ROOT
 
