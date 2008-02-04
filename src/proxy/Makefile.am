@@ -199,6 +199,9 @@ endif # !LORICA_DARWIN
 ACETAO_LIBdir = $(libdir)
 ACETAO_LIB_DATA = $(TAO_LIBS)
 
+$(ACE_ROOT)/apps/gperf/src/tao_gperf:
+	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
+
 TAO_EXECUTABLE_FILES = \
 	$(ACE_ROOT)/apps/gperf/src/tao_gperf        \
 	$(ACE_ROOT)/TAO/TAO_IDL/tao_idl             \
