@@ -145,55 +145,30 @@ TAO_LIBS = \
 else # LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
-	$(ACE_ROOT)/ace/libACE.so                                                                                     \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                    \
-	$(ACE_ROOT)/ace/SSL/libACE_SSL.so                                                                             \
 	$(ACE_ROOT)/TAO/tao/libTAO_Codeset.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                \
-	$(ACE_ROOT)/TAO/tao/libTAO_Codeset.so                                                                         \
 	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)            \
-	$(ACE_ROOT)/TAO/tao/libTAO_AnyTypeCode.so                                                                     \
 	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)           \
-	$(ACE_ROOT)/TAO/tao/libTAO_CodecFactory.so                                                                    \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)             \
-	$(ACE_ROOT)/TAO/tao/libTAO_DynamicAny.so                                                                      \
 	$(ACE_ROOT)/TAO/tao/libTAO_DynamicInterface.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)       \
-	$(ACE_ROOT)/TAO/tao/libTAO_DynamicInterface.so                                                                \
 	$(ACE_ROOT)/TAO/tao/libTAO_EndpointPolicy.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)         \
-	$(ACE_ROOT)/TAO/tao/libTAO_EndpointPolicy.so                                                                  \
 	$(ACE_ROOT)/TAO/TAO_IDL/libTAO_IDL_BE.so.5.$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                             \
-	$(ACE_ROOT)/TAO/TAO_IDL/libTAO_IDL_BE.so                                                                      \
 	$(ACE_ROOT)/TAO/TAO_IDL/libTAO_IDL_FE.so.5.$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                             \
-	$(ACE_ROOT)/TAO/TAO_IDL/libTAO_IDL_FE.so                                                                      \
 	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/libTAO_IFR_BE.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE) \
-	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/libTAO_IFR_BE.so                                                          \
 	$(ACE_ROOT)/TAO/tao/libTAO_IFR_Client.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)             \
-	$(ACE_ROOT)/TAO/tao/libTAO_IFR_Client.so                                                                      \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_IFRService.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE) \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_IFRService.so                                                          \
 	$(ACE_ROOT)/TAO/tao/libTAO_ImR_Client.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)             \
-	$(ACE_ROOT)/TAO/tao/libTAO_ImR_Client.so                                                                      \
 	$(ACE_ROOT)/TAO/tao/libTAO_IORTable.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)               \
-	$(ACE_ROOT)/TAO/tao/libTAO_IORTable.so                                                                        \
 	$(ACE_ROOT)/TAO/tao/libTAO_Messaging.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
-	$(ACE_ROOT)/TAO/tao/libTAO_Messaging.so                                                                       \
 	$(ACE_ROOT)/TAO/tao/libTAO_PI_Server.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
-	$(ACE_ROOT)/TAO/tao/libTAO_PI_Server.so                                                                       \
 	$(ACE_ROOT)/TAO/tao/libTAO_PI.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                     \
-	$(ACE_ROOT)/TAO/tao/libTAO_PI.so                                                                              \
 	$(ACE_ROOT)/TAO/tao/libTAO_PortableServer.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)         \
-	$(ACE_ROOT)/TAO/tao/libTAO_PortableServer.so                                                                  \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Security.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)   \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Security.so                                                            \
 	$(ACE_ROOT)/TAO/tao/libTAO.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                        \
-	$(ACE_ROOT)/TAO/tao/libTAO.so                                                                                 \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_SSLIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)     \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_SSLIOP.so                                                              \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)  \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.so                                                           \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        \
-	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.so                                                                 \
-	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
-	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so
+	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
 endif # !LORICA_DARWIN
 
 ACETAO_LIBdir = $(libdir)
@@ -218,6 +193,33 @@ install-data-hook:
 	chmod 755 $(DESTDIR)$(bindir)/tao_idl
 	chmod 755 $(DESTDIR)$(bindir)/tao_gperf
 	chmod 755 $(DESTDIR)$(bindir)/tao_ifr
+if !LORICA_DARWIN
+	cd $(DESTDIR)$(libdir) && $(LN_S) libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                  libACE.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              libACE_SSL.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_Codeset.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)          libTAO_Codeset.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_AnyTypeCode.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)      libTAO_AnyTypeCode.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_CodecFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)     libTAO_CodecFactory.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_DynamicAny.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)       libTAO_DynamicAny.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_DynamicInterface.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE) libTAO_DynamicInterface.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_EndpointPolicy.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)   libTAO_EndpointPolicy.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_IDL_BE.so.5.$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                           libTAO_IDL_BE.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_IDL_FE.so.5.$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                           libTAO_IDL_FE.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_IFR_BE.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)           libTAO_IFR_BE.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_IFR_Client.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)       libTAO_IFR_Client.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_IFRService.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)       libTAO_IFRService.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_ImR_Client.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)       libTAO_ImR_Client.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_IORTable.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)         libTAO_IORTable.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_Messaging.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        libTAO_Messaging.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_PI_Server.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        libTAO_PI_Server.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_PI.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)               libTAO_PI.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_PortableServer.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)   libTAO_PortableServer.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_Security.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)         libTAO_Security.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                  libTAO.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_SSLIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)           libTAO_SSLIOP.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_Svc_Utils.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        libTAO_Svc_Utils.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_TypeCodeFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)  libTAO_TypeCodeFactory.so
+	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        libTAO_Valuetype.so
+endif # !LORICA_DARWIN
 
 endif # HAVE_ACE_ROOT
 
