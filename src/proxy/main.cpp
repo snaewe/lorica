@@ -420,7 +420,7 @@ Lorica::Service_Loader::init_proxy(void)
 		return 0;
 	}
 
-	std::auto_ptr<Proxy> proxy(new Proxy());
+	std::auto_ptr<Proxy> proxy(new Proxy(debug_));
 	try {
 		proxy->configure(*config);
 

@@ -215,9 +215,9 @@ TAO_EXECUTABLESdir = ${bindir}
 TAO_EXECUTABLES_DATA = $(TAO_EXECUTABLES)
 
 install-data-hook:
-	chmod 755 $(bindir)/tao_idl
-	chmod 755 $(bindir)/tao_gperf
-	chmod 755 $(bindir)/tao_ifr
+	chmod 755 $(DESTDIR)$(bindir)/tao_idl
+	chmod 755 $(DESTDIR)$(bindir)/tao_gperf
+	chmod 755 $(DESTDIR)$(bindir)/tao_ifr
 
 endif # HAVE_ACE_ROOT
 

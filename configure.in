@@ -223,15 +223,6 @@ if test "x$HAVE_FIND" = "xno"; then
    AC_MSG_ERROR([[You need the find(1) program to build Lorica]])
 fi
 
-if test "x$CONF_PATH" != "x"; then
-   AC_CHECK_PROG(HAVE_TAO_IFR, [tao_ifr], yes, no)
-else
-   AC_CHECK_PROG(HAVE_TAO_IFR, [tao_ifr], yes, no, $CONF_PATH:$PATH)
-fi
-if test "x$HAVE_TAO_IFR" = "xno"; then
-   AC_MSG_WARN([[You might need TAO's interface repository loader when starting Lorica]])
-fi
-
 AC_CHECK_PROG(HAVE_RPMBUILD, [rpmbuild], yes, no)
 if test "x$HAVE_RPMBUILD" = "xno"; then
    AM_CONDITIONAL(LORICA_RPMBUILD, false)
@@ -371,20 +362,27 @@ ACE_HEADERS="ace/ACE.h ace/Auto_Ptr.h ace/Dynamic_Service.h ace/Get_Opt.h ace/IN
 dnl The order is vitally important
 ACE_LIBS="ACE ACE_SSL TAO TAO_Codeset TAO_AnyTypeCode TAO_CodecFactory TAO_Valuetype TAO_DynamicAny TAO_PI TAO_PortableServer TAO_Messaging TAO_DynamicInterface TAO_EndpointPolicy TAO_IFR_Client TAO_IORTable TAO_Svc_Utils TAO_TypeCodeFactory TAO_IFRService TAO_PI_Server TAO_Security TAO_SSLIOP"
 
+dnl State all needed TAO programs
+TAO_EXECUTABLES="tao_gperf tao_idl tao_ifr"
+
 if test "x$enable_tao_build" = "xyes"; then
 
    dnl We are opting to (re-)build if needed, so ACE_ROOT must exist somewhere
    AM_CONDITIONAL(HAVE_ACE_ROOT, true)
 
-   if test "x$CONF_PATH" = "x"; then
-      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no)
-   else
-      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $CONF_PATH:$PATH)
-   fi
-   if test "x$HAVE_TAO_IDL" = "xno"; then
-      AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)	
-      AC_MSG_WARN([[You need the TAO IDL compiler to build Lorica - Don't worry I'll build it myself]])
-   fi
+   dnl Check for needed TAO programs
+   for exefile in $TAO_EXECUTABLES
+   do
+	if test "x$CONF_PATH" = "x"; then
+      	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no)
+   	else
+	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no, $CONF_PATH:$PATH)
+   	fi
+   	if test "x$HAVE_TAO_EXE" = "xno"; then
+      	   AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)	
+      	   AC_MSG_WARN([[You need $exefile to build or run Lorica - Don't worry I'll build it myself]])
+   	fi
+   done
 
    dnl ACE and TAO libraries
    for libfile in $ACE_LIBS
@@ -399,14 +397,18 @@ if test "x$enable_tao_build" = "xyes"; then
    done
 
 else
-   if test "x$CONF_PATH" = "x"; then
-      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no)
-   else
-      AC_CHECK_PROG(HAVE_TAO_IDL, [tao_idl], yes, no, $CONF_PATH:$PATH)
-   fi
-   if test "x$HAVE_TAO_IDL" = "xno"; then
-      AC_MSG_ERROR([[You need the TAO IDL compiler to build Lorica - consider enabling tao-build]])
-   fi
+   dnl Check for needed TAO programs
+   for exefile in $TAO_EXECUTABLES
+   do
+	if test "x$CONF_PATH" = "x"; then
+      	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no)
+   	else
+	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no, $CONF_PATH:$PATH)
+   	fi
+   	if test "x$HAVE_TAO_EXE" = "xno"; then
+      	   AC_MSG_ERROR([[You need $exefile to build or run Lorica - consider enabling tao-build]])
+   	fi
+   done
 
    dnl ACE and TAO libraries
    for libfile in $ACE_LIBS

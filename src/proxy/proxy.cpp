@@ -83,10 +83,11 @@ Lorica::Proxy::setup_shutdown_handler(void)
 	return true;
 }
 
-Lorica::Proxy::Proxy(void)
+Lorica::Proxy::Proxy(const bool Debug)
 	: pid_file_(),
 	  ior_file_(),
-	  must_shutdown_(false)
+	  must_shutdown_(false),
+	  debug_(Debug)
 {
 	// nothing else to do
 }
@@ -126,7 +127,7 @@ Lorica::Proxy::open(void *args)
 }
 
 void
-Lorica::Proxy::configure(Config& config)
+Lorica::Proxy::configure(Config & config)
 	throw (InitError)
 {
 	try {
@@ -142,7 +143,10 @@ Lorica::Proxy::configure(Config& config)
 #ifdef ACE_WIN32
 			this->pid_file_ = "lorica.pid";
 #else
-		this->pid_file_ = LORICA_PID_FILE;
+		if (debug_)
+			this->pid_file_ = "lorica.pid";
+		else
+			this->pid_file_ = LORICA_PID_FILE;
 #endif
 		// Create proxy ORB.
 		int argc = arguments->argc();
@@ -276,7 +280,10 @@ Lorica::Proxy::configure(Config& config)
 #ifdef ACE_WIN32
 			this->ior_file_ = "lorica.ior";
 #else
-		this->ior_file_ = LORICA_IOR_FILE;
+		if (debug_)
+			this->ior_file_ = "lorica.ior";
+		else
+			this->ior_file_ = LORICA_IOR_FILE;
 #endif
 		FILE *output_file= ACE_OS::fopen(this->ior_file_.c_str(), "w");
 		if (output_file == 0) {

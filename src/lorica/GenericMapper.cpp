@@ -31,7 +31,7 @@
 #include "ProxyServant.h"
 
 Lorica::GenericMapper::GenericMapper(Lorica_MapperRegistry & mr)
-	: Lorica::ProxyMapper(mr,"_lorica_generic"),
+	: Lorica::ProxyMapper(mr, "_lorica_generic"),
 	  typeIdList()
 {
 }

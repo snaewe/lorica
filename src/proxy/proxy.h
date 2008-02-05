@@ -52,7 +52,7 @@ namespace Lorica
 	public:
 		class InitError{};
 
-		Proxy(void);
+		Proxy(const bool Debug);
 
 		virtual ~Proxy(void);
 
@@ -86,6 +86,7 @@ namespace Lorica
 		std::string pid_file_;
 		std::string ior_file_;
 		bool must_shutdown_;
+		bool debug_;
 	};
 
 	int signal_handler(int signum);
