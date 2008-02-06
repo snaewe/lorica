@@ -202,6 +202,12 @@ Lorica::Config::get_orb_options(void)
 	// app name required to ensure proper argument alignment
 	orb_args_.push_back(LORICA_EXE_NAME);
 
+#ifdef ACE_WIN32
+	orb_args_.push_back("lorica_proxy");
+#else
+	orb_args_.push_back(LORICA_EXE_NAME);
+#endif
+
 	std::string opts = this->get_value ("ORB_Option");
 	if (!opts.empty()) {
 		size_t pos = 0;
@@ -256,26 +262,63 @@ Lorica::Config::get_orb_options(void)
 }
 
 ACE_ARGV*
-Lorica::Config::get_ifr_options(void)
+Lorica::Config::get_ifr_options(const bool Debug)
 {
 	if (ifr_args_.size() > 0)
-		return get_ifr_options_copy ();
+		return get_ifr_options_copy();
 
 	// app name required to ensure proper argument alignment
+#ifdef ACE_WIN32
+	ifr_args_.push_back("ifr_service");
+#else
 	ifr_args_.push_back(IFR_SERVICE_EXE_NAME);
+#endif
 
-	std::string opts = this->get_value("IFR_CmdOption");
-	if (!opts.empty()) {
+	this->ifr_args_.push_back("-o");
+	std::string opt = this->get_value("IFR_IOR_FILE");
+	if (!opt.length()) {
+#ifdef ACE_WIN32
+		opt = "ifr.ior";
+#else
+		if (Debug)
+			opt = "ifr.ior";
+		else
+			opt = IFR_SERVICE_IOR_FILE;
+#endif
+	}
+	this->ifr_args_.push_back(opt.c_str());
+
+	this->ifr_args_.push_back("-b");
+	opt = this->get_value("IFR_CACHE");
+	if (!opt.length()) {
+#ifdef ACE_WIN32
+		opt = "ifr.cache";
+#else
+		if (Debug)
+			opt = "ifr.cache";
+		else
+			opt = IFR_SERVICE_CACHE_FILE;
+#endif
+	}
+	this->ifr_args_.push_back(opt.c_str());
+
+	opt = this->get_value("IFR_PERSISTENT");
+	if ("yes" == opt)
+		this->ifr_args_.push_back("-p");
+
+	// command line options
+	std::string cmd_opts = this->get_value("IFR_CmdOption");
+	if (!cmd_opts.empty()) {
 		size_t pos = 0;
 
 		while (true) {
-			size_t tpos = opts.find(' ', pos);
+			size_t tpos = cmd_opts.find(' ', pos);
 			std::string substr;
 
 			if (tpos == std::string::npos)
-				substr = opts.substr(pos);
+				substr = cmd_opts.substr(pos);
 			else
-				substr = opts.substr(pos, tpos-pos);
+				substr = cmd_opts.substr(pos, tpos-pos);
 
 			if (!substr.empty())
 				this->ifr_args_.push_back(substr.c_str());

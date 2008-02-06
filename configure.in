@@ -463,11 +463,13 @@ AC_SUBST(DH_INSTALL_default_docdir)
 dnl
 dnl Misc Lorica defines
 dnl 
-AC_DEFINE_UNQUOTED([LORICA_PID_FILE],      ["/var/run/lorica.pid"], [Full path to Lorica PID file])
-AC_DEFINE_UNQUOTED([LORICA_IOR_FILE],      ["/var/cache/lorica/lorica.ior"], [Full path to Lorica IOR file])
-AC_DEFINE_UNQUOTED([LORICA_EXE_NAME],      ["lorica"], [Lorica executable name])
-AC_DEFINE_UNQUOTED([LORICA_CONF_FILE],     ["/etc/lorica.conf"], [Full path to Lorica configuration file])
-AC_DEFINE_UNQUOTED([IFR_SERVICE_EXE_NAME], ["ifr_service"], [IFR Service executable name])
+AC_DEFINE_UNQUOTED([LORICA_PID_FILE],        ["/var/run/lorica.pid"], [Full path to Lorica PID file])
+AC_DEFINE_UNQUOTED([LORICA_IOR_FILE],        ["/var/cache/lorica/lorica.ior"], [Full path to Lorica IOR file])
+AC_DEFINE_UNQUOTED([LORICA_EXE_NAME],        ["lorica"], [Lorica executable name])
+AC_DEFINE_UNQUOTED([LORICA_CONF_FILE],       ["/etc/lorica.conf"], [Full path to Lorica configuration file])
+AC_DEFINE_UNQUOTED([IFR_SERVICE_EXE_NAME],   ["ifr_service"], [IFR Service executable name])
+AC_DEFINE_UNQUOTED([IFR_SERVICE_IOR_FILE],   ["/var/cache/lorica/ifr.ior"], [Full path to IFR Service IOR file])
+AC_DEFINE_UNQUOTED([IFR_SERVICE_CACHE_FILE], ["/var/cache/lorica/ifr.cache"], [Full path to IFR Service cache file])
 
 dnl
 dnl Check if this is a distribution

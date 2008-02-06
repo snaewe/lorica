@@ -139,15 +139,17 @@ Lorica::Proxy::configure(Config & config)
 		std::auto_ptr<ACE_ARGV> arguments(config.get_orb_options());
 
 		this->pid_file_ = config.get_value("PID_FILE");
-		if (this->pid_file_.length() == 0)
+		if (!this->pid_file_.length()) {
 #ifdef ACE_WIN32
 			this->pid_file_ = "lorica.pid";
 #else
-		if (debug_)
-			this->pid_file_ = "lorica.pid";
-		else
-			this->pid_file_ = LORICA_PID_FILE;
+			if (debug_)
+				this->pid_file_ = "lorica.pid";
+			else
+				this->pid_file_ = LORICA_PID_FILE;
 #endif
+		}
+
 		// Create proxy ORB.
 		int argc = arguments->argc();
 		if (Lorica_debug_level > 2) {
@@ -276,15 +278,16 @@ Lorica::Proxy::configure(Config & config)
 		iorTable_->bind("lorica_reference_mapper", ior.c_str());
 
 		this->ior_file_ = config.get_value("IOR_FILE");
-		if (this->ior_file_.length() == 0)
+		if (!this->ior_file_.length()) {
 #ifdef ACE_WIN32
 			this->ior_file_ = "lorica.ior";
 #else
-		if (debug_)
-			this->ior_file_ = "lorica.ior";
-		else
-			this->ior_file_ = LORICA_IOR_FILE;
+			if (debug_)
+				this->ior_file_ = "lorica.ior";
+			else
+				this->ior_file_ = LORICA_IOR_FILE;
 #endif
+		}
 		FILE *output_file= ACE_OS::fopen(this->ior_file_.c_str(), "w");
 		if (output_file == 0) {
 			ACE_ERROR((LM_ERROR,
@@ -346,7 +349,7 @@ Lorica::Proxy::configure(Config & config)
 														  "_make_Lorica_GenericLoader",
 														  "")));
 #else
-			Lorica::GenericMapper::GenericMapper *gen_eval = new Lorica::GenericMapper::GenericMapper(*mreg);
+			Lorica::GenericMapper::GenericMapper *gen_eval = new Lorica::GenericMapper::GenericMapper(debug_, *mreg);
 			mreg->add_proxy_mapper(gen_eval);
 #endif
 		}

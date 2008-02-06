@@ -30,9 +30,11 @@
 #include "EvaluatorBase.h"
 #include "ProxyServant.h"
 
-Lorica::GenericMapper::GenericMapper(Lorica_MapperRegistry & mr)
+Lorica::GenericMapper::GenericMapper(const bool Debug,
+				     Lorica_MapperRegistry & mr)
 	: Lorica::ProxyMapper(mr, "_lorica_generic"),
-	  typeIdList()
+	  typeIdList(),
+	  debug_(Debug)
 {
 }
 
@@ -55,14 +57,14 @@ Lorica::GenericMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
 	this->optable_ = new OCI_APT::OperationTable();
 
 	// Collocate the IFR Service.
-	ifr_.init(orb);
+	ifr_.init(debug_, orb);
 
 	ifr_client_ = ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance(TAO_ORB_Core::ifr_client_adapter_name());
 
 	if (ifr_client_ == 0)
 		throw ::CORBA::INTF_REPOS();
 
-	return this->Lorica::ProxyMapper::proxy_mapper_init(outward,inward,orb);
+	return this->Lorica::ProxyMapper::proxy_mapper_init(outward, inward, orb);
 }
 
 OCI_APT::ArgList*

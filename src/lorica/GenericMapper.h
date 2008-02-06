@@ -43,7 +43,8 @@ namespace Lorica
 
 	class Lorica_GenericEvaluator_Export GenericMapper : public ProxyMapper {
 	public:
-		GenericMapper(Lorica_MapperRegistry & mr);
+		GenericMapper(const bool Debug,
+			      Lorica_MapperRegistry & mr);
 
 		virtual ~GenericMapper(void);
 
@@ -73,6 +74,7 @@ namespace Lorica
 		DynamicAny::DynAnyFactory_var dynAnyFact_;
 		Lorica::IFRService ifr_;
 		TAO_IFR_Client_Adapter *ifr_client_;
+		bool debug_;
 	};
 }
 

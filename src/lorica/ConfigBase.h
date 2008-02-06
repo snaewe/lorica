@@ -75,7 +75,7 @@ namespace Lorica
 		 * @retval 0 on failure. Heap allocated ACE_ARGV structure upon success.
 		 */
 		ACE_ARGV* get_orb_options(void);
-		ACE_ARGV* get_ifr_options(void);
+		ACE_ARGV* get_ifr_options(const bool Debug);
 
 		/**
 		 * Returns externally directed endpoints.

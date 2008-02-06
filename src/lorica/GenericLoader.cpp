@@ -43,7 +43,7 @@ Lorica_GenericLoader::init(int argc,
 {
 	this->Lorica_EvaluatorLoader::init(argc, argv);
 
-	Lorica::ProxyMapper *mapper = new Lorica::GenericMapper(*this->mapperRegistry_);
+	Lorica::ProxyMapper *mapper = new Lorica::GenericMapper(false, *this->mapperRegistry_);
 
 	this->mapperRegistry_->set_generic_mapper(mapper);
 

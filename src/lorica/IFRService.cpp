@@ -38,7 +38,8 @@
 #include "debug.h"
 
 int
-Lorica::IFRService::init(CORBA::ORB_ptr orb)
+Lorica::IFRService::init(const bool Debug,
+			 CORBA::ORB_ptr orb)
 {
 	Lorica::Config *config = Lorica::FileConfig::instance();
 
@@ -47,7 +48,7 @@ Lorica::IFRService::init(CORBA::ORB_ptr orb)
 		return 0;
 	}
 
-	ACE_ARGV *arguments = config->get_ifr_options();
+	ACE_ARGV *arguments = config->get_ifr_options(Debug);
 	int argc = arguments->argc();
 
 	if (Lorica_debug_level > 0) {
