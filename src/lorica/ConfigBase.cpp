@@ -36,7 +36,8 @@ Lorica::Config::Endpoint::Endpoint ()
 	  port_(0),
 	  is_ipv6_(false),
 	  ssl_port_(0)
-{ }
+{
+}
 
 Lorica::Config::Endpoint::Endpoint(const Lorica::Config::Endpoint& a)
 {
@@ -122,13 +123,22 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str)
 
 	size_t start = 0;
 	size_t end = port_sep;
-	if ((primary_addr[start] == '[') && (primary_addr[end-1] == ']')) {
-		this->is_ipv6_ = true;
-		++start;
-		end -= 2;
-	}
 
-	this->hostname_ = primary_addr.substr(start,end);
+	// "[]:123" and ":123" are both accepted
+	if (!port_sep) {
+		this->hostname_ = "";
+	} else if ((2 == port_sep)
+		   && ((primary_addr[0] == '[') && (primary_addr[1] == ']'))) {
+		this->is_ipv6_ = true;
+		this->hostname_ = "";
+	} else {
+		if ((primary_addr[start] == '[') && (primary_addr[end-1] == ']')) {
+			this->is_ipv6_ = true;
+			++start;
+			end -= 2;
+		}
+		this->hostname_ = primary_addr.substr(start, end);
+	}
 
 	if (option_pos != std::string::npos) {
 		// The rest are optional modifiers, ssl port, hostname alias
@@ -246,7 +256,7 @@ Lorica::Config::get_orb_options(void)
 		std::string tao_eparg;
 
 		this->endpoints_[count].as_tao_endpoint(tao_eparg);
-		this->orb_args_.push_back("-ORBEndpoint");
+		this->orb_args_.push_back("-ORBListenEndpoints");
 		this->orb_args_.push_back(tao_eparg.c_str());
 	}
 
@@ -288,25 +298,27 @@ Lorica::Config::get_ifr_options(const bool Debug)
 	}
 	this->ifr_args_.push_back(opt.c_str());
 
-	this->ifr_args_.push_back("-b");
-	opt = this->get_value("IFR_CACHE");
-	if (!opt.length()) {
-#ifdef ACE_WIN32
-		opt = "ifr.cache";
-#else
-		if (Debug)
-			opt = "ifr.cache";
-		else
-			opt = IFR_SERVICE_CACHE_FILE;
-#endif
-	}
-	this->ifr_args_.push_back(opt.c_str());
-
 	opt = this->get_value("IFR_PERSISTENT");
-	if ("yes" == opt)
+	if ("no" != opt) {
 		this->ifr_args_.push_back("-p");
 
-	// command line options
+		this->ifr_args_.push_back("-b");
+		opt = this->get_value("IFR_CACHE");
+		if (!opt.length()) {
+#ifdef ACE_WIN32
+			opt = "ifr.cache";
+#else
+			if (Debug)
+				opt = "ifr.cache";
+			else
+				opt = IFR_SERVICE_CACHE_FILE;
+#endif
+		}
+
+		this->ifr_args_.push_back(opt.c_str());
+	}
+
+	// command line options which will override the defaults
 	std::string cmd_opts = this->get_value("IFR_CmdOption");
 	if (!cmd_opts.empty()) {
 		size_t pos = 0;

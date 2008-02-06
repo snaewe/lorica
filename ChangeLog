@@ -1,3 +1,10 @@
+2008-02-06  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
+	s/ORBEndpoint/ORBListenEndpoints/g
+	(Endpoint::parse_string): Accept endpoints with empty
+	hostname part.
+
 2008-01-26  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/Makefile.am: Install lorica in /usr/sbin
