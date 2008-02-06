@@ -160,6 +160,13 @@ fork_done:
 	if (0 != fd0)
 		return EXIT_ERROR;
 
+#ifndef ACE_WIN32
+	if (!Debug
+	    && (mkdir(LORICA_CACHE_DIR, 0700)) 
+	    && (EEXIST != errno))
+		return EXIT_ERROR;
+#endif
+
 	return EXIT_DAEMON;
 }
 #endif // ACE_WIN32

@@ -1,5 +1,8 @@
 2008-02-06  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/main.cpp (become_daemon): Create cache directory
+	on !Windows.
+
 	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
 	s/ORBEndpoint/ORBListenEndpoints/g
 	(Endpoint::parse_string): Accept endpoints with empty
