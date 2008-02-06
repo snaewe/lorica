@@ -223,7 +223,7 @@ endif # !LORICA_DARWIN
 
 endif # HAVE_ACE_ROOT
 
-sysconf_DATA = lorica.conf
+sysconf_DATA = lorica.conf lorica.ssliop
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in

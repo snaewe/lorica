@@ -139,3 +139,8 @@ dist-deb-prep:
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install.in $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 
+install-data-hook:
+if LORICA_GENTOO
+	cp $(CWD)/init_rc/gentoo.confd $(DESTDIR)$(sysconfdir)/conf.d/lorica
+	cp $(CWD)/init_rc/gentoo.initd $(DESTDIR)$(sysconfdir)/init.d/lorica
+endif

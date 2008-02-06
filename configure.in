@@ -466,10 +466,16 @@ dnl
 
 dnl Lorica
 AC_DEFINE_UNQUOTED([LORICA_EXE_NAME],        ["lorica"], [Lorica executable name])
+AC_DEFINE_UNQUOTED([LORICA_EXE_PATH],        ["/usr/sbin/lorica"], [Lorica executable name])
 AC_DEFINE_UNQUOTED([LORICA_CACHE_DIR],       ["/var/cache/lorica"], [Lorica cache directory])
 AC_DEFINE_UNQUOTED([LORICA_PID_FILE],        ["/var/run/lorica.pid"], [Full path to Lorica PID file])
 AC_DEFINE_UNQUOTED([LORICA_IOR_FILE],        ["/var/cache/lorica/lorica.ior"], [Full path to Lorica IOR file])
 AC_DEFINE_UNQUOTED([LORICA_CONF_FILE],       ["/etc/lorica.conf"], [Full path to Lorica configuration file])
+
+LORICA_EXE_PATH="/usr/sbin/lorica"
+AC_SUBST(LORICA_EXE_PATH)
+LORICA_PID_FILE="/var/run/lorica.pid"
+AC_SUBST(LORICA_PID_FILE)
 
 dnl Interface Repository
 AC_DEFINE_UNQUOTED([IFR_SERVICE_EXE_NAME],   ["ifr_service"], [IFR Service executable name])
@@ -504,6 +510,7 @@ src/Makefile
 src/OCI/Makefile
 src/lorica/Makefile
 src/proxy/Makefile
+init_rc/gentoo.confd
 ])
 
 case "$lorica_target" in

@@ -1,0 +1,11 @@
+# /etc/conf.d/lorica: config file for /etc/init.d/lorica
+
+# Lorica startup options
+LORICA_OPTIONS=""
+
+# PID file
+LORICA_PID_FILE=@LORICA_PID_FILE@
+
+# Full path to Lorica executable
+LORICA_EXE_PATH=@LORICA_EXE_PATH@ 
+
