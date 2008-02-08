@@ -298,14 +298,19 @@ fi
 AC_SUBST(CONF_ACE_ROOT)
 
 dnl Must be searchable in <> include statements
-ACETAO_INCLUDES="-I$CONF_ACE_ROOT -I$CONF_ACE_ROOT/TAO -I$CONF_ACE_ROOT/TAO/orbsvcs"
+if test "x$enable_tao_build" = "xyes"; then
+   ACETAO_INCLUDES="-I$CONF_ACE_ROOT -I$CONF_ACE_ROOT/TAO -I$CONF_ACE_ROOT/TAO/orbsvcs -I$with_acetao_includes/TAO -I$with_acetao_includes/TAO/orbsvcs"
+else
+   if test "x$with_acetao_includes" != "x/usr/include"; then
+      ACETAO_INCLUDES="-I$with_acetao_includes -I$with_acetao_includes/TAO -I$with_acetao_includes/TAO/orbsvcs"
+   else
+      ACETAO_INCLUDES="-I$with_acetao_includes/TAO -I$with_acetao_includes/TAO/orbsvcs"
+   fi
+fi 
 AC_SUBST(ACETAO_INCLUDES)
 
 dnl Must only be searchable in "" include statements
-LORICA_INCLUDES="-iquote $LORICA_top_dir -iquote $LORICA_top_dir/src -iquote $LORICA_top_dir/defines"
-if test "x$with_acetao_includes" != "x/usr/include"; then
-   	LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_INCLUDES"
-fi
+LORICA_INCLUDES="$ACETAO_INCLUDES -iquote $LORICA_top_dir -iquote $LORICA_top_dir/src -iquote $LORICA_top_dir/defines"
 
 dnl Now set the preprocessor arguments
 if test "x$lorica_target" = "xDarwin"; then
@@ -363,7 +368,7 @@ if test "x$enable_tao_build" = "xno"; then
 fi
 
 dnl State all used ACE and TAO headers
-ACE_HEADERS="ace/ACE.h ace/Auto_Ptr.h ace/Dynamic_Service.h ace/Get_Opt.h ace/INET_Addr.h ace/Log_Msg.h ace/Min_Max.h ace/Mutex.h ace/OS_NS_errno.h ace/OS_NS_stdio.h ace/OS_NS_stdlib.h ace/OS_NS_string.h ace/OS_NS_strings.h ace/OS_NS_unistd.h ace/Service_Config.h ace/Service_Gestalt.h ace/Signal.h ace/SString.h ace/streams.h ace/Task.h ace/Thread.h ace/Time_Value.h TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h TAO/orbsvcs/orbsvcs/IFRService/Options.h TAO/orbsvcs/orbsvcs/IOR_Multicast.h TAO/orbsvcs/orbsvcs/SecurityC.h TAO/orbsvcs/orbsvcs/SSLIOPC.h TAO/tao/AnyTypeCode/Any_Impl.h TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h TAO/tao/AnyTypeCode/NVList.h TAO/tao/corbafwd.h TAO/tao/CORBA_String.h TAO/tao/debug.h TAO/tao/DynamicAny/DynamicAnyC.h TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h TAO/tao/DynamicInterface/Request.h TAO/tao/DynamicInterface/Server_Request.h TAO/tao/EndpointPolicy/EndpointPolicy.h TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h TAO/tao/Exception.h TAO/tao/IFR_Client/IFR_BasicC.h TAO/tao/IORTable/IORTable.h TAO/tao/Messaging/AMH_Response_Handler.h TAO/tao/MProfile.h TAO/tao/Object.h TAO/tao/OctetSeqC.h TAO/tao/ORB_Constants.h TAO/tao/ORB_Core.h TAO/tao/ORBInitializer_Registry.h TAO/tao/PI/PI.h TAO/tao/PortableServer/POAManagerFactory.h TAO/tao/PortableServer/PortableServer.h TAO/tao/PortableServer/Servant_Base.h TAO/tao/Profile.h TAO/tao/Stub.h TAO/tao/SystemException.h TAO/tao/Tagged_Components.h TAO/tao/TAO_Server_Request.h TAO/tao/Thread_Lane_Resources.h"
+ACE_HEADERS="ace/ACE.h ace/Auto_Ptr.h ace/Dynamic_Service.h ace/Get_Opt.h ace/INET_Addr.h ace/Log_Msg.h ace/Min_Max.h ace/Mutex.h ace/OS_NS_errno.h ace/OS_NS_stdio.h ace/OS_NS_stdlib.h ace/OS_NS_string.h ace/OS_NS_strings.h ace/OS_NS_unistd.h ace/Service_Config.h ace/Service_Gestalt.h ace/Signal.h ace/SString.h ace/streams.h ace/Task.h ace/Thread.h ace/Time_Value.h TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h TAO/orbsvcs/orbsvcs/IFRService/Options.h TAO/orbsvcs/orbsvcs/IOR_Multicast.h TAO/orbsvcs/orbsvcs/SecurityC.h TAO/orbsvcs/orbsvcs/SSLIOPC.h TAO/tao/AnyTypeCode/Any_Impl.h TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h TAO/tao/AnyTypeCode/NVList.h TAO/tao/corbafwd.h TAO/tao/CORBA_String.h TAO/tao/debug.h TAO/tao/DynamicAny/DynamicAny.h TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h TAO/tao/DynamicInterface/Request.h TAO/tao/DynamicInterface/Server_Request.h TAO/tao/EndpointPolicy/EndpointPolicy.h TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h TAO/tao/Exception.h TAO/tao/IFR_Client/IFR_BasicC.h TAO/tao/IORTable/IORTable.h TAO/tao/Messaging/AMH_Response_Handler.h TAO/tao/MProfile.h TAO/tao/Object.h TAO/tao/OctetSeqC.h TAO/tao/ORB_Constants.h TAO/tao/ORB_Core.h TAO/tao/ORBInitializer_Registry.h TAO/tao/PI/PI.h TAO/tao/PortableServer/POAManagerFactory.h TAO/tao/PortableServer/PortableServer.h TAO/tao/PortableServer/Servant_Base.h TAO/tao/Profile.h TAO/tao/Stub.h TAO/tao/SystemException.h TAO/tao/Tagged_Components.h TAO/tao/TAO_Server_Request.h TAO/tao/Thread_Lane_Resources.h"
 
 dnl The order is vitally important
 ACE_LIBS="ACE ACE_SSL TAO TAO_Codeset TAO_AnyTypeCode TAO_CodecFactory TAO_Valuetype TAO_DynamicAny TAO_PI TAO_PortableServer TAO_Messaging TAO_DynamicInterface TAO_EndpointPolicy TAO_IFR_Client TAO_IORTable TAO_Svc_Utils TAO_TypeCodeFactory TAO_IFRService TAO_PI_Server TAO_Security TAO_SSLIOP"
@@ -371,8 +376,12 @@ ACE_LIBS="ACE ACE_SSL TAO TAO_Codeset TAO_AnyTypeCode TAO_CodecFactory TAO_Value
 dnl State all needed TAO programs
 TAO_EXECUTABLES="tao_gperf tao_idl tao_ifr"
 
-if test "x$enable_tao_build" = "xyes"; then
+dnl Take care of CXXFLAGS
+oldCXXFLAGS="$CXXFLAGS"
+CXXFLAGS="$LORICA_DEFS"
 
+dnl Check for TAO programs, libraries and headers
+if test "x$enable_tao_build" = "xyes"; then
    dnl We are opting to (re-)build if needed, so ACE_ROOT must (or will eventually if we rebuilds) exist somewhere
    AM_CONDITIONAL(HAVE_ACE_ROOT, true)
 
@@ -399,9 +408,8 @@ if test "x$enable_tao_build" = "xyes"; then
    dnl ACE and TAO headers
    for headerfile in $ACE_HEADERS
    do
-	AC_CHECK_FILE($with_acetao_includes/$headerfile, [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
+	AC_CHECK_HEADER([$headerfile], [], [AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)])
    done
-
 else
    dnl Check for needed TAO programs
    for exefile in $TAO_EXECUTABLES
@@ -425,9 +433,12 @@ else
    dnl ACE and TAO headers
    for headerfile in $ACE_HEADERS
    do
-	AC_CHECK_FILE($with_acetao_includes/$headerfile, [], [AC_MSG_ERROR([[You need this header to build Lorica - consider enabling tao-build]])])
+	AC_CHECK_HEADER([$headerfile], [], [AC_MSG_ERROR([[You really need this header to build Lorica - consider enabling tao-build]])])
    done
 fi
+
+dnl Restore old CXXFLAGS
+CXXFLAGS="$oldCXXFLAGS"
 
 dnl
 dnl Environment variables to work around ':=' not being POSIX compliant

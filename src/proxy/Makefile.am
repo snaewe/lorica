@@ -227,103 +227,327 @@ endif # !LORICA_DARWIN
 if LORICA_DEVEL
 lorica_aceincludedir = $(includedir)/ace
 lorica_aceinclude_DATA = \
-	$(ACE_ROOT)/ace/ACE.h             \
-	$(ACE_ROOT)/ace/Auto_Ptr.h        \
-	$(ACE_ROOT)/ace/Dynamic_Service.h \
-	$(ACE_ROOT)/ace/Get_Opt.h         \
-	$(ACE_ROOT)/ace/INET_Addr.h       \
-	$(ACE_ROOT)/ace/Log_Msg.h         \
-	$(ACE_ROOT)/ace/Min_Max.h         \
-	$(ACE_ROOT)/ace/Mutex.h           \
-	$(ACE_ROOT)/ace/OS_NS_errno.h     \
-	$(ACE_ROOT)/ace/OS_NS_stdio.h     \
-	$(ACE_ROOT)/ace/OS_NS_stdlib.h    \
-	$(ACE_ROOT)/ace/OS_NS_string.h    \
-	$(ACE_ROOT)/ace/OS_NS_strings.h   \
-	$(ACE_ROOT)/ace/OS_NS_unistd.h    \
-	$(ACE_ROOT)/ace/Service_Config.h  \
-	$(ACE_ROOT)/ace/Service_Gestalt.h \
-	$(ACE_ROOT)/ace/Signal.h          \
-	$(ACE_ROOT)/ace/SString.h         \
-	$(ACE_ROOT)/ace/streams.h         \
-	$(ACE_ROOT)/ace/Task.h            \
-	$(ACE_ROOT)/ace/Thread.h          \
-	$(ACE_ROOT)/ace/Time_Value.h
+	$(ACE_ROOT)/ace/ACE.h                    \
+	$(ACE_ROOT)/ace/ace_wchar.h              \
+	$(ACE_ROOT)/ace/ACE_export.h             \
+	$(ACE_ROOT)/ace/Addr.h                   \
+	$(ACE_ROOT)/ace/Array_Map.h              \
+	$(ACE_ROOT)/ace/Assert.h                 \
+	$(ACE_ROOT)/ace/Atomic_Op.h              \
+	$(ACE_ROOT)/ace/Auto_Ptr.h               \
+	$(ACE_ROOT)/ace/Basic_Types.h            \
+	$(ACE_ROOT)/ace/config-all.h             \
+	$(ACE_ROOT)/ace/config-lite.h            \
+	$(ACE_ROOT)/ace/config-macros.h          \
+	$(ACE_ROOT)/ace/Configuration.h          \
+	$(ACE_ROOT)/ace/Containers.h             \
+	$(ACE_ROOT)/ace/CORBA_macros.h           \
+	$(ACE_ROOT)/ace/Default_Constants.h      \
+	$(ACE_ROOT)/ace/Dynamic_Service.h        \
+	$(ACE_ROOT)/ace/Dynamic_Service_Base.h   \
+	$(ACE_ROOT)/ace/Flag_Manip.h             \
+	$(ACE_ROOT)/ace/Get_Opt.h                \
+	$(ACE_ROOT)/ace/Global_Macros.h          \
+	$(ACE_ROOT)/ace/Handle_Ops.h             \
+	$(ACE_ROOT)/ace/INET_Addr.h              \
+	$(ACE_ROOT)/ace/Init_ACE.h               \
+	$(ACE_ROOT)/ace/iosfwd.h                 \
+	$(ACE_ROOT)/ace/Lib_Find.h               \
+	$(ACE_ROOT)/ace/Lock_Adapter_T.h         \
+	$(ACE_ROOT)/ace/Log_Msg.h                \
+	$(ACE_ROOT)/ace/Log_Priority.h           \
+	$(ACE_ROOT)/ace/Min_Max.h                \
+	$(ACE_ROOT)/ace/Mutex.h                  \
+	$(ACE_ROOT)/ace/Null_Mutex.h             \
+	$(ACE_ROOT)/ace/OS_Log_Msg_Attributes.h  \
+	$(ACE_ROOT)/ace/OS_main.h                \
+	$(ACE_ROOT)/ace/OS_NS_errno.h            \
+	$(ACE_ROOT)/ace/OS_NS_math.h             \
+	$(ACE_ROOT)/ace/OS_NS_signal.h           \
+	$(ACE_ROOT)/ace/OS_NS_stdio.h            \
+	$(ACE_ROOT)/ace/OS_NS_stdlib.h           \
+	$(ACE_ROOT)/ace/OS_NS_string.h           \
+	$(ACE_ROOT)/ace/OS_NS_strings.h          \
+	$(ACE_ROOT)/ace/OS_NS_Thread.h           \
+	$(ACE_ROOT)/ace/OS_NS_unistd.h           \
+	$(ACE_ROOT)/ace/post.h                   \
+	$(ACE_ROOT)/ace/pre.h                    \
+	$(ACE_ROOT)/ace/Reactor.h                \
+	$(ACE_ROOT)/ace/Recursive_Thread_Mutex.h \
+	$(ACE_ROOT)/ace/Service_Config.h         \
+	$(ACE_ROOT)/ace/Service_Gestalt.h        \
+	$(ACE_ROOT)/ace/Service_Object.h         \
+	$(ACE_ROOT)/ace/Service_Repository.h     \
+	$(ACE_ROOT)/ace/Signal.h                 \
+	$(ACE_ROOT)/ace/Singleton.h              \
+	$(ACE_ROOT)/ace/Sock_Connect.h           \
+	$(ACE_ROOT)/ace/SOCK_Dgram_Mcast.h       \
+	$(ACE_ROOT)/ace/SString.h                \
+	$(ACE_ROOT)/ace/SStringfwd.h             \
+	$(ACE_ROOT)/ace/String_Base.h            \
+	$(ACE_ROOT)/ace/Synch_Traits.h           \
+	$(ACE_ROOT)/ace/streams.h                \
+	$(ACE_ROOT)/ace/Task.h                   \
+	$(ACE_ROOT)/ace/Thread.h                 \
+	$(ACE_ROOT)/ace/Thread_Adapter.h         \
+	$(ACE_ROOT)/ace/Thread_Manager.h         \
+	$(ACE_ROOT)/ace/Thread_Mutex.h           \
+	$(ACE_ROOT)/ace/Time_Value.h             \
+	$(ACE_ROOT)/ace/TSS_T.h                  \
+	$(ACE_ROOT)/ace/Unbounded_Queue.h        \
+	$(ACE_ROOT)/ace/Unbounded_Set.h
+
+lorica_os_includeincludedir = $(includedir)/ace/os_include
+lorica_os_includeinclude_DATA = \
+	$(ACE_ROOT)/ace/os_include/os_errno.h   \
+	$(ACE_ROOT)/ace/os_include/os_fcntl.h   \
+	$(ACE_ROOT)/ace/os_include/os_limits.h  \
+	$(ACE_ROOT)/ace/os_include/os_unistd.h  \
+	$(ACE_ROOT)/ace/os_include/os_stdio.h   \
+	$(ACE_ROOT)/ace/os_include/os_stdlib.h  \
+	$(ACE_ROOT)/ace/os_include/os_strings.h \
+	$(ACE_ROOT)/ace/os_include/os_time.h
+
 
 lorica_ifrserviceincludedir = $(includedir)/TAO/orbsvcs/orbsvcs/IFRService
 lorica_ifrserviceinclude_DATA = \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h  \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h       \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS_T.h     \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h     \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/Options.h
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/Options.h               \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/IFR_ExtendedS.h         \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/ifr_service_export.h    \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/Repository_i.h
+
+lorica_securityincludedir = $(includedir)/TAO/orbsvcs/orbsvcs/Security
+lorica_securityinclude_DATA = \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/Security/security_export.h
+
+lorica_ssliopincludedir = $(includedir)/TAO/orbsvcs/orbsvcs/SSLIOP
+lorica_ssliopinclude_DATA = \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Export.h
 
 lorica_orbsvcsincludedir = $(includedir)/TAO/orbsvcs/orbsvcs
 lorica_orbsvcsinclude_DATA = \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IOR_Multicast.h                    \
-	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/SecurityC.h                        \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IOR_Multicast.h    \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/SecurityC.h        \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/svc_utils_export.h \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/SSLIOPC.h
 
 lorica_tao_anytypecodeincludedir = $(includedir)/TAO/tao/AnyTypeCode
 lorica_tao_anytypecodeinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any_Impl.h             \
-	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h   \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any.h                    \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any_Impl.h               \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/AnyTypeCode_methods.h    \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/BooleanSeqA.h            \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/CharSeqA.h               \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/DoubleSeqA.h             \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/FloatSeqA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/IOPA.h                   \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/LongDoubleSeqA.h         \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/LongLongSeqA.h           \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/LongSeqA.h               \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/NVList_Adapter_Impl.h    \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/NVList.h                 \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/OctetSeqA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/orb_typesA.h             \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/ParameterModeA.h         \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/PolicyA.h                \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Policy_CurrentA.h        \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Policy_ManagerA.h        \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/ServicesA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/ShortSeqA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/StringSeqA.h             \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/TimeBaseA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/TypeCode_Constants.h     \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/TypeCode.h               \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Typecode_typesA.h        \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/ULongLongSeqA.h          \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/ULongSeqA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/UShortSeqA.h             \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/WCharSeqA.h              \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/WrongTransactionA.h      \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/WStringSeqA.h            \
 	$(ACE_ROOT)/TAO/tao/AnyTypeCode/NVList.h 
 
 lorica_taoincludedir = $(includedir)/TAO/tao
 lorica_taoinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/corbafwd.h                \
-	$(ACE_ROOT)/TAO/tao/CORBA_String.h            \
-	$(ACE_ROOT)/TAO/tao/Exception.h               \
-	$(ACE_ROOT)/TAO/tao/MProfile.h                \
-	$(ACE_ROOT)/TAO/tao/Object.h                  \
-	$(ACE_ROOT)/TAO/tao/OctetSeqC.h               \
-	$(ACE_ROOT)/TAO/tao/ORB_Constants.h           \
-	$(ACE_ROOT)/TAO/tao/ORB_Core.h                \
-	$(ACE_ROOT)/TAO/tao/ORBInitializer_Registry.h \
-	$(ACE_ROOT)/TAO/tao/Profile.h                 \
-	$(ACE_ROOT)/TAO/tao/Stub.h                    \
-	$(ACE_ROOT)/TAO/tao/SystemException.h         \
-	$(ACE_ROOT)/TAO/tao/Tagged_Components.h       \
-	$(ACE_ROOT)/TAO/tao/TAO_Server_Request.h      \
-	$(ACE_ROOT)/TAO/tao/Thread_Lane_Resources.h   \
-	$(ACE_ROOT)/TAO/tao/debug.h
+	$(ACE_ROOT)/TAO/tao/Abstract_Servant_Base.h     \
+	$(ACE_ROOT)/TAO/tao/Adapter_Registry.h          \
+	$(ACE_ROOT)/TAO/tao/Allocator.h                 \
+	$(ACE_ROOT)/TAO/tao/Any_Insert_Policy_T.h       \
+	$(ACE_ROOT)/TAO/tao/Arg_Traits_T.h              \
+	$(ACE_ROOT)/TAO/tao/Basic_Types.h               \
+	$(ACE_ROOT)/TAO/tao/BooleanSeqC.h               \
+	$(ACE_ROOT)/TAO/tao/Buffer_Allocator_T.h        \
+	$(ACE_ROOT)/TAO/tao/CDR.h                       \
+	$(ACE_ROOT)/TAO/tao/CharSeqC.h                  \
+	$(ACE_ROOT)/TAO/tao/Cleanup_Func_Registry.h     \
+	$(ACE_ROOT)/TAO/tao/Collocation_Proxy_Broker.h  \
+	$(ACE_ROOT)/TAO/tao/Collocation_Strategy.h      \
+	$(ACE_ROOT)/TAO/tao/Configurable_Refcount.h     \
+	$(ACE_ROOT)/TAO/tao/CONV_FRAMEC.h               \
+	$(ACE_ROOT)/TAO/tao/corbafwd.h                  \
+	$(ACE_ROOT)/TAO/tao/CORBA_methods.h             \
+	$(ACE_ROOT)/TAO/tao/CORBA_String.h              \
+	$(ACE_ROOT)/TAO/tao/debug.h                     \
+	$(ACE_ROOT)/TAO/tao/DoubleSeqC.h                \
+	$(ACE_ROOT)/TAO/tao/Environment.h               \
+	$(ACE_ROOT)/TAO/tao/Exception.h                 \
+	$(ACE_ROOT)/TAO/tao/Fault_Tolerance_Service.h   \
+	$(ACE_ROOT)/TAO/tao/FloatSeqC.h                 \
+	$(ACE_ROOT)/TAO/tao/GIOPC.h                     \
+	$(ACE_ROOT)/TAO/tao/GIOP_Message_Version.h      \
+	$(ACE_ROOT)/TAO/tao/Invocation_Utils.h          \
+	$(ACE_ROOT)/TAO/tao/IOPC.h                      \
+	$(ACE_ROOT)/TAO/tao/IOP_IORC.h                  \
+	$(ACE_ROOT)/TAO/tao/LocalObject.h               \
+	$(ACE_ROOT)/TAO/tao/LongDoubleSeqC.h            \
+	$(ACE_ROOT)/TAO/tao/LongLongSeqC.h              \
+	$(ACE_ROOT)/TAO/tao/LongSeqC.h                  \
+	$(ACE_ROOT)/TAO/tao/Messaging_SyncScopeC.h      \
+	$(ACE_ROOT)/TAO/tao/MProfile.h                  \
+	$(ACE_ROOT)/TAO/tao/Object_Argument_T.h         \
+	$(ACE_ROOT)/TAO/tao/Object.h                    \
+	$(ACE_ROOT)/TAO/tao/ObjectKey_Table.h           \
+	$(ACE_ROOT)/TAO/tao/Object_Ref_Table.h          \
+	$(ACE_ROOT)/TAO/tao/Objref_VarOut_T.h           \
+	$(ACE_ROOT)/TAO/tao/OctetSeqC.h                 \
+	$(ACE_ROOT)/TAO/tao/orbconf.h                   \
+	$(ACE_ROOT)/TAO/tao/ORB_Constants.h             \
+	$(ACE_ROOT)/TAO/tao/ORB_Core.h                  \
+	$(ACE_ROOT)/TAO/tao/ORB_Core_Auto_Ptr.h         \
+	$(ACE_ROOT)/TAO/tao/ORB_Core_TSS_Resources.h    \
+	$(ACE_ROOT)/TAO/tao/ORB.h                       \
+	$(ACE_ROOT)/TAO/tao/orb_typesC.h                \
+	$(ACE_ROOT)/TAO/tao/ORBInitializer_Registry.h   \
+	$(ACE_ROOT)/TAO/tao/ParameterModeC.h            \
+	$(ACE_ROOT)/TAO/tao/params.h                    \
+	$(ACE_ROOT)/TAO/tao/Parser_Registry.h           \
+	$(ACE_ROOT)/TAO/tao/PolicyC.h                   \
+	$(ACE_ROOT)/TAO/tao/Policy_CurrentC.h           \
+	$(ACE_ROOT)/TAO/tao/Policy_ForwardC.h           \
+	$(ACE_ROOT)/TAO/tao/Policy_ManagerC.h           \
+	$(ACE_ROOT)/TAO/tao/Profile.h                   \
+	$(ACE_ROOT)/TAO/tao/Pseudo_VarOut_T.h           \
+	$(ACE_ROOT)/TAO/tao/Refcounted_ObjectKey.h      \
+	$(ACE_ROOT)/TAO/tao/Resource_Factory.h          \
+	$(ACE_ROOT)/TAO/tao/Seq_Out_T.h                 \
+	$(ACE_ROOT)/TAO/tao/Sequence_T.h                \
+	$(ACE_ROOT)/TAO/tao/Seq_Var_T.h                 \
+	$(ACE_ROOT)/TAO/tao/Service_Callbacks.h         \
+	$(ACE_ROOT)/TAO/tao/Service_Context.h           \
+	$(ACE_ROOT)/TAO/tao/ServicesC.h                 \
+	$(ACE_ROOT)/TAO/tao/ShortSeqC.h                 \
+	$(ACE_ROOT)/TAO/tao/String_Manager_T.h          \
+	$(ACE_ROOT)/TAO/tao/StringSeqC.h                \
+	$(ACE_ROOT)/TAO/tao/String_Traits_Base_T.h      \
+	$(ACE_ROOT)/TAO/tao/Stub.h                      \
+	$(ACE_ROOT)/TAO/tao/SystemException.h           \
+	$(ACE_ROOT)/TAO/tao/Tagged_Components.h         \
+	$(ACE_ROOT)/TAO/tao/Tagged_Profile.h            \
+	$(ACE_ROOT)/TAO/tao/TAO_Export.h                \
+	$(ACE_ROOT)/TAO/tao/TAO_Server_Request.h        \
+	$(ACE_ROOT)/TAO/tao/TimeBaseC.h                 \
+	$(ACE_ROOT)/TAO/tao/Transport_Selection_Guard.h \
+	$(ACE_ROOT)/TAO/tao/Thread_Lane_Resources.h     \
+	$(ACE_ROOT)/TAO/tao/Typecode_typesC.h           \
+	$(ACE_ROOT)/TAO/tao/ULongLongSeqC.h             \
+	$(ACE_ROOT)/TAO/tao/ULongSeqC.h                 \
+	$(ACE_ROOT)/TAO/tao/UserException.h             \
+	$(ACE_ROOT)/TAO/tao/UShortSeqC.h                \
+	$(ACE_ROOT)/TAO/tao/Valuetype/AbstractBase.h    \
+	$(ACE_ROOT)/TAO/tao/Valuetype/ValueBase.h       \
+	$(ACE_ROOT)/TAO/tao/VarOut_T.h                  \
+	$(ACE_ROOT)/TAO/tao/Versioned_Namespace.h       \
+	$(ACE_ROOT)/TAO/tao/WCharSeqC.h                 \
+	$(ACE_ROOT)/TAO/tao/WrongTransactionC.h         \
+	$(ACE_ROOT)/TAO/tao/WStringSeqC.h
 
 lorica_tao_dynamicanyincludedir = $(includedir)/TAO/tao/DynamicAny
 lorica_tao_dynamicanyinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/DynamicAny/dynamicany_export.h \
+	$(ACE_ROOT)/TAO/tao/DynamicAny/DynamicAny.h        \
 	$(ACE_ROOT)/TAO/tao/DynamicAny/DynamicAnyC.h
 
 lorica_tao_dynamic_interfaceincludedir = $(includedir)/TAO/tao/DynamicInterface
 lorica_tao_dynamic_interfaceinclude_DATA = \
 	$(ACE_ROOT)/TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/Context.h                  \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/dynamicinterface_export.h  \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/Dynamic_Adapter_Impl.h     \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/ExceptionList.h            \
 	$(ACE_ROOT)/TAO/tao/DynamicInterface/Request.h                  \
 	$(ACE_ROOT)/TAO/tao/DynamicInterface/Server_Request.h
 
 lorica_tao_endpointpolicyincludedir = $(includedir)/TAO/tao/EndpointPolicy
 lorica_tao_endpointpolicyinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h \
-	$(ACE_ROOT)/TAO/tao/EndpointPolicy/EndpointPolicy.h
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/EndpointPolicy_Export.h \
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/EndpointPolicy.h        \
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/EndpointPolicyA.h       \
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/EndpointPolicyC.h       \
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h
 
 lorica_tao_ifrclientincludedir = $(includedir)/TAO/tao/IFR_Client
 lorica_tao_ifrclientinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/IFR_Client/IFR_BasicC.h
+	$(ACE_ROOT)/TAO/tao/IFR_Client/IFR_BaseA.h         \
+	$(ACE_ROOT)/TAO/tao/IFR_Client/IFR_BaseC.h         \
+	$(ACE_ROOT)/TAO/tao/IFR_Client/IFR_BasicC.h        \
+	$(ACE_ROOT)/TAO/tao/IFR_Client/ifr_client_export.h \
+	$(ACE_ROOT)/TAO/tao/IFR_Client/IFR_ComponentsC.h
 
 lorica_tao_iortableincludedir = $(includedir)/TAO/tao/IORTable
 lorica_tao_iortableinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/IORTable/IORTable.h
+	$(ACE_ROOT)/TAO/tao/IORTable/IORTable.h        \
+	$(ACE_ROOT)/TAO/tao/IORTable/IORTableC.h       \
+	$(ACE_ROOT)/TAO/tao/IORTable/iortable_export.h
 
 lorica_tao_messagingincludedir = $(includedir)/TAO/tao/Messaging
 lorica_tao_messaginginclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/Messaging/AMH_Response_Handler.h
+	$(ACE_ROOT)/TAO/tao/Messaging/AMH_Response_Handler.h \
+	$(ACE_ROOT)/TAO/tao/Messaging/messaging_export.h
 
 lorica_tao_piincludedir = $(includedir)/TAO/tao/PI
 lorica_tao_piinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/PI/PI.h
+	$(ACE_ROOT)/TAO/tao/PI/ClientRequestInfoC.h        \
+	$(ACE_ROOT)/TAO/tao/PI/ClientRequestInterceptorC.h \
+	$(ACE_ROOT)/TAO/tao/PI/InterceptorC.h              \
+	$(ACE_ROOT)/TAO/tao/PI/ORBInitializerC.h           \
+	$(ACE_ROOT)/TAO/tao/PI/ORBInitInfoC.h              \
+	$(ACE_ROOT)/TAO/tao/PI/PICurrentC.h                \
+	$(ACE_ROOT)/TAO/tao/PI/pi_export.h                 \
+	$(ACE_ROOT)/TAO/tao/PI/PI.h                        \
+	$(ACE_ROOT)/TAO/tao/PI/PolicyFactoryC.h            \
+	$(ACE_ROOT)/TAO/tao/PI/ProcessingModePolicyC.h
 
 lorica_tao_portableserverincludedir = $(includedir)/TAO/tao/PortableServer
 lorica_tao_portableserverinclude_DATA = \
-	$(ACE_ROOT)/TAO/tao/PortableServer/POAManagerFactory.h \
-	$(ACE_ROOT)/TAO/tao/PortableServer/PortableServer.h    \
-	$(ACE_ROOT)/TAO/tao/PortableServer/Servant_Base.h
+	$(ACE_ROOT)/TAO/tao/PortableServer/IdAssignmentPolicyA.h       \
+	$(ACE_ROOT)/TAO/tao/PortableServer/IdUniquenessPolicyA.h       \
+	$(ACE_ROOT)/TAO/tao/PortableServer/ImplicitActivationPolicyA.h \
+	$(ACE_ROOT)/TAO/tao/PortableServer/LifespanPolicyA.h           \
+	$(ACE_ROOT)/TAO/tao/PortableServer/Object_Adapter.h            \
+	$(ACE_ROOT)/TAO/tao/PortableServer/POAManagerC.h               \
+	$(ACE_ROOT)/TAO/tao/PortableServer/POAManagerFactory.h         \
+	$(ACE_ROOT)/TAO/tao/PortableServer/POAManagerFactoryC.h        \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PortableServerC.h           \
+	$(ACE_ROOT)/TAO/tao/PortableServer/portableserver_export.h     \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PortableServer_Functions.h  \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PortableServer.h            \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PortableServer_WFunctions.h \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PS_CurrentC.h               \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PS_ForwardA.h               \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PS_ForwardC.h               \
+	$(ACE_ROOT)/TAO/tao/PortableServer/RequestProcessingPolicyA.h  \
+	$(ACE_ROOT)/TAO/tao/PortableServer/Servant_Base.h              \
+	$(ACE_ROOT)/TAO/tao/PortableServer/ServantRetentionPolicyA.h   \
+	$(ACE_ROOT)/TAO/tao/PortableServer/Servant_var.h               \
+	$(ACE_ROOT)/TAO/tao/PortableServer/ThreadPolicyA.h
+
 endif # LORICA_DEVEL
 
 endif # HAVE_ACE_ROOT
