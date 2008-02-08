@@ -23,6 +23,10 @@
 #include "config.h"
 #endif
 
+#ifndef ACE_WIN32
+#include "defines/pathdefs.h"
+#endif
+
 #include "proxy/ReferenceMapper_i.h"
 #include "proxy/proxy.h"
 #include "lorica/FileConfig.h"

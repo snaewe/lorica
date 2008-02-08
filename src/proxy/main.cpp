@@ -31,8 +31,11 @@
 #include "config.h"
 #endif
 
-#include <unistd.h>
+#ifndef ACE_WIN32
+#include "defines/pathdefs.h"
+#endif
 
+#include <unistd.h>
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
 #include <ace/OS_NS_errno.h>
@@ -162,7 +165,7 @@ fork_done:
 
 #ifndef ACE_WIN32
 	if (!Debug
-	    && (mkdir(LORICA_CACHE_DIR, 0700)) 
+	    && (mkdir(LORICA_CACHE_DIR, 0755)) 
 	    && (EEXIST != errno))
 		return EXIT_ERROR;
 #endif

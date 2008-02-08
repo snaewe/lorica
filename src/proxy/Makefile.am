@@ -22,6 +22,8 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
+CWD = $(CURDIR)
+
 if HAVE_ACE_ROOT
 LORICA_ROOT = $(LORICA_top_dir)
 ACE_ROOT = $(CONF_ACE_ROOT)
@@ -176,6 +178,7 @@ ACETAO_LIB_DATA = $(TAO_LIBS)
 
 $(ACE_ROOT)/apps/gperf/src/tao_gperf:
 	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
+	cd $(ACE_ROOT)/bin && $(LN_S) ../apps/gperf/src/tao_gperf tao_gperf
 
 $(ACE_ROOT)/TAO/TAO_IDL/tao_idl:
 
@@ -221,9 +224,117 @@ if !LORICA_DARWIN
 	cd $(DESTDIR)$(libdir) && $(LN_S) libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        libTAO_Valuetype.so
 endif # !LORICA_DARWIN
 
+if LORICA_DEVEL
+lorica_aceincludedir = $(includedir)/ace
+lorica_aceinclude_DATA = \
+	$(ACE_ROOT)/ace/ACE.h             \
+	$(ACE_ROOT)/ace/Auto_Ptr.h        \
+	$(ACE_ROOT)/ace/Dynamic_Service.h \
+	$(ACE_ROOT)/ace/Get_Opt.h         \
+	$(ACE_ROOT)/ace/INET_Addr.h       \
+	$(ACE_ROOT)/ace/Log_Msg.h         \
+	$(ACE_ROOT)/ace/Min_Max.h         \
+	$(ACE_ROOT)/ace/Mutex.h           \
+	$(ACE_ROOT)/ace/OS_NS_errno.h     \
+	$(ACE_ROOT)/ace/OS_NS_stdio.h     \
+	$(ACE_ROOT)/ace/OS_NS_stdlib.h    \
+	$(ACE_ROOT)/ace/OS_NS_string.h    \
+	$(ACE_ROOT)/ace/OS_NS_strings.h   \
+	$(ACE_ROOT)/ace/OS_NS_unistd.h    \
+	$(ACE_ROOT)/ace/Service_Config.h  \
+	$(ACE_ROOT)/ace/Service_Gestalt.h \
+	$(ACE_ROOT)/ace/Signal.h          \
+	$(ACE_ROOT)/ace/SString.h         \
+	$(ACE_ROOT)/ace/streams.h         \
+	$(ACE_ROOT)/ace/Task.h            \
+	$(ACE_ROOT)/ace/Thread.h          \
+	$(ACE_ROOT)/ace/Time_Value.h
+
+lorica_ifrserviceincludedir = $(includedir)/TAO/orbsvcs/orbsvcs/IFRService
+lorica_ifrserviceinclude_DATA = \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h       \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h     \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IFRService/Options.h
+
+lorica_orbsvcsincludedir = $(includedir)/TAO/orbsvcs/orbsvcs
+lorica_orbsvcsinclude_DATA = \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/IOR_Multicast.h                    \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/SecurityC.h                        \
+	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/SSLIOPC.h
+
+lorica_tao_anytypecodeincludedir = $(includedir)/TAO/tao/AnyTypeCode
+lorica_tao_anytypecodeinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any_Impl.h             \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h \
+	$(ACE_ROOT)/TAO/tao/AnyTypeCode/NVList.h 
+
+lorica_taoincludedir = $(includedir)/TAO/tao
+lorica_taoinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/corbafwd.h                \
+	$(ACE_ROOT)/TAO/tao/CORBA_String.h            \
+	$(ACE_ROOT)/TAO/tao/Exception.h               \
+	$(ACE_ROOT)/TAO/tao/MProfile.h                \
+	$(ACE_ROOT)/TAO/tao/Object.h                  \
+	$(ACE_ROOT)/TAO/tao/OctetSeqC.h               \
+	$(ACE_ROOT)/TAO/tao/ORB_Constants.h           \
+	$(ACE_ROOT)/TAO/tao/ORB_Core.h                \
+	$(ACE_ROOT)/TAO/tao/ORBInitializer_Registry.h \
+	$(ACE_ROOT)/TAO/tao/Profile.h                 \
+	$(ACE_ROOT)/TAO/tao/Stub.h                    \
+	$(ACE_ROOT)/TAO/tao/SystemException.h         \
+	$(ACE_ROOT)/TAO/tao/Tagged_Components.h       \
+	$(ACE_ROOT)/TAO/tao/TAO_Server_Request.h      \
+	$(ACE_ROOT)/TAO/tao/Thread_Lane_Resources.h   \
+	$(ACE_ROOT)/TAO/tao/debug.h
+
+lorica_tao_dynamicanyincludedir = $(includedir)/TAO/tao/DynamicAny
+lorica_tao_dynamicanyinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/DynamicAny/DynamicAnyC.h
+
+lorica_tao_dynamic_interfaceincludedir = $(includedir)/TAO/tao/DynamicInterface
+lorica_tao_dynamic_interfaceinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/Request.h                  \
+	$(ACE_ROOT)/TAO/tao/DynamicInterface/Server_Request.h
+
+lorica_tao_endpointpolicyincludedir = $(includedir)/TAO/tao/EndpointPolicy
+lorica_tao_endpointpolicyinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h \
+	$(ACE_ROOT)/TAO/tao/EndpointPolicy/EndpointPolicy.h
+
+lorica_tao_ifrclientincludedir = $(includedir)/TAO/tao/IFR_Client
+lorica_tao_ifrclientinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/IFR_Client/IFR_BasicC.h
+
+lorica_tao_iortableincludedir = $(includedir)/TAO/tao/IORTable
+lorica_tao_iortableinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/IORTable/IORTable.h
+
+lorica_tao_messagingincludedir = $(includedir)/TAO/tao/Messaging
+lorica_tao_messaginginclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/Messaging/AMH_Response_Handler.h
+
+lorica_tao_piincludedir = $(includedir)/TAO/tao/PI
+lorica_tao_piinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/PI/PI.h
+
+lorica_tao_portableserverincludedir = $(includedir)/TAO/tao/PortableServer
+lorica_tao_portableserverinclude_DATA = \
+	$(ACE_ROOT)/TAO/tao/PortableServer/POAManagerFactory.h \
+	$(ACE_ROOT)/TAO/tao/PortableServer/PortableServer.h    \
+	$(ACE_ROOT)/TAO/tao/PortableServer/Servant_Base.h
+endif # LORICA_DEVEL
+
 endif # HAVE_ACE_ROOT
 
-sysconf_DATA = lorica.conf lorica.ssliop
+$(CWD)/lorica.conf:
+
+$(CWD)/lorica.ssliop:
+
+sysconf_DATA = \
+	$(CWD)/lorica.conf \
+	$(CWD)/lorica.ssliop
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in
@@ -231,5 +342,5 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = $(CURDIR)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid
-CLEANFILES = $(CURDIR)/*.o 
+DISTCLEANFILES = $(CWD)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid
+CLEANFILES = $(CWD)/*.o 

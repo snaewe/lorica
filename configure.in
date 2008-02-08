@@ -79,6 +79,8 @@ AC_SUBST(LORICA_VERSION)
 dnl
 dnl Configure options
 dnl
+
+dnl Enable build of TAO if need be
 AC_ARG_ENABLE(tao-build,
 	      [AS_HELP_STRING([--enable-tao-build[[[[=no/yes]]]]], [Enable download and local rebuild of ACE and TAO [default=no]])],
  	      [],
@@ -89,6 +91,7 @@ else
 	msg_tao_build=no
 fi
 
+dnl Link binaries statically
 AC_ARG_ENABLE(static-bins,
 	      [AS_HELP_STRING([--enable-static-bins[[[[=no/yes]]]]], [Enable statically linked binaries if possible [default=no]])],
  	      [],
@@ -100,6 +103,7 @@ else
 fi
 AM_CONDITIONAL(LORICA_STATIC, test x$enable_static_bins = xyes)
 
+dnl Install development headers
 AC_ARG_ENABLE(lorica-devel,
 	      [AS_HELP_STRING([--enable-lorica-devel[[[[=no/yes]]]]], [Install development files [default=no]])],
 	      [],
@@ -112,6 +116,7 @@ else
 fi
 AM_CONDITIONAL(LORICA_DEVEL, test x$enable_lorica_devel = xyes)
 
+dnl Do various things that helps debugging problems
 AC_ARG_ENABLE(lorica-debug,
 	      [AS_HELP_STRING([--enable-lorica-debug[[[[=no/yes]]]]], [Enable Lorica debugging [default=no]])],
 	      [],
@@ -124,6 +129,7 @@ else
 fi
 AM_CONDITIONAL(LORICA_DEBUG, test x$enable_lorica_debug = xyes)
 
+dnl For the maintainer...
 AC_ARG_ENABLE(lorica-dist,
 	      [AS_HELP_STRING([--enable-lorica-dist[[[[=no/yes]]]]], [Is this a "make dist-<PACKAGE MANAGER>" attempt? [default=no]])],
 	      [],
@@ -296,7 +302,7 @@ ACETAO_INCLUDES="-I$CONF_ACE_ROOT -I$CONF_ACE_ROOT/TAO -I$CONF_ACE_ROOT/TAO/orbs
 AC_SUBST(ACETAO_INCLUDES)
 
 dnl Must only be searchable in "" include statements
-LORICA_INCLUDES="-iquote $LORICA_top_dir -iquote $LORICA_top_dir/src"
+LORICA_INCLUDES="-iquote $LORICA_top_dir -iquote $LORICA_top_dir/src -iquote $LORICA_top_dir/defines"
 if test "x$with_acetao_includes" != "x/usr/include"; then
    	LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_INCLUDES"
 fi
@@ -367,7 +373,7 @@ TAO_EXECUTABLES="tao_gperf tao_idl tao_ifr"
 
 if test "x$enable_tao_build" = "xyes"; then
 
-   dnl We are opting to (re-)build if needed, so ACE_ROOT must exist somewhere
+   dnl We are opting to (re-)build if needed, so ACE_ROOT must (or will eventually if we rebuilds) exist somewhere
    AM_CONDITIONAL(HAVE_ACE_ROOT, true)
 
    dnl Check for needed TAO programs
@@ -376,7 +382,7 @@ if test "x$enable_tao_build" = "xyes"; then
 	if test "x$CONF_PATH" = "x"; then
       	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no)
    	else
-	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no, $CONF_PATH:$PATH)
+	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no, [$CONF_PATH:$PATH])
    	fi
    	if test "x$HAVE_TAO_EXE" = "xno"; then
       	   AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)	
@@ -403,7 +409,7 @@ else
 	if test "x$CONF_PATH" = "x"; then
       	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no)
    	else
-	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no, $CONF_PATH:$PATH)
+	   AC_CHECK_PROG(HAVE_TAO_EXE, [$exefile], yes, no, [$CONF_PATH:$PATH])
    	fi
    	if test "x$HAVE_TAO_EXE" = "xno"; then
       	   AC_MSG_ERROR([[You need $exefile to build or run Lorica - consider enabling tao-build]])
@@ -461,28 +467,6 @@ LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_docdir, /usr/share/doc/$PACKAGE_N
 AC_SUBST(DH_INSTALL_default_docdir)
 
 dnl
-dnl Misc Lorica defines
-dnl 
-
-dnl Lorica
-AC_DEFINE_UNQUOTED([LORICA_EXE_NAME],        ["lorica"], [Lorica executable name])
-AC_DEFINE_UNQUOTED([LORICA_EXE_PATH],        ["/usr/sbin/lorica"], [Lorica executable name])
-AC_DEFINE_UNQUOTED([LORICA_CACHE_DIR],       ["/var/cache/lorica"], [Lorica cache directory])
-AC_DEFINE_UNQUOTED([LORICA_PID_FILE],        ["/var/run/lorica.pid"], [Full path to Lorica PID file])
-AC_DEFINE_UNQUOTED([LORICA_IOR_FILE],        ["/var/cache/lorica/lorica.ior"], [Full path to Lorica IOR file])
-AC_DEFINE_UNQUOTED([LORICA_CONF_FILE],       ["/etc/lorica.conf"], [Full path to Lorica configuration file])
-
-LORICA_EXE_PATH="/usr/sbin/lorica"
-AC_SUBST(LORICA_EXE_PATH)
-LORICA_PID_FILE="/var/run/lorica.pid"
-AC_SUBST(LORICA_PID_FILE)
-
-dnl Interface Repository
-AC_DEFINE_UNQUOTED([IFR_SERVICE_EXE_NAME],   ["ifr_service"], [IFR Service executable name])
-AC_DEFINE_UNQUOTED([IFR_SERVICE_IOR_FILE],   ["/var/cache/lorica/ifr.ior"], [Full path to IFR Service IOR file])
-AC_DEFINE_UNQUOTED([IFR_SERVICE_CACHE_FILE], ["/var/cache/lorica/ifr.cache"], [Full path to IFR Service cache file])
-
-dnl
 dnl Check if this is a distribution
 dnl
 AM_CONDITIONAL(THIS_IS_NOT_A_DISTRIBUTION, [test -f ./nodist])
@@ -510,7 +494,8 @@ src/Makefile
 src/OCI/Makefile
 src/lorica/Makefile
 src/proxy/Makefile
-init_rc/gentoo.confd
+init_rc/Makefile
+defines/Makefile
 ])
 
 case "$lorica_target" in

@@ -22,6 +22,8 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
+CWD = $(CURDIR)
+
 if HAVE_ACE_ROOT
 LORICA_ROOT = $(LORICA_top_dir)
 ACE_ROOT = $(CONF_ACE_ROOT)
@@ -90,5 +92,5 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = $(BUILT_SOURCES) $(CURDIR)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .shobj *_Export.h *.dylib
-CLEANFILES = $(CURDIR)/*.o 
+DISTCLEANFILES = $(BUILT_SOURCES) $(CWD)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .shobj *_Export.h *.dylib
+CLEANFILES = $(CWD)/*.o 

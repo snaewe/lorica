@@ -21,10 +21,12 @@ CWD = $(CURDIR)
 MKDIR = $(MKDIR_P)
 
 SUBDIRS = \
-	acetao \
-	src    \
-	ebuild \
-	deb    \
+	init_rc \
+	defines \
+	acetao  \
+	src     \
+	ebuild  \
+	deb     \
 	docs
 
 if THIS_IS_NOT_A_DISTRIBUTION
@@ -66,7 +68,14 @@ EXTRA_DIST = \
 	deb/$(LORICA_NAME)-dev.install    \
 	autogen.sh                        \
 	$(LORICA_NAME).spec               \
-	$(LORICA_NAME).spec.in
+	$(LORICA_NAME).spec.in            \
+	init_rc/gentoo.initd              \
+	src/proxy/$(LORICA_NAME).conf     \
+	src/proxy/$(LORICA_NAME).ssliop
+
+dist-hook:
+	rm -f $(distdir)/defines/pathdefs.h
+	rm -f $(distdir)/init_rc/gentoo.confd
 
 release:
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
@@ -139,8 +148,4 @@ dist-deb-prep:
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install.in $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 
-install-data-hook:
-if LORICA_GENTOO
-	cp $(CWD)/init_rc/gentoo.confd $(DESTDIR)$(sysconfdir)/conf.d/lorica
-	cp $(CWD)/init_rc/gentoo.initd $(DESTDIR)$(sysconfdir)/init.d/lorica
-endif
+

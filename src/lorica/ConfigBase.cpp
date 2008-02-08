@@ -23,6 +23,10 @@
 #include "config.h"
 #endif
 
+#ifndef ACE_WIN32
+#include "defines/pathdefs.h"
+#endif
+
 #include <iostream>
 #include <ace/OS_NS_stdlib.h>
 

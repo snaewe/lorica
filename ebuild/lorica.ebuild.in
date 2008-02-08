@@ -36,9 +36,10 @@ IUSE="tao debug"
 RESTRICT="nomirror"
 
 RDEPEND="!dev-libs/ace
-    dev-libs/openssl"
+         dev-libs/openssl"
 
-DEPEND="${RDEPEND}"
+DEPEND="${RDEPEND}
+        sys-devel/autoconf"
 
 DOCS="COPYING README INSTALL docs/building_lorica docs/using_the_generic_evaluator docs/lorica_configuration"
 
@@ -55,12 +56,12 @@ src_compile() {
 
 src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
+	newinitd ${S}/init_rc/gentoo.initd "@LORICA_NAME@"
+	newconfd ${S}/init_rc/gentoo.confd "@LORICA_NAME@"
 	dodoc ${DOCS}
 }
 
 pkg_postinst() {
-	elog "Lorica has been installed or updated."
-	ewarn
-	ewarn "Please restart the Lorica daemon if it is running"
-	ewarn
+	ewarn "Remember to merge your config files in /etc and then"
+    ewarn "restart @LORICA_NAME@: '/etc/init.d/@LORICA_NAME@ restart'."
 }
