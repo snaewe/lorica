@@ -28,7 +28,7 @@ if HAVE_ACE_ROOT
 export LORICA_ROOT = $(LORICA_top_dir)
 export ACE_ROOT = $(CONF_ACE_ROOT)
 export TAO_ROOT = $(ACE_ROOT)/TAO
-export PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
+export PATH = $(ACE_ROOT)/bin:$(ENV_PATH)
 
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
@@ -38,27 +38,15 @@ endif
 
 TAO_IDL = $(ACE_ROOT)/TAO/TAO_IDL/tao_idl
 GPERF = $(ACE_ROOT)/apps/gperf/src/gperf
+
 else # !HAVE_ACE_ROOT
-
-if HAVE_CONF_PATH
-export PATH = $(CONF_PATH):$(ENV_PATH)
-endif
-
-if HAVE_CONF_LD_PATH
-if LORICA_DARWIN
-export DYLD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_DYLD_LIBRARY_PATH)
-else
-export LD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_LD_LIBRARY_PATH)
-endif
-endif
 
 TAO_IDL = tao_idl
 GPERF = gperf
+
 endif # HAVE_ACE_ROOT
 
 TAO_IDLFLAGS = -Sa -St -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=Lorica_Client_Export -Wb,export_include=Lorica_Client_Export.h -I$(TAO_ROOT) -g $(GPERF)
-
-AM_CXXFLAGS = $(LORICA_CXXFLAGS)
 
 IDL_FILES = \
 	ServerAgent.idl     \
@@ -104,16 +92,10 @@ endif
 
 noinst_LTLIBRARIES = liblorica_Client.la
 
-if HAVE_ACE_ROOT
 liblorica_Client_la_CPPFLAGS = \
-	$(LORICA_DEFS)            \
-	$(ACETAO_INCLUDES)        \
+	$(LORICA_CXXFLAGS)        \
+	$(LORICA_CPPFLAGS)        \
 	-DLORICA_CLIENT_BUILD_DLL
-else
-liblorica_Client_la_CPPFLAGS = \
-	$(LORICA_DEFS)            \
-	-DLORICA_CLIENT_BUILD_DLL
-endif
 
 liblorica_Client_la_SOURCES = \
 	ReferenceMapperC.cpp  \
@@ -141,18 +123,11 @@ noinst_HEADERS = \
 
 noinst_LTLIBRARIES += liblorica_EvaluatorBase.la
 
-if HAVE_ACE_ROOT
 liblorica_EvaluatorBase_la_CPPFLAGS = \
-	$(LORICA_DEFS)                   \
-	$(ACETAO_INCLUDES)               \
+	$(LORICA_CXXFLAGS)               \
+	$(LORICA_CPPFLAGS)               \
 	-DACE_HAS_SSL=1                  \
 	-DLORICA_EVALUATORBASE_BUILD_DLL
-else
-liblorica_EvaluatorBase_la_CPPFLAGS = \
-	$(LORICA_DEFS)                   \
-	-DACE_HAS_SSL=1                  \
-	-DLORICA_EVALUATORBASE_BUILD_DLL
-endif
 
 liblorica_EvaluatorBase_la_SOURCES = \
 	ConfigBase.cpp        \
@@ -187,18 +162,11 @@ noinst_HEADERS += \
 noinst_LTLIBRARIES += liblorica_GenericEvaluator.la
 #lib_LTLIBRARIES = liblorica_GenericEvaluator.la
 
-if HAVE_ACE_ROOT
 liblorica_GenericEvaluator_la_CPPFLAGS = \
-	$(LORICA_DEFS)                      \
-	$(ACETAO_INCLUDES)                  \
+	$(LORICA_CXXFLAGS)                  \
+	$(LORICA_CPPFLAGS)                  \
 	-DACE_HAS_SSL=1                     \
 	-DLORICA_GENERICEVALUATOR_BUILD_DLL
-else
-liblorica_GenericEvaluator_la_CPPFLAGS = \
-	$(LORICA_DEFS)                      \
-	-DACE_HAS_SSL=1                     \
-	-DLORICA_GENERICEVALUATOR_BUILD_DLL
-endif
 
 liblorica_GenericEvaluator_la_SOURCES = \
 	GenericEvaluator.cpp \

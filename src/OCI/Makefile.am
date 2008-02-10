@@ -28,31 +28,14 @@ if HAVE_ACE_ROOT
 LORICA_ROOT = $(LORICA_top_dir)
 ACE_ROOT = $(CONF_ACE_ROOT)
 TAO_ROOT = $(ACE_ROOT)/TAO
-PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
+PATH = $(CONF_PATH):$(ENV_PATH)
 
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
 else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
-
-else # !HAVE_ACE_ROOT
-
-if HAVE_CONF_PATH
-export PATH = $(CONF_PATH):$(ENV_PATH)
-endif
-
-if HAVE_CONF_LD_PATH
-if LORICA_DARWIN
-export DYLD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_DYLD_LIBRARY_PATH)
-else
-export LD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_LD_LIBRARY_PATH)
-endif
-endif
-
 endif # HAVE_ACE_ROOT
-
-AM_CXXFLAGS = $(LORICA_CXXFLAGS)
 
 BUILT_SOURCES = OCI_AsynchProxyTools_Export.h
 
@@ -61,16 +44,10 @@ $(BUILT_SOURCES):
 
 noinst_LTLIBRARIES = libOCI_AsynchProxyTools.la
 
-if HAVE_ACE_ROOT
 libOCI_AsynchProxyTools_la_CPPFLAGS = \
-	$(LORICA_DEFS)     \
-	$(ACETAO_INCLUDES) \
+	$(LORICA_CXXFLAGS)               \
+	$(LORICA_CPPFLAGS)               \
 	-DOCI_ASYNCHPROXYTOOLS_BUILD_DLL
-else
-libOCI_AsynchProxyTools_la_CPPFLAGS = \
-	$(LORICA_DEFS) \
-	-DOCI_ASYNCHPROXYTOOLS_BUILD_DLL
-endif
 
 libOCI_AsynchProxyTools_la_SOURCES = \
 	ProxyReplyHandler.cpp        \

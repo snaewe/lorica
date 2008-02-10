@@ -32,7 +32,7 @@ if HAVE_ACE_ROOT
 export LORICA_ROOT = $(LORICA_top_dir)
 export ACE_ROOT = $(CONF_ACE_ROOT)
 export TAO_ROOT = $(ACE_ROOT)/TAO
-export PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
+export PATH = $(ACE_ROOT)/bin:$(ENV_PATH)
 
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
@@ -40,7 +40,7 @@ else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
-AM_CPPFLAGS = $(ACETAO_INCLUDES)
+AM_CPPFLAGS = $(ACETAO_CPPFLAGS)
 
 TAO_EXECUTABLES = \
 	$(ACE_ROOT)/apps/gperf/src/gperf            \
@@ -109,14 +109,6 @@ if HAVE_CONF_PATH
 export PATH = $(CONF_PATH):$(ENV_PATH)
 endif
 
-if HAVE_CONF_LD_PATH
-if LORICA_DARWIN
-export DYLD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_DYLD_LIBRARY_PATH)
-else
-export LD_LIBRARY_PATH = $(CONF_LD_PATH):$(ENV_LD_LIBRARY_PATH)
-endif
-endif
-
 TAO_EXECUTABLES =
 TAO_LIBS =
 endif # HAVE_ACE_ROOT
@@ -171,14 +163,15 @@ endif
 	cd $(TAO_ROOT)/tao                 && $(MAKE) -f GNUmakefile.EndpointPolicy
 
 $(ACE_ROOT):
-if LORICA_WGET
-	$(WGET) $(ACETAO)
-endif
-if LORICA_CURL
-	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
-endif
+#if LORICA_WGET
+#	$(WGET) $(ACETAO)
+#endif
+#if LORICA_CURL
+#	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
+#endif
+	cp /home/colding/work/src/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2 $(CWD)/
 	$(TAR) --overwrite -xjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
-	-mv -f $(ACE_WRAPPERS_DIR) $(CONF_ACE_ROOT)
+	-mv -f ACE_wrappers $(CONF_ACE_ROOT)
 
 endif # LORICA_MUST_BUILD_ACETAO
 
