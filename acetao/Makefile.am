@@ -163,13 +163,12 @@ endif
 	cd $(TAO_ROOT)/tao                 && $(MAKE) -f GNUmakefile.EndpointPolicy
 
 $(ACE_ROOT):
-#if LORICA_WGET
-#	$(WGET) $(ACETAO)
-#endif
-#if LORICA_CURL
-#	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
-#endif
-	cp /home/colding/work/src/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2 $(CWD)/
+if LORICA_WGET
+	$(WGET) $(ACETAO)
+endif
+if LORICA_CURL
+	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
+endif
 	$(TAR) --overwrite -xjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 	-mv -f ACE_wrappers $(CONF_ACE_ROOT)
 
