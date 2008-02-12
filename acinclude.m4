@@ -312,6 +312,7 @@ dnl
 AC_DEFUN([AM_LORICA_CHECK_ACETAO],
 [ 
   EXTRA_PATH="$1"
+  echo "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX$1"
   LORICA_ACETAO_CHECKS_OUT="yes"
 
   dnl State all used ACE and TAO headers
@@ -362,6 +363,27 @@ dnl is set.
 dnl 
 dnl AM_CONDITIONAL(HAVE_CONF_PATH) will be set to true if the
 dnl CONF_ACE_ROOT is non-nil. CONF_PATH will be set accordingly.
+dnl
+dnl The big while loop below implements this logic:
+dnl
+dnl Level 0: Do the $ACE_ROOT environment variable exist
+dnl Level 1: Check if ACE_ROOT is suitable for building Lorica
+dnl Level 2: May we build ACE and TAO
+dnl Level 3: Check if ACE and TAO is installed in the system
+dnl Level 4: Build ACE and TAO
+dnl Level 5: Build Lorica
+dnl
+dnl TRUE   Level   FALSE
+dnl  1 <==   0   ==> 2
+dnl  5 <==   1   ==> 2
+dnl  4 <==   2   ==> 3
+dnl  5 <==   3   ==> ERROR
+dnl  5 <==   4   ==> ERROR
+dnl OK <==   5   ==> ERROR
+dnl 
+dnl In this way it is guarenteed that the outcome of any 
+dnl configuration is OK or a well defined terminating error.
+dnl 
 AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
 [ 
   dnl ACE and TAO specific flags
@@ -420,6 +442,7 @@ AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
                                     break 1 # goto level 2
                                 fi
                           done
+
                           # This is level 2
                           if test "x$enable_tao_build" = "xyes"; then
                              AM_CONDITIONAL(HAVE_ACE_ROOT, true)
