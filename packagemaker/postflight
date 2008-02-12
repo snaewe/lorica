@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+mkdir -p /private/var/cache/lorica
+
+launchctl unload /Library/LaunchDaemons/com.42tools.lorica.plist 
+launchctl load /Library/LaunchDaemons/com.42tools.lorica.plist
