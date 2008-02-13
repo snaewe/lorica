@@ -63,10 +63,10 @@ Then execute GNU make in the top-level source directory:
 
    make
 
-Lorica, and optionally AE and TAO will now be build. You may find the Lorica
+Lorica, and optionally ACE and TAO will now be build. You may find the Lorica
 executable as "src/proxy/lorica". The distfiles target supports generation of 
-platfor specific installation files, such as RPMs on Redhat, Fedira and SUSE, 
-ebuild files on Gentoo Linux and dmg image files on Mac OS X and debs on Ubuntu:
+platform specific installation files, such as RPMs on Redhat, Fedora and SUSE, 
+ebuild files on Gentoo, disk image file on Mac OS X and debs on Ubuntu:
 
    make distfiles
 
@@ -144,7 +144,7 @@ The following steps needs to be preformed before Lorica can be started
 Press the green play button and watch Lorica start :-)
 
 
-
 ------------------------------------------
+Jules Colding <colding@42tools.com>
 Rasmus Maagaard <rasmusmaagaard@42tools.com>
 OMC Denmark ApS, 2008
