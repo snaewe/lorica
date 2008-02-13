@@ -258,7 +258,8 @@ Lorica::Service_Loader::print_usage_and_die(void)
 #else
 	ACE_DEBUG ((LM_INFO,
 		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -n -d -f -c -l -n\n")
+		    ACE_TEXT(" -V -n -d -f -c -l -n\n")
+		    ACE_TEXT(" -V: Print the version\n")
 		    ACE_TEXT(" -n: No fork - Run as a regular application\n")
 		    ACE_TEXT(" -d: Debug - Use current directory as working directory\n")
 		    ACE_TEXT(" -f: <file> Configuration file, default is \"/etc/lorica.conf\"\n")
@@ -277,7 +278,7 @@ Lorica::Service_Loader::parse_args(int argc,
 #if defined (ACE_WIN32)
 	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("irtkdf:c:l:"));
 #else
-	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("ndf:c:l:"));
+	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("Vndf:c:l:"));
 #endif
 
 	int c;
@@ -299,6 +300,11 @@ Lorica::Service_Loader::parse_args(int argc,
 			service_command_ = SC_STOP;
 			break;
 #else /* !ACE_WIN32 */
+		case 'V':
+			ACE_DEBUG((LM_INFO,
+				   ACE_TEXT("Lorica version %s"),
+				   VERSION,
+				   0));
 		case 'n':
 			no_fork_ = true;
 			break;
