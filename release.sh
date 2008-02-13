@@ -23,7 +23,7 @@
 prepare ()
 {
     make distclean
-    ./autogen.sh --enable-tao-build
+    ./bootstrap --enable-tao-build
 }
 
 if [ $# -eq 0 ]; then
