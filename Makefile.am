@@ -66,7 +66,7 @@ EXTRA_DIST = \
 	deb/$(LORICA_NAME).install.in     \
 	deb/$(LORICA_NAME)-dev.install.in \
 	deb/$(LORICA_NAME)-dev.install    \
-	autogen.sh                        \
+	bootstrap                         \
 	$(LORICA_NAME).spec               \
 	$(LORICA_NAME).spec.in            \
 	init_rc/gentoo.initd              \

@@ -22,26 +22,21 @@ documentation found at:
    http://trac.brutus.net/lorica
 
 
-Linux build guide - The easy one
-================================
+Linux and Mac OS X build guide
+==============================
 
-Just execute the build.sh script that is distributed with the Lorica source. It
-should take care of building ACE, TAO and Lorica while automatically downloading
-missing files.
+This guide has been tested on Mac OS X and several Linux distributions but
+should be general enough to be usable on all other Linux distributions, maybe 
+with minor modifications.
 
-This doesn't work for you? Well, then you have to use the hard road to Lorica...
-
-
-Linux build guide - The hard one
-================================
-
-This guide is tested on PCLinuxOS but should be general enough to be usable for
-other Linux distributions, maybe with minor modifications.
+We recommend using the GNU Autotools to build on all non-Windows platforms. It 
+should still be possible to use MPC, but it isn't used by the developers so if
+it breaks you get to keep both pieces.
 
 Before following this guide, please make sure that the following prerequisites
 are installed on your system:
 
-   * Development environment (the GNU toolchain)
+   * Development environment (the GNU toolchain and Autotools)
    * OpenSSL
    * Perl
    * ACE+TAO (including MPC) 
@@ -59,25 +54,21 @@ Checkout the Lorica source from our subversion repository:
 Building Lorica 
 ---------------
 
-Before starting, we need to modify the system environment to support Lorica:
+Simply execute the provided bootstrap script with the option to enable building ACE
+and TAO should that be needed:
 
-   export LORICA_ROOT="/path/to/lorica"
-   export LD_LIBRARY_PATH="$LORICA_ROOT/lib:$LD_LIBRARY_PATH"	
-   export PATH="$LORICA_ROOT/bin:$PATH"
+   ./bootstrap --enable-tao-build
 
-Now we can generate the Makefiles using MPC:
+Then execute GNU make in the top-level source directory:
 
-   cd $LORICA_ROOT
-   mwc.pl -type gnuace lorica.mwc
-
-When the Makefiles are generated, Lorica can be built using the default make
-target:
-
-   cd $LORICA_ROOT
    make
 
-When the compiler is done, the Lorica executable can be found in 
-$LORICA_ROOT/bin. 
+Lorica, and optionally AE and TAO will now be build. You may find the Lorica
+executable as "src/proxy/lorica". The distfiles target supports generation of 
+platfor specific installation files, such as RPMs on Redhat, Fedira and SUSE, 
+ebuild files on Gentoo Linux and dmg image files on Mac OS X and debs on Ubuntu:
+
+   make distfiles
 
 
 Test run 
@@ -87,7 +78,10 @@ Before starting Lorica we need a valid configuration file, but for a test run we
 can use a simple test configuration (it should be usable in most environments) 
 which is part of the distribution:
 
-   lorica_proxy -c2 -l10 -f $LORICA_ROOT/src/proxy/lorica.conf.ifr-server.sample
+   lorica -c2 -l10 -f $LORICA_ROOT/src/proxy/lorica.conf
+
+You may need to adjust your LD_LIBRARY_PATH (DYLD_LIBRARY_PATH on Mac OS X) so
+that the Lorica executable may find its shared library dependencies.
 
 
 Visual Studio Build Guide 
