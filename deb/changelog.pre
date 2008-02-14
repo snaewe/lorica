@@ -1,6 +1,6 @@
-brutus-keyring (!BRUTUS_KEYRINGD_VERSION!-0ubuntu1) feisty; urgency=low
+lorica (!LORICA_VERSION!-0ubuntu1) gutsy; urgency=low
 
   * Initial release
 
- -- Jules Colding <colding@omesc.com>  Tue, 26 Jun 2007 12:03:00 +0200
+ -- Jules Colding <colding@42tools.com>  Thu, 14 Feb 2008 22:49:56 +0100
 

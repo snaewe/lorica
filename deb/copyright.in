@@ -1,9 +1,9 @@
 This packages was debianized by Jules Colding <colding@42tools.com>
 on @RFC_822_DATE@
 
-It was downloaded from <http://www.omesc.com/content/downloads/dist/SOURCES/evolution-brutus-@EVOLUTION_BRUTUS_VERSION@.tar.gz>
+It was downloaded from <http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz>
 
-Upstream author: Jules Colding <colding@omesc.com>
+Upstream author: Jules Colding <colding@42tools.com>
 
 This software is copyright (c) 2007-@RFC_822_YEAR@ by OMC Denmark ApS
 

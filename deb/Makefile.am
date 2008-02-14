@@ -1,6 +1,6 @@
 #  
-#  Makefile for Brutus Keyring.
-#  Copyright (C) 2007 OMC Denmark ApS
+#  Makefile for Lorica.
+#  Copyright (C) 2007-2008 OMC Denmark ApS
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,8 +31,8 @@ all-local:
 	sed -f version.sed changelog.pre > changelog
 
 clean-local: 
-	-rm -f brutus-keyring_*
-	-rm -f brutus-keyring*.deb 
-	-rm -f brutus-keyring*.tar.gz 
-	-rm -rf `find -maxdepth 1 -type d -name 'brutus-keyring-*' -printf " %p"`
+	-rm -f lorica_*
+	-rm -f lorica*.deb 
+	-rm -f lorica*.tar.gz 
+	-rm -rf `find -maxdepth 1 -type d -name 'lorica-*' -printf " %p"`
 
