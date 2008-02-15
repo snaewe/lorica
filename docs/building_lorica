@@ -59,6 +59,12 @@ and TAO should that be needed:
 
    ./bootstrap --enable-tao-build
 
+The bootstrap process might complain about not finding the AC_PROG_LIBTOOL macro. 
+One way to fix this is the ensure that you have installed libtool. If yes, then 
+maybe aclocal just can't find the macro definition. This definition is 
+in "libtool.m4". Locate the file and copy it to the "m4" subdirectory where aclocal
+will surely find it.
+
 Then execute GNU make in the top-level source directory:
 
    make
