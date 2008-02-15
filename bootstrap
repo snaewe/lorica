@@ -57,7 +57,7 @@ srcdir=${srcdir:-.}
 }
 
 printbold "Running aclocal..."
-aclocal --verbose --force -I m4
+aclocal --force -I m4
 
 printbold "Running $LIBTOOLIZE..."
 "$LIBTOOLIZE" --force --copy
