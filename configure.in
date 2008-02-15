@@ -32,9 +32,6 @@ AC_SUBST(datarootdir)
 AC_GNU_SOURCE
 AM_CONFIG_HEADER(config.h)
 
-dnl Initialize maintainer mode
-AM_MAINTAINER_MODE
-
 dnl Standard checks
 AC_LANG(C++)
 AC_PROG_CXX
