@@ -50,6 +50,10 @@
 #include "lorica/MapperRegistry.h"
 
 #ifndef ACE_WIN32
+
+static int global_lock_fd = -1;
+static int ref_file_fd = -1;
+
 typedef enum {
 	EXIT_DAEMON = 0, /* we are the daemon                  */
 	EXIT_OK = 1,	 /* caller must exit with EXIT_SUCCESS */
@@ -163,16 +167,113 @@ fork_done:
 	if (0 != fd0)
 		return EXIT_ERROR;
 
-#ifndef ACE_WIN32
 	if (!Debug
 	    && (mkdir(LORICA_CACHE_DIR, 0755)) 
 	    && (EEXIST != errno))
 		return EXIT_ERROR;
-#endif
 
 	return EXIT_DAEMON;
 }
-#endif // ACE_WIN32
+
+static int 
+lock_fd(const int fd)
+{
+	struct flock lock = {
+		.l_type = F_WRLCK,
+		.l_start = 0,
+		.l_whence = SEEK_SET,
+		.l_len = 0,
+	};
+
+	if (-1 == fd)
+		return -1;
+
+	return fcntl(fd, F_SETLK, &lock);
+}
+
+static int
+unlock_fd(const int fd)
+{
+	struct flock lock = {
+		.l_type = F_UNLCK,
+		.l_start = 0,
+		.l_whence = SEEK_SET,
+		.l_len = 0,
+	};
+
+	if (-1 == fd)
+		return -1;
+
+	return fcntl(fd, F_SETLK, &lock);
+}
+
+/*
+ * Will attempt to lock the PID file and write the
+ * pid into it. This function will return FALSE for
+ * all errors. Callee is responsible for closing *fd 
+ * if (*fd != -1).
+ */
+static gboolean
+get_process_lock(int *fd)
+{
+	char buf[32] = { '\0' };
+	int p = 0;
+	ssize_t w = 0;
+	char *file_path = NULL;
+
+	*fd = -1;
+
+	file_path = g_strconcat(getenv("HOME"), "/", BRUTUS_KEYRINGD_PID_FILE_NAME, NULL);
+	if (!file_path)
+		return FALSE;
+
+	*fd = g_open(file_path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	g_free(file_path);
+	if (-1 == *fd)
+		return FALSE;
+
+	// lock it
+	if (lock_fd(*fd))
+		return FALSE;
+
+	// we have the lock
+	if (ftruncate(*fd, 0))
+		return FALSE;
+
+	/* write pid */
+	p = snprintf(buf, sizeof(buf), "%d", getpid());
+	w = write(*fd, buf, strlen(buf) + sizeof(char));
+	p += sizeof(char);
+	if (p != (int)w)
+		return FALSE;
+
+	if (fdatasync(*fd))
+		return FALSE;
+
+	return TRUE;
+}
+
+/*
+ * This handler will only be called after the signal handler
+ * is installed. The signal handler is not installed until
+ * the lock on th epid file is in place.
+ */
+static void
+restart(int sig)
+{
+	unlock_fd(ref_file_fd); // unsafe in signal handler
+	close(ref_file_fd);
+	ref_file_fd = -1;
+
+	unlock_fd(global_lock_fd); // unsafe in signal handler
+	close(global_lock_fd);
+	global_lock_fd = -1;
+
+	system(prog_name); // unsafe in signal handler
+	orb_shutdown(sig); // unsafe in signal handler
+}
+
+#endif // !ACE_WIN32
 
 namespace Lorica
 {
@@ -496,6 +597,16 @@ Lorica::Service_Loader::run_service(void)
 	default :
 		return EXIT_FAILURE;
 	}
+
+TODO - Won't build on purpose...
+	// take the lock and write the pid
+	// if (!get_process_lock(&global_lock_fd)) {
+	// 	if (-1 != global_lock_fd) {
+	// 		close(global_lock_fd);
+	// 		global_lock_fd = -1;
+	// 	}
+	// 	exit(EXIT_SUCCESS);
+	// }
 
 	{
 		std::auto_ptr<Proxy>proxy (this->init_proxy());
