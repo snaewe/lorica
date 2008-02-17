@@ -177,8 +177,7 @@ void
 Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	throw (CORBA::SystemException)
 {
-	Lorica::ReferenceMapValue_var rmv =
-		this->registry_->remove_reference (mapped, true);
+	Lorica::ReferenceMapValue_var rmv = this->registry_->remove_reference (mapped, true);
 	if ((rmv.get() != 0) && (rmv->ior_table_name_ != "")) {
 		if (Lorica_debug_level > 5) {
 			ACE_DEBUG((LM_DEBUG,

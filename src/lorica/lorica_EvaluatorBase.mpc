@@ -45,7 +45,7 @@ project: anytypecode, portableserver, dynamicinterface, ifr_client, security, ss
     ReferenceMapValue.cpp
     MapperRegistry.cpp
     NullProxyMapper.cpp
-    Config.cpp
+    ConfigBase.cpp
     FileConfig.cpp
   }
 }

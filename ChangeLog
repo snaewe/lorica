@@ -1,3 +1,9 @@
+2008-02-17  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/lorica_EvaluatorBase.mpc (project): Fix
+	breakage caursed by renaming (Well, Phil actually 
+	did this first).
+
 2008-02-13  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ReferenceMapper.idl: Added default in and out
