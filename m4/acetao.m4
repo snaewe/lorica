@@ -16,12 +16,12 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-# serial 1
+# serial 2
 
-dnl AM_LORICA_CHECK_ACETAO()
+dnl AX_LORICA_CHECK_ACETAO()
 dnl Checks for programs, libraries and headers
 dnl
-AC_DEFUN([AM_LORICA_CHECK_ACETAO],
+AC_DEFUN([AX_LORICA_CHECK_ACETAO],
 [ 
   EXTRA_PATH="$1"
   LORICA_ACETAO_CHECKS_OUT="yes"
@@ -61,11 +61,11 @@ AC_DEFUN([AM_LORICA_CHECK_ACETAO],
    done
 ])
 
-dnl AM_LORICA_ACETAO_ADAPT()
+dnl AX_LORICA_ACETAO_ADAPT()
 dnl Tries to adapt the ACE+TAO variables to the platform at hand.
 dnl
 dnl CONF_ACE_ROOT, ACETAO_CPPFLAGS and ACETAO_LDFLAGS will have
-dnl been set upon exit. The flags must be prefixed to CXXFLAGS 
+dnl been set upon exit. The flags must be prefixed to CPPFLAGS 
 dnl and LDFLAGS respectively.
 dnl
 dnl AM_CONDITIONAL(HAVE_ACE_ROOT) will be set to true if the
@@ -95,7 +95,7 @@ dnl
 dnl In this way it is guarenteed that the outcome of any 
 dnl configuration is OK or a well defined terminating error.
 dnl 
-AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
+AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
 [ 
   dnl ACE and TAO specific flags
   ACETAO_CPPFLAGS=""
@@ -114,9 +114,9 @@ AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
   AM_CONDITIONAL(HAVE_CONF_PATH, false)
   AM_CONDITIONAL(HAVE_CONF_LD_PATH, false)
 
-  dnl Take care of CXXFLAGS
-  oldCXXFLAGS="$CXXFLAGS"
-  CXXFLAGS=""
+  dnl Take care of CPPFLAGS
+  oldCPPFLAGS="$CPPFLAGS"
+  CPPFLAGS=""
   
   dnl Take care of LDFLAGS
   oldLDFLAGS="$LDFLAGS"
@@ -138,12 +138,12 @@ AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
                                 done
                                 # This is level 1 - check ACE_ROOT
                                 ACETAO_CPPFLAGS="-I$CONF_ACE_ROOT -I$CONF_ACE_ROOT/TAO -I$CONF_ACE_ROOT/TAO/orbsvcs"
-                                CXXFLAGS="$ACETAO_CPPFLAGS"
+                                CPPFLAGS="$ACETAO_CPPFLAGS"
 
                                 ACETAO_LDFLAGS="-L$CONF_ACE_ROOT/lib"
                                 LDFLAGS="$oldLDFLAGS $ACETAO_LDFLAGS"
 
-                                AM_LORICA_CHECK_ACETAO($ACE_ROOT/bin)
+                                AX_LORICA_CHECK_ACETAO($ACE_ROOT/bin)
                                 if test "x$LORICA_ACETAO_CHECKS_OUT" = "xyes"; then
                                     AM_CONDITIONAL(HAVE_CONF_LD_PATH, true)
                                     break 4 # goto level 5
@@ -173,12 +173,12 @@ AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
                     done
                     # This is level 3 - check sys
                     ACETAO_CPPFLAGS="-I/usr/include/TAO -I/usr/include/TAO/orbsvcs"
-                    CXXFLAGS="$ACETAO_CPPFLAGS"
+                    CPPFLAGS="$ACETAO_CPPFLAGS"
 
                     ACETAO_LDFLAGS=""
                     LDFLAGS="$oldLDFLAGS $ACETAO_LDFLAGS"
 
-                    AM_LORICA_CHECK_ACETAO()
+                    AX_LORICA_CHECK_ACETAO()
                     if test "x$LORICA_ACETAO_CHECKS_OUT" = "xyes"; then
                        AM_CONDITIONAL(LORICA_MUST_INSTALL_ACETAO, false)
                        break 2 # goto level 5
@@ -212,7 +212,7 @@ AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
   AC_SUBST(ACETAO_CPPFLAGS)
   AC_SUBST(ACETAO_LDFLAGS)
 
-  dnl Restore old CXXFLAGS
-  CXXFLAGS="$oldCXXFLAGS"
+  dnl Restore old CPPFLAGS
+  CPPFLAGS="$oldCPPFLAGS"
   LDFLAGS="$oldLDFLAGS"
 ])

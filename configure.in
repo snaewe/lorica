@@ -215,17 +215,17 @@ fi
 dnl
 dnl Which Linux distribution or UNIX platform?
 dnl
-AM_LORICA_CHECK_PLATFORM()
+AX_LORICA_CHECK_PLATFORM()
 
 dnl
 dnl Adapt to different Linux distributions and UNIX platforms
 dnl
-AM_LORICA_PLATFORM_ADAPT()
+AX_LORICA_PLATFORM_ADAPT()
 
 dnl
 dnl Adapt to the ACE+TAO configuration
 dnl
-AM_LORICA_ACETAO_ADAPT()
+AX_LORICA_ACETAO_ADAPT()
 
 
 dnl
@@ -257,7 +257,9 @@ LORICA_CPPFLAGS="$LORICA_DEFS $LORICA_INCLUDES"
 AC_SUBST(LORICA_CPPFLAGS)
 
 dnl CXXFLAGS
-LORICA_CXXFLAGS="-fvisibility=hidden -fvisibility-inlines-hidden -Werror -Wextra -Wundef -Wall -Wpointer-arith -O3 -pipe"
+LORICA_CXXFLAGS="-Werror -Wextra -Wundef -Wall -Wpointer-arith -O3 -pipe"
+AX_CXXFLAGS_GCC_OPTION(-fvisibility=hidden, LORICA_CXXFLAGS)
+AX_CXXFLAGS_GCC_OPTION(-fvisibility-inlines-hidden, LORICA_CXXFLAGS)
 if test "x$lorica_target" = "xDarwin"; then
    LORICA_CXXFLAGS="$LORICA_CXXFLAGS -Wno-long-double -flat_namespace"
 fi

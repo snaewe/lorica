@@ -1,5 +1,11 @@
 2008-02-19  Jules Colding  <colding@42tools.com>
 
+	* m4/acetao.m4: Fix CPPFLAGS bug as pointed out 
+	by Phil (Thanks!).
+
+	* configure.in (LORICA_top_dir): Check for supported
+	compiler flags.
+
 	* src/proxy/proxy.cpp (Proxy::get_lock): Added logic on
 	non-Windows to ensure that only one proxy daemon is
 	running at any one time.

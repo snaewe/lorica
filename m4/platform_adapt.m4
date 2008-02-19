@@ -18,7 +18,7 @@
 
 # serial 1
 
-dnl AM_LORICA_CHECK_PLATFORM()
+dnl AX_LORICA_CHECK_PLATFORM()
 dnl Tries to determine the platform and defines the pretty LORICA_DIST_RELEASE
 dnl descriptive string as well as these AM_CONDITIONALS:
 dnl
@@ -31,7 +31,7 @@ dnl These all defaults to false unless we hapen to be on one of those
 dnl platforms .The not so pretty string lorica_target is also defined
 dnl by this macro.
 dnl
-AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
+AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 [ LORICA_DIST_RELEASE="UNKNOWN"
   AM_CONDITIONAL(LORICA_DARWIN,         false)
   AM_CONDITIONAL(LORICA_DARWIN_TIGER,   false)
@@ -200,12 +200,12 @@ AC_DEFUN([AM_LORICA_CHECK_PLATFORM],
   AC_SUBST(LORICA_DIST_RELEASE)
 ])
 
-dnl AM_LORICA_PLATFORM_ADAPT()
+dnl AX_LORICA_PLATFORM_ADAPT()
 dnl Tries to adapt the build variables to the platform at hand.
 dnl
-AC_DEFUN([AM_LORICA_PLATFORM_ADAPT],
+AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
 [ if test "x$LORICA_DIST_RELEASE" = "xUNKNOWN"; then
-     AM_LORICA_CHECK_PLATFORM()
+     AX_LORICA_CHECK_PLATFORM()
   fi
   case "$lorica_target" in
 	OpenSUSE_10_2)
