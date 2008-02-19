@@ -1,7 +1,16 @@
+2008-02-19  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp (Proxy::get_lock): Added logic on
+	non-Windows to ensure that only one proxy daemon is
+	running at any one time.
+
+	* m4/acetao.m4: Fix bug. Must always use $ACE_ROOT if it
+	is set in the environment.
+
 2008-02-17  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/lorica_EvaluatorBase.mpc (project): Fix
-	breakage caursed by renaming (Well, Phil actually 
+	breakage caursed by renaming (Well, Phil actually
 	did this first).
 
 2008-02-13  Jules Colding  <colding@42tools.com>

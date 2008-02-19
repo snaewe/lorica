@@ -69,6 +69,12 @@ namespace Lorica
 		void shutdown(void);
 
 	private:
+		// Will ensure that only one instance of Lorica 
+		// is running at any one time by setting even if they
+		// were to be isolated and run by different users
+#ifndef ACE_WIN32
+		bool get_lock(const char *lock_file_path);
+#endif
 		bool setup_shutdown_handler(void);
 
 		static Proxy* this_;
@@ -82,6 +88,9 @@ namespace Lorica
 		PortableServer::POAManager_var inside_pm_;
 		IORTable::Table_var iorTable_;
 		PortableServer::POA_var admin_poa_;
+
+		// the pid file actually
+		int lock_fd;
 
 		std::string pid_file_;
 		std::string ior_file_;

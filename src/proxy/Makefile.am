@@ -153,7 +153,7 @@ ACETAO_LIBdir = $(libdir)
 ACETAO_LIB_DATA = $(TAO_LIBS)
 
 $(ACE_ROOT)/apps/gperf/src/tao_gperf:
-	cp $(ACE_ROOT)/apps/gperf/src/gperf -f $(ACE_ROOT)/apps/gperf/src/tao_gperf
+	cp -f $(ACE_ROOT)/apps/gperf/src/gperf $(ACE_ROOT)/apps/gperf/src/tao_gperf
 	cd $(ACE_ROOT)/bin && $(LN_S) ../apps/gperf/src/tao_gperf tao_gperf
 
 $(ACE_ROOT)/TAO/TAO_IDL/tao_idl:

@@ -153,12 +153,15 @@ AC_DEFUN([AM_LORICA_ACETAO_ADAPT],
                                     break 1 # goto level 2
                                 fi
                           done
-
                           # This is level 2
                           if test "x$enable_tao_build" = "xyes"; then
                              AM_CONDITIONAL(HAVE_ACE_ROOT, true)
-                             CONF_ACE_ROOT="`pwd`/ACE_wrappers"
                              AM_CONDITIONAL(HAVE_CONF_LD_PATH, true)
+                             if test "x$ACE_ROOT" != "x"; then
+                                CONF_ACE_ROOT="$ACE_ROOT"
+                             else
+                                CONF_ACE_ROOT="`pwd`/ACE_wrappers"
+                             fi
                              ACETAO_CPPFLAGS="-I$CONF_ACE_ROOT -I$CONF_ACE_ROOT/TAO -I$CONF_ACE_ROOT/TAO/orbsvcs"
                              ACETAO_LDFLAGS="-L$CONF_ACE_ROOT/lib"
                              break 2 # goto level 4

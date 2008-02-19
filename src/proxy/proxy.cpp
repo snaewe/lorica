@@ -50,6 +50,110 @@
 
 Lorica::Proxy* Lorica::Proxy::this_ = 0;
 
+#ifndef ACE_WIN32
+
+static int
+lock_fd(const int fd)
+{
+	struct flock lock;
+
+	lock.l_type = F_WRLCK;
+	lock.l_start = 0;
+	lock.l_whence = SEEK_SET;
+	lock.l_len = 0;
+
+	if (-1 == fd)
+		return -1;
+
+	return fcntl(fd, F_SETLK, &lock);
+}
+
+static int
+unlock_fd(const int fd)
+{
+	struct flock lock;
+
+	lock.l_type = F_UNLCK;
+	lock.l_start = 0;
+	lock.l_whence = SEEK_SET;
+	lock.l_len = 0;
+
+	if (-1 == fd)
+		return -1;
+
+	return fcntl(fd, F_SETLK, &lock);
+}
+
+/*
+ * Will attempt to lock the PID file and write the
+ * pid into it. This function will return false for
+ * all errors. Callee is responsible for closing *fd
+ * if (*fd != -1).
+ */
+static bool
+get_process_lock(int & fd,
+		 const char *path)
+{
+	std::string pid_file;
+	char buf[32] = { '\0' };
+	int p = 0;
+	ssize_t w = 0;
+
+	fd = -1;
+	if (!path || !strlen(path))
+		return false;
+
+	fd = open(path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	if (-1 == fd)
+		return false;
+
+	// lock it
+	if (lock_fd(fd))
+		return false;
+
+	// we have the lock
+	if (ftruncate(fd, 0))
+		return false;
+
+	/* write pid */
+	p = snprintf(buf, sizeof(buf), "%d", getpid());
+	w = write(fd, buf, strlen(buf) + sizeof(char));
+	p += sizeof(char);
+	if (p != (int)w)
+		return false;
+
+	if (fsync(fd))
+		return false;
+
+	return true;
+}
+#endif // !ACE_WIN32
+
+Lorica::Proxy::Proxy(const bool Debug)
+	: lock_fd(-1),
+	  pid_file_(),
+	  ior_file_(),
+	  must_shutdown_(false),
+	  debug_(Debug)
+{
+}
+
+#ifndef ACE_WIN32
+bool
+Lorica::Proxy::get_lock(const char *lock_file_path)
+{
+	// take the lock and write the pid
+	if (get_process_lock(this->lock_fd, lock_file_path))
+		return true;
+ 
+	if (-1 != this->lock_fd) {
+		close(this->lock_fd);
+		this->lock_fd = -1;
+	}
+	return false;
+}
+#endif
+
 void
 Lorica::Proxy::shutdown(void)
 {
@@ -74,9 +178,10 @@ Lorica::Proxy::setup_shutdown_handler(void)
 	ACE_Sig_Set sigset;
 
 	// Register signal handlers.
-	sigset.sig_add (SIGINT);
-	sigset.sig_add (SIGUSR1);
-	sigset.sig_add (SIGTERM);
+	sigset.sig_add(SIGINT);
+	sigset.sig_add(SIGUSR1);
+	sigset.sig_add(SIGUSR2);
+	sigset.sig_add(SIGTERM);
 
 	// Register the <handle_signal> method to process all the signals in
 	// <sigset>.
@@ -85,15 +190,6 @@ Lorica::Proxy::setup_shutdown_handler(void)
 	ACE_UNUSED_ARG(sa);
 
 	return true;
-}
-
-Lorica::Proxy::Proxy(const bool Debug)
-	: pid_file_(),
-	  ior_file_(),
-	  must_shutdown_(false),
-	  debug_(Debug)
-{
-	// nothing else to do
 }
 
 int
@@ -151,6 +247,8 @@ Lorica::Proxy::configure(Config & config)
 				this->pid_file_ = "lorica.pid";
 			else
 				this->pid_file_ = LORICA_PID_FILE;
+			if (!this->get_lock(this->pid_file_.c_str()))
+				throw InitError();
 #endif
 		}
 
@@ -379,6 +477,14 @@ Lorica::Proxy::configure(Config & config)
 
 Lorica::Proxy::~Proxy(void)
 {
+#ifndef ACE_WIN32
+	// release the lock
+	if (-1 != this->lock_fd) {
+		unlock_fd(this->lock_fd);
+		close(this->lock_fd);
+		this->lock_fd = -1;
+	}
+#endif
 }
 
 int
