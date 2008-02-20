@@ -257,7 +257,8 @@ LORICA_CPPFLAGS="$LORICA_DEFS $LORICA_INCLUDES"
 AC_SUBST(LORICA_CPPFLAGS)
 
 dnl CXXFLAGS
-LORICA_CXXFLAGS="-Werror -Wextra -Wundef -Wall -Wpointer-arith -O3 -pipe"
+LORICA_CXXFLAGS="-Werror -Wundef -Wall -Wpointer-arith -pipe"
+AX_CXXFLAGS_GCC_OPTION(-Wextra, LORICA_CXXFLAGS)
 AX_CXXFLAGS_GCC_OPTION(-fvisibility=hidden, LORICA_CXXFLAGS)
 AX_CXXFLAGS_GCC_OPTION(-fvisibility-inlines-hidden, LORICA_CXXFLAGS)
 if test "x$lorica_target" = "xDarwin"; then

@@ -1,6 +1,12 @@
+2008-02-20  Jules Colding  <colding@42tools.com>
+
+	* configure.in (LORICA_CPPFLAGS):
+	Check for -Wextra compiler support.
+	Remove -O3 from CXXFLAGS.
+
 2008-02-19  Jules Colding  <colding@42tools.com>
 
-	* m4/acetao.m4: Fix CPPFLAGS bug as pointed out 
+	* m4/acetao.m4: Fix CPPFLAGS bug as pointed out
 	by Phil (Thanks!).
 
 	* configure.in (LORICA_top_dir): Check for supported
