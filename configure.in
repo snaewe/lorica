@@ -269,7 +269,7 @@ if test "x$enable_lorica_dist" = "xyes"; then
 else
 	msg_lorica_dist=no
 	if test "x$enable_lorica_debug" = "xyes"; then
-		LORICA_CXXFLAGS="$LORICA_CXXFLAGS -Werror -Werror-implicit-function-declaration -Wundef -Wbad-function-cast -Wcast-align -Wmissing-declarations -ggdb -O1"
+		LORICA_CXXFLAGS="$LORICA_CXXFLAGS -Werror-implicit-function-declaration -Wbad-function-cast -Wcast-align -Wmissing-declarations -ggdb -O1"
 	else
 		LORICA_CXXFLAGS="$LORICA_CXXFLAGS"
 	fi
