@@ -73,7 +73,6 @@ AC_SUBST(LORICA_NAME)
 LORICA_VERSION=AC_PACKAGE_VERSION
 AC_SUBST(LORICA_VERSION)
 
-
 dnl
 dnl Configure options
 dnl
@@ -257,12 +256,17 @@ LORICA_CPPFLAGS="$LORICA_DEFS $LORICA_INCLUDES"
 AC_SUBST(LORICA_CPPFLAGS)
 
 dnl CXXFLAGS
-LORICA_CXXFLAGS="-Werror -Wundef -Wall -Wpointer-arith -pipe"
-AX_CXXFLAGS_GCC_OPTION(-Wextra, LORICA_CXXFLAGS)
+CS_VISIBILITY_FLAG_INLINES_HIDDEN()
+CS_COMPILER_WARNINGS([C++])
+CS_COMPILER_ERRORS([C++])
+CS_COMPILER_IGNORE_LONG_DOUBLE([C++])
+
+LORICA_CXXFLAGS="$cs_cv_prog_Cxx_enable_errors $cs_cv_prog_Cxx_enable_warnings -Wundef  -Wpointer-arith -pipe $cs_prog_cxx_visibility_inlines_hidden"
 AX_CXXFLAGS_GCC_OPTION(-fvisibility=hidden, LORICA_CXXFLAGS)
-AX_CXXFLAGS_GCC_OPTION(-fvisibility-inlines-hidden, LORICA_CXXFLAGS)
+AX_CXXFLAGS_GCC_OPTION(-Wextra, LORICA_CXXFLAGS)
+
 if test "x$lorica_target" = "xDarwin"; then
-   LORICA_CXXFLAGS="$LORICA_CXXFLAGS -Wno-long-double -flat_namespace"
+   LORICA_CXXFLAGS="$LORICA_CXXFLAGS $cs_cv_prog_Cxx_ignore_long_double"
 fi
 if test "x$enable_lorica_dist" = "xyes"; then
 	msg_lorica_dist=yes
