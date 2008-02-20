@@ -1,5 +1,7 @@
 2008-02-20  Jules Colding  <colding@42tools.com>
 
+	* m4/: Fix compiler bug seen on gutsy.
+
 	* configure.in (LORICA_CPPFLAGS):
 	Check for -Wextra compiler support.
 	Remove -O3 from CXXFLAGS.
