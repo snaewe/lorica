@@ -152,25 +152,15 @@ endif # !LORICA_DARWIN
 ACETAO_LIBdir = $(libdir)
 ACETAO_LIB_DATA = $(TAO_LIBS)
 
-$(ACE_ROOT)/apps/gperf/src/tao_gperf:
-	cp -f $(ACE_ROOT)/apps/gperf/src/gperf $(ACE_ROOT)/apps/gperf/src/tao_gperf
-	cd $(ACE_ROOT)/bin && $(LN_S) ../apps/gperf/src/tao_gperf tao_gperf
-
-$(ACE_ROOT)/TAO/TAO_IDL/tao_idl:
-
 $(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr:
 
 TAO_EXECUTABLES = \
-	$(ACE_ROOT)/TAO/TAO_IDL/tao_idl             \
-	$(ACE_ROOT)/apps/gperf/src/tao_gperf        \
 	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr
 
 TAO_EXECUTABLESdir = ${bindir}
 TAO_EXECUTABLES_DATA = $(TAO_EXECUTABLES)
 
 install-data-hook:
-	chmod 755 $(DESTDIR)$(bindir)/tao_idl
-	chmod 755 $(DESTDIR)$(bindir)/tao_gperf
 	chmod 755 $(DESTDIR)$(bindir)/tao_ifr
 if !LORICA_DARWIN
 	cd $(DESTDIR)$(libdir) && $(LN_S) libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                  libACE.so

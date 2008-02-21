@@ -1,3 +1,6 @@
+#
+# https://crystal.svn.sourceforge.net/svnroot/crystal/CS/trunk/mk/autoconf/cs_check_host.m4
+#
 #------------------------------------------------------------------------------
 # Determine host platform.  Recognized families: Unix, Windows, MacOS/X.
 # Orginial Macros Copyright (C)2003 Eric Sunshine <sunshine@sunshineco.com>

@@ -1,4 +1,7 @@
 # compiler.m4                                                  -*- Autoconf -*-
+#
+# https://crystal.svn.sourceforge.net/svnroot/crystal/CS/trunk/mk/autoconf/compiler.m4
+#
 #=============================================================================
 # Copyright (C)2003-2007 by Eric Sunshine <sunshine@sunshineco.com>
 # Copyright (C)2003 by Matze Braun <matze@braunis.de>

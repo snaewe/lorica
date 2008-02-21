@@ -43,8 +43,6 @@ endif
 AM_CPPFLAGS = $(ACETAO_CPPFLAGS)
 
 TAO_EXECUTABLES = \
-	$(ACE_ROOT)/apps/gperf/src/gperf            \
-	$(ACE_ROOT)/TAO/TAO_IDL/tao_idl             \
 	$(ACE_ROOT)/TAO/orbsvcs/IFR_Service/tao_ifr
 
 if LORICA_DARWIN

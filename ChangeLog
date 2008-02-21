@@ -1,3 +1,11 @@
+2008-02-21  Jules Colding  <colding@42tools.com>
+
+	* configure.in (LORICA_CXXFLAGS):Check compiler support
+	for all flags.
+
+	* src/proxy/Makefile.am (lorica_LDADD): Removed tao_gperf
+	and tao_idl as install targets.
+
 2008-02-20  Jules Colding  <colding@42tools.com>
 
 	* m4/: Fix compiler bug seen on gutsy.

@@ -1,4 +1,7 @@
 # language.m4                                                  -*- Autoconf -*-
+#
+# https://crystal.svn.sourceforge.net/svnroot/crystal/CS/trunk/mk/autoconf/language.m4
+#
 #==============================================================================
 # Copyright (C)2008 by Eric Sunshine <sunshine@sunshineco.com>
 #

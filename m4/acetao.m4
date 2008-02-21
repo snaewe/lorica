@@ -19,7 +19,8 @@
 # serial 2
 
 dnl AX_LORICA_CHECK_ACETAO()
-dnl Checks for programs, libraries and headers
+dnl Checks for all programs, libraries and header files that are 
+dnl needed for the build.
 dnl
 AC_DEFUN([AX_LORICA_CHECK_ACETAO],
 [ 
@@ -33,7 +34,7 @@ AC_DEFUN([AX_LORICA_CHECK_ACETAO],
   ACE_LIBS="ACE ACE_SSL TAO TAO_Codeset TAO_AnyTypeCode TAO_CodecFactory TAO_Valuetype TAO_DynamicAny TAO_PI TAO_PortableServer TAO_Messaging TAO_DynamicInterface TAO_EndpointPolicy TAO_IFR_Client TAO_IORTable TAO_Svc_Utils TAO_TypeCodeFactory TAO_IFRService TAO_PI_Server TAO_Security TAO_SSLIOP"
 
   dnl State all needed TAO programs
-  TAO_EXECUTABLES="tao_gperf tao_idl tao_ifr"
+  TAO_EXECUTABLES="gperf tao_idl tao_ifr"
 
   dnl Check for needed TAO programs
   for exefile in $TAO_EXECUTABLES
