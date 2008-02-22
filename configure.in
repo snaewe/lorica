@@ -239,7 +239,7 @@ dnl Lorica top-level source directory
 LORICA_top_dir="`pwd`"
 AC_SUBST(LORICA_top_dir)
 
-dnl Check if the compiler supports -iquote or -I- DIR (derived from ltrace)
+dnl Check if the compiler supports -iquote DIR (from ltrace)
 ac_cv_have_iquote=no
 AC_MSG_CHECKING(whether compiler accepts -iquote dir)
 save_CPPFLAGS="$CPPFLAGS"
@@ -249,27 +249,13 @@ CPPFLAGS="$save_CPPFLAGS"
 AC_MSG_RESULT($ac_cv_have_iquote)
 if test $ac_cv_have_iquote = yes; then
   iquote="-iquote "
-  iquoteend=""
 else
-  AC_MSG_CHECKING(whether compiler accepts -I-)
-  save_CPPFLAGS="$CPPFLAGS"
-  CPPFLAGS="$CPPFLAGS -I- -I."
-  AC_TRY_COMPILE(,,[ac_cv_have_iquote=yes])
-  CPPFLAGS="$save_CPPFLAGS"
-  AC_MSG_RESULT($ac_cv_have_iquote)
-  if test $ac_cv_have_iquote = yes; then
-     iquote="-I"
-     iquoteend="-I-"
-  else
-     iquote="-I"
-     iquoteend=""
-  fi
+  iquote="-I"
 fi
 AC_SUBST(iquote)
-AC_SUBST(iquoteend)
 
 dnl Should only be searchable in "" include statements
-LORICA_INCLUDES="$iquote$LORICA_top_dir $iquote$LORICA_top_dir/src $iquote$LORICA_top_dir/defines $iquoteend"
+LORICA_INCLUDES="$iquote$LORICA_top_dir $iquote$LORICA_top_dir/src $iquote$LORICA_top_dir/defines"
 
 dnl From AM_LORICA_ACETAO_ADAPT
 LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_CPPFLAGS"
