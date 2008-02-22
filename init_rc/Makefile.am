@@ -24,10 +24,10 @@ else
 CLEAN_IN_FILES =
 endif
 
-all-local: gentoo.confd
+all-local: generic.confd
 
-gentoo.confd: Makefile
-	echo '# $(sysconfdir)/conf.d/$(LORICA_NAME): config file for $(sysconfdir)/init.d/$(LORICA_NAME)"' >$@
+generic.confd: Makefile
+	echo '# Config file for $(sysconfdir)/init.d/$(LORICA_NAME)"' >$@
 	echo '' >>$@
 	echo '# Lorica startup options' >>$@
 	echo 'LORICA_OPTIONS=""' >>$@
@@ -41,5 +41,5 @@ gentoo.confd: Makefile
 
 DISTCLEANFILES = $(CLEAN_IN_FILES) Makefile
 
-CLEANFILES = gentoo.confd
+CLEANFILES = generic.confd
 

@@ -57,7 +57,7 @@ src_compile() {
 src_install() {
 	emake DESTDIR="${D}" install || die "emake install failed"
 	newinitd ${S}/init_rc/gentoo.initd "@LORICA_NAME@"
-	newconfd ${S}/init_rc/gentoo.confd "@LORICA_NAME@"
+	newconfd ${S}/init_rc/generic.confd "@LORICA_NAME@"
 	dodoc ${DOCS}
 }
 

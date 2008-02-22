@@ -9,11 +9,11 @@ LORICA_PID_FILE=${LORICA_PID_FILE:-/var/run/${SVCNAME}.pid}
 LORICA_EXE_PATH=${LORICA_EXE_PATH:-/usr/sbin/lorica}
 
 start() {
-  ebegin "Starting ${SVCNAME}"
-  start-stop-daemon --start --exec "${LORICA_EXE_PATH}" \
-		    --pidfile "${LORICA_PID_FILE}" \
-  		    -- "${LORICA_OPTIONS}"
-  eend $?
+	ebegin "Starting ${SVCNAME}"
+	start-stop-daemon --start --exec "${LORICA_EXE_PATH}" \
+			  --pidfile "${LORICA_PID_FILE}" \
+			  -- "${LORICA_OPTIONS}"
+	eend $?
 }
 
 stop() {
