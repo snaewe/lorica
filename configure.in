@@ -249,16 +249,14 @@ CPPFLAGS="$save_CPPFLAGS"
 AC_MSG_RESULT($ac_cv_have_iquote)
 if test $ac_cv_have_iquote = yes; then
   iquote="-iquote "
-  iquoteend=""
 else
-  iquote="-I "
-  iquoteend="-I-"
+  iquote="-I"
 fi
 AC_SUBST(iquote)
 AC_SUBST(iquoteend)
 
-dnl Must only be searchable in "" include statements
-LORICA_INCLUDES="$iquote $LORICA_top_dir $iquote $LORICA_top_dir/src $iquote $LORICA_top_dir/defines $iquoteend"
+dnl Should only be searchable in "" include statements
+LORICA_INCLUDES="$iquote$LORICA_top_dir $iquote$LORICA_top_dir/src $iquote$LORICA_top_dir/defines"
 
 dnl From AM_LORICA_ACETAO_ADAPT
 LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_CPPFLAGS"

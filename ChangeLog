@@ -1,5 +1,7 @@
 2008-02-22  Jules Colding  <colding@42tools.com>
 
+	* configure.in: Fix iquote support (thanks Phil).
+
 	* deb/: Ubuntu Gutsy installation support
 
 	* configure.in (LORICA_INCLUDES): Check for -iquote DIR
