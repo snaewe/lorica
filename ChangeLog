@@ -1,3 +1,8 @@
+2008-02-22  Jules Colding  <colding@42tools.com>
+
+	* configure.in (LORICA_INCLUDES): Check for -iquote DIR
+	compiler support.
+
 2008-02-21  Jules Colding  <colding@42tools.com>
 
 	* configure.in (LORICA_CXXFLAGS):Check compiler support

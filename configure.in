@@ -242,8 +242,26 @@ AC_SUBST(LORICA_top_dir)
 dnl From AM_LORICA_ACETAO_ADAPT
 LORICA_INCLUDES="$ACETAO_CPPFLAGS"
 
+dnl Check if the compiler support -iquote DIR (from ltrace)
+ac_cv_have_iquote=no
+AC_MSG_CHECKING(compiler accepts -iquote dir)
+save_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS -iquote ."
+AC_TRY_COMPILE(,,[ac_cv_have_iquote=yes])
+CPPFLAGS="$save_CPPFLAGS"
+AC_MSG_RESULT($ac_cv_have_iquote)
+if test $ac_cv_have_iquote = yes; then
+  iquote="-iquote "
+  iquoteend=""
+else
+  iquote="-I "
+  iquoteend="-I-"
+fi
+AC_SUBST(iquote)
+AC_SUBST(iquoteend)
+
 dnl Must only be searchable in "" include statements
-LORICA_INCLUDES="$LORICA_INCLUDES -iquote $LORICA_top_dir -iquote $LORICA_top_dir/src -iquote $LORICA_top_dir/defines"
+LORICA_INCLUDES="$LORICA_INCLUDES $iquote $LORICA_top_dir $iquote $LORICA_top_dir/src $iquote $LORICA_top_dir/defines $iquoteend"
 
 dnl Now set the preprocessor arguments
 LORICA_CPPFLAGS="$LORICA_INCLUDES"
