@@ -20,7 +20,9 @@
 ACLOCAL_AMFLAGS = -I m4
 
 CWD = $(CURDIR)
-MKDIR = $(MKDIR_P)
+MKDIR_P ?= $(mkdir_p)
+MKDIR = $(MKDIR_P) 
+TAR=/bin/tar
 
 SUBDIRS = \
 	init_rc \

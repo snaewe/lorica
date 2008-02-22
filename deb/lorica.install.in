@@ -1,4 +1,4 @@
-@DH_INSTALL_default_bindir@/tao_idl
+@DH_INSTALL_default_bindir@/tao_ifr
 @DH_INSTALL_default_sbindir@/lorica
 @DH_INSTALL_default_libdir@/lib*.so*
 @DH_INSTALL_default_docdir@/lorica_configuration

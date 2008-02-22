@@ -68,7 +68,7 @@ case "$action" in
     Gentoo)
 	make dist-ebuild
 	;;
-    Ubuntu)
+    Ubuntu*)
 	codename=`lsb_release -sc`
 	case "$codename" in
 	    "edgy")
@@ -143,7 +143,7 @@ case "$action" in
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r ebuild/brutus-keyring-*.ebuild ebuild/ChangeLog ebuild/metadata.xml colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Gentoo/'
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r *.tar.gz colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Gentoo/'
 	;;
-    Ubuntu)
+    Ubuntu*)
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r deb/*.deb colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Ubuntu\ '"$codename/"
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r *.tar.gz colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Ubuntu\ '"$codename/"
 	;;
