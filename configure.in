@@ -239,12 +239,9 @@ dnl Lorica top-level source directory
 LORICA_top_dir="`pwd`"
 AC_SUBST(LORICA_top_dir)
 
-dnl From AM_LORICA_ACETAO_ADAPT
-LORICA_INCLUDES="$ACETAO_CPPFLAGS"
-
-dnl Check if the compiler support -iquote DIR (from ltrace)
+dnl Check if the compiler supports -iquote DIR (from ltrace)
 ac_cv_have_iquote=no
-AC_MSG_CHECKING(compiler accepts -iquote dir)
+AC_MSG_CHECKING(whether compiler accepts -iquote dir)
 save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS -iquote ."
 AC_TRY_COMPILE(,,[ac_cv_have_iquote=yes])
@@ -261,7 +258,10 @@ AC_SUBST(iquote)
 AC_SUBST(iquoteend)
 
 dnl Must only be searchable in "" include statements
-LORICA_INCLUDES="$LORICA_INCLUDES $iquote $LORICA_top_dir $iquote $LORICA_top_dir/src $iquote $LORICA_top_dir/defines $iquoteend"
+LORICA_INCLUDES="$iquote $LORICA_top_dir $iquote $LORICA_top_dir/src $iquote $LORICA_top_dir/defines $iquoteend"
+
+dnl From AM_LORICA_ACETAO_ADAPT
+LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_CPPFLAGS"
 
 dnl Now set the preprocessor arguments
 LORICA_CPPFLAGS="$LORICA_INCLUDES"
@@ -347,6 +347,9 @@ AC_SUBST(DH_INSTALL_default_datadir)
 
 LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_bindir, /usr/bin)
 AC_SUBST(DH_INSTALL_default_bindir)
+
+LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_sbindir, /usr/sbin)
+AC_SUBST(DH_INSTALL_default_sbindir)
 
 LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_libdir, /usr/lib)
 AC_SUBST(DH_INSTALL_default_libdir)
