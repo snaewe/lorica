@@ -1,5 +1,7 @@
 2008-02-22  Jules Colding  <colding@42tools.com>
 
+	* deb/: Ubuntu Gutsy installation support
+
 	* configure.in (LORICA_INCLUDES): Check for -iquote DIR
 	compiler support.
 

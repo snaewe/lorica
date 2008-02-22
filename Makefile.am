@@ -137,6 +137,8 @@ dist-deb-prep:
 	cp $(CWD)/$(LORICA_NAME)-$(LORICA_VERSION).tar.gz $(CWD)/deb/$(LORICA_NAME)_$(LORICA_VERSION).orig.tar.gz
 	cd $(CWD)/deb && $(TAR) xzf $(LORICA_NAME)_$(LORICA_VERSION).orig.tar.gz
 	cd $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION) && $(MKDIR) debian
+	cp $(CWD)/init_rc/generic.confd $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/$(LORICA_NAME).default
+	cp $(CWD)/init_rc/ubuntu.initd $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/$(LORICA_NAME).init
 	cp $(CWD)/deb/compat $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/changelog $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/control $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/

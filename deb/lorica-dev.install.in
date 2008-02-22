@@ -1,5 +1,2 @@
-@DH_INSTALL_default_bindir@/brutus-keyring-client
-@DH_INSTALL_default_includedir@/@BRUTUS_KEYRINGD_NAME@-@LIBBRUTUS_KEYRINGD_CURRENT@.@LIBBRUTUS_KEYRINGD_REVISION@/*
-@DH_INSTALL_default_libdir@/pkgconfig/libBrutus*
-@DH_INSTALL_default_datadir@/@BRUTUS_idl_install_subdir@/*
-@DH_INSTALL_default_docdir@-dev/brutus-keyring-devel-guide
+@DH_INSTALL_default_datadir@/@LORICA_idl_install_subdir@/*
+@DH_INSTALL_default_docdir@-dev/building_lorica

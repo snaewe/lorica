@@ -133,7 +133,7 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 			LORICA_DIST_RELEASE="Mac%20OS%20X%20Leopard"
 			;;
 		     *)
-			AC_MSG_WARN([[Unable to determine Darwin release]])
+			AC_MSG_ERROR([[Unable to determine Darwin release]])
 			;;
 		esac
 		;;
@@ -166,7 +166,7 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 				LORICA_DIST_RELEASE="Rawhide"
 			fi
 			if test "x$LORICA_DIST_RELEASE" = "x"; then
-				AC_MSG_WARN([[Unable to determine Fedora release number]])
+				AC_MSG_ERROR([[Unable to determine Fedora release number]])
 			fi
 		fi
 		;;
@@ -188,7 +188,21 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 	xUbuntu)
 		AM_CONDITIONAL(LORICA_DEBIAN, true)
 		AC_DEFINE([LORICA_DEBIAN], [1], [Define if this is a Debian based distribution])
-		LORICA_DIST_RELEASE="Ubuntu"
+		codename=`lsb_release -sc`
+		case "$codename" in
+		     "edgy")
+			LORICA_DIST_RELEASE="Ubuntu%20Edgy"
+			;;
+	    	     "feisty")
+			LORICA_DIST_RELEASE="Ubuntu%20Feisty"
+			;;
+		     "gutsy")
+			LORICA_DIST_RELEASE="Ubuntu%20Gutsy"
+			;;
+	    	     *)
+			AC_MSG_ERROR([[Unable to determine Ubuntu release]])
+			;;
+ 		esac
 		;;
 	xUNKNOWN)
 		LORICA_DIST_RELEASE="UNKNOWN"

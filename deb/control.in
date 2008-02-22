@@ -3,12 +3,12 @@ Section: net
 Priority: optional
 Maintainer: Jules Colding <colding@42tools.com>
 Standards-Version: 3.7.2
-Build-Depends: debhelper (>= 5), autotools-dev
+Build-Depends: debhelper (>= 5), autotools-dev, g++, libssl-dev
 
 Package: lorica-dev
 Section: netdevel
 Architecture: any
-Depends: lorica (= ${Source-Version})
+Depends: lorica (= ${Source-Version}), libssl, libstdc++ (>=6)
 Description: Development files for Lorica IIOP Firewall
  This is the Lorica daemon development package
  .

@@ -27,7 +27,7 @@ endif
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --enable-brutus-target=ubuntu --enable-brutus-dist=yes --enable-brutus-debug=yes --enable-brutus-devel=yes
+	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --enable-lorica-target=ubuntu --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes
 
 
 build: build-stamp
@@ -84,7 +84,7 @@ binary-arch: build install
 #	dh_installemacsen
 #	dh_installpam
 #	dh_installmime
-#	dh_installinit
+	dh_installinit -- start 65 2 3 4 5 . stop 35 0 1 6 .
 #	dh_installcron
 #	dh_installinfo
 #	dh_installman
@@ -95,7 +95,7 @@ binary-arch: build install
 #	dh_perl
 #	dh_python
 	dh_makeshlibs -V
-	dh_shlibdeps -L libBrutusKeyringd-1.0 -l debian/brutus-keyring/usr/lib
+#	dh_shlibdeps
 	dh_installdeb
 	dh_gencontrol
 	dh_md5sums
