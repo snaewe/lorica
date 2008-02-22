@@ -246,13 +246,7 @@ dnl Must only be searchable in "" include statements
 LORICA_INCLUDES="$LORICA_INCLUDES -iquote $LORICA_top_dir -iquote $LORICA_top_dir/src -iquote $LORICA_top_dir/defines"
 
 dnl Now set the preprocessor arguments
-if test "x$lorica_target" = "xDarwin"; then
-   LORICA_DEFS="-DACE_HAS_CUSTOM_EXPORT_MACROS=0 -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__"
-else
-   LORICA_DEFS="-D_REENTRANT -DACE_HAS_AIO_CALLS -D_GNU_SOURCE -DACE_HAS_EXCEPTIONS -D__ACE_INLINE__"
-fi
-
-LORICA_CPPFLAGS="$LORICA_DEFS $LORICA_INCLUDES"
+LORICA_CPPFLAGS="$LORICA_INCLUDES"
 AC_SUBST(LORICA_CPPFLAGS)
 
 dnl CXXFLAGS

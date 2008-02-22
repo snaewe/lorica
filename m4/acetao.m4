@@ -88,7 +88,7 @@ dnl
 dnl TRUE   Level   FALSE
 dnl  1 <==   0   ==> 2
 dnl  5 <==   1   ==> 2
-dnl  4 <==   2   ==> 3
+dnl  4 <==   2   ==> ERROR (was 3)
 dnl  5 <==   3   ==> ERROR
 dnl  5 <==   4   ==> ERROR
 dnl OK <==   5   ==> ERROR
@@ -103,6 +103,7 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
   ACETAO_LDFLAGS=""
  
   CONF_ACE_ROOT=""
+  CONF_TAO_ROOT=""
   CONF_LD_PATH=""
 
   dnl Must we install ACE and TAO?
@@ -169,7 +170,8 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
                           else
                              ACETAO_CPPFLAGS=""
                              ACETAO_LDFLAGS=""
-                             break 1 # goto level 3
+                             AC_MSG_ERROR([[You need ACE and TAO to build and run Lorica - you must enable tao-build]]) # Error
+                             break 1 # goto level 3 (TODO: level 3 is obsolete)
                           fi
                     done
                     # This is level 3 - check sys
@@ -194,7 +196,7 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
               AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)
               break
         done
-        # This is level 5 superflous?
+        # This is level 5 (TODO: remove level 5)
         break
   done
 
@@ -203,10 +205,12 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
      CONF_PATH="$CONF_ACE_ROOT/bin"
      CONF_LD_PATH="$CONF_ACE_ROOT/lib"
   fi
+  CONF_TAO_ROOT="$CONF_ACE_ROOT/TAO"
 
   # Effective ACE_ROOT
   AC_SUBST(CONF_PATH)
   AC_SUBST(CONF_ACE_ROOT)
+  AC_SUBST(CONF_TAO_ROOT)
   AC_SUBST(CONF_LD_PATH)
 
   dnl ACE+TAO flags

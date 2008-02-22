@@ -22,6 +22,9 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
+include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
+include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
 CWD = $(CURDIR)
 
 if HAVE_ACE_ROOT
