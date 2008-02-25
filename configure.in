@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT(lorica, 0.9.0, bugs@42tools.com)
+AC_INIT(lorica, 0.9.1, bugs@42tools.com)
 
 AC_COPYRIGHT(Copyright (C) 2008 OMC Denmark ApS)
 
@@ -335,6 +335,9 @@ dnl LORICA_GET_DH_INSTALL_PATH(VAR-PREFIX, PATH_NAME, PATH)
 AC_DEFUN([LORICA_GET_DH_INSTALL_PATH], [
 	$1_$2=`echo $3 | cut -c 2-`
 ])
+
+LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_etcdir, /etc)
+AC_SUBST(DH_INSTALL_default_etcdir)
 
 LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_includedir, /usr/include)
 AC_SUBST(DH_INSTALL_default_includedir)
