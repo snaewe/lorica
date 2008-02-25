@@ -22,10 +22,6 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
-include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
-include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(CONF_TAO_ROOT)/rules.tao.GNU
-
 CWD = $(CURDIR)
 
 if HAVE_ACE_ROOT
@@ -40,6 +36,10 @@ else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 endif # HAVE_ACE_ROOT
+
+include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
+include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(CONF_TAO_ROOT)/rules.tao.GNU
 
 BUILT_SOURCES = OCI_AsynchProxyTools_Export.h
 

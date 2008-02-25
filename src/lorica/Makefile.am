@@ -22,10 +22,6 @@
 # MPC Command:
 # mwc.pl -type automake lorica.mwc
 
-include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
-include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
-include $(CONF_TAO_ROOT)/rules.tao.GNU
-
 CWD = $(CURDIR)
 
 if HAVE_ACE_ROOT
@@ -49,6 +45,10 @@ TAO_IDL = tao_idl
 GPERF = gperf
 
 endif # HAVE_ACE_ROOT
+
+include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
+include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+include $(CONF_TAO_ROOT)/rules.tao.GNU
 
 TAO_IDLFLAGS = -Sa -St -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -Wb,export_macro=Lorica_Client_Export -Wb,export_include=Lorica_Client_Export.h -I$(TAO_ROOT) -g $(GPERF)
 
