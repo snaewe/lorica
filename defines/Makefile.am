@@ -25,9 +25,9 @@ CLEAN_IN_FILES =
 endif
 
 if LORICA_DARWIN
-CACHE_DIR = "/var/db"
+CACHE_DIR = /var/db
 else
-CACHE_DIR = "/var/cache"
+CACHE_DIR = /var/cache
 endif
 
 all-local: pathdefs.h
