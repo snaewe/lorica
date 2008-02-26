@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT(lorica, 0.9.1, bugs@42tools.com)
+AC_INIT([lorica],[0.9.1],[bugs@42tools.com])
 
 AC_COPYRIGHT(Copyright (C) 2008 OMC Denmark ApS)
 
@@ -30,13 +30,13 @@ dnl Required by autoconf 2.60
 AC_SUBST(datarootdir)
 
 AC_GNU_SOURCE
-AM_CONFIG_HEADER(config.h)
+AC_CONFIG_HEADERS([config.h])
 
 dnl Standard checks
 AC_LANG([C++])
 AC_PROG_CXX
 AC_REQUIRE_CPP
-AC_STDC_HEADERS
+AC_HEADER_STDC
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
@@ -244,7 +244,7 @@ ac_cv_have_iquote=no
 AC_MSG_CHECKING(whether compiler accepts -iquote dir)
 save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS -iquote ."
-AC_TRY_COMPILE(,,[ac_cv_have_iquote=yes])
+AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[]], [[]])],[ac_cv_have_iquote=yes],[])
 CPPFLAGS="$save_CPPFLAGS"
 AC_MSG_RESULT($ac_cv_have_iquote)
 if test $ac_cv_have_iquote = yes; then
@@ -267,7 +267,11 @@ AC_SUBST(LORICA_CPPFLAGS)
 dnl CXXFLAGS
 LORICA_CXXFLAGS=""
 
-CS_VISIBILITY_FLAG_INLINES_HIDDEN()
+if test "$lorica_target" = "Ubuntu"; then
+   cs_prog_cxx_visibility_inlines_hidden=""
+else
+   CS_VISIBILITY_FLAG_INLINES_HIDDEN()
+fi
 CS_COMPILER_WARNINGS([C++])
 CS_COMPILER_ERRORS([C++])
 LORICA_CXXFLAGS="$cs_cv_prog_cxx_enable_errors $cs_cv_prog_cxx_enable_warnings $cs_prog_cxx_visibility_inlines_hidden"
@@ -367,7 +371,7 @@ dnl ******************************
 dnl Makefiles
 dnl ******************************
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 lorica.spec
 acetao/Makefile
@@ -388,6 +392,7 @@ src/proxy/Makefile
 init_rc/Makefile
 defines/Makefile
 ])
+AC_OUTPUT
 
 case "$lorica_target" in
 	UNKNOWN)

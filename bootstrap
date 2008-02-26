@@ -59,24 +59,32 @@ srcdir=${srcdir:-.}
     exit 1
 }
 
-printbold "Running aclocal..."
-aclocal --force -I m4
+if [[ $1 = "reconf" ]]; then
+    shift
+    printbold "Running autoreconf..."
+    autoreconf --warnings=all --force --verbose --install
+else
+    printbold "Running aclocal..."
+    aclocal --force -I m4
 
-printbold "Running $LIBTOOLIZE..."
-"$LIBTOOLIZE" --force --copy
+    printbold "Running $LIBTOOLIZE..."
+    "$LIBTOOLIZE" --force --copy
 
-printbold "Running Autoheader..."
-autoheader
-# this prevents automake from thinking config.h.in is out of
-# date, since autoheader doesn't touch the file if it doesn't
-# change.
-test -f config.h.in && touch config.h.in
+    printbold "Running Autoheader..."
+    autoheader
 
-printbold "Running Automake..."
-automake --warnings=all --Werror --gnu --add-missing --force --copy 
+    # this prevents automake from thinking config.h.in is out of
+    # date, since autoheader doesn't touch the file if it doesn't
+    # change.
+    test -f config.h.in && touch config.h.in
 
-printbold "Running Autoconf..."
-autoconf
+    printbold "Running Automake..."
+    automake --warnings=all --Werror --gnu --add-missing --force --copy 
+
+    printbold "Running Autoconf..."
+    autoconf
+fi
+
 
 conf_flags="--enable-maintainer-mode --cache-file=/dev/null"
 

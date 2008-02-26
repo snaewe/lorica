@@ -103,7 +103,7 @@ get_process_lock(int & fd,
 	if (!path || !strlen(path))
 		return false;
 
-	fd = open(path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR);
+	fd = open(path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (-1 == fd)
 		return false;
 
@@ -493,6 +493,7 @@ Lorica::Proxy::svc(void)
 	outside_pm_->activate();
 	inside_pm_->activate();
 
+#ifdef ACE_WIN32
 	// Output the pid file indicating we are running
 	FILE *output_file= ACE_OS::fopen(this->pid_file_.c_str(), "w");
 	if (output_file == 0) {
@@ -503,6 +504,7 @@ Lorica::Proxy::svc(void)
 	}
 	ACE_OS::fprintf(output_file, "%d\n", ACE_OS::getpid());
 	ACE_OS::fclose(output_file);
+#endif
 
 	while (!this->must_shutdown_) {
 		ACE_Time_Value timeout(1,0);
