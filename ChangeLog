@@ -1,3 +1,8 @@
+2008-02-26  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/FileConfig.cpp (FileConfig::load):
+	Correct for CRLF.
+
 2008-02-22  Jules Colding  <colding@42tools.com>
 
 	* configure.in: Fix iquote support (thanks Phil).
