@@ -24,17 +24,23 @@ else
 CLEAN_IN_FILES =
 endif
 
+if LORICA_DARWIN
+CACHE_DIR = "/var/db"
+else
+CACHE_DIR = "/var/cache"
+endif
+
 all-local: pathdefs.h
 
 pathdefs.h: Makefile
 	echo '#define LORICA_EXE_NAME        "$(LORICA_NAME)"' >$@
 	echo '#define LORICA_EXE_PATH        "$(sbindir)/$(LORICA_NAME)"' >>$@
-	echo '#define LORICA_CACHE_DIR       "/var/cache/$(LORICA_NAME)"' >>$@
-	echo '#define LORICA_IOR_FILE        "/var/cache/$(LORICA_NAME)/$(LORICA_NAME).ior"' >>$@
+	echo '#define LORICA_CACHE_DIR       "$(CACHE_DIR)/$(LORICA_NAME)"' >>$@
+	echo '#define LORICA_IOR_FILE        "$(CACHE_DIR)/$(LORICA_NAME)/$(LORICA_NAME).ior"' >>$@
 	echo '#define LORICA_PID_FILE        "/var/run/$(LORICA_NAME).pid"' >>$@
 	echo '#define LORICA_CONF_FILE       "$(sysconfdir)/$(LORICA_NAME).conf"' >>$@
-	echo '#define IFR_SERVICE_IOR_FILE   "/var/cache/$(LORICA_NAME)/ifr.ior"' >>$@
-	echo '#define IFR_SERVICE_CACHE_FILE "/var/cache/$(LORICA_NAME)/ifr.cache"' >>$@
+	echo '#define IFR_SERVICE_IOR_FILE   "$(CACHE_DIR)/$(LORICA_NAME)/ifr.ior"' >>$@
+	echo '#define IFR_SERVICE_CACHE_FILE "$(CACHE_DIR)/$(LORICA_NAME)/ifr.cache"' >>$@
 	echo '#define IFR_SERVICE_EXE_NAME   "ifr_service"' >>$@
 	echo '#define IFR_SERVICE_EXE_PATH   "$(bindir)/ifr_service"' >>$@
 	echo '#define TAO_IDL_EXE_PATH       "$(bindir)/tao_idl"' >>$@
