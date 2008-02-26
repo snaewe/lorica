@@ -80,28 +80,47 @@ Lorica::FileConfig::load(void)
 				  "FileConfig::load: could not open file %s\n",
 				  file_name_.c_str()),
 				 false);
+
 	std::string line;
+	std::string::size_type pos;
 	while (!config_file.eof()) {
-		std::getline (config_file, line);
-		size_t pos = line.find (COMMENT_CHAR);
+		std::getline(config_file, line);
+		if (line.empty())
+			continue;
 
-		if (pos != std::string::npos)
-			line = line.substr(pos);
-
+		// handle comments
+		if (COMMENT_CHAR == line[0])
+			continue;
+		pos = line.find(COMMENT_CHAR, 0);
+		if (std::string::npos != pos)
+			line.erase(pos);
 		if (line.empty())
 			continue;
 
 		// correct for CRLF and other whitespace issues
- 		pos = line.find ('\r');
-		if (pos != std::string::npos)
+		pos = 0;
+		while (true) {
+			pos = line.find('\r', pos);
+			if (std::string::npos == pos)
+				break;
 			line[pos] = ' ';
+		}
+		pos = 0;
+		while (true) {
+			pos = line.find('\t', pos);
+			if (std::string::npos == pos)
+				break;
+			line[pos] = ' ';
+		}
 
- 		pos = line.find (' ');
-		if (pos == std::string::npos)
+		pos = line.find(' ', 0); // "token cur_val"
+		if (std::string::npos == pos)
 			continue;
 
-		std::string token = line.substr(0, pos);
-		std::string cur_val = line.substr(pos+1);
+		std::string token = line.substr(0, pos); // "token"
+		if ((pos+2) > line.length())
+			continue;
+		std::string cur_val = line.substr(pos+1); // "cur_val"
 
 		// get any value currently assocuated with this token.
 		std::string accru_val = this->get_value(token);
@@ -163,6 +182,7 @@ Lorica::FileConfig::extract(const std::string& token) const
 {
 	std::string value;
 
+	// voodoo :-(
 	if (configs_.find(ACE::hash_pjw(token.c_str())) != configs_.end())
 		value = configs_.find(ACE::hash_pjw(token.c_str()))->second;
 

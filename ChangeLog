@@ -1,7 +1,9 @@
 2008-02-26  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/FileConfig.cpp (FileConfig::load):
-	Correct for CRLF.
+	Correct for CRLF and other whitespace issues.
+	(FileConfig::load): Fix commenting.
+	(FileConfig::load): Prevent segv.
 
 2008-02-22  Jules Colding  <colding@42tools.com>
 
