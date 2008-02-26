@@ -38,6 +38,10 @@ generic.confd: Makefile
 	echo '# Full path to Lorica executable' >>$@
 	echo 'LORICA_EXE_PATH="$(sbindir)/$(LORICA_NAME)"' >>$@
 	echo '' >>$@
+if LORICA_DEBIAN
+	-cp $@ ../debian/$(LORICA_NAME).default
+	-cp ubuntu.initd ../debian/$(LORICA_NAME).init
+endif
 
 DISTCLEANFILES = $(CLEAN_IN_FILES) Makefile
 
