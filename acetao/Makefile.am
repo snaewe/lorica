@@ -22,7 +22,7 @@ MKDIR = $(MKDIR_P)
 TAR = tar
 
 if LORICA_WGET
-WGET = wget --no-cache -nc
+WGET = wget -nc
 endif
 if LORICA_CURL
 CURL = curl
