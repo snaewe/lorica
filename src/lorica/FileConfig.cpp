@@ -182,7 +182,6 @@ Lorica::FileConfig::extract(const std::string& token) const
 {
 	std::string value;
 
-	// voodoo :-(
 	if (configs_.find(ACE::hash_pjw(token.c_str())) != configs_.end())
 		value = configs_.find(ACE::hash_pjw(token.c_str()))->second;
 
