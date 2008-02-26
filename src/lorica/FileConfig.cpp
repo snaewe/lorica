@@ -131,7 +131,7 @@ Lorica::FileConfig::load(void)
 		else
 			accru_val += " " + cur_val;
 
-		this->insert (token, accru_val);
+		this->insert(token, accru_val);
 	}
 
 	return true;
