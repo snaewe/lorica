@@ -91,7 +91,7 @@ Lorica::FileConfig::load(void)
 		if (line.empty())
 			continue;
 
-		// correct for CRLF
+		// correct for CRLF and other whitespace issues
  		pos = line.find ('\r');
 		if (pos != std::string::npos)
 			line[pos] = ' ';
