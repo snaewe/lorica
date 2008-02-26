@@ -59,16 +59,16 @@ srcdir=${srcdir:-.}
     exit 1
 }
 
-if test "x$1" = "xreconf"; then
+if test "x$1" = "xnoreconf"; then
     shift
-    printbold "Running autoreconf..."
-    autoreconf --warnings=all --force --verbose --install
-else
     printbold "Running aclocal..."
     aclocal --force -I m4
 
     printbold "Running $LIBTOOLIZE..."
     "$LIBTOOLIZE" --force --copy
+
+    printbold "Running aclocal..."
+    aclocal --force -I m4
 
     printbold "Running Autoheader..."
     autoheader
@@ -83,6 +83,9 @@ else
 
     printbold "Running Autoconf..."
     autoconf
+else
+    printbold "Running autoreconf..."
+    autoreconf --warnings=all --force --verbose --install
 fi
 
 
