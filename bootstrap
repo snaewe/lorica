@@ -59,7 +59,7 @@ srcdir=${srcdir:-.}
     exit 1
 }
 
-if [[ $1 = "reconf" ]]; then
+if test "x$1" = "xreconf"; then
     shift
     printbold "Running autoreconf..."
     autoreconf --warnings=all --force --verbose --install
