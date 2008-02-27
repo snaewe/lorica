@@ -60,6 +60,11 @@ namespace Lorica
 		/// Make sure only one instance is created.
 		FileConfig(void);
 
+		// trims characters in char_set from the end of str 
+		// and return the result
+		inline std::string rtrim(std::string const & str, 
+					 char const *char_set);
+
 		inline bool insert(const std::string & token,
 				   const std::string & value);
 

@@ -43,13 +43,11 @@ Lorica::IFRService::init(const bool Debug,
 {
 	Lorica::Config *config = Lorica::FileConfig::instance();
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 	if (!config->collocate_ifr()) {
 		this->my_ifr_server_ = 0;
 		return 0;
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 	ACE_ARGV *arguments = config->get_ifr_options(Debug);
 	int argc = arguments->argc();
 
@@ -61,31 +59,23 @@ Lorica::IFRService::init(const bool Debug,
 			ACE_DEBUG((LM_DEBUG,"  %s\n", arguments->argv()[i]));
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 	int result;
 	try {
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 		ACE_NEW_RETURN(this->my_ifr_server_,
 			       TAO_IFR_Server,
 			       -1);
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 		result = this->my_ifr_server_->init_with_orb(argc,
 							     arguments->argv(),
 							     orb);
-
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 		if (result != 0)
 			return result;
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 	}
 	catch (const CORBA::Exception & ex) {
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 		if (Lorica_debug_level > 0)
 			ex._tao_print_exception("Lorica::IFRService::init");
 		throw;
 	}
-	ACE_DEBUG((LM_INFO, ACE_TEXT("%s:%d \n"), __FILE__, __LINE__));
 
 	return 0;
 }

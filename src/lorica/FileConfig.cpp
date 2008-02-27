@@ -99,19 +99,24 @@ Lorica::FileConfig::load(void)
 
 		// correct for CRLF and other whitespace issues
 		pos = 0;
-		while (true) {
+		while (true) { // replace '\r' with ' ' 
 			pos = line.find('\r', pos);
 			if (std::string::npos == pos)
 				break;
 			line[pos] = ' ';
 		}
 		pos = 0;
-		while (true) {
+		while (true) { // replace '\t' with ' ' 
 			pos = line.find('\t', pos);
 			if (std::string::npos == pos)
 				break;
 			line[pos] = ' ';
 		}
+		line = rtrim(line, " ");
+
+		// anything left?
+		if (line.empty())
+			continue;
 
 		pos = line.find(' ', 0); // "token cur_val"
 		if (std::string::npos == pos)
@@ -166,6 +171,15 @@ Lorica::FileConfig::getBooleanValue(const std::string & token,
 		result = false;
 
 	return result;
+}
+
+std::string 
+Lorica::FileConfig::rtrim(std::string const & str, 
+			  char const *char_set)
+{
+	std::string::size_type const last = str.find_last_not_of(char_set);
+
+	return (std::string::npos == last) ? std::string() : str.substr(0, last+1);
 }
 
 bool
