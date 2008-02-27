@@ -1,0 +1,24 @@
+# @file Makefile.MapForServer_Client.am
+#
+# $Id: automake.mpd 1138 2007-02-02 17:51:14Z elliott_c $
+
+if BUILD_EXCEPTIONS
+
+noinst_PROGRAMS += client
+
+client_CPPFLAGS = \
+  -I$(ACE_ROOT) \
+  -I$(ACE_BUILDDIR) \
+  -I$(TAO_ROOT) \
+  -I$(TAO_BUILDDIR)
+
+client_SOURCES = \
+  TestC.cpp \
+  client.cpp \
+  Hello.h
+
+client_LDADD = \
+  libTAO.la \
+  libACE.la
+
+endif BUILD_EXCEPTIONS
