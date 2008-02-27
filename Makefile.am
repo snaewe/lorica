@@ -50,36 +50,49 @@ DISTCLEANFILES = \
 	$(CLEAN_IN_FILES)
 
 EXTRA_DIST = \
-	docs                              \
-	ebuild/$(LORICA_NAME).ebuild.in   \
-	ebuild/ChangeLog                  \
-	ebuild/metadata.xml               \
-	deb/compat                        \
-	deb/changelog                     \
-	deb/changelog.pre                 \
-	deb/control.in                    \
-	deb/control                       \
-	deb/copyright.in                  \
-	deb/copyright                     \
-	deb/rules                         \
-	deb/version.sed                   \
-	deb/version.sed.in                \
-	deb/watch                         \
-	deb/watch.in                      \
-	deb/$(LORICA_NAME).install        \
-	deb/$(LORICA_NAME).install.in     \
-	deb/$(LORICA_NAME)-dev.install.in \
-	deb/$(LORICA_NAME)-dev.install    \
-	bootstrap                         \
-	$(LORICA_NAME).spec               \
-	$(LORICA_NAME).spec.in            \
-	init_rc/gentoo.initd              \
-	src/proxy/$(LORICA_NAME).conf     \
-	src/proxy/$(LORICA_NAME).ssliop
+	docs                                    \
+	packagemaker                            \
+	ebuild/$(LORICA_NAME).ebuild.in         \
+	ebuild/ChangeLog                        \
+	ebuild/metadata.xml                     \
+	deb/compat                              \
+	deb/changelog                           \
+	deb/changelog.pre                       \
+	deb/control.in                          \
+	deb/control                             \
+	deb/copyright.in                        \
+	deb/copyright                           \
+	deb/rules                               \
+	deb/version.sed                         \
+	deb/version.sed.in                      \
+	deb/watch                               \
+	deb/watch.in                            \
+	deb/$(LORICA_NAME).install              \
+	deb/$(LORICA_NAME).install.in           \
+	deb/$(LORICA_NAME)-dev.install.in       \
+	deb/$(LORICA_NAME)-dev.install          \
+	bootstrap                               \
+	$(LORICA_NAME).spec                     \
+	$(LORICA_NAME).spec.in                  \
+	$(LORICA_NAME).mwc                      \
+	init_rc/gentoo.initd                    \
+	init_rc/ubuntu.initd                    \
+	src/proxy/$(LORICA_NAME).conf           \
+	src/proxy/$(LORICA_NAME).ssliop         \
+	src/lorica/lorica_Client.mpc            \
+	src/lorica/lorica_EvaluatorBase.mpc     \
+	src/lorica/lorica_GenericEvaluator.mpc  \
+	src/OCI/AsynchProxyTools.mpc            \
+	src/proxy/proxy.mpc
+
+
 
 dist-hook:
-	rm -f $(distdir)/defines/pathdefs.h
-	rm -f $(distdir)/init_rc/gentoo.confd
+	-rm -f $(distdir)/defines/pathdefs.h
+	-rm -f $(distdir)/init_rc/gentoo.confd
+	-rm -f $(distdir)/src/lorica/*S.*
+	-rm -f $(distdir)/src/lorica/*C.*
+	-rm -f $(distdir)/packagemaker/*.dmg
 
 release:
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
