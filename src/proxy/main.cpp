@@ -258,7 +258,7 @@ Lorica::Service_Loader::print_usage_and_die(void)
 #else
 	ACE_DEBUG ((LM_INFO,
 		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -V -n -d -f -c -l -n\n")
+		    ACE_TEXT(" -V -n -d -f <file> -c <level> -l <level> -n\n")
 		    ACE_TEXT(" -V: Print the version\n")
 		    ACE_TEXT(" -n: No fork - Run as a regular application\n")
 		    ACE_TEXT(" -d: Debug - Use current directory as working directory\n")
@@ -275,6 +275,9 @@ int
 Lorica::Service_Loader::parse_args(int argc,
 				   ACE_TCHAR *argv[])
 {
+	if (!argc)
+		return 0;
+
 #if defined (ACE_WIN32)
 	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("irtkdf:c:l:"));
 #else
@@ -469,8 +472,14 @@ Lorica::Service_Loader::run_service(void)
 		ACE_LOG_MSG->open(program_name.c_str(), ACE_Log_Msg::SYSLOG);
 
 #if defined (ACE_WIN32)
-	ACE_DEBUG((LM_INFO, ACE_TEXT ("%T (%t): Starting Lorica server.\n")));
-	Lorica::SERVICE::instance()->proxy(init_proxy());
+	try {
+		Lorica::SERVICE::instance()->proxy(init_proxy());
+	}
+	catch (...) {
+		ACE_ERROR((LM_ERROR,
+			   ACE_TEXT ("%p\n"),
+			   ACE_TEXT ("Couldn't start Lorica server")));
+	}
 	ACE_NT_SERVICE_RUN(Lorica,
 			   Lorica::SERVICE::instance(),
 			   ret);
@@ -491,13 +500,14 @@ Lorica::Service_Loader::run_service(void)
 	case EXIT_DAEMON :
 		break;
 	case EXIT_OK :
-		return EXIT_SUCCESS;
+		exit(EXIT_SUCCESS);
 	case EXIT_ERROR :
 	default :
-		return EXIT_FAILURE;
+		exit(EXIT_FAILURE);
 	}
 
 	{
+		ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica is starting up\n")));
 		std::auto_ptr<Proxy>proxy (this->init_proxy());
 
 		proxy->activate();
@@ -525,7 +535,7 @@ Lorica::Service_Loader::run_standalone(void)
 bool
 Lorica::Service_Loader::is_service(void)
 {
-	return !no_fork_;
+	return !debug_;
 }
 
 int
@@ -547,11 +557,15 @@ ACE_TMAIN(int argc,
 	else if (result > 0)
 		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
 
-	if (lorica.is_service())
-		result = lorica.run_service ();
-	else
-		result = lorica.run_standalone ();
+#if defined (ACE_WIN32)
+ 	if (lorica.is_service())
+		result = lorica.run_service();
+ 	else
+		result = lorica.run_standalone();
+#else
+	result = lorica.run_service();
+#endif
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("TERMINATING \n")));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica is shutting down\n")));
 	exit(result);
 }

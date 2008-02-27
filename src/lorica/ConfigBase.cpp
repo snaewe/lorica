@@ -360,6 +360,8 @@ Lorica::Config::init_endpoints(bool do_extern)
 	for (; tpos != std::string::npos; pos = tpos + 1) {
 		tpos = eps_str.find(' ', pos);
 		std::string ep_str = (tpos == std::string::npos) ? eps_str.substr(pos) : eps_str.substr(pos, tpos-pos);
+		if (ep_str.empty())
+			break;
 
 		Endpoint ep;
 		ep.external_ = do_extern;
