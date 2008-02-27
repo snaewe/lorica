@@ -93,7 +93,7 @@ dist-hook:
 	-rm -f $(distdir)/src/lorica/*S.*
 	-rm -f $(distdir)/src/lorica/*C.*
 	-rm -f $(distdir)/packagemaker/*.dmg
-
+	-rm -rf $(distdir)/packagemaker/distribution
 release:
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
 

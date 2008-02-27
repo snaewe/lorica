@@ -2,15 +2,12 @@
 
 APP_NAME=Lorica
 LAUNCH_SCRIPT=com.42tools.lorica.plist
+DISTRIBUTION=distribution
 
 # Remove old disk image (and if present, old build files)
 
 rm $APP_NAME.dmg
 rm -rf $DISTRIBUTION
-
-# Create distribution folder structure
-
-DISTRIBUTION=distribution
 
 ROOT=$DISTRIBUTION/root
 RESOURCES=$DISTRIBUTION/resources
