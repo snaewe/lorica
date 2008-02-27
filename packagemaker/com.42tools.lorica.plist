@@ -8,14 +8,9 @@
     <array>
         <string>/usr/sbin/lorica</string>
         <string>-n</string>
-        <string>-d</string>
-        <string>-f</string>
-        <string>/etc/lorica.conf</string>
     </array>
     <key>KeepAlive</key>
     <true/>
-    <key>WorkingDirectory</key>
-    <string>/var/cache/lorica</string>
     <key>ExitTimeOut</key>
     <integer>30</integer>
 </dict>

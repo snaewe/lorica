@@ -1,6 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-mkdir -p /private/var/cache/lorica
+deamon="/Library/LaunchDaemons/com.42tools.lorica.plist"
+storage="/private/var/db/lorica"
 
-launchctl unload /Library/LaunchDaemons/com.42tools.lorica.plist 
-launchctl load /Library/LaunchDaemons/com.42tools.lorica.plist
+# Create the directory where Lorica stores persisten files
+mkdir -p $storage
+
+# PackageMaker changes the premission of the launch file..
+chmod 644 $deamon
+
+# Restart Lorica
+launchctl unload $deamon
+launchctl load $deamon

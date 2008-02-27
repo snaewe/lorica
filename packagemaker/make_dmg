@@ -1,27 +1,17 @@
 #!/bin/bash
 
-PACKAGE=./distribution
-ROOT=$PACKAGE/root
-RESOURCES=$PACKAGE/resources
-SCRIPTS=$PACKAGE/scripts
-DMG=$PACKAGE/disk
-TMP=$PACKAGE/tmp
-
-TAO=../ACE_wrappers
-TAO_LIBS=$TAO/lib
-TAO_BIN=$TAO/bin
-
-LORICA_CMD=lorica
-LORICA_PROXY=../src/proxy
-LORICA_IDL=../src/lorica
-
-INSTALL_NAME=Lorica
+APP_NAME=Lorica
 LAUNCH_SCRIPT=com.42tools.lorica.plist
 
-# Create initial folder structure
+# Create distribution folder structure
 
-mkdir $PACKAGE
-chown root:wheel $PACKAGE
+DISTRIBUTION=distribution
+
+ROOT=$DISTRIBUTION/root
+RESOURCES=$DISTRIBUTION/resources
+SCRIPTS=$DISTRIBUTION/scripts
+DMG=$DISTRIBUTION/disk
+TMP=$DISTRIBUTION/tmp
 
 mkdir -p $ROOT
 mkdir -p $RESOURCES
@@ -29,90 +19,30 @@ mkdir -p $SCRIPTS
 mkdir -p $DMG
 mkdir -p $TMP
 
-rm $INSTALL_NAME.dmg
+# Remove old disk image (if present)
 
-# Prepare TAO libs
+rm $APP_NAME.dmg
 
-LIBS=$ROOT/usr/lib
-mkdir -p  $LIBS
+# Stage install
 
-for file in "$TAO_LIBS/*.dylib"; do
- cp $file $LIBS
-done
+STAGE_DIR=$(pwd)/$ROOT
 
-for file in "$LIBS/*"; do
- chown root:wheel $file
- chmod 755 $file
-done
+pushd ..
+./bootstrap --enable-tao-build --enable-lorica-devel --enable-lorica-target=darwin --prefix="/usr" --sysconfdir="/private/etc"
+make && make DESTDIR=$STAGE_DIR install
+popd
 
-# Prepare TAO commands
-
-COMMANDS="tao_ifr tao_idl gperf"
-
-BIN=$ROOT/usr/bin
-mkdir -p $BIN
-
-for command in $COMMANDS; do
- cp $TAO_BIN/$command $BIN
-done
-
-for command in "$BIN/*"; do
- chown root:wheel $command
- chmod 755 $command
-done
-
-mv $BIN/gperf $BIN/tao_gperf
-
-# Prepare Lorica
-
-SBIN=$ROOT/usr/sbin
-mkdir -p $SBIN
-
-cp $LORICA_PROXY/$LORICA_CMD $SBIN
-chown root:wheel $SBIN/$LORICA_CMD
-chmod 755 $SBIN/$LORICA_CMD
-
-ETC=$ROOT/private/etc
-mkdir -p $ETC
-
-CONF_FILES="lorica.conf lorica.ssliop"
-
-for file in $CONF_FILES; do
- cp $LORICA_PROXY/$file $ETC
-done
-
-for file in $CONF_FILES; do
- chown root:wheel $ETC/$file
- chmod 644 $ETC/$file
-done
+# Prepare lauch deamon
 
 LAUNCH_DIR=$ROOT/Library/LaunchDaemons
 mkdir -p $LAUNCH_DIR
 cp $LAUNCH_SCRIPT $LAUNCH_DIR
-chown root:wheel $LAUNCH_DIR/$LAUNCH_SCRIPT
-chmod 744 $LAUNCH_DIR/$LAUNCH_SCRIPT
 
-# Prepare IDL files
-
-IDL=$ROOT/usr/share/idl/lorica
-mkdir -p $IDL
-
-for file in "$LORICA_IDL/*.idl"; do
- cp $file $IDL
-done
-
-for file in "$IDL/*"; do
- chown root:wheel $file
- chmod 644 $file
-done
-
-# Prepare scripts
+# Prepare install scripts
 
 cp postflight $SCRIPTS
-chown root:wheel $SCRIPTS/postflight
-chmod 744 $SCRIPTS/postflight
 
-# Prepare resoureces
+# Prepare install resoureces
 
 RESOURCE_FILES="Welcome.rtf ReadMe.rtf License.rtf background.pdf"
 
@@ -120,38 +50,31 @@ for resource in $RESOURCE_FILES; do
  cp $resource $RESOURCES
 done
 
-for resource in "$RESOURCES/*"; do
- chown root:wheel $resource
- chmod 644 $resource
-done
-
 # Create package
 
 PM_CMD=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
-
-rm -rf $INSTALL_NAME.pkg
-$PM_CMD --root $ROOT --resources $RESOURCES --scripts $SCRIPTS --info Info.plist --title $INSTALL_NAME --target 10.4 --root-volume-only --no-recommend --out $DMG/$INSTALL_NAME.pkg
+$PM_CMD --root $ROOT --resources $RESOURCES --scripts $SCRIPTS --info Info.plist --title $APP_NAME --target 10.4 --root-volume-only --out "$DMG/Install $APP_NAME.pkg"
 
 # Prepare disk image
 
-IMAGE_DIR=$DMG/.background
+cp DS_Store $DMG/.DS_Store
 
+IMAGE_DIR=$DMG/.background
 mkdir $IMAGE_DIR
 cp image.png $IMAGE_DIR
-cp DS_Store $DMG/.DS_Store
 
 # Create disk image
 
-hdiutil create -srcfolder $DMG -format UDBZ -volname "$INSTALL_NAME Installer" -uid 99 -gid 99 -mode 444 -noscrub $TMP/$INSTALL_NAME.dmg
+hdiutil create -srcfolder $DMG -format UDBZ -volname "$APP_NAME Install Disk" -mode 444 -noscrub $TMP/$APP_NAME.dmg
 
 # Add SLA to disk image
 
-hdiutil unflatten $TMP/$INSTALL_NAME.dmg
+hdiutil unflatten $TMP/$APP_NAME.dmg
 DeRez sla.rsrc > $TMP/sla.r
-Rez -a $TMP/sla.r -o $TMP/$INSTALL_NAME.dmg
-hdiutil flatten $TMP/$INSTALL_NAME.dmg
+Rez -a $TMP/sla.r -o $TMP/$APP_NAME.dmg
+hdiutil flatten $TMP/$APP_NAME.dmg
 
 # Clean up
 
-cp $TMP/$INSTALL_NAME.dmg .
-rm -rf $PACKAGE
+cp $TMP/$APP_NAME.dmg .
+rm -rf $DISTRIBUTION
