@@ -36,11 +36,13 @@ case "$1" in
 	;;
   restart)
 	log_daemon_msg "Restarting Lorica"
-        start-stop-daemon --stop --signal USR2 --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+        start-stop-daemon --stop --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+	start-stop-daemon --start -oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE" -- "$LORICA_OPTIONS"
 	;;
   force-reload)
-	log_daemon_msg "Restarting Lorica"
-        start-stop-daemon --stop --signal USR2 --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+	log_daemon_msg "Reloading Lorica"
+        start-stop-daemon --stop --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+	start-stop-daemon --start -oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE" -- "$LORICA_OPTIONS"
 	;;
   *)
 	log_action_msg "Usage: /etc/init.d/$0 {start|stop|restart|force-reload}"

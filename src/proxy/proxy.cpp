@@ -226,6 +226,23 @@ Lorica::Proxy::open(void *args)
 	return 1;
 }
 
+static inline FILE*
+get_file(const char *filename)
+{
+	int file_fd = -1;
+	FILE *file = NULL;
+
+	file_fd = open(filename, O_CREAT | O_WRONLY | O_SYNC | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (-1 == file_fd)
+		return NULL;
+
+	file = fdopen(file_fd, "w");
+	if (!file)
+		close(file_fd);
+
+	return file;
+}
+
 void
 Lorica::Proxy::configure(Config & config)
 	throw (InitError)
@@ -390,15 +407,15 @@ Lorica::Proxy::configure(Config & config)
 				this->ior_file_ = LORICA_IOR_FILE;
 #endif
 		}
-		FILE *output_file= ACE_OS::fopen(this->ior_file_.c_str(), "w");
-		if (output_file == 0) {
+		FILE *output_file = get_file(this->ior_file_.c_str());
+		if (!output_file) {
 			ACE_ERROR((LM_ERROR,
 				   "(%P|%t) Lorica::Proxy::configure "
 				   "Cannot open output file for writing IOR: %s\n",
 				   "lorica.ior"));
 		} else {
-			ACE_OS::fprintf (output_file, "%s", ior.c_str());
-			ACE_OS::fclose (output_file);
+			ACE_OS::fprintf(output_file, "%s", ior.c_str());
+			ACE_OS::fclose(output_file);
 		}
 
 		if (!setup_shutdown_handler()) {

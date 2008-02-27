@@ -69,6 +69,9 @@ become_daemon(const bool NoFork,
 	int fd1;
 	int fd2;
 
+	/* reset the file mode mask */
+	umask(0);
+
 	/*
 	 * A process that has terminated but has not yet been waited for is a zombie.
 	 * On the other hand, if the parent dies first, init (process 1) inherits the

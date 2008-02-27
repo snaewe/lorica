@@ -25,7 +25,7 @@ stop() {
 
 restart() {
         ebegin "Reloading ${SVCNAME}"
-        start-stop-daemon --stop --signal USR2 --oknodo \
-            --exec "${LORICA_EXE_PATH}" --pidfile "${LORICA_PID_FILE}"
+	stop
+	start
         eend $?
 }
