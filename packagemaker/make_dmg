@@ -3,6 +3,11 @@
 APP_NAME=Lorica
 LAUNCH_SCRIPT=com.42tools.lorica.plist
 
+# Remove old disk image (and if present, old build files)
+
+rm $APP_NAME.dmg
+rm -rf $DISTRIBUTION
+
 # Create distribution folder structure
 
 DISTRIBUTION=distribution
@@ -18,10 +23,6 @@ mkdir -p $RESOURCES
 mkdir -p $SCRIPTS
 mkdir -p $DMG
 mkdir -p $TMP
-
-# Remove old disk image (if present)
-
-rm $APP_NAME.dmg
 
 # Stage install
 
