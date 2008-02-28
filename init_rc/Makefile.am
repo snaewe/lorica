@@ -40,11 +40,7 @@ generic.confd: Makefile
 	echo '' >>$@
 if LORICA_DEBIAN
 	-cp $@ ../debian/$(LORICA_NAME).default
-endif
-
-if LORICA_DEBIAN
-ubuntu.initd: Makefile
-	-cp $@ ../debian/$(LORICA_NAME).init
+	-cp ubuntu.initd ../debian/$(LORICA_NAME).init
 endif
 
 DISTCLEANFILES = $(CLEAN_IN_FILES) Makefile
