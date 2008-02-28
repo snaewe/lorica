@@ -3,20 +3,22 @@ Section: net
 Priority: optional
 Maintainer: Jules Colding <colding@42tools.com>
 Standards-Version: 3.7.2
-Conflicts: libace, libtao
 Build-Depends: debhelper (>= 5), autotools-dev, g++, libssl-dev
 
 Package: lorica-dev
 Section: netdevel
 Architecture: any
-Depends: lorica (= ${Source-Version}), libssl, libstdc++ (>=6)
+Depends:
 Description: Development files for Lorica IIOP Firewall
- This is the Lorica daemon development package
+ This is the Lorica daemon development package. It contains
+ the Lorica IDL files and build documentation.
  .
 
 Package: lorica
+Section: net
 Architecture: any
-Depends: 
+Depends: libssl, libstdc++ (>=6)
+Conflicts: libace, libtao
 Description: Lorica IIOP Firewall
- This is the Lorica daemon
+ This is Lorica - a GPL'ed IIOP Firewall.
  .
