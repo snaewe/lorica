@@ -17,7 +17,7 @@ Description: Development files for Lorica IIOP Firewall
 Package: lorica
 Section: net
 Architecture: any
-Depends: libssl, libstdc++ (>=6)
+Depends: openssl, libstdc++ (>= 6)
 Conflicts: libace, libtao
 Description: Lorica IIOP Firewall
  This is Lorica - a GPL'ed IIOP Firewall.
