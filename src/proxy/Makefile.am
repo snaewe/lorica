@@ -197,13 +197,13 @@ endif # HAVE_ACE_ROOT
 endif # LORICA_MUST_INSTALL_ACETAO
 
 
-$(CWD)/lorica.conf:
+lorica.conf:
 
-$(CWD)/lorica.ssliop:
+lorica.ssliop:
 
 sysconf_DATA = \
-	$(CWD)/lorica.conf \
-	$(CWD)/lorica.ssliop
+	lorica.conf \
+	lorica.ssliop
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in
