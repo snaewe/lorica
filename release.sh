@@ -148,10 +148,6 @@ case "$action" in
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r *.tar.gz colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Ubuntu\ '"$codename/"
 	;;
     tarball)
-	scp -i $HOME/.ssh/no_passphrase_id_rsa -r *.tar.gz colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/'
-	echo "Download URL is: http://www.omesc.com/sites/default/files/downloads/"
-	;;
-    SOURCE)
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r *.tar.gz colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/SOURCES/'
 	;;
     *)

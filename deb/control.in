@@ -3,6 +3,7 @@ Section: net
 Priority: optional
 Maintainer: Jules Colding <colding@42tools.com>
 Standards-Version: 3.7.2
+Conflicts: libace, libtao
 Build-Depends: debhelper (>= 5), autotools-dev, g++, libssl-dev
 
 Package: lorica-dev
