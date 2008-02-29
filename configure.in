@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT([lorica],[0.9.2],[bugs@42tools.com])
+AC_INIT([lorica],[0.9.3],[bugs@42tools.com])
 
 AC_COPYRIGHT(Copyright (C) 2008 OMC Denmark ApS)
 
@@ -72,6 +72,19 @@ AC_SUBST(LORICA_NAME)
 
 LORICA_VERSION=AC_PACKAGE_VERSION
 AC_SUBST(LORICA_VERSION)
+
+dnl Lorica IANA registered ports
+AC_DEFINE([LORICA_DEFAULT_INSIDE_FACING_PORT], [4080], [Default Lorica inside facing port])
+AC_DEFINE([LORICA_DEFAULT_INSIDE_FACING_PORT_STR], ["4080"], [Default Lorica inside facing port (stringified)])
+
+AC_DEFINE([LORICA_DEFAULT_INSIDE_FACING_PORT_SEC], [4081], [Default Lorica inside facing secure port])
+AC_DEFINE([LORICA_DEFAULT_INSIDE_FACING_PORT_SEC_STR], ["4081"], [Default Lorica inside facing secure port (stringified)])
+
+AC_DEFINE([LORICA_DEFAULT_OUTSIDE_FACING_PORT], [4082], [Default Lorica outside facing port])
+AC_DEFINE([LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR], ["4082"], [Default Lorica outside facing port (stringified)])
+
+AC_DEFINE([LORICA_DEFAULT_OUTSIDE_FACING_PORT_SEC], [4083], [Default Lorica outside facing secure port])
+AC_DEFINE([LORICA_DEFAULT_OUTSIDE_FACING_PORT_SEC_STR], ["4083"], [Default Lorica outside facing secure port (stringified)])
 
 dnl
 dnl Configure options

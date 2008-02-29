@@ -108,7 +108,8 @@ Lorica::Config::Endpoint::as_tao_endpoint(std::string &arg)
 }
 
 bool
-Lorica::Config::Endpoint::parse_string(const std::string &ep_str)
+Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
+				       const bool outside_facing)
 {
 	this->is_ipv6_ = false;
 	this->ssl_port_ = 0;
@@ -123,7 +124,14 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str)
 			   primary_addr.c_str()));
 		return false;
 	}
-	this->port_ = ACE_OS::atoi(primary_addr.substr(port_sep+1).c_str());
+
+	this->port_ = static_cast<int> (ACE_OS::strtol(primary_addr.substr(port_sep+1).c_str(), 0, 10));
+	if (0 >= this->port_) {
+		if (outside_facing)
+			this->port_ = LORICA_DEFAULT_OUTSIDE_FACING_PORT;
+		else 
+			this->port_ = LORICA_DEFAULT_INSIDE_FACING_PORT;
+	}
 
 	size_t start = 0;
 	size_t end = port_sep;
@@ -166,7 +174,13 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str)
 			size_t start = opt + test.length();
 
 			std::string portstr = (comma == std::string::npos) ? ep_str.substr(start) : ep_str.substr(start, comma - start);
-			this->ssl_port_ = ACE_OS::atoi(portstr.c_str());
+			this->ssl_port_ = static_cast<int> (ACE_OS::strtol(portstr.c_str(), 0, 10));
+			if (0 >= this->ssl_port_) {
+				if (outside_facing) 
+					this->ssl_port_ = LORICA_DEFAULT_OUTSIDE_FACING_PORT_SEC;
+				else 
+					this->ssl_port_ = LORICA_DEFAULT_INSIDE_FACING_PORT_SEC;
+			}
 		}
 	}
 
@@ -357,6 +371,9 @@ Lorica::Config::init_endpoints(bool do_extern)
 	size_t pos = 0;
 	size_t tpos = 0;
 
+	if (eps_str.empty() || !eps_str.length())
+		eps_str = do_extern ? ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR : "localhost:"LORICA_DEFAULT_INSIDE_FACING_PORT_STR;
+
 	for (; tpos != std::string::npos; pos = tpos + 1) {
 		tpos = eps_str.find(' ', pos);
 		std::string ep_str = (tpos == std::string::npos) ? eps_str.substr(pos) : eps_str.substr(pos, tpos-pos);
@@ -365,7 +382,7 @@ Lorica::Config::init_endpoints(bool do_extern)
 
 		Endpoint ep;
 		ep.external_ = do_extern;
-		if (ep.parse_string(ep_str))
+		if (ep.parse_string(ep_str, do_extern))
 			endpoints_.push_back(ep);
 		else
 			return false;

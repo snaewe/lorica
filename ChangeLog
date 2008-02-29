@@ -1,3 +1,12 @@
+2008-02-29  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Config::init_endpoints):
+	Use IANA registered default port numbers if none is
+	specified in the configuration file.
+	(Endpoint::parse_string): Detect malformed port
+	specifications and use the IANA registered as defaults
+	in that case.
+
 2008-02-27  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/FileConfig.cpp (FileConfig::load):

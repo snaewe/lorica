@@ -50,7 +50,10 @@ namespace Lorica
 			Endpoint& operator= (const Endpoint& a);
 
 			bool operator!= (const Endpoint& a);
-			bool parse_string (const std::string &ep_str);
+
+			bool parse_string (const std::string &ep_str,
+					   const bool outside_facing);
+
 			void as_tao_endpoint (std::string &arg);
 		};
 		typedef std::vector<Endpoint> Endpoints;
