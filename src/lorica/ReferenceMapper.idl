@@ -32,18 +32,24 @@ module Lorica
 	{
 		exception SecurityNotAvailable { };
 
+		// See:
+		//
+		//     http://iana.org/assignments/port-numbers
+		//
+		// for the IANA registered ports.
+
 		// The default ports used by the Lorica process to listen for 
 		// connections coming from inside the firewall enclave. This 
 		// includes connections used to register new object references 
 		// for mapping, or for clients tunneling new connections 
 		// through the proxy. 
-		const unsigned short in_facing_IIOP_port = 4080;
-		const unsigned short in_facing_SSLIOP_port = 4081;
+		const unsigned short lorica_in_port = 4080;
+		const unsigned short lorica_in_port_sec = 4081;
 
 		// The default ports used by the Lorica process to listen for 
 		// connections coming from outside the protected firewall enclave.
-		const unsigned short out_facing_IIOP_port = 4082;
-		const unsigned short out_facing_SSLIOP_port = 4083;
+		const unsigned short lorica_out_port = 4082;
+		const unsigned short lorica_out_port_sec = 4083;
 
 
 		// Map a reference that a server would publish to clients outside the

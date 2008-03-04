@@ -1,5 +1,9 @@
 2008-03-04  Jules Colding  <colding@42tools.com>
 
+	* src/lorica/ReferenceMapper.idl: Updated the port names
+	to be more similar to the short names used in the IANA
+	registration (http://iana.org/assignments/port-numbers).
+
 	* configure.in (LIBACE): Updated to ACE+TAO x.6.3
 
 	* src/lorica/GenericEvaluator.cpp: Fix build warning
