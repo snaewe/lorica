@@ -17,30 +17,42 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
+AC_PREREQ(2.59)
 AC_INIT([lorica],[0.9.3],[bugs@42tools.com])
 
 AC_COPYRIGHT(Copyright (C) 2008 OMC Denmark ApS)
 
-AC_PREREQ(2.59)
+AC_CONFIG_SRCDIR([lorica.spec])
+AC_CONFIG_HEADERS([config.h])
 
-AC_CONFIG_SRCDIR(README)
 AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 
 dnl Required by autoconf 2.60
 AC_SUBST(datarootdir)
 
 AC_GNU_SOURCE
-AC_CONFIG_HEADERS([config.h])
 
 dnl Standard checks
 AC_LANG([C++])
 AC_PROG_CXX
 AC_REQUIRE_CPP
+
 AC_HEADER_STDC
+AC_HEADER_MAJOR
+
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_MKDIR_P
+
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
+
+AC_FUNC_FORK
+AC_FUNC_MALLOC
+AC_FUNC_MEMCMP
+AC_CHECK_FUNCS([dup2 ftruncate memset mkdir strcasecmp strdup strtol])
 
 dnl Initialize libtool
 AC_LIBTOOL_DLOPEN
