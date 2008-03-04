@@ -1,3 +1,9 @@
+2008-03-04  Jules Colding  <colding@42tools.com>
+
+	* configure.in (LIBACE): Updated to ACE+TAO x.6.3
+
+	* src/lorica/GenericEvaluator.cpp: Fix build warning
+
 2008-02-29  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ConfigBase.cpp (Config::init_endpoints):

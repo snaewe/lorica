@@ -23,6 +23,7 @@
 #include "config.h"
 #endif
 
+#include <tao/DynamicAny/DynamicAny.h>
 #include <tao/AnyTypeCode/Any_Unknown_IDL_Type.h>
 #include <tao/SystemException.h>
 #include <tao/Exception.h>
@@ -31,9 +32,6 @@
 #include "ProxyServant.h"
 #include "GenericEvaluator.h"
 #include "debug.h"
-
-#include <tao/DynamicAny/DynamicAnyC.h>
-
 
 Lorica::GenericEvaluator::GenericEvaluator(const std::string & typeId,
 					   CORBA::InterfaceDef_ptr idef,
