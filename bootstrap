@@ -47,14 +47,13 @@ PKG_NAME=${PKG_NAME:-lorica}
 srcdir=`dirname $0`
 srcdir=${srcdir:-.}
 
-(test -f $srcdir/configure.in \
+(test -f $srcdir/configure.ac \
   && test -f $srcdir/Makefile.am \
   && test -f $srcdir/ChangeLog \
   && test -d $srcdir/src \
   && test -f $srcdir/src/lorica/RMVByMapped.cpp \
   && test -f $srcdir/src/Makefile.am) || {
-    printerr "**Error**: Directory "\`$srcdir\'" does not look like the"
-    printerr echo " top-level $PKG_NAME directory"
+    printerr "**Error**: Directory '$(pwd)' does not look like the top-level $PKG_NAME directory"
     printerr
     exit 1
 }

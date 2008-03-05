@@ -20,7 +20,7 @@
 AC_PREREQ(2.59)
 AC_INIT([lorica],[0.9.3],[bugs@42tools.com])
 
-AC_COPYRIGHT(Copyright (C) 2008 OMC Denmark ApS)
+AC_COPYRIGHT([Copyright (C) 2008 OMC Denmark ApS])
 
 AC_CONFIG_SRCDIR([lorica.spec])
 AC_CONFIG_HEADERS([config.h])
