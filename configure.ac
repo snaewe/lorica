@@ -49,9 +49,7 @@ AC_TYPE_PID_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
 
-AC_FUNC_FORK
 AC_FUNC_MALLOC
-AC_FUNC_MEMCMP
 AC_CHECK_FUNCS([dup2 ftruncate memset mkdir strcasecmp strdup strtol])
 
 dnl Initialize libtool
