@@ -26,7 +26,7 @@
 ACE_RCSID(Hello, client, "$Id: client.cpp 1626 2007-03-19 01:42:06Z mesnierp $")
 
 const char *ior = "file://test.ior";
-const char *lorica_ior = "corbaloc::localhost:10951/lorica_reference_mapper";
+const char *lorica_ior = "corbaloc::localhost:10951/LORICA_REFERENCE_MAPPER";
 
 int
 parse_args (int argc, char *argv[])

@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: f; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
  *    Lorica source file.
@@ -32,7 +32,7 @@ const char *ior_output_file = "server.ior";
 
 const char *mapped_file = "mapped.ior";
 const char *orig_file = "direct.ior";
-const char *lorica_ior = "corbaloc::localhost:10951/lorica_reference_mapper";
+const char *lorica_ior = "corbaloc::localhost:10951/LORICA_REFERENCE_MAPPER";
 
 int
 parse_args (int argc, char *argv[])

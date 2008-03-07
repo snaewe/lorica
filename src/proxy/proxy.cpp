@@ -394,7 +394,7 @@ Lorica::Proxy::configure(Config & config)
 		ReferenceMapper_var refMapper_obj = ReferenceMapper::_narrow(obj.in());
 
 		std::string ior = orb_->object_to_string(refMapper_obj.in());
-		iorTable_->bind("lorica_reference_mapper", ior.c_str());
+		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY "lorica_reference_mapper", ior.c_str());
 
 		this->ior_file_ = config.get_value("IOR_FILE");
 		if (!this->ior_file_.length()) {

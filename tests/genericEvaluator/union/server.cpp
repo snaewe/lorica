@@ -25,7 +25,7 @@
 
 const char *mapped_file = "mapped.ior";
 const char *orig_file   = "direct.ior";
-const char *lorica_ior  = "corbaloc::localhost:1950/lorica_reference_mapper";
+const char *lorica_ior  = "corbaloc::localhost:1950/LORICA_REFERENCE_MAPPER";
 
 int parse_args(int argc, char *argv[]) {
 	ACE_Get_Opt get_opts (argc, argv, "o:m:?");

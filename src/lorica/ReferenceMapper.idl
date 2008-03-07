@@ -51,6 +51,9 @@ module Lorica
 		const unsigned short lorica_out_port = 4082;
 		const unsigned short lorica_out_port_sec = 4083;
 
+		// Used for corbaloc bootstrapping of the ReferenceMapper
+		const string IOR_TABLE_KEY = "LORICA_REFERENCE_MAPPER";
+
 
 		// Map a reference that a server would publish to clients outside the
 		// enclave. The arguments are:

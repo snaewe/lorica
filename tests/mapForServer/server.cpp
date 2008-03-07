@@ -33,7 +33,7 @@ ACE_RCSID (Hello,
 
 const char *mapped_file = "mapped.ior";
 const char *orig_file = "direct.ior";
-const char *lorica_ior = "corbaloc::localhost:10951/lorica_reference_mapper";
+const char *lorica_ior = "corbaloc::localhost:10951/LORICA_REFERENCE_MAPPER";
 
 bool linger = false;
 
