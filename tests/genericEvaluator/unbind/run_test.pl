@@ -45,7 +45,7 @@ unlink "client.log";
 unlink "proxy.log";
 unlink "server.log";
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/bin/lorica_proxy", "-d -f test.conf -l10 -c2");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf -110 -c2");
 
 $IDLC = new PerlACE::Process ("$ACE_ROOT/bin/tao_ifr",
                               " -ORBInitRef InterfaceRepository=file://$ifrfile ".

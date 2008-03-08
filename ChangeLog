@@ -1,3 +1,10 @@
+2008-03-08  Jules Colding  <colding@42tools.com>
+
+	* test/: Correct all references to the Lorica executable
+
+	* src/proxy/proxy.cpp (Proxy::configure): Fix the build by
+	removing a forgotten string.
+
 2008-03-04  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ReferenceMapper.idl: Updated the port names

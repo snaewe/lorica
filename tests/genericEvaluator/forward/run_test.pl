@@ -56,7 +56,7 @@ unlink "server.log";
 
 $ifrfile = "ifr.ior";
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/bin/lorica_proxy", "-d -f test.conf -l 1");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf -l 1");
 
 $IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr",
                               " -ORBInitRef InterfaceRepository=file://$ifrfile ".

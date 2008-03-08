@@ -129,7 +129,7 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 	if (0 >= this->port_) {
 		if (outside_facing)
 			this->port_ = LORICA_DEFAULT_OUTSIDE_FACING_PORT;
-		else 
+		else
 			this->port_ = LORICA_DEFAULT_INSIDE_FACING_PORT;
 	}
 
@@ -176,9 +176,9 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 			std::string portstr = (comma == std::string::npos) ? ep_str.substr(start) : ep_str.substr(start, comma - start);
 			this->ssl_port_ = static_cast<int> (ACE_OS::strtol(portstr.c_str(), 0, 10));
 			if (0 >= this->ssl_port_) {
-				if (outside_facing) 
+				if (outside_facing)
 					this->ssl_port_ = LORICA_DEFAULT_OUTSIDE_FACING_PORT_SEC;
-				else 
+				else
 					this->ssl_port_ = LORICA_DEFAULT_INSIDE_FACING_PORT_SEC;
 			}
 		}
