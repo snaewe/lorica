@@ -31,7 +31,8 @@ SUBDIRS = \
 	src     \
 	ebuild  \
 	deb     \
-	docs
+	docs    \
+	tests
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in

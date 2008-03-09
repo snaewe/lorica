@@ -1,6 +1,6 @@
 #
 #    Lorica test script. 
-#    Copyright (C) 2007 OMC Denmark ApS.
+#    Copyright (C) 2007-2008 OMC Denmark ApS.
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
+use Env (LORICA_ROOT);
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 

@@ -2,7 +2,7 @@
 
 /*
  *    Lorica source file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "lorica/Config.h"
+#include "lorica/ConfigBase.h"
 #include "lorica/FileConfig.h"
 
 #include <string>
@@ -53,7 +53,7 @@ int main (int, char *[])
 	test_eps.push_back (ep1);
 	test_eps.push_back (ep2);
 
-	ACE_ARGV test_args ("lorica_proxy "
+	ACE_ARGV test_args ("lorica "
 			    "-ORBDottedDecimalAddresses 1 -ORBObjRefStyle IOR "
 			    "-ORBEndpoint iiop://proxyhost:951/ssl_port=952,"
 			    "hostname_in_ior=ociweb.com "

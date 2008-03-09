@@ -1,3 +1,7 @@
+2008-03-09  Jules Colding  <colding@42tools.com>
+
+	* tests: All test cases now build by autotools.
+
 2008-03-08  Jules Colding  <colding@42tools.com>
 
 	* test/: Correct all references to the Lorica executable

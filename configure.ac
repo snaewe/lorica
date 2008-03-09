@@ -414,6 +414,23 @@ src/lorica/Makefile
 src/proxy/Makefile
 init_rc/Makefile
 defines/Makefile
+tests/Makefile
+tests/exception/Makefile
+tests/fileConfig/Makefile
+tests/genericEvaluator/Makefile
+tests/genericEvaluator/basic/Makefile
+tests/genericEvaluator/basic_collocate/Makefile
+tests/genericEvaluator/callback/Makefile
+tests/genericEvaluator/forward/Makefile
+tests/genericEvaluator/logging/Makefile
+tests/genericEvaluator/persistence_ifr/Makefile
+tests/genericEvaluator/server_agent/Makefile
+tests/genericEvaluator/unbind/Makefile
+tests/genericEvaluator/union/Makefile
+tests/mapForClient/Makefile
+tests/mapForServer/Makefile
+tests/secureBridge/Makefile
+tests/secureInvocation/Makefile
 ])
 AC_OUTPUT
 
