@@ -47,6 +47,13 @@ include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 TAO_IDLFLAGS = -I$(TAO_ROOT) -g $(GPERF)
 
+#if LORICA_DARWIN
+#TESTS_ENVIRONMENT = env DYLD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
+#else
+#TESTS_ENVIRONMENT = env LD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
+#endif
+#TESTS = run_test.pl
+
 ##################################################################
 
 noinst_PROGRAMS = test
