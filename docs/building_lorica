@@ -1,0 +1,156 @@
+
+
+                    ***   Building Lorica  ***
+
+               Copyright (C) 2007-2008 OMC Denmark ApS
+
+
+Your rights
+===========
+
+Copying and distribution of this file, with or without modification, 
+are permitted in any medium without royalty provided the copyright 
+notice and this notice are preserved.
+
+
+For more information
+====================
+
+For the newest and most comprehensive documentation, please refer to the online
+documentation found at:
+
+   http://trac.42tools.net/lorica
+
+
+Linux and Mac OS X build guide
+==============================
+
+This guide has been tested on Mac OS X and several Linux distributions but
+should be general enough to be usable on all other Linux distributions, maybe 
+with minor modifications.
+
+We recommend using the GNU Autotools to build on all non-Windows platforms. It 
+should still be possible to use MPC, but it isn't used by the developers so if
+it breaks you get to keep both pieces.
+
+Before following this guide, please make sure that the following prerequisites
+are installed on your system:
+
+   * Development environment (the GNU toolchain and Autotools)
+   * OpenSSL
+   * Perl
+   * ACE+TAO (including MPC) 
+   * Subversion
+
+
+Getting the source
+------------------
+
+Checkout the Lorica source from our subversion repository:
+
+   svn co http://svn.42tools.net/repos/lorica/trunk/ lorica
+
+
+Building Lorica 
+---------------
+
+Simply execute the provided bootstrap script with the option to enable building ACE
+and TAO should that be needed:
+
+   ./bootstrap --enable-tao-build
+
+The bootstrap process might complain about not finding the AC_PROG_LIBTOOL macro. 
+One way to fix this is the ensure that you have installed libtool. If yes, then 
+maybe aclocal just can't find the macro definition. This definition is 
+in "libtool.m4". Locate the file and copy it to the "m4" subdirectory where aclocal
+will surely find it.
+
+Then execute GNU make in the top-level source directory:
+
+   make
+
+Lorica, and optionally ACE and TAO will now be build. You may find the Lorica
+executable as "src/proxy/lorica". The distfiles target supports generation of 
+platform specific installation files, such as RPMs on Redhat, Fedora and SUSE, 
+ebuild files on Gentoo, disk image file on Mac OS X and debs on Ubuntu:
+
+   make distfiles
+
+
+Test run 
+--------
+
+Before starting Lorica we need a valid configuration file, but for a test run we
+can use a simple test configuration (it should be usable in most environments) 
+which is part of the distribution:
+
+   lorica -c2 -l10 -f $LORICA_ROOT/src/proxy/lorica.conf
+
+You may need to adjust your LD_LIBRARY_PATH (DYLD_LIBRARY_PATH on Mac OS X) so
+that the Lorica executable may find its shared library dependencies.
+
+
+Visual Studio Build Guide 
+=========================
+
+This short guide will describe how to use Microsoft Visual Studio 2005 C++ for 
+building Lorica. It assumes you have read the section "Building ACE and TAO" in
+the setup_visual_studio.txt file as distributed with the brutus-server source.
+
+
+Prerequisite 
+------------
+
+The following environment variables must be created. It should point to the
+directory where the Lorica project is hosted:
+
+  %LORICA_ROOT%
+
+Also, for windows to be able to load the required libraries when running Lorica
+the PATH environment variable must include %LORICA_ROOT%\lib.
+
+
+TAO/ACE project 
+---------------
+
+Lorica depends upon ACE/TAO so we need to modify the TAO_ACE solution. In 
+Microsoft Visual Studio load the TAO_ACE solution and open the 
+"Build-->Batch Build..." window to select the following projects:
+
+    * EndpointPolicy
+    * IFR_Service
+    * DynamicAny
+    * DynamicInterface
+    * tao_ifr_exe 
+
+Close the window and force a rebuild by clicking the Rebuild button.
+
+
+Lorica project files 
+--------------------
+
+To create the Microsoft Visual Studio project files, open a console, make
+%LORICA_ROOT% the current directory and execute the following command:
+
+   %ACE_ROOT%\bin\mwc.pl -type vc8 lorica.mwc
+
+
+Starting Lorica 
+---------------
+
+The following steps needs to be preformed before Lorica can be started
+
+    * Lorica needs a configuration file before it can start. Create a 
+      lorica.conf file in the src/proxy directory and see LoricaConfiguration 
+      for information on configuration options.
+    * Open the Lorica solution file in Microsoft Visual Studio and right click
+      on the proxy project and select Set as StartUp project.
+    * In Microsoft Visual Studio rebuild the project (ctrl+alt+f7). 
+
+Press the green play button and watch Lorica start :-)
+
+
+------------------------------------------
+Jules Colding <colding@42tools.com>
+Rasmus Maagaard <rasmusmaagaard@42tools.com>
+OMC Denmark ApS, 2008

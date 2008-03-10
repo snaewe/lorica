@@ -1,0 +1,1865 @@
+2008-03-09  Jules Colding  <colding@42tools.com>
+
+	* tests: All test cases now build by autotools.
+
+2008-03-08  Jules Colding  <colding@42tools.com>
+
+	* test/: Correct all references to the Lorica executable
+
+	* src/proxy/proxy.cpp (Proxy::configure): Fix the build by
+	removing a forgotten string.
+
+2008-03-04  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ReferenceMapper.idl: Updated the port names
+	to be more similar to the short names used in the IANA
+	registration (http://iana.org/assignments/port-numbers).
+
+	* configure.in (LIBACE): Updated to ACE+TAO x.6.3
+
+	* src/lorica/GenericEvaluator.cpp: Fix build warning
+
+2008-02-29  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Config::init_endpoints):
+	Use IANA registered default port numbers if none is
+	specified in the configuration file.
+	(Endpoint::parse_string): Detect malformed port
+	specifications and use the IANA registered as defaults
+	in that case.
+
+2008-02-27  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/FileConfig.cpp (FileConfig::load):
+	TRim trailing whitespace on values.
+
+2008-02-26  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/FileConfig.cpp (FileConfig::load):
+	Correct for CRLF and other whitespace issues.
+	(FileConfig::load): Fix commenting.
+	(FileConfig::load): Prevent segv.
+
+2008-02-22  Jules Colding  <colding@42tools.com>
+
+	* configure.in: Fix iquote support (thanks Phil).
+
+	* deb/: Ubuntu Gutsy installation support
+
+	* configure.in (LORICA_INCLUDES): Check for -iquote DIR
+	compiler support.
+
+2008-02-21  Jules Colding  <colding@42tools.com>
+
+	* configure.in (LORICA_CXXFLAGS):Check compiler support
+	for all flags.
+
+	* src/proxy/Makefile.am (lorica_LDADD): Removed tao_gperf
+	and tao_idl as install targets.
+
+2008-02-20  Jules Colding  <colding@42tools.com>
+
+	* m4/: Fix compiler bug seen on gutsy.
+
+	* configure.in (LORICA_CPPFLAGS):
+	Check for -Wextra compiler support.
+	Remove -O3 from CXXFLAGS.
+
+2008-02-19  Jules Colding  <colding@42tools.com>
+
+	* m4/acetao.m4: Fix CPPFLAGS bug as pointed out
+	by Phil (Thanks!).
+
+	* configure.in (LORICA_top_dir): Check for supported
+	compiler flags.
+
+	* src/proxy/proxy.cpp (Proxy::get_lock): Added logic on
+	non-Windows to ensure that only one proxy daemon is
+	running at any one time.
+
+	* m4/acetao.m4: Fix bug. Must always use $ACE_ROOT if it
+	is set in the environment.
+
+2008-02-17  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/lorica_EvaluatorBase.mpc (project): Fix
+	breakage caursed by renaming (Well, Phil actually
+	did this first).
+
+2008-02-13  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ReferenceMapper.idl: Added default in and out
+	facing ports as IDL constants.
+
+2008-02-06  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/main.cpp (become_daemon): Create cache directory
+	on !Windows.
+
+	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
+	s/ORBEndpoint/ORBListenEndpoints/g
+	(Endpoint::parse_string): Accept endpoints with empty
+	hostname part.
+
+2008-01-26  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/Makefile.am: Install lorica in /usr/sbin
+	by default.
+
+2008-01-25  Jules Colding  <colding@42tools.com>
+
+	* Lorica: Major build rework on Linux. The autotool build
+	system does now seem to work.
+
+2008-01-23  Jules Colding  <colding@42tools.com>
+
+	* Lorica: Ported Lorica to use the GNU autotools on Linux
+	and Darwin. Still using MPC on WIndows though. To build on
+	Linux or Darwin please do:
+
+	./autogen.sh --enable-tao-build && make
+
+	The enable-tao-build switch will make Lorica build ACE and
+	TAO locally is the system lacks anything in that regard.
+
+2008-01-15  Jules Colding  <colding@42tools.com>
+
+        * lorica.mwc:
+
+	  Exclude the automake project target
+
+Sun Jan  6 05:18:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+          Fixed a reference counting error in remove_reference which
+          caused a crash by inadvertently deleting the POA due to improper
+          reference management.
+
+          Also, provisionally removed the native_values_ map. After a code
+          review, I determined that this map is never referenced, and thus
+          redundent. The map also had a problem in that its ability to
+          distinguish object references was fundamentally flawed. This
+          flaw is related to the nature of the encapsulated object key,
+          which by spec is opaque, and due to the possible presense of
+          uninitialized CDR padding bytes impossible to reliably compare.
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+
+          Removed the DECISION_OBJECT_AVAILABLE macro. That was included
+          only for the time when the decision object code was under
+          development and thus not available in the publicly available
+          release of TAO. In fact, the flag caused alignment problems
+          because it was only set in the header when compiling
+          ReferenceMapper_i.cpp. When included in other .cpp files the
+          flag was not set, and so the affected reference was missing.
+
+        * tests/genericEvaluator/forward/forward.mpc:
+        * tests/genericEvaluator/union/union.mpc:
+
+          Fix the mpc files so that a top level makefile generation does
+          not complain about replicated project names.
+
+        * tests/genericEvaluator/forward/test_i.cpp:
+
+          This file was including the incorrect PI header. Now TAO exits
+          with an error if that header is included.
+
+2008-01-04  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
+
+        * tests/genericEvaluator/unbind:
+
+          To more clearly simulate our issue with Lorica we updated the test 
+          to run the server twice. 
+
+2008-01-03  Jules Colding  <colding@omesc.com>
+
+        * src/proxy/main.cpp (Service_Loader::parse_args):
+
+	  Warn and exit on WIN32 for non-valid startup options.
+
+2008-01-03  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
+
+        * tests/genericEvaluator/unbind:
+
+          Added a new test for validating the unbinding of mapped references.
+
+2008-01-01  Jules Colding  <colding@42tools.com>
+
+        * src/proxy/main.cpp: s/is_nt_service/is_service/g
+        (Service_Loader::print_usage_and_die)
+        (Service_Loader::parse_args): Cleanup options so to not
+        offer options that are known to be unavailable on the
+        platform in question.
+
+2008-01-01  Jules Colding  <colding@42tools.com>
+
+        * docs/building_lorica.txt: Updated.
+
+2007-12-19  Jules Colding  <colding@42tools.com>
+
+        * README: Slight change in the wording of the last
+        paragraph.
+
+Tue Nov  6 02:59:28 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+          Added error detection for unmappable references.
+
+Mon Nov  5 23:22:27 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+
+          Reversed the sense of the POA used for mapping out args and
+          return values.
+
+        * tests/genericEvaluator/basic_collocate/client.cpp:
+        * tests/genericEvaluator/basic_collocate/run_test.pl:
+        * tests/genericEvaluator/basic_collocate/test.conf:
+        * tests/genericEvaluator/basic_collocate/test.idl:
+        * tests/genericEvaluator/basic_collocate/test_i.h:
+        * tests/genericEvaluator/basic_collocate/test_i.cpp:
+
+          Extended the test to include passing an IOR in an out argument.
+
+Fri Nov  2 23:23:07 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/OperationTable.cpp (add_interface):
+
+          For each new interface, iterate over the list of attributes
+          adding _get_<name> methods for each and _set_<name> methods for
+          any non-readonly attributes.
+
+Thu Nov  1 00:48:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+
+          Swap the sense of the mapped ior generated for forwarded
+          references. The ProxyReplyHandler was mapping relative to the
+          inside peer's perspective, but it needs to be from the outside
+          peer's perspective.
+
+Fri Oct 26 01:57:45 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+
+          Uncomment pending location handler hook and clean up development
+          debug output.
+
+        * tests/genericEvaluator/forward/run_test.pl:
+        * tests/genericEvaluator/forward/test.conf:
+
+          Clean up the test run to output directly to console.
+
+Mon Oct 22 03:50:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/ProxyReplyHandler.h:
+        * src/OCI/ProxyReplyHandler.cpp:
+        * src/OCI/ProxyServant.cpp:
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Fixed memory leaks related to the AMH_DSI_Reply_Handler code.
+          This was highlighted in DOC bugzilla entry 3093.
+
+          Also added all the support functionality necessary for mapping
+          and forwarding Location Forward exceptions. The functionality is
+          currently disabled pending additional code changes to the TAO
+          Messaging and DynamicInterface libraries.
+
+        * tests/genericEvaluator/forward:
+
+          Added a new test for validating the Location Forward exception
+          handling feature, once it is finally activated.
+
+Tue Sep 18 21:40:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/main.cpp:
+
+          Removed windows-specific code that tested a prototype extension
+          to the ACE wrapper around NT Service functions. This code should
+          never have been committed, and has no operational effect.
+
+Wed Sep 12 16:50:50 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/RMVByNative.cpp:
+
+          Fix for the secureInvocation test, the object reference used as
+          the map key value was not being incremented properly.
+
+Sat Sep  8 00:47:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+          Added code to satisfy the new requirements of the mixed security
+          model. The TAO AccessDecision object requires explicit orb, poa
+          and object id values, so new accessors were necessary.
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/proxy.cpp:
+
+          Enabled the use of mixed security to selectively register as an
+          open or a secure server.
+
+        * tests/secureInvocation/run_test.pl:
+        * tests/secureInvocation/server.cpp:
+        * tests/secureInvocation/test.conf:
+
+          Updates on the path to restoring this test.
+
+Fri Aug 24 20:35:15 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+          Now that TAO 1.5.10+ properly supports inout on objref sequence
+          elements the code requiring that support may be enabled.
+
+        * src/lorica/Config.h:
+        * src/lorica/Config.cpp:
+        * src/lorica/IFRService.h:
+        * src/lorica/IFRService.cpp:
+          Made the collocation of IFRService optional. This way Lorica can
+          be deployed in an environment with a separate IFR.
+
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/ProxyReplyHandler.cpp:
+          Cleaned up debug output, removed commented-out code, added
+          exception support to the base evaluator.
+
+        * tests/exception/test.conf:
+          Commented out the -ORBDebuglevel option
+
+        * tests/fileConfig/fileConfig.mpc:
+        * tests/genericEvaluator/basic/run_test.pl:
+        * tests/genericEvaluator/basic/server.cpp:
+        * tests/genericEvaluator/basic/test.conf:
+        * tests/genericEvaluator/basic_collocate/test.conf:
+        * tests/genericEvaluator/callback/test.conf:
+        * tests/genericEvaluator/persistence_ifr/test.conf:
+        * tests/mapForServer/test.conf:
+          Cleaned up the configuration options related to the IFR and
+          collocation so that the tests continue to run properly.
+
+Thu May 17 19:12:58 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/OperationTable.cpp:
+
+        * src/lorica/Config.h:
+        * src/lorica/Config.cpp:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/GenericMapper.cpp:
+        * src/lorica/IFRService.cpp:
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/RMVByNative.cpp:
+        * src/lorica/ReferenceMapValue.cpp:
+        * src/lorica/ServerAgent_impl.cpp:
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+
+          Added fixes to support secure forwarded invocations when the
+          native reference supports secure connections.
+
+        * tests/secureBridge:
+          New test for insecure client & server communication bridged by
+          two Lorica proxies using a secure connection.
+
+        * tests/secureInvocation/client.conf:
+          Fixed typo in config file.
+
+Wed May 16 21:08:58 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/ntsvc.h:
+        * src/proxy/ntsvc.cpp:
+          Supplimental fix to make it actually compile on windoze.
+
+Wed May 16 20:41:27 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/main.cpp:
+        * src/proxy/ntsvc.h:
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+          Changes necessary to support execution as an NT service.
+
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/ReferenceMapper_i.h:
+          Temporarily wrap references to the AccessDecision object so that
+          code can be built on hosts using older TAO.
+
+Tue May 15 10:21:49 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/main.cpp:
+          Freshen up the code used to initalize the NT service.
+
+Mon May 14 19:01:44 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/Config.cpp:
+        * src/lorica/GenericEvaluator.cpp:
+          Clean up previously commented out sections of code.
+
+        * src/lorica/ProxyMapper.cpp:
+          Framing out mixed security support.
+
+        * src/lorica/RMVByNative.cpp:
+          Fix error in reference matching logic.
+
+        * src/lorica/lorica_EvaluatorBase.mpc:
+          Add TAO security base project.
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+          Add hooks for allowing mixed security levels, either SSL
+          required or not, and for efficiently testing if SSLIOP is linked
+          to the runtime executable.
+
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+          Added support for daemonizing on a unix platform.
+
+        * tests/genericEvaluator/server_agent/ServerAgent_i.h:
+        * tests/genericEvaluator/server_agent/ServerAgent_i.cpp:
+        * tests/genericEvaluator/server_agent/server.cpp:
+        * tests/genericEvaluator/server_agent/test_i.h:
+        * tests/genericEvaluator/server_agent/test_i.cpp:
+
+          Enhanced the server agent test to include removing a registered
+          server reference.
+
+        * tests/secureInvocation:
+
+          Added a new test for validating secure invocations. This
+          involves two scenarios, one with the proxy using a secure
+          connection to the native server with an insecure client. The
+          second being a client using a secure reference through the proxy
+          for an otherwise insecure native reference.
+
+Fri May  4 16:12:11 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericMapper.cpp:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/RMVByNative.h:
+        * src/lorica/RMVByNative.cpp:
+        * src/lorica/ReferenceMapValue.h:
+        * src/lorica/ReferenceMapValue.cpp:
+        * src/lorica/ReferenceMapper.idl:
+
+          Refactored the idl to provide an exception if a secure service
+          registration is desired but the proxy does not support secure
+          connections.  Also had to replace the use of stringified object
+          references with binary object references as key values in the
+          RequestMapperValue tables as the stringified references cannot
+          be reliably compared. Finally, added redundency checking on
+          values introduced for mapping. This ensures that if a previously
+          mapped value is passed through the proxy as a data member it is
+          not remapped.
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+
+          Added implementation details for selective security support and
+          revision to Reference Mapper implemetation. Finally, there is a
+          temporary change to ensure the proper initializtion of the
+          dynamically loaded mapper registry. For this to work, the ORB
+          must have the default name.
+
+        * tests/exception/run_test.pl:
+        * tests/exception/test.conf:
+        * tests/genericEvaluator/basic/server.cpp:
+        * tests/genericEvaluator/basic/test.conf:
+        * tests/genericEvaluator/basic_collocate/server.cpp:
+        * tests/genericEvaluator/callback/server.cpp:
+        * tests/genericEvaluator/logging/server.cpp:
+        * tests/genericEvaluator/persistence_ifr/server.cpp:
+        * tests/genericEvaluator/persistence_ifr/test.conf:
+        * tests/genericEvaluator/server_agent/server.cpp:
+        * tests/mapForServer/run_test.pl:
+        * tests/mapForServer/server.cpp:
+
+          Tests updated to address change in ReferenceMapper.idl and to
+          modify debug status during the run.
+
+Tue Apr 10 15:12:41 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+
+          Force the initialization of the MapperRegistry.
+
+Fri Apr  6 16:37:59 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/persistence_ifr/run_test.pl:
+
+          removed unnessassary process creation.
+
+        * tests/lorica_tests.lst:
+
+          Added a test list so that we can run
+          'auto_run_test.pl -l lorica_tests.lst'
+
+Fri Apr  6 15:56:53 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/logging/client.cpp:
+
+          Added a header file for using sleep function.
+
+Fri Apr  6 15:21:22 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/ServerAgent_impl.h:
+        * src/lorica/ServerAgent_impl.cpp:
+        * src/lorica/lorica_Client.mpc:
+
+          Provided a default servant implementation for the ServerAgent.
+
+Fri Apr  6 15:03:30 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/Config.cpp:
+        * src/lorica/IFRService.cpp:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/proxy.cpp:
+
+          More files used Lorica_debug_level.
+
+        * tests/genericEvaluator/basic_collocate/run_test.pl:
+
+          Used the new -l option to control the debug printout level.
+
+Thu Apr  5 22:33:43 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Used Lorica_debug_level.
+
+        * src/lorica/debug.h:
+        * src/lorica/debug.cpp:
+        * src/lorica/lorica_Client.mpc:
+
+          Added Lorica_debug_level.
+
+Thu Apr  5 20:07:27 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Got access to server agent. Reported error back.
+
+        * tests/genericEvaluator/logging/test.conf:
+
+          Changed to use ORBSvcConfDirective option.
+
+        * tests/genericEvaluator/logging/svc.conf:
+
+          Removed this file.
+
+Thu Apr  5 17:27:06 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/ServerAgent.idl:
+
+          Changed the disconnect method to oneway.
+
+        * tests/genericEvaluator/logging:
+        * tests/genericEvaluator/logging/ServerAgent_i.h:
+        * tests/genericEvaluator/logging/ServerAgent_i.cpp:
+        * tests/genericEvaluator/logging/client.cpp:
+        * tests/genericEvaluator/logging/logging.mpc:
+        * tests/genericEvaluator/logging/run_test.pl:
+        * tests/genericEvaluator/logging/server.cpp:
+        * tests/genericEvaluator/logging/svc.conf:
+        * tests/genericEvaluator/logging/test.conf:
+        * tests/genericEvaluator/logging/test.idl:
+        * tests/genericEvaluator/logging/test_i.h:
+        * tests/genericEvaluator/logging/test_i.cpp:
+
+          Added a new test for logging.
+
+        * tests/genericEvaluator/server_agent/test.conf:
+
+          Added the missing file.
+
+Thu Apr  5 04:06:10 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/server_agent:
+        * tests/genericEvaluator/server_agent/ServerAgent_i.h:
+        * tests/genericEvaluator/server_agent/ServerAgent_i.cpp:
+        * tests/genericEvaluator/server_agent/client.cpp:
+        * tests/genericEvaluator/server_agent/run_test.pl:
+        * tests/genericEvaluator/server_agent/server.cpp:
+        * tests/genericEvaluator/server_agent/server_agent.mpc:
+        * tests/genericEvaluator/server_agent/test.idl:
+        * tests/genericEvaluator/server_agent/test_i.h:
+        * tests/genericEvaluator/server_agent/test_i.cpp:
+
+          Added a new test for ServerAgent.
+
+Wed Apr  4 23:53:13 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/basic_collocate/test.conf:
+
+          Removed the -p (persistence) option.
+
+        * tests/genericEvaluator/persistence_ifr/run_test.pl:
+        * tests/genericEvaluator/persistence_ifr/test.conf:
+
+          Make the test simulate the persistence scenanio.
+
+Wed Apr  4 12:49:50 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/RMVByMapped.h:
+        * src/lorica/RMVByMapped.cpp:
+        * src/lorica/RMVByNative.h:
+        * src/lorica/RMVByNative.cpp:
+        * src/lorica/ReferenceMapValue.h:
+        * src/lorica/ReferenceMapValue.cpp:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+
+          Refactored the code base to modify the relationship between the
+          Proxy Servant, the Mapper and the Evaluator. Also extended the
+          mapper and evaluator to support detection of previously mapped
+          references to avoid multiple mappings. Modified the generic
+          mapper and evaluator so that the mapper owns the object table
+          rather than the evaluator.
+
+        * tests/genericEvaluator/persistence_ifr/run_test.pl:
+        * tests/genericEvaluator/persistence_ifr/test.conf:
+
+          The run_test.pl tried to load the wrong ifr.ior file.
+
+Mon Apr  2 21:25:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/exception/exception.mpc:
+
+          Correct the APT tools name.
+
+Mon Apr  2 21:22:35 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/fileConfig/main.cpp:
+
+          Fixed main with arguments.
+
+Mon Apr  2 21:13:53 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/Config.h:
+        * tests/fileConfig/main.cpp:
+
+          Nested classes/structs need to be exported individually.
+
+Mon Apr  2 19:37:31 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * docs/Lorica_Dev_Guide.odt:
+
+          Added the IFR_CmdOption documentation.
+
+Mon Apr  2 18:08:05 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/Config.cpp:
+        * src/lorica/FileConfig.cpp:
+        * tests/genericEvaluator/basic_collocate/test.conf:
+
+          Removed some debugging messages.
+
+Mon Apr  2 16:13:33 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/persistence_ifr:
+        * tests/genericEvaluator/persistence_ifr/client.cpp:
+        * tests/genericEvaluator/persistence_ifr/persistence_ifr.mpc:
+        * tests/genericEvaluator/persistence_ifr/run_test.pl:
+        * tests/genericEvaluator/persistence_ifr/server.cpp:
+        * tests/genericEvaluator/persistence_ifr/test.conf:
+        * tests/genericEvaluator/persistence_ifr/test.idl:
+        * tests/genericEvaluator/persistence_ifr/test_i.h:
+        * tests/genericEvaluator/persistence_ifr/test_i.cpp:
+
+          Added a new test for persistence.
+
+Mon Apr  2 16:02:02 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/IFRService.cpp:
+
+          Make the command line option for collocated IFRService
+          configurable.
+
+Mon Apr  2 15:15:23 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/Config.h:
+        * src/lorica/Config.cpp:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/FileConfig.h:
+        * src/lorica/FileConfig.cpp:
+        * src/lorica/IFRService.cpp:
+        * src/lorica/ProxyMapper.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+        * tests/fileConfig/main.cpp:
+
+          Changes related to refactoring FileConfig to be a singleton.
+
+Thu Mar 29 21:46:00 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/OperationTable.h:
+        * src/OCI/OperationTable.cpp:
+
+          Minor text refactoring.
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/GenericMapper.h:
+        * src/lorica/GenericMapper.cpp:
+        * src/lorica/IFRService.h:
+        * src/lorica/IFRService.cpp:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Refactored the relationship between the IFR, the Generic
+          Evaluator and the Generic Mapper. The Generic Evaluator has
+          become more lightweight, with the mapper holding the reference
+          to the IFR and the Operation Table. The evaluator may become
+          lighter still perhaps becoming a reference counted entity which
+          the generic mapper could create on the fly and let the proxy
+          servant and reply handler use and discard as needed.
+
+        * tests/genericEvaluator/basic_collocate/test.conf:
+
+          Minor reordering of ORB option values.
+
+Wed Mar 28 18:32:51 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/Config.h:
+        * src/lorica/FileConfig.h:
+        * src/lorica/FileConfig.cpp:
+        * src/lorica/ProxyMapper.cpp:
+
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+
+        * tests/fileConfig/fileConfig.mpc:
+        * tests/fileConfig/main.cpp:
+
+          Made FileConfig a singleton.
+
+Wed Mar 28 16:36:09 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ReferenceMapValue.h:
+        * src/lorica/ReferenceMapValue.cpp:
+
+          Add more implementation to enable the proper removal of mapped
+          references.
+
+        * src/proxy/ReferenceMapper_i.cpp:
+
+          Clean up the IORMapper interaction so that a remap attempt
+          doesn't fail and a removed server is properly unmapped.
+
+        * tests/mapForServer/Hello.h:
+        * tests/mapForServer/Hello.cpp:
+        * tests/mapForServer/run_test.pl:
+        * tests/mapForServer/server.cpp:
+        * tests/mapForServer/test.conf:
+
+          Modified the test to support optional lingering of the server to
+          enable either a quick test of mapping or having a client
+          connect. In order to support the proper removal of the mapped
+          reference on exit, a gneneric shutdown method is defined which
+          is called by the servant rather than having it call
+          ORB->shutdown directly.
+
+Wed Mar 28 15:06:08 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/Config.h:
+        * src/lorica/Config.cpp:
+        * src/lorica/FileConfig.h:
+        * src/lorica/FileConfig.cpp:
+
+        * src/lorica/lorica_EvaluatorBase.mpc:
+        * src/lorica/lorica_GenericEvaluator.mpc:
+
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+
+          Moved the config module from proxy to lorica dir
+          so that Generic Evaluator can use it.
+
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+        * src/proxy/FileConfig.h:
+        * src/proxy/FileConfig.cpp:
+
+          Removed these files.
+
+Tue Mar 27 22:19:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ReferenceMapValue.h:
+        * src/lorica/ReferenceMapValue.cpp:
+
+          Added basic support for a map used to manage native and mapped
+          object references. This enables the ability to report errors
+          related to known references if a server agent is mapped, as well
+          as the means to clean up the IORTable if a reference is removed.
+
+        * tests/mapForServer/server.cpp:
+        * tests/mapForServer/test.conf:
+
+          Modified the test a bit to validate the mapper table enhancement
+          works.
+
+Mon Mar 26 21:27:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/GenericMapper.h:
+        * src/lorica/GenericMapper.cpp:
+
+          Fix up the initialization code to actually create an instance of
+          the generic evaluator during Generic mapper initialization.
+
+Mon Mar 26 20:51:40 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/IFRService.h:
+        * src/lorica/IFRService.cpp:
+        * src/lorica/lorica_GenericEvaluator.mpc:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+        * tests/genericEvaluator/basic_collocate/run_test.pl:
+
+          Moved IFR collocation from proxy to lorica generic evaluator.
+
+        * src/proxy/IFRService.h:
+        * src/proxy/IFRService.cpp:
+
+          Removed these files.
+
+Mon Mar 26 17:59:04 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/basic_collocate:
+        * tests/genericEvaluator/basic_collocate/basic_collocate.mpc:
+        * tests/genericEvaluator/basic_collocate/client.cpp:
+        * tests/genericEvaluator/basic_collocate/run_test.pl:
+        * tests/genericEvaluator/basic_collocate/server.cpp:
+        * tests/genericEvaluator/basic_collocate/test.conf:
+        * tests/genericEvaluator/basic_collocate/test.idl:
+        * tests/genericEvaluator/basic_collocate/test_i.h:
+        * tests/genericEvaluator/basic_collocate/test_i.cpp:
+
+          Added a new test for IFR collocated with Lorica proxy.
+
+Mon Mar 26 17:42:48 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/proxy/IFRService.h:
+        * src/proxy/IFRService.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+
+          Collocate IFR Service with lorica executable.
+
+Mon Mar 26 14:11:07 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/callback/Server_Task.cpp:
+        * tests/genericEvaluator/callback/run_test.pl:
+
+          Modified the duration of the test. This test is passing.
+
+Fri Mar 23 22:23:58 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/callback:
+        * tests/genericEvaluator/callback/Client_Task.h:
+        * tests/genericEvaluator/callback/Client_Task.cpp:
+        * tests/genericEvaluator/callback/Receiver_i.h:
+        * tests/genericEvaluator/callback/Receiver_i.cpp:
+        * tests/genericEvaluator/callback/Sender_i.h:
+        * tests/genericEvaluator/callback/Sender_i.cpp:
+        * tests/genericEvaluator/callback/Server_Task.h:
+        * tests/genericEvaluator/callback/Server_Task.cpp:
+        * tests/genericEvaluator/callback/Test.idl:
+        * tests/genericEvaluator/callback/callback.mpc:
+        * tests/genericEvaluator/callback/client.cpp:
+        * tests/genericEvaluator/callback/run_test.pl:
+        * tests/genericEvaluator/callback/server.cpp:
+        * tests/genericEvaluator/callback/test.conf:
+
+          Added a new callback test for GenericEvaluator.
+
+Fri Mar 23 20:11:42 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+
+          Print out an error msg when the bug in sequence implementation
+          is encountered.
+
+        * tests/genericEvaluator/basic/run_test.pl:
+        * tests/genericEvaluator/basic/test.conf:
+
+          Minor changes to make the test work.
+
+Fri Mar 23 14:50:56 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/lorica_GenericEvaluator.mpc:
+
+          Added dependency on TAO_DynamicAny
+
+Fri Mar 23 19:06:42 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/README:
+
+          Further adjustments to the license text.
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+
+          Moved the selection of the "other" POA from the low level
+          proxify method to the high level evaluate_request method. This
+          ensures that only references contained within requests to the
+          server are mapped on the other POA. References contained within
+          replies or exceptions are mapped to the POA that received the
+          invocation.
+
+        * src/proxy/proxy.cpp:
+
+          Fixed typo in GenericEvaluator library name.
+
+Fri Mar 23 18:50:15 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+
+          Added a missing destructure.
+
+        * tests/genericEvaluator/basic/run_test.pl:
+
+          Added more stuff.
+
+Fri Mar 23 14:41:07 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator/basic/run_test.pl:
+        * tests/genericEvaluator/basic/test.conf:
+
+          Added this auto test script and a conf file.
+
+Thu Mar 22 22:10:45 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/genericEvaluator:
+        * tests/genericEvaluator/basic:
+        * tests/genericEvaluator/basic/basic.mpc:
+        * tests/genericEvaluator/basic/client.cpp:
+        * tests/genericEvaluator/basic/server.cpp:
+        * tests/genericEvaluator/basic/test.idl:
+        * tests/genericEvaluator/basic/test_i.h:
+        * tests/genericEvaluator/basic/test_i.cpp:
+
+          Added a new test for GenericEvaluator. This test is
+          not complete yet.
+
+Thu Mar 22 22:02:09 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/mapForClient/mapForClient.mpc:
+
+          Used the correct lib name.
+
+Thu Mar 22 15:27:57 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+
+          commented out one line of code which is causing compilation error.
+          The GenericEvaluator is compiled without that line of code.
+
+Thu Mar 22 14:59:23 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/lorica_GenericEvaluator.mpc:
+
+          Added more code.
+
+Wed Mar 21 21:21:32 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Added ProxyServant as a parameter for evaluate_request ().
+
+        * tests/mapForServer/mapForServer.mpc:
+
+          Added loricacommon.
+
+Wed Mar 21 21:13:08 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericLoader.cpp:
+        * src/lorica/GenericMapper.h:
+        * src/lorica/GenericMapper.cpp:
+        * src/lorica/NullProxyMapper.h:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/lorica_GenericEvaluator.mpc:
+
+          Propagate the const change necessary to allow the proxy servant
+          to use the evaluator base a non-const when calling
+          evaluate_request. This is necessary since the evaluate_request
+          operation may trigger an update to the internal state of
+          specialized evaluators.
+
+        * src/proxy/proxy.cpp:
+
+          Added code to look up and initialize the generic evaluator as
+          configured.
+
+
+Wed Mar 21 19:42:45 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI/README:
+
+          Corrected the Id keyword.
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+
+          Removed the constness for method evaluate_request
+          because it needs to modify the optable_ member.
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+
+          Added more implementation.
+
+Wed Mar 21 18:59:10 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Milestones.odt:
+
+          Updated document to reflect current project status.
+
+        * src/OCI/README:
+
+          A document serving as the foundation for a copyright / license
+          statement for OCI controlled open-source code.
+
+        * src/lorica/EvaluatorLoader.h:
+        * src/lorica/EvaluatorLoader.cpp:
+        * src/lorica/GenericEvaluator_Export.h:
+        * src/lorica/GenericLoader.h:
+        * src/lorica/GenericLoader.cpp:
+        * src/lorica/lorica_GenericEvaluator.mpc:
+
+          Additional functionality used to dynamically load a generic
+          proxy mapper and evaluator.
+
+Wed Mar 21 18:04:53 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericMapper.h:
+        * src/lorica/GenericMapper.cpp:
+
+          Added the implementation for GenericMapper.
+
+Wed Mar 21 17:59:00 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+
+          More implementation checked in.
+
+Tue Mar 20 17:31:14 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Lorica_Dev_Guide.odt:
+        * docs/Lorica_Model.zip:
+
+          Completed a first round of documentation, and further model
+          enhancements.
+
+
+Tue Mar 20 21:38:08 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/EvaluatorBase.h:
+
+          Moved the mapper_ to protected section so that all the subclasses
+          can use it.
+
+        * src/lorica/GenericEvaluator.h:
+        * src/lorica/GenericEvaluator.cpp:
+
+          Saving partially finished code before I lose it.
+
+Mon Mar 19 22:34:35 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Lorica_Model.mdzip:
+          Model updates
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+        * src/proxy/FileConfig.cpp:
+        * src/proxy/proxy.cpp:
+
+        * tests/exception/test.conf:
+
+        * tests/fileConfig/main.cpp:
+        * tests/fileConfig/test.conf:
+
+        * tests/mapForClient/test.conf:
+
+        * tests/mapForServer/test.conf:
+
+          Reworked the config loading code, renamed some of the config
+          value names to be easier to understand (IMO).
+
+Mon Mar 19 13:36:51 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/AsynchProxyTools.mpc:
+        * src/OCI/AsynchProxyTools_Export.h:
+        * src/OCI/OperationTable.h:
+        * src/OCI/OperationTable.cpp:
+        * src/OCI/ProxyReplyHandler.h:
+        * src/OCI/ProxyReplyHandler.cpp:
+        * src/OCI/ProxyServant.h:
+        * src/OCI/ProxyServant.cpp:
+
+        * src/OCI/AsynchProxyTools/AsynchProxyTools_Export.h:
+        * src/OCI/AsynchProxyTools/OperationTable.h:
+        * src/OCI/AsynchProxyTools/OperationTable.cpp:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.h:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.cpp:
+        * src/OCI/AsynchProxyTools/ProxyServant.h:
+        * src/OCI/AsynchProxyTools/ProxyServant.cpp:
+
+          Relocated the OCI-contributed source files into the OCI
+          directory. There is no need for a nested directory, at least at
+          this time. Also renamed the types to be under the OCI_APT namespace.
+
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyServant.h:
+
+          Renamed the base class as needed to apply APT changes.
+
+Mon Mar 19 01:34:58 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/NullProxyMapper.cpp:
+
+          Added mapping for exceptions and cleaned up development output
+
+        * tests/exception:
+          A new test for passing exceptions through the proxy.
+
+        * tests/mapForClient/client.cpp:
+        * tests/mapForClient/Hello.mpc:
+        * tests/mapForClient/mapForClient.mpc:
+        * tests/mapForClient/run_test.pl:
+
+          Add support for getting $LoricaIOR environment variable to
+          locate the proxy's ReferenceMapper interface. Also renamed the
+          MPC file from Hello to mapForClient.
+
+        * tests/mapForServer/client.cpp:
+        * tests/mapForServer/mapForServer.mpc:
+        * tests/mapForServer/run_test.pl:
+        * tests/mapForServer/server.cpp:
+        * tests/mapForServer/test.conf:
+
+          Added a test client to do an end-to-end test using a server-side
+          mapped IOR.
+
+Fri Mar 16 20:54:18 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyServant.h:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/MapperRegistry.cpp:
+
+          Add support for getting an evaluator based on the incoming
+          object reference as well as a specific type, and cleaned some
+          redundant debug output. Fixed the determination of oneway calls.
+
+        * tests/mapForClient/test.conf:
+
+          Use specific type ids with the null proxy mapper rather than the
+          default case.
+
+Fri Mar 16 22:01:34 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/proxy/proxy.mpc:
+
+          Added the install path.
+
+        * tests/mapForClient/run_test.pl:
+
+          Put the proxy in the auto test.
+
+Fri Mar 16 19:57:36 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * tests/mapForClient/Hello.mpc:
+        * tests/mapForClient/client.cpp:
+        * tests/mapForClient/test.conf:
+
+          modified the hostname to run the proxy on localhost
+
+Fri Mar 16 19:32:07 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/ProxyServant.cpp:
+
+          Added and reordered header to pass compilation errors.
+
+Fri Mar 16 17:28:53 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyServant.cpp:
+          Added error handling for failure to find an evaluator or an
+          operation name.
+
+        * src/proxy/proxy.cpp:
+          Implemented the initialization of the null proxy with specific
+          type ids.
+
+Fri Mar 16 16:09:20 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyReplyHandler.h:
+
+          Added missing <string> include.
+
+Fri Mar 16 15:23:17 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.h:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.cpp:
+        * src/OCI/AsynchProxyTools/ProxyServant.h:
+        * src/OCI/AsynchProxyTools/ProxyServant.cpp:
+
+          Added necessary base code to pass the appropriate information up
+          to the derived classes.
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/NullProxyMapper.h:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyReplyHandler.cpp:
+        * src/lorica/ProxyServant.h:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+
+          Added more implementation necessary to actually do an end-to-end
+          test through the null proxy mapper.
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+
+          Fix problems related to IPV6 parsing and Endpoint policy
+          construction.
+
+        * tests/mapForClient/Hello.mpc:
+        * tests/mapForClient/client.cpp:
+        * tests/mapForClient/test.conf:
+
+          Get the test case working.
+
+Fri Mar 16 14:29:57 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI/AsynchProxyTools.mpc:
+
+          Added ifr_client mpc base project.
+
+Thu Mar 15 00:44:22 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/proxy.cpp:
+
+          Clean up code for preparing the Endpoint policies.
+
+Thu Mar 15 22:27:29 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI/AsynchProxyTools/OperationTable.cpp:
+
+          Fixed a compilation error.
+
+Thu Mar 15 20:55:25 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/loricacommon.mpb:
+
+          Add the lorica lib directory to the libpaths.
+
+        * src/OCI/AsynchProxyTools.mpc:
+        * src/OCI/AsynchProxyTools/AsynchProxyTools_Export.h:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.h:
+        * src/OCI/AsynchProxyTools/ProxyServant.h:
+
+          Clean up Export Macro differences.
+
+Thu Mar 15 21:05:58 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI/AsynchProxyTools.mpc:
+        * src/OCI/AsynchProxyTools/OperationTable.h:
+        * src/OCI/AsynchProxyTools/OperationTable.cpp:
+
+          Added the OperationTable classes inside the
+          OCI_APT namespace.
+
+Thu Mar 15 20:34:03 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI/AsynchProxyTools.mpc:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+        * src/proxy/proxy.mpc:
+
+          lib name changes.
+
+        * src/lorica/ProxyServant.cpp:
+
+          Removed a redunant header inclusion.
+
+Thu Mar 15 19:18:20 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/lorica_Client.mpc:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+        * src/lorica/lorica_Impl.mpc:
+        * src/loricacommon.mpb:
+
+          Refactored the library layout to eliminate circular
+          dependencies. The liblorica_Impl was eliminated as it
+          was the source of the circularity. Moved the include
+          path to the common base project.
+
+        * src/lorica/EvaluatorLoader.cpp:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/NullProxyMapper.h:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/ProxyServant.h:
+        * src/lorica/ReferenceMapValue.h:
+
+          Fixed the export macros to be consistent with the new
+          library membership.
+
+        * src/OCI/AsynchProxyTools.mpc:
+
+          Add required base projects.
+
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.h:
+
+          Fix compilation errors.
+
+        * src/proxy/proxy.mpc:
+
+          add common base project.
+
+
+
+Wed Mar 14 21:28:15 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/lorica/ProxyServant.cpp:
+
+          Proxyservant.h need to be included as the last header
+          in order to compile successfully on gcc 4.1.
+
+        * src/lorica/lorica_Client.mpc:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+        * src/lorica/lorica_Impl.mpc:
+        * src/loricacommon.mpb:
+
+          Added an MPC base project.
+          Note: you either need to specify the include path in
+          the mwc.pl command line, or you can put the path in
+          $ACE_ROOT/bin/MakeProjectCreator/config/MPC.cfg file.
+
+Wed Mar 14 20:41:15 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/lorica_Client.mpc:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+        * src/lorica/lorica_Impl.mpc:
+
+          Fixes to properly support windows.
+
+Wed Mar 14 19:17:29 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Lorica_Model.mdzip:
+          Updated model to reflect current design direction.
+
+        * src/lorica/EvaluatorLoader.h:
+        * src/lorica/EvaluatorLoader.cpp:
+          Added to support the loading of externally produced  evaluators.
+
+        * src/lorica/MapperRegistry.h:
+          Text reformat only.
+
+        * src/lorica/lorica_Client.mpc:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+        * src/lorica/lorica_Impl.mpc:
+        * src/lorica/lorica.mpc:
+          Split the lorica.mpc file into project-specific mpc files.
+
+
+Wed Mar 14 11:14:51 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/MapperRegistry.h:
+          Added export macro to static service declaration.
+
+Wed Mar 14 11:02:43 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/lorica.mpc:
+
+          Added proper dynamic flags for building with export macros.
+
+Wed Mar 14 13:54:33 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/OCI/AsynchProxyTools.mpc:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.cpp:
+        * src/OCI/AsynchProxyTools/ProxyServant.h:
+        * src/OCI/AsynchProxyTools/ProxyServant.cpp:
+
+          Fix compiler errors.
+
+
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+
+          Add implementation necessary to avoid runtime errors and provide
+          milestone 1 level of support.
+
+        * tests/fileConfig/main.cpp:
+
+          Fix the default null proxy id for testing.
+
+        * tests/mapForServer/run_test.pl:
+        * tests/mapForServer/server.cpp:
+        * tests/mapForServer/test.conf:
+
+          Get the test running.
+
+Mon Mar 12 01:11:16 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.h:
+        * src/OCI/AsynchProxyTools/ProxyServant.h:
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyServant.h:
+
+          Subsequent change due to lib src movement below.
+
+Mon Mar 12 00:44:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/OCI:
+        * src/OCI/AsynchProxyTools:
+        * src/OCI/AsynchProxyTools/AsynchProxyTools_Export.h:
+        * src/OCI/AsynchProxyTools/OperationTable.h:
+        * src/OCI/AsynchProxyTools/OperationTable.cpp:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.h:
+        * src/OCI/AsynchProxyTools/ProxyReplyHandler.cpp:
+        * src/OCI/AsynchProxyTools/ProxyServant.h:
+        * src/OCI/AsynchProxyTools/ProxyServant.cpp:
+
+          Moved the library src from oci_rt9734 to here.
+          From now on, we can work with doc head and abandon
+          the oci_rt9734 branch.
+
+Thu Mar  8 05:06:59 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/NullProxyMapper.h:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+
+          Moved MapperRegistry class out of lorica namespace. This was
+          necessary to use the ACE Service Configurator macros for
+          initializing the registry instance.
+
+        * src/proxy/Config.cpp:
+        * src/proxy/FileConfig.cpp:
+
+          Added a dummy 0'th element to the argv list so that ORB_init
+          would properly handle the argument list.
+
+        * tests/mapForServer/run_test.pl:
+        * tests/mapForServer/server.cpp:
+
+          Fixed up the run script to pass the correct command line to the
+          proxy and fixed the currently hardwired corbaloc used to resolve
+          the proxy's internal reference.
+
+Mon Mar  5 02:45:58 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/lorica.mpc:
+        * src/proxy/proxy.mpc:
+          Fix build dependencies.
+
+        * tests/fileConfig/test.conf:
+          Fix typo in repository type ids.
+
+        * tests/mapForClient:
+        * tests/mapForClient/Hello.h:
+        * tests/mapForClient/Hello.cpp:
+        * tests/mapForClient/Hello.mpc:
+        * tests/mapForClient/README:
+        * tests/mapForClient/Test.idl:
+        * tests/mapForClient/client.cpp:
+        * tests/mapForClient/run_test.pl:
+        * tests/mapForClient/server.cpp:
+          New test for the as_client operation.
+
+        * tests/mapForServer:
+        * tests/mapForServer/Hello.h:
+        * tests/mapForServer/Hello.cpp:
+        * tests/mapForServer/README:
+        * tests/mapForServer/Test.idl:
+        * tests/mapForServer/mapForServer.mpc:
+        * tests/mapForServer/run_test.pl:
+        * tests/mapForServer/server.cpp:
+          New test for the as_server operation.
+
+Sat Mar  3 02:08:49 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+
+          Added more implementation, fixed compilation errors.
+
+Fri Mar  2 18:18:51 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/ReferenceMapper_i.h:
+          Fixed skel class name. Add initialization exception.
+
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+          Add a mechanism for asynchronous shutdown of the Proxy.
+
+Thu Mar  1 21:13:48 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ReferenceMapValue.h:
+
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/proxy.mpc:
+
+          Fixed the ReferenceMapValue to store references rather than
+          strings. This is what I originally intended when I composed the
+          type in the object model. Add more implementation to the
+          ProxyMapper and fixed up proxy.mpc to refer to the correct
+          library names.
+
+        * src/proxy/proxy.cpp:
+
+          My gcc doesn't like the thrown value to be wrapped in ().
+
+Wed Feb 28 23:45:55 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/lorica.mpc:
+
+          Cleanup that should have been done before the previous commit.
+
+Thu Mar  1 15:40:48 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+          Add additional accessors methods.
+
+        * src/proxy/FileConfig.h:
+        * src/proxy/FileConfig.cpp:
+          Add debug flag. Other minor reworks.
+
+        * src/proxy/main.cpp:
+          Accept new command line debug option. Initialization of the
+          config and proxy objects.
+
+        * tests/fileConfig/main.cpp:
+        * tests/fileConfig/test.conf:
+          Enhanced the test.
+
+Wed Feb 28 23:16:24 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/Client_Export.h:
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/EvaluatorBase_Export.h:
+        * src/lorica/Impl_Export.h:
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/NullProxyMapper.h:
+        * src/lorica/NullProxyMapper.cpp:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyServant.h:
+        * src/lorica/ReferenceMapValue.h:
+        * src/lorica/ReferenceMapValue.cpp:
+        * src/lorica/lorica.mpc:
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/proxy.mpc:
+
+          Added Export macros and addtional implementation.
+
+
+Wed Feb 28 18:23:01 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+          Minor fixes.
+
+        * tests/fileConfig:
+        * tests/fileConfig/fileConfig.mpc:
+        * tests/fileConfig/main.cpp:
+        * tests/fileConfig/test.conf:
+          Add new test for File based configuration.
+
+Tue Feb 27 23:00:07 UTC 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+        * src/lorica/NullProxyMapper.h:
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyServant.h:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/ReferenceMapValue.h:
+        * src/lorica/ReferenceMapValue.cpp:
+        * src/lorica/lorica.mpc:
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+
+          Made the code compilable. It is still largely stubbed out though.
+
+Tue Feb 27 19:13:02 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/proxy.cpp:
+          root_poa initialization etc..
+
+Tue Feb 27 17:16:21 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+        * src/proxy/FileConfig.h:
+        * src/proxy/FileConfig.cpp:
+          Modified configuration syntax based upon design doc.
+
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+          Partial implementation for initializing the internal & external
+          POA managers.
+
+Mon Feb 26 16:38:24 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/EvaluatorBase.cpp:
+        * src/lorica/EvaluatorBase.h:
+        * src/lorica/ProxyReplyHandler.h:
+        * src/lorica/ProxyServant.cpp:
+        * src/lorica/ProxyServant.h:
+          Added new files.
+
+        * src/ProxyMapper.cpp:
+        * src/ProxyMapper.h:
+          Added more implementation.
+
+        * docs/Lorica_Model.mdzip:
+          Updated model to be consistent with the budding implementation.
+
+Mon Feb 26 11:19:04 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/MapperRegistry.cpp:
+          Added new files.
+
+Thu Feb 22 11:37:45 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Lorica_Model.mdzip:
+          Updated model to add new elements, ProxyCore, ProxyMapper.
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/ReferenceMapValue.h:
+          Added new files.
+
+Wed Feb 21 12:45:10 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/design_topics.odt:
+          Freshened text related to directories and config.
+
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.h:
+          Added these files.
+
+        * src/proxy/main.cpp:
+          Previously known as lorica.cpp, renamed to better connote the
+          role of the code contained within. In addtion to the file
+          rename, the class ::Lorica_Process was renamed
+          ::Lorica::Service_Loader.
+
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/ntsvc.h:
+        * src/proxy/Config.cpp:
+        * src/proxy/Config.h:
+        * src/proxy/FileConfig.cpp:
+        * src/proxy/FileConfig.h:
+          Added Lorica namespace, updated style.
+
+        * src/proxy/proxy.mpc:
+          Added new files to project.
+
+        * src/lorica/lorica.mpc:
+        * src/lorica/ReferenceMapper.idl:
+        * src/lorica/ServerAgent.idl:
+          Added a new directory to contain the idl and eventually any
+          other elements needed by any libraries used by Lorica or its
+          clients.
+
+
+Tue Feb 20 15:44:43 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/design_topics.odt:
+          Added text about directory layout and configuration.
+
+Tue Feb 20 18:29:03 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/Config.h:
+        * src/proxy/Config.cpp:
+          Configuration interface.
+
+        * src/proxy/FileConfig.h:
+        * src/proxy/FileConfig.cpp:
+          Concrete implementation of File based configurator.
+
+Tue Feb 20 17:32:47 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/proxy/ntsvc.h:
+
+          included a required header.
+
+Mon Feb 19 18:33:36 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/proxy/lorica.cpp:
+        * src/proxy/ntsvc.h:
+        * src/proxy/ntsvc.cpp:
+
+          Code clean up.
+
+Fri Feb 16 19:58:48 UTC 2007  Ciju John  <johnc@ociweb.com>
+
+        * src/proxy/lorica.cpp:
+          Add required header include.
+
+Thu Feb 15 16:00:50 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * docs/Lorica_Model.mdzip:
+          Added more class diagram elements and sequence diagrams for
+          explicit mapping of server references and handling invocations.
+
+Thu Feb 15 11:03:53 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/ReferenceMapper.idl:
+        * src/ServerAgent.idl:
+
+          Added new interfaces as part of the proxy project. The
+          ReferenceMapper interface will be implemented by the proxy and
+          used by applications wanting to explictly map references. The
+          ServerAgent interface will be implemented by applications
+          wanting to be informed about proxy status, and be used by the
+          proxy.
+
+        * docs/M1_task_details.txt:
+          A new document outlining the implementation tasks for milestone
+          one in greater detail.
+
+        * docs/Lorica_Model.mdzip:
+          Updated the model.
+
+Wed Feb 14 23:21:06 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/proxy/lorica.cpp:
+
+          Made Lorica to compile and run as a service on Windows.
+
+Wed Feb 14 16:40:05 UTC 2007  Wallace Zhang  <zhang_w@ociweb.com>
+
+        * src/proxy:
+
+        * src/proxy/lorica.cpp:
+        * src/proxy/ntsvc.h:
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/proxy.mpc:
+
+          adding the source for the proxy executable, i.e., lorica.
+
+Fri Feb  9 11:24:46 2007  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        Created Lorica project workspace

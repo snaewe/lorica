@@ -1,0 +1,193 @@
+
+
+                    ***   Configuring Lorica  ***
+
+                  Copyright (C) 2008 OMC Denmark ApS
+
+
+Your rights
+===========
+
+Copying and distribution of this file, with or without modification, 
+are permitted in any medium without royalty provided the copyright 
+notice and this notice are preserved.
+
+
+For more information
+====================
+
+For the newest and most comprehensive documentation, please refer to the online
+documentation found at:
+
+   http://trac.42tools.net/lorica
+
+
+Running Lorica
+--------------
+
+The proxy executable may be bootstrapped as a Windows NT service or a Unix 
+daemon. It may also be run from the command line, usually for debugging 
+purposes. 
+
+The proxy is configured via a text file, by default it reads lorica.conf from
+the start-up directory. See below for details about the contents of this
+configuration file.
+
+A file named lorica.pid is used to store the process ID of the proxy during its
+run. This file is removed when the proxy is shut down. The presence of this PID 
+file may be used in test scripts to determine if the proxy is running.
+
+The proxy accepts the follwoing command line options:
+
+ * On Windows:
+
+   Option     | Description
+   ----------------------------------------------------------------------
+   -i         | Install this program as an NT service
+   -r         | Remove this program from the Service Manager
+   -s         | Start the service
+   -k         | Stop the service
+   -d         | Debug, run as a regular application
+   -f <file>  | Configuration file. Required, default is "./lorica.conf"
+   -c <level> | Turn on CORBA debugging, default 0
+   -l <level> | Turn on Lorica debugging, default 0
+
+ * On all other supported platforms:
+
+   Option     | Description
+   ----------------------------------------------------------------------
+   -d         | Debug, run as a regular application
+   -f <file>  | Configuration file. Required, default is "./lorica.conf"
+   -c <level> | Turn on CORBA debugging, default 0
+   -l <level> | Turn on Lorica debugging, default 0
+
+
+Configuration File
+------------------
+
+The Lorica proxy is configured by reading the default or supplied configuration
+file. This file contains a series of name value pairs, and may contain 
+descriptive comments.
+
+The following table shows the configuration options used by the Lorica proxy:
+
+   Token              | Required? | Description
+   ------------------------------------------------------------------------------
+   External_Address   |    yes    | The hostname and port used to listen for 
+                      |           | connections coming from outside the protected
+                      |           | enclave. See below for details about the 
+                      |           | format of this value.
+   ------------------------------------------------------------------------------
+   Internal_Address   |    yes    | The hostname and port used to listen for 
+                      |           | connections coming from inside the enclave. 
+                      |           | This includes connections used to register 
+                      |           | new object references for mapping, or for 
+                      |           | clients tunneling new connections through the 
+                      |           | proxy.
+   ------------------------------------------------------------------------------
+   ORB_Option         |    no     | A list of arguments to be supplied to 
+                      |           | ORB_init. Multiple ORB_Option values may be 
+                      |           | supplied, these will be concatenated to make
+                      |           | the final list of ORB_init arguments. Note 
+                      |           | that endpoint values should not be supplied 
+                      |           | here, they will be filtered out by the 
+                      |           | endpoint policies.
+   ------------------------------------------------------------------------------
+   Null_Evaluator_Any |    no     | Takes a yes/no value indicating that the Null
+                      |           | evaluator may support any type not explicitly
+                      |           | handled by any other evaluator. This option
+                      |           | should only be used for debugging.
+   ------------------------------------------------------------------------------
+   Null_Eval_Type_ID  |    no     | A list of repository Type IDs supplied to the
+                      |           | Null evaluator. This list supersedes the
+                      |           | Null_Eval_Any option if both are set.
+   ------------------------------------------------------------------------------
+   Generic_Evaluator  |    no     | Takes a yes/no value indicating that the 
+                      |           | Generic evaluator is to be loaded. The  
+                      |           | Generic evaluator supports any type defined 
+                      |           | in the Interface Repository ID.
+   ------------------------------------------------------------------------------
+   IFR_CmdOption      |    no     | Takes IFR command line options. E.g., -p for 
+                      |           | persistence.
+   ------------------------------------------------------------------------------
+
+
+Endpoint Definitions
+--------------------
+
+The configuration of internal and external endpoints serves two purposes:
+
+ 1) To supply -ORBEndpoint arguments to ORB_init, and 
+
+ 2) To construct separate internal and external endpoint policy objects, used to 
+    initialize their respective POAs.
+
+The general syntax of an endpoint value is shown here:
+
+   value = <host>”:”<port>[“/”<option_list>]
+   option_list = [<option>”,”]*<option>
+   option = “ssl_port=”<port> | “alias=”<host>
+   host = DNS style hostname | ipv4_address | “[“ ipv6_address “]”
+   port = number
+
+
+Here are some example endpoint values:
+
+   10.20.100.50:12345
+   mydomain.com:951/ssl_port=952
+   10.20.100.50:951/ssl_port=952,alias=mydomain.com
+   [fe80::20e:a6ff:fe90:7a15]:12453/alias=mydomain.com
+
+
+Please see: 
+
+   http://www.dre.vanderbilt.edu/~schmidt/DOC_ROOT/TAO/docs/ORBEndpoint.html
+
+for the exact format.
+
+
+Service Configuration Directives
+--------------------------------
+
+In order to use the ssl_port option, you must also ensure that SSLIOP is loaded.
+This is done by supplying ACE Service Configuration directives to the ORB via
+ORB Options. The most direct way is to use the form:
+
+   ORB_Option -ORBSvcDirective <directive>
+
+
+Where <directive> is some single service configuration directive. Note that
+directives will contain spaces, so the entire directive parameter must be 
+enclosed in quotes. Further, directives may also take an internal list of
+parameters, itself passed as a quoted string.
+
+A simpler way of managing these service configuration directives is to place
+them in a second file, traditionally named svc.conf. You will likely want to
+name your file something else, as all TAO applications will read svc.conf by
+default. To configure the use of an alternative service configuration file,
+add:
+
+   ORB_Option -ORBSvcConf <filename>
+
+
+in your lorica.conf file to specify the name of the file containing the service
+configuration directives.
+
+The following is an example of a typical service configuration directive for
+loading SSLIOP:
+
+   dynamic SSLIOP_Factory Service_Object * TAO_SSLIOP:_make_TAO_SSLIOP_Protocol_Factory() "-SSLNoProtection"
+   static Resource_Factory "-ORBProtocolFactory SSLIOP_Factory"
+
+
+Note that two directives, "dynamic SSLIOP_Factory" and "static Resource_Factory"
+are needed to initialize the protocol. TAO's SSLIOP takes several configuration
+options, the example -SSLNoProtection instructs the ORB to accept unprotected as
+well as protected connections. Refer to the OCI TAO developer's guide (version 
+1.4a or later) or online documentation for a more complete discussion of service
+configuration options and SSLIOP.
+
+
+------------------------------------------
+Rasmus Maagaard <rasmusmaagaard@42tools.com>
+OMC Denmark ApS, 2008

@@ -1,0 +1,130 @@
+#  
+#  RPM spec file for the Brutus Keyring.
+#  Copyright (C) 2007 OMC Denmark ApS
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+#  MA 02111-1307 USA
+#
+
+@RPM_SPEC_SUSE_PREFIX@
+@RPM_SPEC_SUSE_DOCDIR@
+
+Summary:         A small keyring daemon build upon libgcrypt
+Name:            @BRUTUS_KEYRINGD_NAME@
+Version:         @BRUTUS_KEYRINGD_VERSION@
+Release:         1%{?dist}
+License:         GPL
+Group:           Applications/System
+Source0:         http://www.omesc.com/sites/default/files/downloads/dist/%{name}/@BRUTUS_DIST_RELEASE@/SOURCES/%{name}-%{version}.tar.gz
+BuildRoot:       %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+URL:             http://trac.brutus.net/brutus-keyring/
+Conflicts:       evolution-brutus < 1.1.28
+Requires:        @RPM_SPEC_LIBIDL@ >= @LIBIDL_REQUIRED@
+BuildRequires:   @RPM_SPEC_ORBIT2@-devel >= @ORBIT2_REQUIRED@
+BuildRequires:   libgcrypt-devel >= @LIBGCRYPT_REQUIRED@
+@RPM_SPEC_BUILDREQUIRES_1@
+@RPM_SPEC_BUILDREQUIRES_2@
+@RPM_SPEC_BUILDREQUIRES_3@
+
+%description
+This is the Brutus Keyring. It is a very small and simple 
+keyring daemon that will encrypt large as well as small 
+secrets using a symmetric cipher.
+
+This package contains the executable necessary for programs using
+Brutus Keyring.
+
+You will need to install this package and brutus-keyring-devel if 
+you want to write programs using Brutus Keyring.
+
+%package devel
+Summary:         IDL and header files for brutus-keyring
+Group:           Development/Libraries
+Requires:        %name = %{version}-%{release}
+Requires:        pkgconfig >= @PKGCONFIG_REQUIRED@
+Requires:        ORBit2-devel >= @ORBIT2_REQUIRED@
+
+%description devel 
+This is the Brutus Keyring development files. Brutus Keyring is 
+a very small and simple keyring daemon that will encrypt large 
+as well as small secrets using a symmetric cipher.
+
+This package contains the header files, libraries and utilities
+necessary to write Brutus Keyring client programs.
+
+@RPM_SPEC_DEBUGINFO@
+%prep
+%setup -q 
+
+%build
+@RPM_SPEC_CONFIGURE@
+make %{?_smp_mflags}
+
+%install 
+rm -rf %{buildroot}
+make INSTALL="install -c -p" DESTDIR=%{buildroot} install
+find %{buildroot} -name '*.la' -exec rm {} ';'
+
+%clean 
+rm -rf %{buildroot}
+
+%post devel -p /sbin/ldconfig
+
+%postun devel -p /sbin/ldconfig
+
+%files
+%defattr(-,root,root,-)
+%dir %{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@
+%{_bindir}/@BRUTUS_KEYRINGD_BIN@
+%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/brutus-keyring-guide
+%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/COPYING
+%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/README
+%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/AUTHORS
+%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/ChangeLog
+
+%files devel
+%defattr(-,root,root,-)
+%dir %{_includedir}/@BRUTUS_KEYRINGD_NAME@-@LIBBRUTUS_KEYRINGD_CURRENT@.@LIBBRUTUS_KEYRINGD_REVISION@
+%dir %{_datadir}/@BRUTUS_idl_install_subdir@
+%dir %{_docdir}/@BRUTUS_KEYRINGD_NAME@-devel-@BRUTUS_KEYRINGD_VERSION@
+%{_bindir}/brutus-keyring-client
+%{_libdir}/libBrutusKeyringd*
+%{_libdir}/pkgconfig/libBrutusKeyringd*
+%{_includedir}/@BRUTUS_KEYRINGD_NAME@-@LIBBRUTUS_KEYRINGD_CURRENT@.@LIBBRUTUS_KEYRINGD_REVISION@/*
+%{_datadir}/@BRUTUS_idl_install_subdir@/*
+%{_docdir}/@BRUTUS_KEYRINGD_NAME@-devel-@BRUTUS_KEYRINGD_VERSION@/brutus-keyring-devel-guide
+
+%changelog
+* Mon Jul 23 2007 Jules Colding <colding@omesc.com> 0.9.3-1
+- Update the spec to bring it more into sync with the one 
+  in Fedora cvs
+
+* Mon Jul 2 2007 Jules Colding <colding@omesc.com> 0.9.1-1
+- Fix devel "Require"
+- Fix tar-ball versioning
+
+* Sat Jun 30 2007 Jules Colding <colding@omesc.com> 0.9.0-4
+- Fix one more review issue
+
+* Sat Jun 30 2007 Jules Colding <colding@omesc.com> 0.9.0-3
+- Fix review issues
+
+* Sat Jun 30 2007 Jules Colding <colding@omesc.com> 0.9.0-2
+- Fix syntax for post and postun macros
+
+* Tue Jun 26 2007 Jules Colding <colding@omesc.com> 0.9.0-1
+- Initial RPM release
+
+

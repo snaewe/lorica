@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>com.42tools.lorica.pkg</string>
+	<key>IFRequirementDicts</key>
+	<array>
+		<dict>
+			<key>MessageKey</key>
+			<string>Only Intel based Macintosh computers are supported</string>
+			<key>SpecType</key>
+			<string>sysctl</string>
+			<key>SpecArgument</key>
+			<string>hw.machine</string>
+			<key>TestObject</key>
+			<string>i386</string>
+			<key>TestOperator</key>
+			<string>eq</string>
+			<key>TitleKey</key>
+			<string>CPU</string>
+		</dict>
+	</array>
+	<key>IFPkgFlagBackgroundAlignment</key>
+	<string>bottomleft</string>
+	<key>IFPkgFlagBackgroundScaling</key>
+	<string>none</string>
+</dict>
+</plist>

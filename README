@@ -1,0 +1,28 @@
+
+                    Lorica README
+          Copyright (C) 2007 OMC Denmark ApS.
+
+
+Your rights
+===========
+
+Copying and distribution of this file, with or without 
+modification, are permitted in any medium without royalty 
+provided the copyright notice and this notice are preserved.
+
+
+Build instructions
+==================
+For the newest and most comprehensive documentation, please 
+refer to the online documentation found at:
+
+  http://trac.42tools.net/lorica
+
+
+A short build guide is provided in the 'docs' directory.
+
+
+---------------- 
+Rasmus Maagaard <rasmusmaagaard@42tools.com>
+OMC Denmark ApS
+September 2007

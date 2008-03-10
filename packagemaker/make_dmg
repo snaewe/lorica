@@ -1,0 +1,78 @@
+#!/bin/bash
+
+APP_NAME=Lorica
+LAUNCH_SCRIPT=com.42tools.lorica.plist
+DISTRIBUTION=distribution
+
+# Remove old disk image (and if present, old build files)
+
+rm $APP_NAME.dmg
+rm -rf $DISTRIBUTION
+
+ROOT=$DISTRIBUTION/root
+RESOURCES=$DISTRIBUTION/resources
+SCRIPTS=$DISTRIBUTION/scripts
+DMG=$DISTRIBUTION/disk
+TMP=$DISTRIBUTION/tmp
+
+mkdir -p $ROOT
+mkdir -p $RESOURCES
+mkdir -p $SCRIPTS
+mkdir -p $DMG
+mkdir -p $TMP
+
+# Stage install
+
+STAGE_DIR=$(pwd)/$ROOT
+
+pushd ..
+./bootstrap --enable-tao-build --enable-lorica-devel --enable-lorica-target=darwin --prefix="/usr" --sysconfdir="/private/etc"
+make && make DESTDIR=$STAGE_DIR install
+popd
+
+# Prepare lauch deamon
+
+LAUNCH_DIR=$ROOT/Library/LaunchDaemons
+mkdir -p $LAUNCH_DIR
+cp $LAUNCH_SCRIPT $LAUNCH_DIR
+
+# Prepare install scripts
+
+cp postflight $SCRIPTS
+
+# Prepare install resoureces
+
+RESOURCE_FILES="Welcome.rtf ReadMe.rtf License.rtf background.pdf"
+
+for resource in $RESOURCE_FILES; do
+ cp $resource $RESOURCES
+done
+
+# Create package
+
+PM_CMD=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
+$PM_CMD --root $ROOT --resources $RESOURCES --scripts $SCRIPTS --info Info.plist --title $APP_NAME --target 10.4 --root-volume-only --out "$DMG/Install $APP_NAME.pkg"
+
+# Prepare disk image
+
+cp DS_Store $DMG/.DS_Store
+
+IMAGE_DIR=$DMG/.background
+mkdir $IMAGE_DIR
+cp image.png $IMAGE_DIR
+
+# Create disk image
+
+hdiutil create -srcfolder $DMG -format UDBZ -volname "$APP_NAME Install Disk" -mode 444 -noscrub $TMP/$APP_NAME.dmg
+
+# Add SLA to disk image
+
+hdiutil unflatten $TMP/$APP_NAME.dmg
+DeRez sla.rsrc > $TMP/sla.r
+Rez -a $TMP/sla.r -o $TMP/$APP_NAME.dmg
+hdiutil flatten $TMP/$APP_NAME.dmg
+
+# Clean up
+
+cp $TMP/$APP_NAME.dmg .
+rm -rf $DISTRIBUTION
