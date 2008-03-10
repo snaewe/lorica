@@ -1,2 +1,0 @@
-@DH_INSTALL_default_datadir@/@LORICA_idl_install_subdir@/*
-@DH_INSTALL_default_docdir@-dev/building_lorica
