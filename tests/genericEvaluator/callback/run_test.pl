@@ -52,9 +52,7 @@ unlink $ifrfile;
 $IFR = new PerlACE::Process("$TAO_ROOT/orbsvcs/IFR_Service/IFR_Service", " -o $ifrfile");
 $PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf");
 
-$IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr",
-                              " -ORBInitRef InterfaceRepository=file://$ifrfile ".
-                              " Test.idl");
+$IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", "-ORBInitRef InterfaceRepository=file://$ifrfile  Test.idl");
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile");
 
@@ -77,7 +75,7 @@ if (PerlACE::waitforfile_timed ($pidfile,
     exit 1;
 }
 
-$idlc_ret = $IDLC->SpawnWaitKill (5);
+$idlc_ret = $IDLC->SpawnWaitKill (50);
 if (($idlc_ret != 0) || ($? != 0)) {
   if ($idlc_ret == 0) { $idlc_ret = $?; }
   print STDERR "Error: IDL Compiler returned $idlc_ret\n";
