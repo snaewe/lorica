@@ -31,7 +31,6 @@
 #include "config.h"
 #endif
 
-#include <unistd.h>
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
 #include <ace/OS_NS_errno.h>
@@ -44,6 +43,10 @@
 #include "lorica/FileConfig.h"
 #include "lorica/debug.h"
 #include "lorica/MapperRegistry.h"
+
+#ifndef ACE_WIN32
+#include <unistd.h>
+#endif
 
 #ifdef ACE_WIN32
 #include "defines/windefs.h"
@@ -431,7 +434,7 @@ Lorica::Service_Loader::init_proxy(void)
 	try {
 		config->init(config_file_, corba_debug_level_);
 	}
-	catch (const Lorica::FileConfig::InitError & ex) {
+	catch (const Lorica::FileConfig::InitError &) {
 		ACE_ERROR((LM_ERROR,
 			   ACE_TEXT("Proxy could not read %s.\n"),
 			   this->config_file_.c_str()));
@@ -445,7 +448,7 @@ Lorica::Service_Loader::init_proxy(void)
 
 		return proxy.release();
 	}
-	catch (const Lorica::Proxy::InitError & ex) {
+	catch (const Lorica::Proxy::InitError &) {
 		ACE_ERROR((LM_ERROR,
 			   ACE_TEXT("Proxy initialization failed.\n")));
 	}
@@ -459,8 +462,11 @@ Lorica::Service_Loader::run_service(void)
 	if (debug_) {
 		size_t len = strlen(program_name.c_str());
 		char *name = (char*)malloc(len + 4 + 1);
+#ifdef ACE_WIN32
+		sprintf_s(name, len + 4 + 1, "%s.log", program_name.c_str());
+#else
 		snprintf(name, len + 4 + 1, "%s.log", program_name.c_str());
-
+#endif
 		ofstream *output_file = new ofstream(ACE_TEXT(name), ios::out);
 		free(name);
 

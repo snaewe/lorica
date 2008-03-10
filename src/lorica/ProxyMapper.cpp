@@ -317,7 +317,7 @@ Lorica::ProxyMapper::supports_secure(CORBA::Object_ptr native)
 		// Extract the Byte Order.
 		CORBA::Boolean byte_order;
 		if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-			return -1;
+			return false;
 		in_cdr.reset_byte_order(static_cast<int> (byte_order));
 
 		// Extract endpoints sequence.

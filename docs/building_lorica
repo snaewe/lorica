@@ -93,7 +93,7 @@ that the Lorica executable may find its shared library dependencies.
 Visual Studio Build Guide 
 =========================
 
-This short guide will describe how to use Microsoft Visual Studio C++ for 
+This short guide will describe how to use Microsoft Visual Studio 2005 C++ for 
 building Lorica. It assumes you have read the section "Building ACE and TAO" in
 the setup_visual_studio.txt file as distributed with the brutus-server source.
 

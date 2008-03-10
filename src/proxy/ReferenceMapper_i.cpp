@@ -56,7 +56,7 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i(CORBA::ORB_ptr orb,
 					    "SSLIOP not available\n"));
 		}
 	}
-	catch (CORBA::Exception & ex) {
+	catch (CORBA::Exception &) {
 		ACE_ERROR ((LM_ERROR,"Cannot initialize access decision object\n"));
 	}
 }
@@ -144,7 +144,7 @@ Lorica::ReferenceMapper_i::as_server_i (bool require_secure,
 					    "bound to ior table\n"));
 			rmv->ior_table_name_ = corbaloc_name;
 		}
-		catch (IORTable::AlreadyBound & ex) {
+		catch (IORTable::AlreadyBound &) {
 			ACE_ERROR((LM_ERROR,
 				   "(%P|%t) Lorica::ReferenceMapper_i::as_server_i "
 				   "ior_table cannot bind to %s\n",

@@ -50,6 +50,10 @@
 #include "defines/pathdefs.h"
 #endif
 
+#ifdef ACE_WIN32
+#include <io.h>
+#endif
+
 Lorica::Proxy* Lorica::Proxy::this_ = 0;
 
 #ifndef ACE_WIN32
@@ -207,7 +211,7 @@ Lorica::Proxy::open(void *args)
 	try {
 		config->init(config_file_, corba_debug_level_);
 	}
-	catch (const FileConfig::InitError & ex) {
+	catch (const FileConfig::InitError &) {
 		ACE_ERROR((LM_ERROR,
 			   ACE_TEXT("Proxy could not read config file %s.\n"),
 			   config_file_));
@@ -218,7 +222,7 @@ Lorica::Proxy::open(void *args)
 	try {
 		this->configure(*config);
 	}
-	catch (const Lorica::Proxy::InitError & ex) {
+	catch (const Lorica::Proxy::InitError &) {
 		ACE_ERROR((LM_ERROR,
 			   ACE_TEXT("Proxy configuration failed.\n")));
 
@@ -234,7 +238,11 @@ get_file(const char *filename)
 	int file_fd = -1;
 	FILE *file = NULL;
 
-	file_fd = open(filename, O_CREAT | O_WRONLY | O_SYNC | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+#ifdef ACE_WIN32
+	file_fd = _open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+#else
+		file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+#endif
 	if (-1 == file_fd)
 		return NULL;
 

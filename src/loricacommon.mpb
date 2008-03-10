@@ -21,6 +21,7 @@ project {
   libout = $(LORICA_ROOT)/lib
   libpaths += $(LORICA_ROOT)/lib
   includes += $(LORICA_ROOT)/src
+  includes += $(LORICA_ROOT)
 
   Define_Custom(DLL_EXPORT) {
     automatic             = 0
