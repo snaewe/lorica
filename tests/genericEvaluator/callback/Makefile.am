@@ -74,7 +74,9 @@ CLEANFILES = \
 	TestC.inl  \
 	TestS.cpp  \
 	TestS.h    \
-	TestS.inl
+	TestS.inl  \
+	ifr.cache  \
+	lorica.ior
 
 TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
 
