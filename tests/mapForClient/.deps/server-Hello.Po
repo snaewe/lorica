@@ -1,0 +1,1665 @@
+server-Hello.o server-Hello.o: Hello.cpp Hello.h \
+  /Users/colding/work/src/ACE_wrappers/ace/pre.h TestS.h TestC.h \
+  /Users/colding/work/src/ACE_wrappers/ace/config-all.h \
+  /Users/colding/work/src/ACE_wrappers/ace/config-lite.h \
+  /Users/colding/work/src/ACE_wrappers/ace/config-macros.h \
+  /Users/colding/work/src/ACE_wrappers/ace/config.h \
+  /Users/colding/work/src/ACE_wrappers/ace/config-macosx-leopard.h \
+  /Users/colding/work/src/ACE_wrappers/ace/config-g++-common.h \
+  /Users/colding/work/src/ACE_wrappers/ace/post.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Version.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Versioned_Namespace.h \
+  /Users/colding/work/src/ACE_wrappers/ace/ace_wchar.h \
+  /usr/include/c++/4.0.0/cwchar \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++config.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/os_defines.h \
+  /usr/include/c++/4.0.0/cstddef \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stddef.h \
+  /usr/include/c++/4.0.0/ctime /usr/include/time.h /usr/include/_types.h \
+  /usr/include/sys/_types.h /usr/include/sys/cdefs.h \
+  /usr/include/machine/_types.h /usr/include/i386/_types.h \
+  /usr/include/_structs.h /usr/include/sys/_structs.h \
+  /usr/include/wchar.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h \
+  /usr/include/stdio.h /usr/include/_wctype.h /usr/include/ctype.h \
+  /usr/include/runetype.h /usr/include/c++/4.0.0/cwctype \
+  /usr/include/wctype.h \
+  /Users/colding/work/src/ACE_wrappers/ace/ace_wchar.inl \
+  /usr/include/string.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_main.h \
+  /Users/colding/work/src/ACE_wrappers/ace/ACE_export.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/ORB.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/UserException.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/TAO_Export.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Exception.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/orbconf.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Basic_Types.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_limits.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_unistd.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_types.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_stddef.h \
+  /usr/include/sys/types.h /usr/include/sys/appleapiopts.h \
+  /usr/include/machine/types.h /usr/include/i386/types.h \
+  /usr/include/machine/endian.h /usr/include/i386/endian.h \
+  /usr/include/sys/_endian.h /usr/include/libkern/_OSByteOrder.h \
+  /usr/include/libkern/i386/_OSByteOrder.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_inttypes.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdint.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdint.h \
+  /usr/include/inttypes.h /usr/include/unistd.h /usr/include/sys/unistd.h \
+  /usr/include/sys/select.h /usr/include/sys/_select.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdio.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdarg.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/limits.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h \
+  /usr/include/limits.h /usr/include/machine/limits.h \
+  /usr/include/i386/limits.h /usr/include/i386/_limits.h \
+  /usr/include/sys/syslimits.h /usr/include/sys/param.h \
+  /usr/include/machine/param.h /usr/include/i386/param.h \
+  /usr/include/i386/_param.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h \
+  /usr/include/sys/signal.h /usr/include/machine/signal.h \
+  /usr/include/i386/signal.h /usr/include/i386/_structs.h \
+  /usr/include/machine/_structs.h /usr/include/mach/i386/_structs.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_float.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/float.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdlib.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_wait.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_signal.h \
+  /usr/include/signal.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_ucontext.h \
+  /usr/include/ucontext.h /usr/include/sys/ucontext.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_resource.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_time.h \
+  /usr/include/sys/time.h /usr/include/sys/resource.h \
+  /usr/include/sys/syscall.h /usr/include/sys/wait.h \
+  /usr/include/stdlib.h /usr/include/available.h /usr/include/alloca.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Basic_Types.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Global_Macros.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Assert.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_Errno.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_errno.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_errno.h \
+  /usr/include/errno.h /usr/include/sys/errno.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_errno.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_Errno.inl \
+  /usr/include/c++/4.0.0/new /usr/include/c++/4.0.0/exception \
+  /Users/colding/work/src/ACE_wrappers/ace/Synch_Traits.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Lock.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Lock.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Versioned_Namespace.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Basic_Types.h \
+  /Users/colding/work/src/ACE_wrappers/ace/CDR_Base.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Default_Constants.h \
+  /Users/colding/work/src/ACE_wrappers/ace/CDR_Base.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/CORBA_String.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Traits_Base_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Alloc.h \
+  /Users/colding/work/src/ACE_wrappers/ace/CDR_Stream.h \
+  /Users/colding/work/src/ACE_wrappers/ace/SStringfwd.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Message_Block.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Time_Value.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_time.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Time_Value.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Truncate.h \
+  /Users/colding/work/src/ACE_wrappers/ace/If_Then_Else.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Numeric_Limits.h \
+  /usr/include/c++/4.0.0/limits \
+  /Users/colding/work/src/ACE_wrappers/ace/Message_Block.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Message_Block_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Message_Block_T.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Message_Block_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Malloc_Base.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_mman.h \
+  /usr/include/sys/mman.h \
+  /Users/colding/work/src/ACE_wrappers/ace/CDR_Stream.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_string.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_string.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_wchar.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_wchar.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_string.h \
+  /usr/include/memory.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_ctype.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_wchar.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_Memory.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdlib.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdlib.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Object_Manager_Base.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Cleanup.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Cleanup.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_search.h \
+  /Users/colding/work/src/ACE_wrappers/ace/iosfwd.h \
+  /Users/colding/work/src/ACE_wrappers/ace/streams.h \
+  /usr/include/c++/4.0.0/iostream /usr/include/c++/4.0.0/ostream \
+  /usr/include/c++/4.0.0/ios /usr/include/c++/4.0.0/iosfwd \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++locale.h \
+  /usr/include/c++/4.0.0/clocale /usr/include/locale.h \
+  /usr/include/_locale.h /usr/include/c++/4.0.0/cstring \
+  /usr/include/c++/4.0.0/cstdio \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++io.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/gthr.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/gthr-default.h \
+  /usr/include/pthread.h /usr/include/pthread_impl.h /usr/include/sched.h \
+  /usr/include/c++/4.0.0/cctype /usr/include/c++/4.0.0/bits/stringfwd.h \
+  /usr/include/c++/4.0.0/bits/postypes.h \
+  /usr/include/c++/4.0.0/bits/functexcept.h \
+  /usr/include/c++/4.0.0/exception_defines.h \
+  /usr/include/c++/4.0.0/bits/char_traits.h \
+  /usr/include/c++/4.0.0/bits/stl_algobase.h \
+  /usr/include/c++/4.0.0/climits \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h \
+  /usr/include/c++/4.0.0/cstdlib /usr/include/c++/4.0.0/bits/stl_pair.h \
+  /usr/include/c++/4.0.0/bits/cpp_type_traits.h \
+  /usr/include/c++/4.0.0/bits/stl_iterator_base_types.h \
+  /usr/include/c++/4.0.0/bits/stl_iterator_base_funcs.h \
+  /usr/include/c++/4.0.0/bits/concept_check.h \
+  /usr/include/c++/4.0.0/bits/stl_iterator.h \
+  /usr/include/c++/4.0.0/debug/debug.h /usr/include/c++/4.0.0/cassert \
+  /usr/include/assert.h /usr/include/c++/4.0.0/bits/localefwd.h \
+  /usr/include/c++/4.0.0/bits/ios_base.h \
+  /usr/include/c++/4.0.0/bits/atomicity.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/atomic_word.h \
+  /usr/include/c++/4.0.0/bits/locale_classes.h \
+  /usr/include/c++/4.0.0/string /usr/include/c++/4.0.0/memory \
+  /usr/include/c++/4.0.0/bits/allocator.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++allocator.h \
+  /usr/include/c++/4.0.0/ext/new_allocator.h \
+  /usr/include/c++/4.0.0/bits/stl_construct.h \
+  /usr/include/c++/4.0.0/bits/stl_uninitialized.h \
+  /usr/include/c++/4.0.0/bits/stl_raw_storage_iter.h \
+  /usr/include/c++/4.0.0/bits/stl_function.h \
+  /usr/include/c++/4.0.0/bits/basic_string.h \
+  /usr/include/c++/4.0.0/algorithm /usr/include/c++/4.0.0/bits/stl_algo.h \
+  /usr/include/c++/4.0.0/bits/stl_heap.h \
+  /usr/include/c++/4.0.0/bits/stl_tempbuf.h \
+  /usr/include/c++/4.0.0/bits/basic_string.tcc \
+  /usr/include/c++/4.0.0/streambuf \
+  /usr/include/c++/4.0.0/bits/streambuf.tcc \
+  /usr/include/c++/4.0.0/bits/basic_ios.h \
+  /usr/include/c++/4.0.0/bits/streambuf_iterator.h \
+  /usr/include/c++/4.0.0/bits/locale_facets.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/ctype_base.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/ctype_inline.h \
+  /usr/include/c++/4.0.0/bits/codecvt.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/time_members.h \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/messages_members.h \
+  /usr/include/c++/4.0.0/bits/basic_ios.tcc \
+  /usr/include/c++/4.0.0/bits/ostream.tcc /usr/include/c++/4.0.0/locale \
+  /usr/include/c++/4.0.0/bits/locale_facets.tcc \
+  /usr/include/c++/4.0.0/typeinfo /usr/include/c++/4.0.0/istream \
+  /usr/include/c++/4.0.0/bits/istream.tcc /usr/include/c++/4.0.0/fstream \
+  /usr/include/c++/4.0.0/i686-apple-darwin9/bits/basic_file.h \
+  /usr/include/c++/4.0.0/bits/fstream.tcc /usr/include/c++/4.0.0/iomanip \
+  /usr/include/c++/4.0.0/functional \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/CORBA_String.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/CORBA_macros.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Exception_Macros.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Exception.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/UserException.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/orb_typesC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/objectid.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/CORBA_methods.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/VarOut_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/VarOut_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/VarOut_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Pseudo_VarOut_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/varbase.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Pseudo_VarOut_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Pseudo_VarOut_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Var_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Var_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Var_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Out_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Out_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Out_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Octet_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Value_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Value_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Value_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Generic_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Range_Checking_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/checked_iterator.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Basic_String_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Reference_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Traits_Base_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Sequence_Element_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Const_Sequence_Element_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Object_Reference_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Reference_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Traits_Base_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Objref_VarOut_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Objref_VarOut_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Objref_VarOut_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Environment.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/default_environment.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Environment.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Generic_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Sequence_Element_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Const_Sequence_Element_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Array_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Array_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Array_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Array_VarOut_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Array_VarOut_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Array_VarOut_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Sequence_CDR_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Value_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Value_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Basic_String_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Reference_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Object_Reference_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Reference_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Array_Sequence_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Array_Allocation_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Sequence_CDR_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Policy_ForwardC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/ServicesC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/OctetSeqC.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Thread_Mutex.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_Thread.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_pthread.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_sched.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Base_Thread_Adapter.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_Log_Msg_Attributes.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_Log_Msg_Attributes.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Base_Thread_Adapter.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_sem.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_ipc.h \
+  /usr/include/sys/ipc.h /usr/include/sys/sem.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_semaphore.h \
+  /usr/include/semaphore.h /usr/include/sys/fcntl.h \
+  /usr/include/sys/semaphore.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_signal.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_signal.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_macros.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_Thread.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_mman.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_mman.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_fcntl.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_fcntl.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_stat.h \
+  /usr/include/sys/stat.h /usr/include/fcntl.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_fcntl.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_unistd.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_unistd.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_utsname.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_utsname.h \
+  /usr/include/sys/utsname.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdio.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdio.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_pwd.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_pwd.h \
+  /usr/include/pwd.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_pwd.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_stat.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_stat.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_time.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_time.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Thread_Mutex.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Guard_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Guard_T.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/RW_Thread_Mutex.h \
+  /Users/colding/work/src/ACE_wrappers/ace/RW_Mutex.h \
+  /Users/colding/work/src/ACE_wrappers/ace/RW_Mutex.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/RW_Thread_Mutex.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Guard_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Atomic_Op.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Atomic_Op_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Atomic_Op_T.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Atomic_Op_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Atomic_Op.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/ORB.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/SystemException.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/SystemException.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/ORB_Constants.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/IOP_IORC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/String_Manager_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Argument_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Argument.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/ParameterModeC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Argument_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Argument_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Arg_Traits_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Any_Insert_Policy_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/UB_String_Argument_T.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/UB_String_Argument_T.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/UB_String_Argument_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/CDR.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_Version.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_Version.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Cache_Manager.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Null_Mutex.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Hash_Map_Manager_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/ACE.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_math.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_math.h \
+  /usr/include/math.h /usr/include/architecture/i386/math.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_math.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Flag_Manip.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Flag_Manip.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Handle_Ops.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Lib_Find.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Init_ACE.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Sock_Connect.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/netinet/os_in.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_socket.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_uio.h \
+  /usr/include/sys/uio.h /usr/include/sys/socket.h \
+  /usr/include/machine/_param.h /usr/include/netinet/in.h \
+  /usr/include/netinet6/in6.h \
+  /Users/colding/work/src/ACE_wrappers/ace/ACE.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_ctype.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_ctype.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_wctype.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_socket.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/net/os_if.h \
+  /usr/include/net/if.h /usr/include/net/if_var.h \
+  /usr/include/sys/queue.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_stropts.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_stropts.h \
+  /usr/include/sys/ioctl.h /usr/include/sys/ttycom.h \
+  /usr/include/sys/ioccom.h /usr/include/sys/filio.h \
+  /usr/include/sys/sockio.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_stropts.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_QoS.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_socket.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_uio.h \
+  /Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_uio.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor_String.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor_String.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/String_Base.h \
+  /Users/colding/work/src/ACE_wrappers/ace/String_Base_Const.h \
+  /Users/colding/work/src/ACE_wrappers/ace/String_Base.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Min_Max.h \
+  /Users/colding/work/src/ACE_wrappers/ace/String_Base.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Auto_Ptr.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Auto_Ptr.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Auto_Ptr.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor_T.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Functor_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Log_Msg.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Log_Priority.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Log_Msg.inl \
+  /usr/include/c++/4.0.0/iterator \
+  /usr/include/c++/4.0.0/bits/stream_iterator.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Hash_Map_Manager_T.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Hash_Map_Manager_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Cache_Entries.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Descriptor_Interface.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Descriptor_Interface.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Cache_Entries.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Cache_Manager.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Timer.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Event_Handler.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Event_Handler.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Queue.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Pluggable_Messaging_Utils.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/GIOPC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/GIOPC.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Pluggable_Messaging_Utils.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Queue.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Stack.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Queued_Data.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_State.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_State.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Queued_Data.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Stack.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Basic_Stats.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Basic_Stats.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Transport.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/CDR.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode_Adapter.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Service_Object.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Shared_Object.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Shared_Object.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Svc_Conf_Tokens.h \
+  /Users/colding/work/src/ACE_wrappers/ace/DLL.h \
+  /Users/colding/work/src/ACE_wrappers/ace/os_include/os_dlfcn.h \
+  /usr/include/dlfcn.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdbool.h \
+  /usr/include/AvailabilityMacros.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Service_Gestalt.h \
+  /Users/colding/work/src/ACE_wrappers/ace/SString.h \
+  /Users/colding/work/src/ACE_wrappers/ace/SString.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Unbounded_Queue.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Node.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Node.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Unbounded_Queue.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Unbounded_Queue.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Service_Repository.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Recursive_Thread_Mutex.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Recursive_Thread_Mutex.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Service_Repository.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Singleton.h \
+  /Users/colding/work/src/ACE_wrappers/ace/TSS_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/TSS_T.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/TSS_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Thread.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Thread_Adapter.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Thread_Adapter.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Thread.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Singleton.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Singleton.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Object_Manager.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Static_Object_Lock.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Object_Manager.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Managed_Object.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Managed_Object.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Managed_Object.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Framework_Component.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Framework_Component.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Framework_Component_T.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Framework_Component_T.cpp \
+  /Users/colding/work/src/ACE_wrappers/ace/Service_Gestalt.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Service_Object.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service_Base.h \
+  /Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service.inl \
+  /Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/debug.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/IFR_Client_Adapter.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Configurable_Refcount.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Configurable_Refcount.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Object.inl TestC.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Collocation_Proxy_Broker.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Collocation_Strategy.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServer.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/portableserver_export.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServerC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/POAC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/AnyTypeCode_methods.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/TAO_AnyTypeCode_Export.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/Policy_ForwardA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/OctetSeqA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/orb_typesA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PS_ForwardA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PS_ForwardC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdAssignmentPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdAssignmentPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/UShortSeqC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/CurrentC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PolicyC.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/PolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdUniquenessPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdUniquenessPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ImplicitActivationPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ImplicitActivationPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/LifespanPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/LifespanPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/RequestProcessingPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/RequestProcessingPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ServantRetentionPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ServantRetentionPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ThreadPolicyA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ThreadPolicyC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/POAManagerC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/POAManagerFactoryC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PS_CurrentC.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/CurrentA.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServer_Functions.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServer_WFunctions.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_Base.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_var.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_var.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_var.cpp \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Abstract_Servant_Base.h \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/Abstract_Servant_Base.inl \
+  /Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_Base.inl \
+  TestS.inl
+
+Hello.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/pre.h:
+
+TestS.h:
+
+TestC.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/config-all.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/config-lite.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/config-macros.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/config.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/config-macosx-leopard.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/config-g++-common.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/post.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Version.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Versioned_Namespace.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/ace_wchar.h:
+
+/usr/include/c++/4.0.0/cwchar:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++config.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/os_defines.h:
+
+/usr/include/c++/4.0.0/cstddef:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stddef.h:
+
+/usr/include/c++/4.0.0/ctime:
+
+/usr/include/time.h:
+
+/usr/include/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/_structs.h:
+
+/usr/include/sys/_structs.h:
+
+/usr/include/wchar.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+/usr/include/stdio.h:
+
+/usr/include/_wctype.h:
+
+/usr/include/ctype.h:
+
+/usr/include/runetype.h:
+
+/usr/include/c++/4.0.0/cwctype:
+
+/usr/include/wctype.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/ace_wchar.inl:
+
+/usr/include/string.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_main.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/ACE_export.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/ORB.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/UserException.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/TAO_Export.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Exception.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/orbconf.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Basic_Types.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_limits.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_unistd.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_types.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_stddef.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/appleapiopts.h:
+
+/usr/include/machine/types.h:
+
+/usr/include/i386/types.h:
+
+/usr/include/machine/endian.h:
+
+/usr/include/i386/endian.h:
+
+/usr/include/sys/_endian.h:
+
+/usr/include/libkern/_OSByteOrder.h:
+
+/usr/include/libkern/i386/_OSByteOrder.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_inttypes.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdint.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdint.h:
+
+/usr/include/inttypes.h:
+
+/usr/include/unistd.h:
+
+/usr/include/sys/unistd.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/sys/_select.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdio.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdarg.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/limits.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/machine/limits.h:
+
+/usr/include/i386/limits.h:
+
+/usr/include/i386/_limits.h:
+
+/usr/include/sys/syslimits.h:
+
+/usr/include/sys/param.h:
+
+/usr/include/machine/param.h:
+
+/usr/include/i386/param.h:
+
+/usr/include/i386/_param.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h:
+
+/usr/include/sys/signal.h:
+
+/usr/include/machine/signal.h:
+
+/usr/include/i386/signal.h:
+
+/usr/include/i386/_structs.h:
+
+/usr/include/machine/_structs.h:
+
+/usr/include/mach/i386/_structs.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_float.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/float.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_stdlib.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_wait.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_signal.h:
+
+/usr/include/signal.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_ucontext.h:
+
+/usr/include/ucontext.h:
+
+/usr/include/sys/ucontext.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_resource.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_time.h:
+
+/usr/include/sys/time.h:
+
+/usr/include/sys/resource.h:
+
+/usr/include/sys/syscall.h:
+
+/usr/include/sys/wait.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/available.h:
+
+/usr/include/alloca.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Basic_Types.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Global_Macros.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Assert.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_Errno.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_errno.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_errno.h:
+
+/usr/include/errno.h:
+
+/usr/include/sys/errno.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_errno.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_Errno.inl:
+
+/usr/include/c++/4.0.0/new:
+
+/usr/include/c++/4.0.0/exception:
+
+/Users/colding/work/src/ACE_wrappers/ace/Synch_Traits.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Lock.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Lock.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Versioned_Namespace.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Basic_Types.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/CDR_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Default_Constants.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/CDR_Base.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/CORBA_String.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Traits_Base_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Alloc.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/CDR_Stream.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/SStringfwd.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Message_Block.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Time_Value.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_time.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Time_Value.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Truncate.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/If_Then_Else.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Numeric_Limits.h:
+
+/usr/include/c++/4.0.0/limits:
+
+/Users/colding/work/src/ACE_wrappers/ace/Message_Block.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Message_Block_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Message_Block_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Message_Block_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Malloc_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_mman.h:
+
+/usr/include/sys/mman.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/CDR_Stream.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_string.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_string.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_wchar.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_wchar.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_string.h:
+
+/usr/include/memory.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_ctype.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_wchar.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_Memory.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdlib.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdlib.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Object_Manager_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Cleanup.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Cleanup.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_search.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/iosfwd.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/streams.h:
+
+/usr/include/c++/4.0.0/iostream:
+
+/usr/include/c++/4.0.0/ostream:
+
+/usr/include/c++/4.0.0/ios:
+
+/usr/include/c++/4.0.0/iosfwd:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++locale.h:
+
+/usr/include/c++/4.0.0/clocale:
+
+/usr/include/locale.h:
+
+/usr/include/_locale.h:
+
+/usr/include/c++/4.0.0/cstring:
+
+/usr/include/c++/4.0.0/cstdio:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++io.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/gthr.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/gthr-default.h:
+
+/usr/include/pthread.h:
+
+/usr/include/pthread_impl.h:
+
+/usr/include/sched.h:
+
+/usr/include/c++/4.0.0/cctype:
+
+/usr/include/c++/4.0.0/bits/stringfwd.h:
+
+/usr/include/c++/4.0.0/bits/postypes.h:
+
+/usr/include/c++/4.0.0/bits/functexcept.h:
+
+/usr/include/c++/4.0.0/exception_defines.h:
+
+/usr/include/c++/4.0.0/bits/char_traits.h:
+
+/usr/include/c++/4.0.0/bits/stl_algobase.h:
+
+/usr/include/c++/4.0.0/climits:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h:
+
+/usr/include/c++/4.0.0/cstdlib:
+
+/usr/include/c++/4.0.0/bits/stl_pair.h:
+
+/usr/include/c++/4.0.0/bits/cpp_type_traits.h:
+
+/usr/include/c++/4.0.0/bits/stl_iterator_base_types.h:
+
+/usr/include/c++/4.0.0/bits/stl_iterator_base_funcs.h:
+
+/usr/include/c++/4.0.0/bits/concept_check.h:
+
+/usr/include/c++/4.0.0/bits/stl_iterator.h:
+
+/usr/include/c++/4.0.0/debug/debug.h:
+
+/usr/include/c++/4.0.0/cassert:
+
+/usr/include/assert.h:
+
+/usr/include/c++/4.0.0/bits/localefwd.h:
+
+/usr/include/c++/4.0.0/bits/ios_base.h:
+
+/usr/include/c++/4.0.0/bits/atomicity.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/atomic_word.h:
+
+/usr/include/c++/4.0.0/bits/locale_classes.h:
+
+/usr/include/c++/4.0.0/string:
+
+/usr/include/c++/4.0.0/memory:
+
+/usr/include/c++/4.0.0/bits/allocator.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/c++allocator.h:
+
+/usr/include/c++/4.0.0/ext/new_allocator.h:
+
+/usr/include/c++/4.0.0/bits/stl_construct.h:
+
+/usr/include/c++/4.0.0/bits/stl_uninitialized.h:
+
+/usr/include/c++/4.0.0/bits/stl_raw_storage_iter.h:
+
+/usr/include/c++/4.0.0/bits/stl_function.h:
+
+/usr/include/c++/4.0.0/bits/basic_string.h:
+
+/usr/include/c++/4.0.0/algorithm:
+
+/usr/include/c++/4.0.0/bits/stl_algo.h:
+
+/usr/include/c++/4.0.0/bits/stl_heap.h:
+
+/usr/include/c++/4.0.0/bits/stl_tempbuf.h:
+
+/usr/include/c++/4.0.0/bits/basic_string.tcc:
+
+/usr/include/c++/4.0.0/streambuf:
+
+/usr/include/c++/4.0.0/bits/streambuf.tcc:
+
+/usr/include/c++/4.0.0/bits/basic_ios.h:
+
+/usr/include/c++/4.0.0/bits/streambuf_iterator.h:
+
+/usr/include/c++/4.0.0/bits/locale_facets.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/ctype_base.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/ctype_inline.h:
+
+/usr/include/c++/4.0.0/bits/codecvt.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/time_members.h:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/messages_members.h:
+
+/usr/include/c++/4.0.0/bits/basic_ios.tcc:
+
+/usr/include/c++/4.0.0/bits/ostream.tcc:
+
+/usr/include/c++/4.0.0/locale:
+
+/usr/include/c++/4.0.0/bits/locale_facets.tcc:
+
+/usr/include/c++/4.0.0/typeinfo:
+
+/usr/include/c++/4.0.0/istream:
+
+/usr/include/c++/4.0.0/bits/istream.tcc:
+
+/usr/include/c++/4.0.0/fstream:
+
+/usr/include/c++/4.0.0/i686-apple-darwin9/bits/basic_file.h:
+
+/usr/include/c++/4.0.0/bits/fstream.tcc:
+
+/usr/include/c++/4.0.0/iomanip:
+
+/usr/include/c++/4.0.0/functional:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/CORBA_String.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/CORBA_macros.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Exception_Macros.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Exception.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/UserException.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/orb_typesC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/objectid.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/CORBA_methods.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/VarOut_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/VarOut_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/VarOut_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Pseudo_VarOut_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/varbase.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Pseudo_VarOut_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Pseudo_VarOut_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Var_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Var_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Var_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Out_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Out_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Seq_Out_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Octet_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Value_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Value_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Value_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Generic_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Range_Checking_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/checked_iterator.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Basic_String_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Reference_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Traits_Base_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Sequence_Element_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Const_Sequence_Element_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Object_Reference_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Reference_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Traits_Base_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Objref_VarOut_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Objref_VarOut_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Objref_VarOut_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Environment.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/default_environment.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Environment.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Generic_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Sequence_Element_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Reference_Const_Sequence_Element_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Array_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Array_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Array_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Array_VarOut_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Array_VarOut_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Array_VarOut_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Unbounded_Sequence_CDR_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Value_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Value_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Basic_String_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Reference_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Object_Reference_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Reference_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Array_Sequence_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Array_Allocation_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Bounded_Sequence_CDR_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Policy_ForwardC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/ServicesC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/OctetSeqC.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Thread_Mutex.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_Thread.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_pthread.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_sched.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Base_Thread_Adapter.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_Log_Msg_Attributes.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_Log_Msg_Attributes.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Base_Thread_Adapter.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_sem.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_ipc.h:
+
+/usr/include/sys/ipc.h:
+
+/usr/include/sys/sem.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_semaphore.h:
+
+/usr/include/semaphore.h:
+
+/usr/include/sys/fcntl.h:
+
+/usr/include/sys/semaphore.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_signal.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_signal.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_macros.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_Thread.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_mman.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_mman.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_fcntl.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_fcntl.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_stat.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/fcntl.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_fcntl.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_unistd.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_unistd.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_utsname.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_utsname.h:
+
+/usr/include/sys/utsname.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdio.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_stdio.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_pwd.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_pwd.h:
+
+/usr/include/pwd.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_pwd.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_stat.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_stat.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_time.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_time.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Thread_Mutex.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Guard_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Guard_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/RW_Thread_Mutex.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/RW_Mutex.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/RW_Mutex.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/RW_Thread_Mutex.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Guard_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Atomic_Op.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Atomic_Op_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Atomic_Op_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Atomic_Op_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Atomic_Op.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/ORB.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/SystemException.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/SystemException.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/ORB_Constants.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/IOP_IORC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/String_Manager_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Argument_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Argument.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/ParameterModeC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Argument_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object_Argument_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Arg_Traits_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Any_Insert_Policy_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/UB_String_Argument_T.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/UB_String_Argument_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/UB_String_Argument_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/CDR.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_Version.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_Version.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Cache_Manager.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Null_Mutex.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Hash_Map_Manager_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/ACE.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_math.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_math.h:
+
+/usr/include/math.h:
+
+/usr/include/architecture/i386/math.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_math.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Flag_Manip.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Flag_Manip.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Handle_Ops.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Lib_Find.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Init_ACE.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Sock_Connect.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/netinet/os_in.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_socket.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/sys/os_uio.h:
+
+/usr/include/sys/uio.h:
+
+/usr/include/sys/socket.h:
+
+/usr/include/machine/_param.h:
+
+/usr/include/netinet/in.h:
+
+/usr/include/netinet6/in6.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/ACE.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_ctype.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_ctype.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_wctype.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_socket.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/net/os_if.h:
+
+/usr/include/net/if.h:
+
+/usr/include/net/if_var.h:
+
+/usr/include/sys/queue.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_stropts.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_stropts.h:
+
+/usr/include/sys/ioctl.h:
+
+/usr/include/sys/ttycom.h:
+
+/usr/include/sys/ioccom.h:
+
+/usr/include/sys/filio.h:
+
+/usr/include/sys/sockio.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_stropts.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_QoS.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_socket.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_uio.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/OS_NS_sys_uio.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor_String.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor_String.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/String_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/String_Base_Const.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/String_Base.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Min_Max.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/String_Base.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Auto_Ptr.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Auto_Ptr.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Auto_Ptr.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Functor_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Log_Msg.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Log_Priority.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Log_Msg.inl:
+
+/usr/include/c++/4.0.0/iterator:
+
+/usr/include/c++/4.0.0/bits/stream_iterator.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Hash_Map_Manager_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Hash_Map_Manager_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Cache_Entries.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Descriptor_Interface.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Descriptor_Interface.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Cache_Entries.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Cache_Manager.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport_Timer.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Event_Handler.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Event_Handler.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Queue.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Pluggable_Messaging_Utils.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/GIOPC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/GIOPC.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Pluggable_Messaging_Utils.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Queue.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Stack.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Queued_Data.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_State.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/GIOP_Message_State.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Queued_Data.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Incoming_Message_Stack.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Basic_Stats.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Basic_Stats.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Transport.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/CDR.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode_Adapter.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Service_Object.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Shared_Object.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Shared_Object.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Svc_Conf_Tokens.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/DLL.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/os_include/os_dlfcn.h:
+
+/usr/include/dlfcn.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdbool.h:
+
+/usr/include/AvailabilityMacros.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Service_Gestalt.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/SString.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/SString.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Unbounded_Queue.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Node.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Node.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Unbounded_Queue.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Unbounded_Queue.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Service_Repository.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Recursive_Thread_Mutex.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Recursive_Thread_Mutex.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Service_Repository.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Singleton.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/TSS_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/TSS_T.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/TSS_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Thread.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Thread_Adapter.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Thread_Adapter.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Thread.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Singleton.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Singleton.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Object_Manager.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Static_Object_Lock.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Object_Manager.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Managed_Object.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Managed_Object.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Managed_Object.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Framework_Component.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Framework_Component.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Framework_Component_T.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Framework_Component_T.cpp:
+
+/Users/colding/work/src/ACE_wrappers/ace/Service_Gestalt.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Service_Object.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service.inl:
+
+/Users/colding/work/src/ACE_wrappers/ace/Dynamic_Service.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/debug.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/IFR_Client_Adapter.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Configurable_Refcount.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Configurable_Refcount.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Object.inl:
+
+TestC.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Collocation_Proxy_Broker.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Collocation_Strategy.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServer.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/portableserver_export.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServerC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/POAC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/AnyTypeCode_methods.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/TAO_AnyTypeCode_Export.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/Policy_ForwardA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/OctetSeqA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/orb_typesA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PS_ForwardA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PS_ForwardC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdAssignmentPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdAssignmentPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/UShortSeqC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/CurrentC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PolicyC.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/PolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdUniquenessPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/IdUniquenessPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ImplicitActivationPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ImplicitActivationPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/LifespanPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/LifespanPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/RequestProcessingPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/RequestProcessingPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ServantRetentionPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ServantRetentionPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ThreadPolicyA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/ThreadPolicyC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/POAManagerC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/POAManagerFactoryC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PS_CurrentC.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/AnyTypeCode/CurrentA.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServer_Functions.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/PortableServer_WFunctions.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_var.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_var.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_var.cpp:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Abstract_Servant_Base.h:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/Abstract_Servant_Base.inl:
+
+/Users/colding/work/src/ACE_wrappers/TAO/tao/PortableServer/Servant_Base.inl:
+
+TestS.inl:
