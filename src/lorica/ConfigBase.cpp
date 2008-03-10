@@ -23,15 +23,17 @@
 #include "config.h"
 #endif
 
-#ifndef ACE_WIN32
-#include "defines/pathdefs.h"
-#endif
-
 #include <iostream>
 #include <ace/OS_NS_stdlib.h>
 
 #include "ConfigBase.h"
 #include "debug.h"
+
+#ifdef ACE_WIN32
+#include "defines/windefs.h"
+#else
+#include "defines/pathdefs.h"
+#endif
 
 const int Lorica::Config::SYS_PORT = -1;
 
@@ -230,12 +232,6 @@ Lorica::Config::get_orb_options(void)
 	// app name required to ensure proper argument alignment
 	orb_args_.push_back(LORICA_EXE_NAME);
 
-#ifdef ACE_WIN32
-	orb_args_.push_back("lorica_proxy");
-#else
-	orb_args_.push_back(LORICA_EXE_NAME);
-#endif
-
 	std::string opts = this->get_value ("ORB_Option");
 	if (!opts.empty()) {
 		size_t pos = 0;
@@ -296,17 +292,13 @@ Lorica::Config::get_ifr_options(const bool Debug)
 		return get_ifr_options_copy();
 
 	// app name required to ensure proper argument alignment
-#ifdef ACE_WIN32
-	ifr_args_.push_back("ifr_service");
-#else
 	ifr_args_.push_back(IFR_SERVICE_EXE_NAME);
-#endif
 
 	this->ifr_args_.push_back("-o");
 	std::string opt = this->get_value("IFR_IOR_FILE");
 	if (!opt.length()) {
 #ifdef ACE_WIN32
-		opt = "ifr.ior";
+		opt = IFR_SERVICE_IOR_FILE;
 #else
 		if (Debug)
 			opt = "ifr.ior";
@@ -324,7 +316,7 @@ Lorica::Config::get_ifr_options(const bool Debug)
 		opt = this->get_value("IFR_CACHE");
 		if (!opt.length()) {
 #ifdef ACE_WIN32
-			opt = "ifr.cache";
+			opt = IFR_SERVICE_CACHE_FILE;
 #else
 			if (Debug)
 				opt = "ifr.cache";

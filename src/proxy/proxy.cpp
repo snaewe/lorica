@@ -23,10 +23,6 @@
 #include "config.h"
 #endif
 
-#ifndef ACE_WIN32
-#include "defines/pathdefs.h"
-#endif
-
 #include "proxy/ReferenceMapper_i.h"
 #include "proxy/proxy.h"
 #include "lorica/FileConfig.h"
@@ -47,6 +43,12 @@
 #include <ace/OS_NS_unistd.h>
 #include <ace/Service_Gestalt.h>
 #include <ace/Time_Value.h>
+
+#ifdef ACE_WIN32
+#include "defines/windefs.h"
+#else
+#include "defines/pathdefs.h"
+#endif
 
 Lorica::Proxy* Lorica::Proxy::this_ = 0;
 
@@ -258,7 +260,7 @@ Lorica::Proxy::configure(Config & config)
 		this->pid_file_ = config.get_value("PID_FILE");
 		if (!this->pid_file_.length()) {
 #ifdef ACE_WIN32
-			this->pid_file_ = "lorica.pid";
+			this->pid_file_ = LORICA_PID_FILE;
 #else
 			if (debug_)
 				this->pid_file_ = "lorica.pid";
@@ -399,7 +401,7 @@ Lorica::Proxy::configure(Config & config)
 		this->ior_file_ = config.get_value("IOR_FILE");
 		if (!this->ior_file_.length()) {
 #ifdef ACE_WIN32
-			this->ior_file_ = "lorica.ior";
+			this->ior_file_ = LORICA_IOR_FILE;
 #else
 			if (debug_)
 				this->ior_file_ = "lorica.ior";

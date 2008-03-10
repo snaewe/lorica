@@ -31,10 +31,6 @@
 #include "config.h"
 #endif
 
-#ifndef ACE_WIN32
-#include "defines/pathdefs.h"
-#endif
-
 #include <unistd.h>
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
@@ -49,6 +45,11 @@
 #include "lorica/debug.h"
 #include "lorica/MapperRegistry.h"
 
+#ifdef ACE_WIN32
+#include "defines/windefs.h"
+#else
+#include "defines/pathdefs.h"
+#endif
 
 #ifndef ACE_WIN32
 typedef enum {
@@ -228,11 +229,7 @@ Lorica::Service_Loader::Service_Loader(const char *progname)
 	  service_command_(SC_NONE),
 	  no_fork_(false),
 	  debug_(false),
-#ifdef ACE_WIN32
-	  config_file_("lorica.conf"),
-#else
 	  config_file_(LORICA_CONF_FILE),
-#endif
 	  corba_debug_level_(0)
 {
 }
