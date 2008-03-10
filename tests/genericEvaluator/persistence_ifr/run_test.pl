@@ -37,6 +37,8 @@ foreach $i (@ARGV) {
     }
 }
 
+unlink  ("ifr.cache");
+
 $mappedfile = PerlACE::LocalFile ("mapped.ior");
 unlink $mappedfile;
 
@@ -54,9 +56,7 @@ unlink $storefile;
 
 $PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf");
 
-$IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr",
-                              " -ORBInitRef InterfaceRepository=file://$ifrfile ".
-                              " test.idl");
+$IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", " -ORBInitRef InterfaceRepository=file://$ifrfile  test.idl");
 
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile");
@@ -73,7 +73,7 @@ if (PerlACE::waitforfile_timed ($pidfile,
     exit 1;
 }
 
-$idlc_ret = $IDLC->SpawnWaitKill (6);
+$idlc_ret = $IDLC->SpawnWaitKill (60);
 if (($idlc_ret != 0) || ($? != 0)) {
   if ($idlc_ret == 0) { $idlc_ret = $?; }
   print STDERR "Error: IDL Compiler returned $idlc_ret\n";

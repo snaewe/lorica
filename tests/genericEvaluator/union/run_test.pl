@@ -41,6 +41,8 @@ foreach $i (@ARGV) {
     }
 }
 
+unlink  ("ifr.cache");
+
 $mappedfile = PerlACE::LocalFile ("mapped.ior");
 unlink $mappedfile;
 
@@ -56,7 +58,7 @@ unlink "server.log";
 
 $ifrfile = "ifr.ior";
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf -1 1");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf -l 1");
 
 $IDLC = new PerlACE::Process ("$ACE_ROOT/bin/tao_ifr",
                               " -ORBInitRef InterfaceRepository=file://$ifrfile ".

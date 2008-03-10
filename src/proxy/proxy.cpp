@@ -44,6 +44,8 @@
 #include <ace/Service_Gestalt.h>
 #include <ace/Time_Value.h>
 
+#include <libgen.h>
+
 #ifdef ACE_WIN32
 #include "defines/windefs.h"
 #else
@@ -274,11 +276,12 @@ Lorica::Proxy::configure(Config & config)
 				this->pid_file_ = "lorica.pid";
 			else
 				this->pid_file_ = LORICA_PID_FILE;
-			if (!this->get_lock(this->pid_file_.c_str()))
-				throw InitError();
 #endif
 		}
-
+#ifndef ACE_WIN32
+		if (!this->get_lock(this->pid_file_.c_str()))
+			throw InitError();
+#endif
 		// Create proxy ORB.
 		int argc = arguments->argc();
 		if (Lorica_debug_level > 2) {

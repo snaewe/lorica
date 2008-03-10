@@ -57,9 +57,9 @@ print "Starting East proxy\n";
 
 $east = $EAST->Spawn ();
 if (PerlACE::waitforfile_timed ($epidfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$pidfile>\n";
-    $EAST->Kill (); $EAST->TimedWait (1);
+				$PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$epidfile>\n";
+    $EAST->Kill (); $EAST->TimedWait (60);
     exit 1;
 }
 
@@ -67,8 +67,8 @@ print "Starting West proxy\n";
 
 $west = $WEST->Spawn ();
 if (PerlACE::waitforfile_timed ($wpidfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$pidfile>\n";
+				$PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$wpidfile>\n";
     $WEST->Kill (); $WEST->TimedWait (1);
     exit 1;
 }
@@ -78,8 +78,8 @@ print "Starting server\n";
 $server = $SV->Spawn ();
 
 if (PerlACE::waitforfile_timed ($mappedfile,
-             $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$pidfile>\n";
+				$PerlACE::wait_interval_for_process_creation) == -1) {
+    print STDERR "ERROR: cannot find file <$mappedfile>\n";
     $SV->Kill (); $SV->TimedWait (1);
     $EAST->Kill (); $EAST->TimedWait (1);
     $WEST->Kill (); $WEST->TimedWait (1);

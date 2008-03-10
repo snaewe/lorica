@@ -41,6 +41,8 @@ foreach $i (@ARGV) {
     }
 }
 
+unlink  ("ifr.cache");
+
 $mappedfile = PerlACE::LocalFile ("mapped.ior");
 unlink $mappedfile;
 

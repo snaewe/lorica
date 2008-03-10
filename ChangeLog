@@ -1,3 +1,8 @@
+2008-03-10  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp (Proxy::configure): Fix writing of
+	PID file on non-Windows.
+
 2008-03-09  Jules Colding  <colding@42tools.com>
 
 	* tests: All test cases now build by autotools.

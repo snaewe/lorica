@@ -40,16 +40,16 @@ foreach $i (@ARGV) {
 $pidfile = PerlACE::LocalFile("lorica.pid");
 $ifrfile = "ifr.ior";
 
+unlink  ("ifr.cache");
+
 unlink $pidfile;
 unlink "client.log";
 unlink "proxy.log";
 unlink "server.log";
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf -110 -c2");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", " -n -d -f test.conf -l10 -c2");
 
-$IDLC = new PerlACE::Process ("$ACE_ROOT/bin/tao_ifr",
-                              " -ORBInitRef InterfaceRepository=file://$ifrfile ".
-                              " Test.idl");
+$IDLC = new PerlACE::Process ("$ACE_ROOT/bin/tao_ifr", " -ORBInitRef InterfaceRepository=file://$ifrfile  Test.idl");
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug");
 
