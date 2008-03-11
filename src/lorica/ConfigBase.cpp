@@ -324,7 +324,6 @@ Lorica::Config::get_ifr_options(const bool Debug)
 				opt = IFR_SERVICE_CACHE_FILE;
 #endif
 		}
-
 		this->ifr_args_.push_back(opt.c_str());
 	}
 
