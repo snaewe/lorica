@@ -69,13 +69,12 @@ bool
 Lorica::FileConfig::load(void)
 {
 	if (file_name_.empty())
-		ACE_ERROR_RETURN((LM_ERROR,
-				  "FileConfig::load: file_name_ is empty\n"),
+		ACE_ERROR_RETURN((LM_ERROR, "FileConfig::load: file_name_ is empty\n"),
 				 false);
 	this->unload();
 
 	std::ifstream config_file(file_name_.c_str());
-	if (!config_file)
+	if (!config_file.is_open())
 		ACE_ERROR_RETURN((LM_ERROR,
 				  "FileConfig::load: could not open file %s\n",
 				  file_name_.c_str()),

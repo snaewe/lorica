@@ -36,13 +36,13 @@
 #define LORICA_DEFAULT_OUTSIDE_FACING_PORT_SEC (4083)     // Default Lorica outside facing secure port
 #define LORICA_DEFAULT_OUTSIDE_FACING_PORT_SEC_STR "4083" // Default Lorica outside facing secure port (stringified)
 
-#define LORICA_EXE_NAME        "lorica"
+#define LORICA_EXE_NAME        "lorica.exe"
 #define LORICA_IOR_FILE        "lorica.ior"
 #define LORICA_PID_FILE        "lorica.pid"
 #define LORICA_CONF_FILE       "lorica.conf"
 #define IFR_SERVICE_IOR_FILE   "ifr.ior"
 #define IFR_SERVICE_CACHE_FILE "ifr.cache"
-#define IFR_SERVICE_EXE_NAME   "ifr_service"
+#define IFR_SERVICE_EXE_NAME   "IFR_Service.exe"
 
 #endif // ACE_WIN32
 

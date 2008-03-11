@@ -178,7 +178,6 @@ fork_done:
 
 	return EXIT_DAEMON;
 }
-
 #endif // !ACE_WIN32
 
 namespace Lorica
@@ -337,43 +336,32 @@ Lorica::Service_Loader::parse_args(int argc,
 		}
 	}
 
-#if defined (ACE_WIN32)
-	if ((SC_NONE == service_command_) && (!debug_)) {
-		ACE_DEBUG((LM_INFO,
-			   ACE_TEXT("You must use a service command if you are running in non-debug mode"),
-			   0));
-
-		ACE_OS::exit(1);
-	}
-#endif /* ACE_WIN32 */
-
 	return 0;
 }
 
 int
 Lorica::Service_Loader::run_service_command(void)
 {
+#if defined (ACE_WIN32)
+	Lorica::SERVICE::instance()->name(ACE_TEXT("Lorica"),
+					  ACE_TEXT("Lorica IIOP Firewall"));
+
 	if (service_command_ == SC_NONE)
 		return 0;
-#if defined (ACE_WIN32)
-	Lorica::SERVICE::instance ()->name(ACE_TEXT("Lorica"),
-					   ACE_TEXT("Lorica CORBA Firewall Proxy"));
+
 	int result = 1;
 	switch (service_command_) {
 	case SC_INSTALL:
 	{
-		// TODO: path for the executable is not defined yet.
-		const DWORD MAX_PATH_LENGTH = 4096;
-		char pathname[MAX_PATH_LENGTH];
-
-		DWORD length = ACE_TEXT_GetModuleFileName(0,
+		char pathname[_MAX_PATH] = { '\0' };
+		DWORD length = ACE_TEXT_GetModuleFileName(NULL,
 							  pathname,
-							  MAX_PATH_LENGTH);
+							  _MAX_PATH);
 
-		// Append the command used for running the implrepo as a service
-		ACE_OS::strcat (pathname, ACE_TEXT(" -s"));
-		if (-1 == Lorica::SERVICE::instance()->insert(SERVICE_DEMAND_START, SERVICE_ERROR_NORMAL, pathname)) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("insert")));
+		// Append the command used for running as a service
+		ACE_OS::strcat(pathname, ACE_TEXT(" -s"));
+		if (-1 == Lorica::SERVICE::instance()->insert(SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, pathname)) {
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("Error inserting service")));
 			result = -1;
 		}
 
@@ -381,19 +369,19 @@ Lorica::Service_Loader::run_service_command(void)
 	}
 	case SC_REMOVE :
 		if (-1 == Lorica::SERVICE::instance()->remove()) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("remove")));
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("remove")));
 			result = -1;
 		}
 		break;
 	case SC_START :
 		if (-1 == Lorica::SERVICE::instance()->start_svc()) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("start")));
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("start")));
 			result = -1;
 		}
 		break;
 	case SC_STOP :
 		if (-1 == Lorica::SERVICE::instance()->stop_svc()) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%p\n"), ACE_TEXT("stop")));
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("stop")));
 			result = -1;
 		}
 		break;
@@ -403,14 +391,12 @@ Lorica::Service_Loader::run_service_command(void)
 
 	return result;;
 #else /* !ACE_WIN32 */
-	ACE_ERROR ((LM_ERROR,
-		    ACE_TEXT("NT Service not supported on this platform")));
+	ACE_ERROR ((LM_ERROR, ACE_TEXT("NT Service not supported on this platform")));
 	return -1;
 #endif /* ACE_WIN32 */
 }
 
 #if defined (ACE_WIN32)
-
 // Define a function to handle Ctrl+C to cleanly shut this down.
 static BOOL __stdcall
 ConsoleHandler(DWORD ctrlType)
@@ -422,10 +408,8 @@ ConsoleHandler(DWORD ctrlType)
 
 ACE_NT_SERVICE_DEFINE(Lorica,
 		      Lorica::NT_Service,
-		      ACE_TEXT ("Lorica CORBA Firewall Proxy"));
-
+		      ACE_TEXT ("Lorica IIOP Firewall"));
 #endif /* ACE_WIN32 */
-
 
 Lorica::Proxy *
 Lorica::Service_Loader::init_proxy(void)
@@ -435,10 +419,8 @@ Lorica::Service_Loader::init_proxy(void)
 		config->init(config_file_, corba_debug_level_);
 	}
 	catch (const Lorica::FileConfig::InitError &) {
-		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT("Proxy could not read %s.\n"),
+		ACE_ERROR((LM_ERROR, ACE_TEXT("Proxy could not read %s.\n"),
 			   this->config_file_.c_str()));
-
 		return 0;
 	}
 
@@ -449,8 +431,7 @@ Lorica::Service_Loader::init_proxy(void)
 		return proxy.release();
 	}
 	catch (const Lorica::Proxy::InitError &) {
-		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT("Proxy initialization failed.\n")));
+		ACE_ERROR((LM_ERROR, ACE_TEXT("Proxy initialization failed.\n")));
 	}
 
 	return 0;
@@ -459,40 +440,22 @@ Lorica::Service_Loader::init_proxy(void)
 int
 Lorica::Service_Loader::run_service(void)
 {
-	if (debug_) {
-		size_t len = strlen(program_name.c_str());
-		char *name = (char*)malloc(len + 4 + 1);
-#ifdef ACE_WIN32
-		sprintf_s(name, len + 4 + 1, "%s.log", program_name.c_str());
-#else
-		snprintf(name, len + 4 + 1, "%s.log", program_name.c_str());
-#endif
-		ofstream *output_file = new ofstream(ACE_TEXT(name), ios::out);
-		free(name);
-
-		if (output_file && (output_file->rdstate() == ios::goodbit))
-			ACE_LOG_MSG->msg_ostream(output_file, 1);
-
-		ACE_LOG_MSG->open(program_name.c_str(), ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
-	} else
-		ACE_LOG_MSG->open(program_name.c_str(), ACE_Log_Msg::SYSLOG);
-
 #if defined (ACE_WIN32)
 	try {
 		Lorica::SERVICE::instance()->proxy(init_proxy());
 	}
 	catch (...) {
 		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT ("%p\n"),
-			   ACE_TEXT ("Couldn't start Lorica server")));
+			   ACE_TEXT("%s\n"),
+			   ACE_TEXT("Couldn't start Lorica server - init_proxy() failed")));
 	}
+
+	ACE_DEBUG((LM_INFO, ACE_TEXT("Starting Lorica service\n")));
 	ACE_NT_SERVICE_RUN(Lorica,
 			   Lorica::SERVICE::instance(),
 			   ret);
-	if (ret == 0) {
-		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT ("%p\n"),
-			   ACE_TEXT ("Couldn't start Lorica server")));
+	if (0 == ret) {
+		ACE_ERROR((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("Couldn't start Lorica server - Service start failed")));
 	}
 
 	return ret;
@@ -529,8 +492,9 @@ Lorica::Service_Loader::run_standalone(void)
 {
 	std::auto_ptr<Proxy>proxy (this->init_proxy());
 
-	ACE_DEBUG((LM_DEBUG,
-		   ACE_TEXT("Lorica [%P] running as a standalone application \n")));
+	ACE_DEBUG((LM_DEBUG, ACE_TEXT("Lorica [%P] running as a standalone application \n")));
+
+	SetConsoleCtrlHandler(&ConsoleHandler, true);
 
 	proxy->activate();
 	proxy->wait();
@@ -551,11 +515,45 @@ ACE_TMAIN(int argc,
 	Lorica::Service_Loader lorica(argv[0]);
 	int result = 0;
 
+#ifdef ACE_WIN32
+	{ // Change current working directory
+		char *c = NULL;
+		char wdir[_MAX_PATH] = { '\0' };
+
+		memcpy(wdir, argv[0], strlen(argv[0]));
+		c = &wdir[strlen(argv[0])-1];
+		while ('\\' != *c)
+			*(c--) = '\0';
+		*c = '\0';
+		SetCurrentDirectory(wdir);
+	}
+#endif
 	result = lorica.parse_args(argc, argv);
 	if (result < 0)
 		exit(EXIT_FAILURE);  // Error
 	else if (result > 0)
 		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
+
+	// initialize ACE logging framework
+	if (!lorica.is_service()) { // ==> if (lorica.debug_) a.k.a. put all logging output in the log file
+		size_t len = strlen("Lorica");
+		char *name = (char*)malloc(len + 4 + 1);
+#ifdef ACE_WIN32
+		sprintf_s(name, len + 4 + 1, "%s.log", "Lorica");
+#else
+		snprintf(name, len + 4 + 1, "%s.log", "Lorica");
+#endif
+		ofstream *output_file = new ofstream(ACE_TEXT(name), ios::out);
+		free(name);
+
+		if (output_file && (output_file->rdstate() == ios::goodbit))
+			ACE_LOG_MSG->msg_ostream(output_file, 1);
+
+		ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
+	} else
+		ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::SYSLOG);
+
+	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica initializing\n")));
 
 	result = lorica.run_service_command();
 	if (result < 0)
