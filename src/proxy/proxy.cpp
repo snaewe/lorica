@@ -44,8 +44,6 @@
 #include <ace/Service_Gestalt.h>
 #include <ace/Time_Value.h>
 
-#include <libgen.h>
-
 #ifdef ACE_WIN32
 #include "defines/windefs.h"
 #else
