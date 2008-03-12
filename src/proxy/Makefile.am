@@ -197,12 +197,15 @@ endif # HAVE_ACE_ROOT
 endif # LORICA_MUST_INSTALL_ACETAO
 
 
+$(LORICA_ROOT)/configurations/evolution-brutus/lorica.conf.evolution-brutus:
+
 lorica.conf:
 
 lorica.ssliop:
 
 sysconf_DATA = \
-	lorica.conf \
+	$(LORICA_ROOT)/configurations/evolution-brutus/lorica.conf.evolution-brutus \
+	lorica.conf                                                                 \
 	lorica.ssliop
 
 if THIS_IS_NOT_A_DISTRIBUTION

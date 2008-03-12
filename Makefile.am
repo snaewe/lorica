@@ -52,6 +52,7 @@ DISTCLEANFILES = \
 
 EXTRA_DIST = \
 	docs                                    \
+	configurations                          \
 	packagemaker                            \
 	ebuild/$(LORICA_NAME).ebuild.in         \
 	ebuild/ChangeLog                        \
