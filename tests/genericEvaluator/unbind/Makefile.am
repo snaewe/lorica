@@ -82,6 +82,12 @@ Test-stamp: $(srcdir)/Test.idl
 	$(TAO_IDL) $(TAO_IDLFLAGS) -Sa -St $(srcdir)/Test.idl
 	@touch "$@"
 
+noinst_HEADERS = \
+	Test.idl   \
+	test.conf  \
+	unbind.mpc \
+	run_test.pl 
+
 #
 # Server
 #
@@ -109,3 +115,10 @@ server_LDADD = \
 	-lTAO                                           \
 	-lACE
 
+if THIS_IS_NOT_A_DISTRIBUTION
+CLEAN_IN_FILES = Makefile.in
+else
+CLEAN_IN_FILES =
+endif
+
+DISTCLEANFILES = *.log *.ior *.pid *.cache $(CLEAN_IN_FILES)

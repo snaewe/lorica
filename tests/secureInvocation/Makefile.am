@@ -83,7 +83,23 @@ Test-stamp: $(srcdir)/Test.idl
 	@touch "$@"
 
 noinst_HEADERS = \
-	Test.idl
+	Test.idl                \
+	test.conf               \
+	client.conf             \
+	run_test.pl             \
+	cacert.pem              \
+	client_cert.pem         \
+	client_key.pem          \
+	client_key_nopasswd.pem \
+	pvtkey-client.pem       \
+	pvtkey.pem              \
+	secureInvocation.mpc    \
+	selfsigncert-client.pem \
+	selfsigncert.pem        \
+	server.conf             \
+	server_cert.pem         \
+	server_key.pem          \
+	server_key_nopasswd.pem
 
 #
 # Client
@@ -129,3 +145,11 @@ server_LDADD = \
 	-lTAO_AnyTypeCode                                \
 	-lTAO                                            \
 	-lACE
+
+if THIS_IS_NOT_A_DISTRIBUTION
+CLEAN_IN_FILES = Makefile.in
+else
+CLEAN_IN_FILES =
+endif
+
+DISTCLEANFILES = *.log *.ior *.pid *.cache $(CLEAN_IN_FILES)

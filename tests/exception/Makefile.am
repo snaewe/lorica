@@ -83,7 +83,10 @@ Test-stamp: $(srcdir)/Test.idl
 	@touch "$@"
 
 noinst_HEADERS = \
-	Test.idl
+	Test.idl      \
+	test.conf     \
+	exception.mpc \
+	run_test.pl 
 
 #
 # Client
@@ -127,3 +130,10 @@ server_LDADD = \
 	-lTAO                \
 	-lACE
 
+if THIS_IS_NOT_A_DISTRIBUTION
+CLEAN_IN_FILES = Makefile.in
+else
+CLEAN_IN_FILES =
+endif
+
+DISTCLEANFILES = *.log *.ior *.pid *.cache $(CLEAN_IN_FILES)
