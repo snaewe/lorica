@@ -38,11 +38,12 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
   AM_CONDITIONAL(LORICA_DARWIN_LEOPARD, false)
   AM_CONDITIONAL(LORICA_LINUX,          false)
   AM_CONDITIONAL(LORICA_FEDORA,         false)
+  AM_CONDITIONAL(LORICA_RHEL,           false)
   AM_CONDITIONAL(LORICA_SUSE,           false)
   AM_CONDITIONAL(LORICA_GENTOO,         false)
   AM_CONDITIONAL(LORICA_DEBIAN,         false)
   AC_ARG_ENABLE(lorica-target,
-		[AS_HELP_STRING([--enable-lorica-target[[[[=fedora/opensuse102/opensuse103/gentoo/ubuntu/darwin]]]]], [Distribution target [default=UNKNOWN]])],
+		[AS_HELP_STRING([--enable-lorica-target[[[[=rhel/fedora/opensuse102/opensuse103/gentoo/ubuntu/darwin]]]]], [Distribution target [default=UNKNOWN]])],
 	      	[],
 	      	enable_lorica_target=UNKNOWN)
 
@@ -64,23 +65,26 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 
   dnl Determine system sub-type
   case "x$enable_lorica_target" in
+	xrhel)
+		lorica_target="RHEL"
+		;;
 	xfedora)
-		lorica_target=Fedora
+		lorica_target="Fedora"
 		;;
 	xopensuse102)
-		lorica_target=OpenSUSE_10_2
+		lorica_target="OpenSUSE_10_2"
 		;;
 	xopensuse103)
-		lorica_target=OpenSUSE_10_3
+		lorica_target="OpenSUSE_10_3"
 		;;
 	xgentoo)
-		lorica_target=Gentoo
+		lorica_target="Gentoo"
 		;;
 	xubuntu)
-		lorica_target=Ubuntu
+		lorica_target="Ubuntu"
 		;;
 	xdarwin)
-		lorica_target=Darwin
+		lorica_target="Darwin"
 		;;
 	*)
 		lorica_target="UNKNOWN"
@@ -90,7 +94,11 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 		if test -f /etc/redhat-release; then
 			is_fedora="`grep Fedora /etc/redhat-release >/dev/null ; echo $?`"
 			if test "x$is_fedora" = "x0"; then
-			   	lorica_target=Fedora
+			   	lorica_target="Fedora"
+			fi
+			is_rhel="`grep 'Red Hat Enterprise Linux' /etc/redhat-release >/dev/null ; echo $?`"
+			if test "x$is_rhel" = "x0"; then
+			   	lorica_target="RHEL"
 			fi
 		else
 			AC_CHECK_PROG(HAVE_LSB_RELEASE, [lsb_release], yes, no)
@@ -98,6 +106,9 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 				lsb_name=`lsb_release -si`
 				lsb_version=`lsb_release -sr`
 				case "x$lsb_name" in
+					xRedHatEnterprise*)
+						lorica_target="RHEL"
+						;;
 					"xSUSE LINUX")
 						if test "x$lsb_version" = "x10.2"; then
 							lorica_target="OpenSUSE_10_2"
@@ -120,6 +131,19 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 
   dnl Determine system sub-type variant
   case "x$lorica_target" in
+        xRHEL)
+		AM_CONDITIONAL(LORICA_RHEL, true)
+		AC_DEFINE([LORICA_RHEL], [1], [Define if this is a Red Hat Enterprise Linux based distribution])
+		if test -f /etc/redhat-release; then
+			rhel_release="`grep Nahant /etc/redhat-release >/dev/null ; echo $?`"
+			if test "x$rhel_release" = "x0"; then
+				LORICA_DIST_RELEASE="Red%20Hat%20Enterprise%20Linux%204"
+			fi
+			if test "x$LORICA_DIST_RELEASE" = "x"; then
+				AC_MSG_ERROR([[Unable to determine Red Hat Enterprise Linux release number]])
+			fi
+		fi
+		;;
         xDarwin)
 		system_release=`uname -r`
 		system_version=${system_release:0:1}
