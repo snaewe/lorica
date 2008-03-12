@@ -1,0 +1,274 @@
+#
+#             LORICA DEFAULT CONFIGURATION FILE
+#
+#             Copyright (C) 2008 OMC Denmark ApS
+#
+#   COPYING AND DISTRIBUTION OF THIS FILE, WITH OR WITHOUT 
+#   MODIFICATION, ARE PERMITTED IN ANY MEDIUM WITHOUT ROYALTY 
+#   PROVIDED THE COPYRIGHT NOTICE AND THIS NOTICE ARE PRESERVED.
+#
+#                       *  ***  * 
+#
+#   IT IS OF VITAL IMPORTANCE THAT THIS FILE IS KEPT SECURE
+#   AND INACCESSIBLE BY ANYONE EXCEPT AUTHORIZED PERSONNEL.
+#
+#                       *  ***  * 
+#
+#           CUSTOMIZED FOR BRUTUS SERVER INTEGRATION
+#
+# This configuration file has been specially crafted to support
+# integration with a Lorica shielded Brutus Server. It is assumed 
+# that the remote Lorica is configured with a collocated IFR and 
+# a persistence Interface Repository cache. 
+#
+# It is furthermore assumed that the remote Lorica server is found
+# on the DNS resolvable host named <lorica.domain.test> and that it
+# is using the standard port. You need to correct this to the 
+# actual DNS name of your remote Lorica server and possibly another 
+# port.
+#
+# Other configurations are possible but then you need to generate
+# the Interface Reposotory cache yourself. See the Lorica 
+# documentation on how to do that.
+#
+#                       *  ***  * 
+#
+# Syntax is: 
+#          <> ==> Required, [] ==> Optional 
+#
+#    token/values:
+#
+#          "<TOKEN><WHITESPACE><VALUE(S)>[WHITESPACE]"
+#
+#    comment:
+#
+#          "#[ANY COMBINATION OF COMMENT TEXT AND WHITESPACE]"
+#
+# The tokens and values in this configuration file are case
+# sensitive.
+#
+# Every option is clearly marked MANDATORY it is otherwise
+# optional.
+# 
+# It is not allowed to start a line with a whitespace
+# character unless that line is composed of whitespace 
+# characters only. A whitespace character is defined as
+# ' ', '\t' or '\r'.
+# 
+# The order of normal configuration tokens does not matter. Any
+# trailing whitespace is ignored.
+#
+# The keyword token "IFR_CmdOption" and "ORB_Option" is 
+# recognized by the parser to the effect that on WIndows you can 
+# do things like:
+#
+# ORB_Option -ORBDebug
+# ORB_Option -ORBLogFile
+# ORB_Option C:\orb.log
+#
+# While on e.g. Linux you can do:
+#
+# ORB_Option -ORBDebug
+# ORB_Option -ORBLogFile
+# ORB_Option /home/some_user/tmp/orb.log
+#
+# The ORB in question will then be given the following 
+# command-line options:
+#
+# "-ORBDebug -ORBLogFile C:\orb.log"
+#
+# The order is obviously important when specifying ORB options.
+# The placement of the ORB options in the configuration file
+# does not matter as long as their internal ordering are 
+# kept. ORB options can thus be interplaced in between normal
+# options if so desired.
+#
+# IFR_CmdOption is parsed to construct command line options for
+# any collated IFR service.
+#
+# ORB_Option is parsed to construct command line options 
+# for any ORB which is used by Lorica. 
+#
+
+
+#################################################################
+#                                                               #
+#          ! !!! ! CONFIGURATION OPTIONS BELOW ! !!! !          #
+#                                                               #
+
+
+#################################################################
+#                                                               #
+#                     TCP/IP Options                            #
+#                                                               #
+#################################################################
+
+#
+# ORB endpoints. It is specified in a format that gives the 
+# hostname and port number to be used in the endpoint. The function 
+# of the hostname is to identify the NIC on which the endpoint is 
+# bound. The hostname may be a numeric IP address or a resolvable
+# hostname.
+#
+# The NIC device(s) is automatically chosen if not specified.
+#
+# IIOP endpoints are used for unencrypted communications through 
+# friendly networks such as a corporate Intranet. SSLIOP endpoints 
+# are for secure communication through hostile networks such as 
+# the Internet. The specification for an IIOP endpoint are 
+# embedded within the specification for an SSLIOP endpoint.
+# 
+# Therefore:
+# 
+# DO NOT SPECIFY BOTH IIOP AND SSLIOP ENDPOINTS, BUT ONE OF THESE 
+# IS REQUIRED IN ALL CONFIGURATIONS!
+#
+# The format of a Lorica endpoint is:
+#
+# [HOSTNAME]<:PORT NUMBER>[/ssl_port=SSL_PORT_NUMBER]
+#
+# IPv6 endpoints are specified using '[' and ']' as hostname 
+# delimiters. Please do not be confused here. These delimiter 
+# characters are used verbatim when specifying IPv6 endpoints.
+# 
+# Examples:
+#
+# IPv4 endpoint with no hostname on port 123
+# ===========================================
+#   :123
+#
+# IPv4 endpoints with hostnames on port 123
+# ============================================
+# ipv4_host.test.com:123
+# 127.0.0.1:123/ssl_port=124
+#
+# IPv6 endpoint with no hostname on port 123
+# ===========================================
+#   []:123
+#
+# IPv6 endpoints with hostnames on port 123
+# ============================================
+# [ipv6_host.test.com]:123/ssl_port=124
+# [::1]:123
+#
+
+# The hostname and port used to listen for connections coming
+# from inside the network enclave. This includes connections
+# used to register new object references for mapping, or for
+# clients tunneling new connections through the proxy.
+#
+# Do not change the port numbers unless you have a good reason
+# to do so. The default ports are registered at IANA:
+#
+# http://iana.org/assignments/port-numbers
+#
+#Internal_Address localhost:4080/ssl_port=4081
+#Internal_Address localhost:4080
+
+# The hostname and port used to listen for connections coming
+# from outside the protected network enclave.
+#
+# Do not change the port numbers unless you have a good reason
+# to do so. The default ports are registered at IANA:
+#
+# http://iana.org/assignments/port-numbers
+#
+#External_Address :4082/ssl_port=4083
+#External_Address :4082
+
+# MANDATORY if ssl_port is specified on any endpoint.
+#
+# Enables SSL. You must use this option for SSL to work.
+#
+#ORB_Option -ORBSvcConf /etc/lorica.ssliop
+
+
+#################################################################
+#                                                               #
+#                   Evaluator Options                           #
+#                                                               #
+#################################################################
+
+# Takes a yes/no value indicating that the Null evaluator may
+# support any type not explicitly handled by any other evaluator.
+# This option should only be used for debugging (default is no).
+#
+#Null_Evaluator_Any no
+
+# Takes a yes/no value indicating that the Generic evaluator is
+# to be loaded. The Generic evaluator supports any type defined
+# in the Interface Repository ID (default is no). 
+#
+Generic_Evaluator yes
+
+
+#################################################################
+#                                                               #
+#               Interface Repository Options                    #
+#                                                               #
+#################################################################
+
+# The Generic evaluator makes use of the Interface Repository
+# (IFR) you may obtain a performance boost by collocating the
+# IFR with the proxy instance (default is yes).
+#
+Collocate_IFR no
+
+# Remote IFR location used by the generic evaluator. This is
+# mandatory if you specified "no" to "Collocate_IFR" above.
+# This remote IFR may be another IFR which is collated by 
+# a remote Lorica instace. 
+#
+# You must use the appropriate port when specifying the corbaloc
+# reference below. It must reflect the value of "External_Address"
+# for the remote Lorica instance if you are using a remotely
+# collated IFR service. Alternative it must use the actual value
+# as used by a remote IFR server instance.
+#
+ORB_Option -ORBInitRef InterfaceRepository=corbaloc:iiop:lorica.domain.test:4082/InterfaceRepository
+
+# Full path to IFR reference file. 
+# Default is "/var/cache/lorica/ifr.ior" on anything but Windows
+# where the default is "ifr.ior" in the current working directory.
+#
+#IFR_IOR_FILE ifr.ior 
+
+# Should the IFR data be cached across invocations?
+# Default is yes.
+#
+#IFR_PERSISTENT yes
+
+# Full path to IFR cache file. 
+# Default is "/var/cache/lorica/ifr.cache" on anything but Windows
+# where the default is "ifr.cache" in the current working directory.
+#
+#IFR_CACHE ifr.cache
+
+# You can also directly specify standard TAO IFR command line 
+# options. 
+#
+# These options will override any previously defined and existing
+# default IFR options.
+#
+#IFR_CmdOption -o ifr.ior
+#IFR_CmdOption -p
+#IFR_CmdOption -b ifr_cache.bin
+
+
+#################################################################
+#                                                               #
+#                      Lorica Options                           #
+#                                                               #
+#################################################################
+
+# Full path to Lorica PID file. 
+# Default is "/var/run/lorica.pid" on anything but Windows
+# where the default is "lorica.pid" in the current working directory.
+#
+#PID_FILE /home/some_user/tmp/lorica.pid
+
+# Full path to Lorica IOR file. 
+# Default is "/var/cache/lorica/lorica.ior" on anything but Windows
+# where the default is "lorica.ior" in the current working directory.
+#
+#IOR_FILE /home/some_user/tmp/lorica.ior
