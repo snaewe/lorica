@@ -391,8 +391,7 @@ Lorica::Service_Loader::run_service_command(void)
 
 	return result;;
 #else /* !ACE_WIN32 */
-	ACE_ERROR ((LM_ERROR, ACE_TEXT("NT Service not supported on this platform")));
-	return -1;
+	return 0;
 #endif /* ACE_WIN32 */
 }
 
