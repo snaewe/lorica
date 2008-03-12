@@ -494,8 +494,9 @@ Lorica::Service_Loader::run_standalone(void)
 
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("Lorica [%P] running as a standalone application \n")));
 
+#ifdef ACE_WIN32
 	SetConsoleCtrlHandler(&ConsoleHandler, true);
-
+#endif
 	proxy->activate();
 	proxy->wait();
 
