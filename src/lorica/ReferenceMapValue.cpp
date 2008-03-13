@@ -58,6 +58,7 @@ Lorica::ReferenceMapValue::reverse(void)
 {
 	Lorica::ReferenceMapValue *rtn = new Lorica::ReferenceMapValue();
 
+	rtn->out_facing_ = this->out_facing_;
 	rtn->orig_ref_ = this->mapped_ref_;
 	rtn->mapped_ref_ = this->orig_ref_;
 	rtn->ior_table_name_ = "";

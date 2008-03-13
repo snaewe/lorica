@@ -1,3 +1,9 @@
+2008-03-14  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/Makefile.am (lorica_LDADD, TAO_LIBS):
+	* acetao/Makefile.am (TAO_LIBS): Added TAO_BiDirGIOP bits 
+	that was MIA.
+
 Thu Mar 13 19:14:48 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:

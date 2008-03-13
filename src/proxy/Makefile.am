@@ -69,6 +69,7 @@ lorica_LDADD = \
 	$(LORICA_top_dir)/src/lorica/liblorica_GenericEvaluator.la \
 	$(LORICA_top_dir)/src/lorica/liblorica_Client.la           \
 	$(LORICA_top_dir)/src/OCI/libOCI_AsynchProxyTools.la       \
+	-lTAO_BiDirGIOP                                           \
 	-lTAO_IFRService                                           \
 	-lTAO_Svc_Utils                                            \
 	-lTAO_DynamicInterface                                     \
@@ -121,7 +122,8 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_SSLIOP.dylib     \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.dylib  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.dylib        \
-	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.dylib
+	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.dylib              \
+	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.dylib
 else # !LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
@@ -148,7 +150,8 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_SSLIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)     \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        \
-	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
+	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
+	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
 endif # !LORICA_DARWIN
 
 ACETAO_LIBdir = $(libdir)
