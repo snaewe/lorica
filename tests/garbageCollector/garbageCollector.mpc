@@ -1,5 +1,5 @@
 //
-//    Lorica project file.
+//    Lorica project file. 
 //    Copyright (C) 2007 OMC Denmark ApS.
 //
 //    This program is free software; you can redistribute it and/or modify
@@ -17,34 +17,37 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-project: anytypecode, bidir_giop, portableserver, dynamicinterface, ifr_client, security, ssliop, loricacommon {
-  dynamicflags = LORICA_EVALUATORBASE_BUILD_DLL
-  after += lorica_Client AsynchProxyTools
-  libs += lorica_Client OCI_AsynchProxyTools
-  sharedName = lorica_EvaluatorBase
-
-  DLL_EXPORT_Files {
-    Lorica_EvaluatorBase
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Test.idl
   }
+  custom_only = 1
+}
 
-  verbatim(gnuace, bottom) {
-    Lorica_EvaluatorBase:
+project(*Server): taoserver, loricacommon {
+  after += *idl
+  libs += lorica_Client
+  includes += ${LORICA_ROOT}/src
+
+  Source_Files {
+    Hello.cpp
+    server.cpp
+  }
+  Source_Files {
+    TestC.cpp
+    TestS.cpp
+  }
+  IDL_Files {
+  }
+}
+project(*Client): taoexe, loricacommon {
+  after += *idl
+
+  Source_Files {
+    client.cpp
+    TestC.cpp
   }
 
   IDL_Files {
-  }
-
-  source_files {
-    RMVByMapped.cpp
-    EvaluatorBase.cpp
-    EvaluatorLoader.cpp
-    ProxyMapper.cpp
-    ProxyServant.cpp
-    ProxyReplyHandler.cpp
-    ReferenceMapValue.cpp
-    MapperRegistry.cpp
-    NullProxyMapper.cpp
-    ConfigBase.cpp
-    FileConfig.cpp
   }
 }

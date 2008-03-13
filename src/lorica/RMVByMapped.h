@@ -23,6 +23,8 @@
 #define RMV_BY_MAPPED_H
 
 #include <ace/Mutex.h>
+#include <ace/Condition_Thread_Mutex.h>
+#include <ace/Task.h>
 
 #include "Lorica_EvaluatorBase_Export.h"
 #include "ReferenceMapValue.h"
@@ -36,9 +38,9 @@ namespace Lorica
 	// "normalized" which reallocates multiple pages into a single large
 	// contiguous block.
 
-	class Lorica_EvaluatorBase_Export RMVByMapped {
+	class Lorica_EvaluatorBase_Export RMVByMapped : public ACE_Task_Base {
 	public:
-		RMVByMapped(ACE_UINT32 page_size = 1024);
+		RMVByMapped(time_t gc_period = 60, ACE_UINT32 page_size = 1024);
 
 		virtual ~RMVByMapped(void);
 
@@ -56,14 +58,30 @@ namespace Lorica
 		bool unbind(ACE_UINT32 index,
 			    ReferenceMapValue *& value);
 
+		// The svc method overrides ACE_Task_Base::svc() to be the
+		// thread function responsible for handling garbage collection.
+		// Periodically (on a rate to be determined) the svc thread
+		// will wake up and iterate over the list of values. It will
+		// "ping" each native reference invoking the _non_existent()
+		// method on each. If the result is true, or an exception,
+		// the reference will be removed from the map.
+
+		int svc (void);
+
 	protected:
 		ACE_UINT32 high_index_;
 		ACE_Thread_Mutex high_index_lock_;
 
 	private:
+		ACE_Thread_Mutex gc_control_lock_;
+		ACE_Condition_Thread_Mutex gc_terminate_;
+		time_t gc_period_secs_;
+		bool gc_terminated_;
+
 		ACE_UINT32 page_size_;
 
-		struct free_stack_node {
+		struct free_stack_node 
+		{
 			free_stack_node(ACE_UINT32 x, free_stack_node *n)
 				: index_(x),
 				  next_(n)
@@ -82,7 +100,8 @@ namespace Lorica
 			free_stack_node *next_;
 		} *free_stack_;
 
-		struct page_list_node {
+		struct page_list_node 
+		{
 			page_list_node(ACE_UINT32 size)
 				: next_(0)
 				{

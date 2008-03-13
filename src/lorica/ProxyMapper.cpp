@@ -30,6 +30,7 @@
 #include <ace/INET_Addr.h>
 #include <tao/PortableServer/PortableServer.h>
 #include <tao/PortableServer/Servant_Base.h>
+#include <tao/BiDir_GIOP/BiDirGIOP.h>
 #include <tao/Object.h>
 #include <tao/Stub.h>
 #include <tao/Profile.h>
@@ -58,7 +59,6 @@ Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
 				 const std::string & id)
 	: evaluator_head_(0),
 	  mapped_values_(0),
-//        native_values_(0),
 	  registry_(mr),
 	  id_ (id),
 	  ref_count_ (1),
@@ -87,8 +87,17 @@ Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
 	Lorica::Config * configuration = FILECONFIG::instance();
 
 	if (configuration->getBooleanValue("CacheProxyReferences", false)) {
-		this->mapped_values_ = new RMVByMapped;
-//		this->native_values_ = new RMVByNative;
+		std::string gc_period = configuration->get_value("GC_Period_Seconds");
+		if (gc_period.length() == 0)
+			this->mapped_values_ = new RMVByMapped;
+		else
+			{
+				char * bad;
+				time_t p = ACE_OS::strtol(gc_period.c_str(),&bad,10);
+				if (*bad != '\0')
+					p = 60; // default to 60 seconds, should we complain about param?
+				this->mapped_values_ = new RMVByMapped (p);
+			}
 	}
 }
 
@@ -98,7 +107,6 @@ Lorica::ProxyMapper::~ProxyMapper(void)
 
 	// need to iterate over maps, remove each entry and decrement refcounts
 	delete this->mapped_values_;
-//	delete this->native_values_;
 
 	if (this->next_)
 		this->next_->decr_refcount();
@@ -123,7 +131,7 @@ Lorica::ProxyMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
 	obj = orb->resolve_initial_references("RootPOA");
 	PortableServer::POA_var root = PortableServer::POA::_narrow (obj.in());
 
-	CORBA::PolicyList policies(4);
+	CORBA::PolicyList policies(5);
 	policies.length(4);
 	policies[0] = root->create_id_assignment_policy(PortableServer::USER_ID);
 	policies[1] = root->create_id_uniqueness_policy(PortableServer::MULTIPLE_ID);
@@ -137,6 +145,12 @@ Lorica::ProxyMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
 
 	PortableServer::ServantBase_var defserv = this->make_default_servant();
 	this->in_facing_poa_->set_servant(defserv.in());
+
+  policies.length(5);
+	CORBA::Any arg;
+	arg <<= BiDirPolicy::BOTH;
+  policies[4] = orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
+                                    arg);
 
 	poaname = this->id_ + "_o";
 	this->out_facing_poa_ = root->create_POA(poaname.c_str(), outward, policies);
@@ -359,7 +373,6 @@ Lorica::ProxyMapper::add_native_unchecked(CORBA::Object_ptr native,
 
 	// put new value in maps
 	if (this->mapped_values_ != 0) {
-//		this->native_values_->bind(native,rmv.get());
 		this->mapped_values_->bind(index, rmv.get());
 	}
 
@@ -451,10 +464,10 @@ Lorica::ProxyMapper::remove_mapped(CORBA::Object_ptr mapped,
 			PortableServer::POA_var p = out_facing ? this->out_facing_poa_ : this->in_facing_poa_;
 			PortableServer::ObjectId_var oid = p->reference_to_id(mapped);
 			Lorica::MappedObjectId *ptr = reinterpret_cast<Lorica::MappedObjectId *>(oid->get_buffer());
- 	
+
 			Lorica::ReferenceMapValue_var rmv;
 			this->mapped_values_->unbind(ptr->index, rmv.out());
-			
+
 			return rmv.release();
 		}
 
@@ -620,6 +633,9 @@ Lorica::ProxyMapper::mapped_for_native(CORBA::Object_ptr & ref,
 Lorica::EvaluatorBase *
 Lorica::ProxyMapper::evaluator_for(CORBA::Object_ptr native)
 {
+	if (CORBA::is_nil(native))
+		return 0;
+
 	std::string typeId = native->_stubobj()->type_id.in();
 
 	return this->evaluator_for(typeId);

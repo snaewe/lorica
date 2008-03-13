@@ -144,7 +144,6 @@ liblorica_EvaluatorBase_la_SOURCES = \
 	ProxyReplyHandler.cpp \
 	ProxyServant.cpp      \
 	RMVByMapped.cpp       \
-	RMVByNative.cpp       \
 	ReferenceMapValue.cpp
 
 liblorica_EvaluatorBase_la_LDFLAGS =
@@ -160,7 +159,6 @@ noinst_HEADERS += \
 	ProxyReplyHandler.h \
 	ProxyServant.h      \
 	RMVByMapped.h       \
-	RMVByNative.h       \
 	ReferenceMapValue.h
 
 noinst_LTLIBRARIES += liblorica_GenericEvaluator.la

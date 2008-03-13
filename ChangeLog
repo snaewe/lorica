@@ -1,141 +1,185 @@
+Thu Mar 13 19:14:48 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+        * m4/acetao.m4:
+
+	  Added checks for new BiDir_GIOP and config for buiding new tests.
+
+        * src/lorica/ProxyMapper.h:
+        * src/lorica/RMVByNative.h:
+        * src/lorica/RMVByNative.cpp:
+	* src/lorica/Makefile.am:
+
+          Expunged references to the unneeded RMVByNative type.
+	
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/lorica_EvaluatorBase.mpc:
+
+	  Added the initialization of the bidirectional GIOP policy.
+	
+        * src/lorica/RMVByMapped.h:
+        * src/lorica/RMVByMapped.cpp:
+
+	  Added garbage collection strategy implementation
+	
+        * src/proxy/lorica.conf:
+
+	  Documented the garbage collection period configuration option.
+	
+        * src/proxy/proxy.mpc:
+
+	  Added explicit dependency on generic evaluator library. This 
+	  explicit dependency should not be necessary, but the order of
+	  initialization imposed by the IFR linkage demands it. There should
+	  be a better solution to avoid this linkage so that instances of
+	  Lorica may be created without adding in the generic evaluator.
+	
+        * tests/Makefile.am:
+        * tests/garbageCollector:
+        * tests/genericEvaluator/Makefile.am:
+        * tests/genericEvaluator/bidir:
+
+	  New tests created to support the new garbage collector and bidir
+	  features.
+
 2008-03-11  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Version bump to 0.9.4
+        * configure.ac: Version bump to 0.9.4
 
 2008-03-10  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/proxy.cpp (Proxy::configure): Fix writing of
-	PID file on non-Windows.
+        * src/proxy/proxy.cpp (Proxy::configure): Fix writing of
+        PID file on non-Windows.
 
 2008-03-09  Jules Colding  <colding@42tools.com>
 
-	* tests: All test cases now build by autotools.
+        * tests: All test cases now build by autotools.
 
 2008-03-08  Jules Colding  <colding@42tools.com>
 
-	* test/: Correct all references to the Lorica executable
+        * test/: Correct all references to the Lorica executable
 
-	* src/proxy/proxy.cpp (Proxy::configure): Fix the build by
-	removing a forgotten string.
+        * src/proxy/proxy.cpp (Proxy::configure): Fix the build by
+        removing a forgotten string.
 
 2008-03-04  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ReferenceMapper.idl: Updated the port names
-	to be more similar to the short names used in the IANA
-	registration (http://iana.org/assignments/port-numbers).
+        * src/lorica/ReferenceMapper.idl: Updated the port names
+        to be more similar to the short names used in the IANA
+        registration (http://iana.org/assignments/port-numbers).
 
-	* configure.in (LIBACE): Updated to ACE+TAO x.6.3
+        * configure.in (LIBACE): Updated to ACE+TAO x.6.3
 
-	* src/lorica/GenericEvaluator.cpp: Fix build warning
+        * src/lorica/GenericEvaluator.cpp: Fix build warning
 
 2008-02-29  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ConfigBase.cpp (Config::init_endpoints):
-	Use IANA registered default port numbers if none is
-	specified in the configuration file.
-	(Endpoint::parse_string): Detect malformed port
-	specifications and use the IANA registered as defaults
-	in that case.
+        * src/lorica/ConfigBase.cpp (Config::init_endpoints):
+        Use IANA registered default port numbers if none is
+        specified in the configuration file.
+        (Endpoint::parse_string): Detect malformed port
+        specifications and use the IANA registered as defaults
+        in that case.
 
 2008-02-27  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/FileConfig.cpp (FileConfig::load):
-	TRim trailing whitespace on values.
+        * src/lorica/FileConfig.cpp (FileConfig::load):
+        TRim trailing whitespace on values.
 
 2008-02-26  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/FileConfig.cpp (FileConfig::load):
-	Correct for CRLF and other whitespace issues.
-	(FileConfig::load): Fix commenting.
-	(FileConfig::load): Prevent segv.
+        * src/lorica/FileConfig.cpp (FileConfig::load):
+        Correct for CRLF and other whitespace issues.
+        (FileConfig::load): Fix commenting.
+        (FileConfig::load): Prevent segv.
 
 2008-02-22  Jules Colding  <colding@42tools.com>
 
-	* configure.in: Fix iquote support (thanks Phil).
+        * configure.in: Fix iquote support (thanks Phil).
 
-	* deb/: Ubuntu Gutsy installation support
+        * deb/: Ubuntu Gutsy installation support
 
-	* configure.in (LORICA_INCLUDES): Check for -iquote DIR
-	compiler support.
+        * configure.in (LORICA_INCLUDES): Check for -iquote DIR
+        compiler support.
 
 2008-02-21  Jules Colding  <colding@42tools.com>
 
-	* configure.in (LORICA_CXXFLAGS):Check compiler support
-	for all flags.
+        * configure.in (LORICA_CXXFLAGS):Check compiler support
+        for all flags.
 
-	* src/proxy/Makefile.am (lorica_LDADD): Removed tao_gperf
-	and tao_idl as install targets.
+        * src/proxy/Makefile.am (lorica_LDADD): Removed tao_gperf
+        and tao_idl as install targets.
 
 2008-02-20  Jules Colding  <colding@42tools.com>
 
-	* m4/: Fix compiler bug seen on gutsy.
+        * m4/: Fix compiler bug seen on gutsy.
 
-	* configure.in (LORICA_CPPFLAGS):
-	Check for -Wextra compiler support.
-	Remove -O3 from CXXFLAGS.
+        * configure.in (LORICA_CPPFLAGS):
+        Check for -Wextra compiler support.
+        Remove -O3 from CXXFLAGS.
 
 2008-02-19  Jules Colding  <colding@42tools.com>
 
-	* m4/acetao.m4: Fix CPPFLAGS bug as pointed out
-	by Phil (Thanks!).
+        * m4/acetao.m4: Fix CPPFLAGS bug as pointed out
+        by Phil (Thanks!).
 
-	* configure.in (LORICA_top_dir): Check for supported
-	compiler flags.
+        * configure.in (LORICA_top_dir): Check for supported
+        compiler flags.
 
-	* src/proxy/proxy.cpp (Proxy::get_lock): Added logic on
-	non-Windows to ensure that only one proxy daemon is
-	running at any one time.
+        * src/proxy/proxy.cpp (Proxy::get_lock): Added logic on
+        non-Windows to ensure that only one proxy daemon is
+        running at any one time.
 
-	* m4/acetao.m4: Fix bug. Must always use $ACE_ROOT if it
-	is set in the environment.
+        * m4/acetao.m4: Fix bug. Must always use $ACE_ROOT if it
+        is set in the environment.
 
 2008-02-17  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/lorica_EvaluatorBase.mpc (project): Fix
-	breakage caursed by renaming (Well, Phil actually
-	did this first).
+        * src/lorica/lorica_EvaluatorBase.mpc (project): Fix
+        breakage caursed by renaming (Well, Phil actually
+        did this first).
 
 2008-02-13  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ReferenceMapper.idl: Added default in and out
-	facing ports as IDL constants.
+        * src/lorica/ReferenceMapper.idl: Added default in and out
+        facing ports as IDL constants.
 
 2008-02-06  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp (become_daemon): Create cache directory
-	on !Windows.
+        * src/proxy/main.cpp (become_daemon): Create cache directory
+        on !Windows.
 
-	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
-	s/ORBEndpoint/ORBListenEndpoints/g
-	(Endpoint::parse_string): Accept endpoints with empty
-	hostname part.
+        * src/lorica/ConfigBase.cpp (Config::get_orb_options):
+        s/ORBEndpoint/ORBListenEndpoints/g
+        (Endpoint::parse_string): Accept endpoints with empty
+        hostname part.
 
 2008-01-26  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/Makefile.am: Install lorica in /usr/sbin
-	by default.
+        * src/proxy/Makefile.am: Install lorica in /usr/sbin
+        by default.
 
 2008-01-25  Jules Colding  <colding@42tools.com>
 
-	* Lorica: Major build rework on Linux. The autotool build
-	system does now seem to work.
+        * Lorica: Major build rework on Linux. The autotool build
+        system does now seem to work.
 
 2008-01-23  Jules Colding  <colding@42tools.com>
 
-	* Lorica: Ported Lorica to use the GNU autotools on Linux
-	and Darwin. Still using MPC on WIndows though. To build on
-	Linux or Darwin please do:
+        * Lorica: Ported Lorica to use the GNU autotools on Linux
+        and Darwin. Still using MPC on WIndows though. To build on
+        Linux or Darwin please do:
 
-	./autogen.sh --enable-tao-build && make
+        ./autogen.sh --enable-tao-build && make
 
-	The enable-tao-build switch will make Lorica build ACE and
-	TAO locally is the system lacks anything in that regard.
+        The enable-tao-build switch will make Lorica build ACE and
+        TAO locally is the system lacks anything in that regard.
 
 2008-01-15  Jules Colding  <colding@42tools.com>
 
         * lorica.mwc:
 
-	  Exclude the automake project target
+          Exclude the automake project target
 
 Sun Jan  6 05:18:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -180,14 +224,14 @@ Sun Jan  6 05:18:38 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/genericEvaluator/unbind:
 
-          To more clearly simulate our issue with Lorica we updated the test 
-          to run the server twice. 
+          To more clearly simulate our issue with Lorica we updated the test
+          to run the server twice.
 
 2008-01-03  Jules Colding  <colding@omesc.com>
 
         * src/proxy/main.cpp (Service_Loader::parse_args):
 
-	  Warn and exit on WIN32 for non-valid startup options.
+          Warn and exit on WIN32 for non-valid startup options.
 
 2008-01-03  Rasmus Maagaard  <rasmusmaagaard@42tools.com>
 

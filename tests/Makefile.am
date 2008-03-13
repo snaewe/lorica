@@ -20,6 +20,7 @@
 SUBDIRS = \
         exception        \
 	fileConfig       \
+	garbageCollector \
 	genericEvaluator \
 	mapForClient     \
 	mapForServer     \

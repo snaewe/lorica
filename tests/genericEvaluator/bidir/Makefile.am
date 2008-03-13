@@ -1,0 +1,172 @@
+#  
+#  Lorica makefile for test program
+#  Copyright (C) 2008 OMC Denmark ApS
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+#  MA 02111-1307 USA
+
+##################################################################
+CWD = $(CURDIR)
+
+if HAVE_ACE_ROOT
+LORICA_ROOT = $(LORICA_top_dir)
+ACE_ROOT = $(CONF_ACE_ROOT)
+TAO_ROOT = $(ACE_ROOT)/TAO
+PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
+
+if LORICA_DARWIN
+export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
+else
+export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
+endif
+
+TAO_IDL = $(ACE_ROOT)/TAO/TAO_IDL/tao_idl
+GPERF = $(ACE_ROOT)/apps/gperf/src/gperf
+
+else # !HAVE_ACE_ROOT
+
+TAO_IDL = tao_idl
+GPERF = gperf
+
+endif # HAVE_ACE_ROOT
+
+include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
+include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
+
+TAO_IDLFLAGS = -I$(TAO_ROOT) -g $(GPERF)
+
+if LORICA_DARWIN
+TESTS_ENVIRONMENT = env DYLD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
+else
+TESTS_ENVIRONMENT = env LD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
+endif
+TESTS = run_test.pl
+
+##################################################################
+
+#
+# IDL
+#
+BUILT_SOURCES = \
+	TestC.cpp \
+	TestC.h   \
+	TestC.inl \
+	TestS.cpp \
+	TestS.h   \
+	TestS.inl
+
+CLEANFILES = \
+	Test-stamp \
+	TestC.cpp  \
+	TestC.h    \
+	TestC.inl  \
+	TestS.cpp  \
+	TestS.h    \
+	TestS.inl  \
+	ifr.cache  \
+	lorica.ior
+
+TestC.cpp TestC.h TestC.inl TestS.cpp TestS.h TestS.inl: Test-stamp
+
+Test-stamp: $(srcdir)/Test.idl
+	$(TAO_IDL) $(TAO_IDLFLAGS) $(srcdir)/Test.idl
+	@touch "$@"
+
+#
+# Client
+#
+noinst_PROGRAMS = client
+
+client_CPPFLAGS = \
+	$(LORICA_CXXFLAGS) \
+	$(LORICA_CPPFLAGS)
+
+client_SOURCES = \
+	Client_Task.cpp \
+	Receiver_i.cpp  \
+	Server_Task.cpp \
+	TestC.cpp       \
+	TestS.cpp       \
+	client.cpp      \
+	Client_Task.h   \
+	Receiver_i.h    \
+	Server_Task.h   \
+	TestC.h         \
+	TestC.inl       \
+	TestS.h         \
+	TestS.inl
+
+client_LDADD = \
+	-lTAO_BiDirGIOP        \
+	-lTAO_DynamicInterface \
+	-lTAO_Messaging        \
+	-lTAO_PI               \
+	-lTAO_CodecFactory     \
+	-lTAO_PortableServer   \
+	-lTAO_Valuetype        \
+	-lTAO_AnyTypeCode      \
+	-lTAO                  \
+	-lACE
+
+BUILT_SOURCES += \
+	TestC.cpp \
+	TestC.h   \
+	TestC.inl \
+	TestS.cpp \
+	TestS.h   \
+	TestS.inl
+
+CLEANFILES += \
+	Test-stamp \
+	TestC.cpp  \
+	TestC.h    \
+	TestC.inl  \
+	TestS.cpp  \
+	TestS.h    \
+	TestS.inl
+
+#
+# Server
+#
+noinst_PROGRAMS += server
+
+server_CPPFLAGS = \
+	$(LORICA_CXXFLAGS) \
+	$(LORICA_CPPFLAGS)
+
+server_SOURCES = \
+	Sender_i.cpp    \
+	Server_Task.cpp \
+	TestC.cpp       \
+	TestS.cpp       \
+	server.cpp      \
+	Sender_i.h      \
+	Server_Task.h   \
+	TestC.h         \
+	TestC.inl       \
+	TestS.h         \
+	TestS.inl
+
+server_LDADD = \
+	$(LORICA_top_dir)/src/lorica/liblorica_Client.la \
+	-lTAO_DynamicInterface                        \
+	-lTAO_Messaging                               \
+	-lTAO_PI                                      \
+	-lTAO_CodecFactory                            \
+	-lTAO_PortableServer                          \
+	-lTAO_Valuetype                               \
+	-lTAO_AnyTypeCode                             \
+	-lTAO                                         \
+	-lACE

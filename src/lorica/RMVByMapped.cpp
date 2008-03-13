@@ -23,22 +23,29 @@
 #include "config.h"
 #endif
 
-#include <ace/Mutex.h>
+#include <ace/OS_NS_time.h>
 
 #include "RMVByMapped.h"
+#include "debug.h"
 
-Lorica::RMVByMapped::RMVByMapped(ACE_UINT32 page_size)
+Lorica::RMVByMapped::RMVByMapped(time_t gc_period, ACE_UINT32 page_size)
 	: high_index_(0),
+	  gc_terminate_(gc_control_lock_),
+	  gc_period_secs_(gc_period),
+	  gc_terminated_ (false),
 	  page_size_(page_size),
 	  free_stack_ (0),
 	  num_pages_(1)
 {
 	pages_ = new page_list_node(page_size_);
-
+	this->activate();
 }
 
 Lorica::RMVByMapped::~RMVByMapped(void)
 {
+	gc_terminated_ = true;
+	gc_terminate_.broadcast();
+	this->wait();
 	delete pages_;
 	while (free_stack_ != 0)
 		free_stack_ = free_stack_->pop();
@@ -70,6 +77,7 @@ bool
 Lorica::RMVByMapped::bind(ACE_UINT32 index,
 			  ReferenceMapValue *value)
 {
+	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
 		return false;
 
@@ -89,6 +97,7 @@ bool
 Lorica::RMVByMapped::rebind(ACE_UINT32 index,
 			    ReferenceMapValue *value)
 {
+	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
 		return false;
 
@@ -107,6 +116,7 @@ bool
 Lorica::RMVByMapped::find(ACE_UINT32 index,
 			  ReferenceMapValue *& value)
 {
+	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
 		return false;
 
@@ -125,6 +135,7 @@ bool
 Lorica::RMVByMapped::unbind(ACE_UINT32 index,
 			    ReferenceMapValue *& value)
 {
+	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
 		return false;
 
@@ -135,7 +146,83 @@ Lorica::RMVByMapped::unbind(ACE_UINT32 index,
 
 	value = page[ndx];
 	page[ndx] = 0;
-	free_stack_ = new free_stack_node(index, free_stack_);
+	this->free_stack_ = new free_stack_node(index, this->free_stack_);
 
 	return true;
+}
+
+int
+Lorica::RMVByMapped::svc (void)
+{
+	ACE_Time_Value wait_period (this->gc_period_secs_ + ACE_OS::time(0));
+  if (Lorica_debug_level > 0)
+		ACE_DEBUG ((LM_DEBUG,
+								"(%P|%t) RMVByMapped::svc, garbage collection loop "
+								"commensing, wait_period set to %d\n", this->gc_period_secs_));
+	while (!this->gc_terminated_)
+		{
+			ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
+			int result = this->gc_terminate_.wait(&wait_period);
+
+			if (result == 0 || errno != ETIME)
+				break;
+			
+			if (Lorica_debug_level > 4)
+				ACE_DEBUG ((LM_DEBUG,
+										"(%P|%t) RMVByMapped::svc, invoking "
+										"collection, result = %d %p\n", result,"wait" ));
+			size_t page_offset = 0;
+			size_t test_count = 0;
+			size_t reap_count = 0;
+			for (page_list_node *iter = this->pages_;
+					 iter != 0 && !this->gc_terminated_;
+					 iter = iter->next_)
+				{
+					ReferenceMapValue **rmv = iter->page_;
+					for (size_t index = 0; 
+							 index < this->page_size_ && !this->gc_terminated_; 
+							 index++)
+						{
+							if (rmv[index] != 0)
+								{
+									test_count++;
+									ReferenceMapValue *value = rmv[index];
+									bool expired = false;
+									try
+										{
+											CORBA::Object_var obj = value->orig_ref_;
+											guard.release();
+											expired = obj->_non_existent();
+										}
+									catch (CORBA::Exception &)
+										{
+											expired = true;
+										}
+									guard.acquire();
+									// recheck, since we released the lock, an unbind
+									// may have occured.
+									if (expired && rmv[index] == value)
+										{
+											reap_count++;
+											rmv[index]->decr_refcount();
+											rmv[index] = 0;
+											this->free_stack_ =
+												new free_stack_node(page_offset + index,
+																						this->free_stack_);
+												
+										}
+								}
+						}
+					page_offset += this->page_size_;
+				}
+			if (!this->gc_terminated_ && reap_count > 0 && Lorica_debug_level > 0)
+				ACE_DEBUG ((LM_DEBUG,
+										"(%P|%t) RMVByMapped::svc, garbage collector reaped "
+										"%d out of %d references\n", reap_count, test_count));
+
+		}
+  if (Lorica_debug_level > 0)
+		ACE_DEBUG ((LM_DEBUG,
+								"(%P|%t) RMVByMapped::svc, garbage collection loop "
+								"terminating\n"));
 }

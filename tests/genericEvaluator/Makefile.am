@@ -20,6 +20,7 @@
 SUBDIRS = \
 	basic           \
 	basic_collocate \
+	bidir           \
 	callback        \
 	forward         \
 	logging         \

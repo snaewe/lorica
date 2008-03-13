@@ -417,9 +417,11 @@ defines/Makefile
 tests/Makefile
 tests/exception/Makefile
 tests/fileConfig/Makefile
+tests/garbageCollector/Makefile
 tests/genericEvaluator/Makefile
 tests/genericEvaluator/basic/Makefile
 tests/genericEvaluator/basic_collocate/Makefile
+tests/genericEvaluator/bidir/Makefile
 tests/genericEvaluator/callback/Makefile
 tests/genericEvaluator/forward/Makefile
 tests/genericEvaluator/logging/Makefile
