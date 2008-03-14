@@ -55,6 +55,8 @@ the Lorica IDL files. This package contain those.
 %prep
 %setup -q 
 
+autoreconf 
+
 %build
 @RPM_SPEC_CONFIGURE@
 make %{?_smp_mflags}
@@ -63,20 +65,25 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 make INSTALL="install -c -p" DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm {} ';'
+install -m755 init_rc/sshd.init     $RPM_BUILD_ROOT/etc/rc.d/init.d/sshd
 
 %clean 
 rm -rf %{buildroot}
 
 %post devel -p /sbin/ldconfig
+%_post_service <initscript-name>
 
 %postun devel -p /sbin/ldconfig
+
+%preun
+%_preun_service <initscript-name>
 
 %files
 %defattr(-,root,root,-)
 %dir %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@
-%config /etc/lorica.conf
-%config /etc/lorica.ssliop
-%config /etc/lorica.conf.evolution-brutus
+%config %{_sysconfdir}/lorica.conf
+%config %{_sysconfdir}/etc/lorica.ssliop
+%config %{_sysconfdir}/etc/lorica.conf.evolution-brutus
 %{_bindir}/*
 %{_sbindir}/*
 %{_libdir}/*
