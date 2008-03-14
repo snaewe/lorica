@@ -1,6 +1,10 @@
 2008-03-14  Jules Colding  <colding@42tools.com>
 
+	* acetao/Makefile.am ($(TAO_FILES)): Workaround for g++
+	bug on RHEL
+
 	* configure.ac: Added --with-acetao-X version options.
+	(LORICA_FIX_GXX_BUG): Workaround for g++ bug on RHEL
 
 Fri Mar 14 02:38:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 

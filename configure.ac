@@ -301,14 +301,24 @@ AC_SUBST(LORICA_CPPFLAGS)
 dnl CXXFLAGS
 LORICA_CXXFLAGS=""
 
-if test "$lorica_target" = "Ubuntu"; then
+dnl Workaround for https://bugzilla.redhat.com/show_bug.cgi?id=218377
+CXX_VERSION=`$CXX -dumpversion`
+if test "x$CXX_VERSION" = "x3.4.6"; then
+   LORICA_FIX_GXX_BUG_FLAG="-fno-var-tracking"
+else
+   LORICA_FIX_GXX_BUG_FLAG=""
+fi
+AC_SUBST(LORICA_FIX_GXX_BUG_FLAG)
+LORICA_CXXFLAGS="$LORICA_CXXFLAGS $LORICA_FIX_GXX_BUG_FLAG"
+
+if test "x$lorica_target" = "xUbuntu"; then
    cs_prog_cxx_visibility_inlines_hidden=""
 else
    CS_VISIBILITY_FLAG_INLINES_HIDDEN()
 fi
 CS_COMPILER_WARNINGS([C++])
 CS_COMPILER_ERRORS([C++])
-LORICA_CXXFLAGS="$cs_cv_prog_cxx_enable_errors $cs_cv_prog_cxx_enable_warnings $cs_prog_cxx_visibility_inlines_hidden"
+LORICA_CXXFLAGS="$LORICA_CXXFLAGS $cs_cv_prog_cxx_enable_errors $cs_cv_prog_cxx_enable_warnings $cs_prog_cxx_visibility_inlines_hidden"
 
 AX_CXXFLAGS_GCC_OPTION(-fvisibility=hidden, LORICA_CXXFLAGS)
 AX_CXXFLAGS_GCC_OPTION(-Wextra, LORICA_CXXFLAGS)
