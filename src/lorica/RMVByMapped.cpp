@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica source file.
@@ -225,4 +225,6 @@ Lorica::RMVByMapped::svc (void)
 		ACE_DEBUG ((LM_DEBUG,
 								"(%P|%t) RMVByMapped::svc, garbage collection loop "
 								"terminating\n"));
+
+	return 0;
 }

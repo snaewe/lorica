@@ -1,27 +1,32 @@
+Fri Mar 14 02:38:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/RMVByMapped.cpp:
+	  Add missing return to svc function.
+	
 Fri Mar 14 00:54:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * INSTALL:
-	  synching the repository version of this apparently generated file.
-	
+          synching the repository version of this apparently generated file.
+
         * src/lorica/RMVByMapped.cpp:
-	  Fixed the recalculation of the timeout to ensure it is always set to
-	  the next absolute time value.
-	
+          Fixed the recalculation of the timeout to ensure it is always set to
+          the next absolute time value.
+
         * tests/garbageCollector/client.cpp:
         * tests/garbageCollector/run_test.pl:
-	  Fix the test so that if the gc period is configured to something
-	  long to demonstrate the failure case actually fails.
-	
+          Fix the test so that if the gc period is configured to something
+          long to demonstrate the failure case actually fails.
+
         * tests/genericEvaluator/bidir/run_test.pl:
         * tests/genericEvaluator/bidir/test.conf:
-	  Use localhost endpoints in an explicit configuration to ensure
-	  the test passes.
-	
+          Use localhost endpoints in an explicit configuration to ensure
+          the test passes.
+
 2008-03-14  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/Makefile.am (lorica_LDADD, TAO_LIBS):
-	* acetao/Makefile.am (TAO_LIBS): Added TAO_BiDirGIOP bits 
-	that was MIA.
+        * src/proxy/Makefile.am (lorica_LDADD, TAO_LIBS):
+        * acetao/Makefile.am (TAO_LIBS): Added TAO_BiDirGIOP bits
+        that was MIA.
 
 Thu Mar 13 19:14:48 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
