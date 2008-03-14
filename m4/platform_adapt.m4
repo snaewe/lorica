@@ -246,63 +246,21 @@ AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
      AX_LORICA_CHECK_PLATFORM()
   fi
   case "$lorica_target" in
-	OpenSUSE_10_2)
-		RPM_SPEC_SUSE_PREFIX='%define _prefix /opt/gnome'
-		RPM_SPEC_SUSE_DOCDIR='%define _docdir %{_prefix}/share/doc/packages'
-		RPM_SPEC_LIBIDL='libidl'
-		RPM_SPEC_ORBIT2='orbit2'
-		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=opensuse102 --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes --prefix=/opt/gnome --libdir=/opt/gnome/%{_lib} --libexecdir=%{_libexecdir}'
-		RPM_SPEC_BUILDREQUIRES_1='BuildRequires:   mDNSResponder-lib'
-		RPM_SPEC_BUILDREQUIRES_2='BuildRequires:   gnome-common'
-		RPM_SPEC_BUILDREQUIRES_3="BuildRequires:   $RPM_SPEC_LIBIDL-devel"
-		RPM_SPEC_DEBUGINFO='%debug_package'
-		;;
-	OpenSUSE_10_3)
-		RPM_SPEC_SUSE_PREFIX=''
-		RPM_SPEC_SUSE_DOCDIR=''
-		RPM_SPEC_LIBIDL='libidl'
-		RPM_SPEC_ORBIT2='orbit2'
-		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=opensuse103 --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes --prefix=/opt/gnome --libdir=/opt/gnome/%{_lib} --libexecdir=%{_libexecdir}'
-		RPM_SPEC_BUILDREQUIRES_1='BuildRequires:   avahi'
-		RPM_SPEC_BUILDREQUIRES_2='BuildRequires:   gnome-common'
-		RPM_SPEC_BUILDREQUIRES_3="BuildRequires:   $RPM_SPEC_LIBIDL-devel"
-		RPM_SPEC_DEBUGINFO='%debug_package'
+	RHEL)
+		RPM_SPEC_DEBUGINFO=''
+		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=rhel --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
 	Fedora)
-		RPM_SPEC_SUSE_PREFIX=''
-		RPM_SPEC_SUSE_DOCDIR=''
-		RPM_SPEC_LIBIDL='libIDL'
-		RPM_SPEC_ORBIT2='ORBit2'
-		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=fedora --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
-		RPM_SPEC_BUILDREQUIRES_1=''
-		RPM_SPEC_BUILDREQUIRES_2=''
-		RPM_SPEC_BUILDREQUIRES_3=''
 		RPM_SPEC_DEBUGINFO=''
+		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=fedora --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
 	*)
-		RPM_SPEC_SUSE_PREFIX=''
-		RPM_SPEC_SUSE_DOCDIR=''
-		RPM_SPEC_LIBIDL='libIDL'
-		RPM_SPEC_ORBIT2='ORBit2'
-		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=fedora --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
-		RPM_SPEC_BUILDREQUIRES_1=''
-		RPM_SPEC_BUILDREQUIRES_2=''
-		RPM_SPEC_BUILDREQUIRES_3=''
-		RPM_SPEC_DEBUGINFO=''
+		RPM_SPEC_DEBUGINFO='%debug_package'
+		RPM_SPEC_CONFIGURE=''
 		;;
   esac
-  dnl This workaround can be used in automake 1.10 and above:
-  dnl _AM_SUBST_NOTMAKE([RPM_SPEC_BUILDREQUIRES])
-  AC_SUBST([RPM_SPEC_BUILDREQUIRES_1])
-  AC_SUBST([RPM_SPEC_BUILDREQUIRES_2])
-  AC_SUBST([RPM_SPEC_BUILDREQUIRES_3])
-  AC_SUBST([RPM_SPEC_BUILDREQUIRES_4])
-  AC_SUBST([RPM_SPEC_SUSE_PREFIX])
-  AC_SUBST([RPM_SPEC_SUSE_DOCDIR])
-  AC_SUBST([RPM_SPEC_LIBIDL])
-  AC_SUBST([RPM_SPEC_ORBIT2])
-  AC_SUBST([RPM_SPEC_CONFIGURE])
   AC_SUBST([RPM_SPEC_DEBUGINFO])
+  AC_SUBST([RPM_SPEC_CONFIGURE])
 
   dnl For the dist-deb targets
   AC_CHECK_PROG(HAVE_DATE, [date], yes, no)

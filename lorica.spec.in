@@ -1,6 +1,6 @@
 #  
-#  RPM spec file for the Brutus Keyring.
-#  Copyright (C) 2007 OMC Denmark ApS
+#  RPM spec file for Lorica.
+#  Copyright (C) 2007-2008 OMC Denmark ApS
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,51 +18,38 @@
 #  MA 02111-1307 USA
 #
 
-@RPM_SPEC_SUSE_PREFIX@
-@RPM_SPEC_SUSE_DOCDIR@
-
-Summary:         A small keyring daemon build upon libgcrypt
-Name:            @BRUTUS_KEYRINGD_NAME@
-Version:         @BRUTUS_KEYRINGD_VERSION@
+Summary:         An IIOP Firewall daemon
+Name:            @LORICA_NAME@
+Version:         @LORICA_VERSION@
 Release:         1%{?dist}
 License:         GPL
-Group:           Applications/System
-Source0:         http://www.omesc.com/sites/default/files/downloads/dist/%{name}/@BRUTUS_DIST_RELEASE@/SOURCES/%{name}-%{version}.tar.gz
+Group:           Applications/Communications
+Source0:         http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz
 BuildRoot:       %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-URL:             http://trac.brutus.net/brutus-keyring/
-Conflicts:       evolution-brutus < 1.1.28
-Requires:        @RPM_SPEC_LIBIDL@ >= @LIBIDL_REQUIRED@
-BuildRequires:   @RPM_SPEC_ORBIT2@-devel >= @ORBIT2_REQUIRED@
-BuildRequires:   libgcrypt-devel >= @LIBGCRYPT_REQUIRED@
-@RPM_SPEC_BUILDREQUIRES_1@
-@RPM_SPEC_BUILDREQUIRES_2@
-@RPM_SPEC_BUILDREQUIRES_3@
+URL:             http://trac.42tools.com/lorica/
+Conflicts:       ACE
+Requires:        openssl
+BuildRequires:   openssl-devel
 
 %description
-This is the Brutus Keyring. It is a very small and simple 
-keyring daemon that will encrypt large as well as small 
-secrets using a symmetric cipher.
+This is the Lorica. Loricva is an IIOP/CORBA Firewall build 
+upon ACE and TAO.
 
-This package contains the executable necessary for programs using
-Brutus Keyring.
+This package contains the executable necessary for programs 
+using Lorica.
 
-You will need to install this package and brutus-keyring-devel if 
-you want to write programs using Brutus Keyring.
+You will need to install this package and lorica-devel if 
+you want to write programs which are using Lorica.
 
 %package devel
-Summary:         IDL and header files for brutus-keyring
+Summary:         IDL files for Lorica
 Group:           Development/Libraries
 Requires:        %name = %{version}-%{release}
-Requires:        pkgconfig >= @PKGCONFIG_REQUIRED@
-Requires:        ORBit2-devel >= @ORBIT2_REQUIRED@
 
 %description devel 
-This is the Brutus Keyring development files. Brutus Keyring is 
-a very small and simple keyring daemon that will encrypt large 
-as well as small secrets using a symmetric cipher.
-
-This package contains the header files, libraries and utilities
-necessary to write Brutus Keyring client programs.
+This is the Lorica development files. Lorica is an IIOP
+Firewall daemon. To develop programs using Lorica you need
+the Lorica IDL files. This package contain those.
 
 @RPM_SPEC_DEBUGINFO@
 %prep
@@ -86,45 +73,29 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%dir %{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@
-%{_bindir}/@BRUTUS_KEYRINGD_BIN@
-%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/brutus-keyring-guide
-%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/COPYING
-%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/README
-%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/AUTHORS
-%{_docdir}/@BRUTUS_KEYRINGD_NAME@-@BRUTUS_KEYRINGD_VERSION@/ChangeLog
+%dir %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@
+%config /etc/lorica.conf
+%config /etc/lorica.ssliop
+%config /etc/lorica.conf.evolution-brutus
+%{_bindir}/*
+%{_sbindir}/*
+%{_libdir}/*
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/lorica_configuration
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/brutus-keyring-guide
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/COPYING
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/README
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/AUTHORS
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/ChangeLog
 
 %files devel
 %defattr(-,root,root,-)
-%dir %{_includedir}/@BRUTUS_KEYRINGD_NAME@-@LIBBRUTUS_KEYRINGD_CURRENT@.@LIBBRUTUS_KEYRINGD_REVISION@
-%dir %{_datadir}/@BRUTUS_idl_install_subdir@
-%dir %{_docdir}/@BRUTUS_KEYRINGD_NAME@-devel-@BRUTUS_KEYRINGD_VERSION@
-%{_bindir}/brutus-keyring-client
-%{_libdir}/libBrutusKeyringd*
-%{_libdir}/pkgconfig/libBrutusKeyringd*
-%{_includedir}/@BRUTUS_KEYRINGD_NAME@-@LIBBRUTUS_KEYRINGD_CURRENT@.@LIBBRUTUS_KEYRINGD_REVISION@/*
-%{_datadir}/@BRUTUS_idl_install_subdir@/*
-%{_docdir}/@BRUTUS_KEYRINGD_NAME@-devel-@BRUTUS_KEYRINGD_VERSION@/brutus-keyring-devel-guide
+%dir %{_datadir}/@LORICA_idl_install_subdir@
+%dir %{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@
+%{_datadir}/@LORICA_idl_install_subdir@/*
+%{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@/building_lorica
 
 %changelog
-* Mon Jul 23 2007 Jules Colding <colding@omesc.com> 0.9.3-1
-- Update the spec to bring it more into sync with the one 
-  in Fedora cvs
-
-* Mon Jul 2 2007 Jules Colding <colding@omesc.com> 0.9.1-1
-- Fix devel "Require"
-- Fix tar-ball versioning
-
-* Sat Jun 30 2007 Jules Colding <colding@omesc.com> 0.9.0-4
-- Fix one more review issue
-
-* Sat Jun 30 2007 Jules Colding <colding@omesc.com> 0.9.0-3
-- Fix review issues
-
-* Sat Jun 30 2007 Jules Colding <colding@omesc.com> 0.9.0-2
-- Fix syntax for post and postun macros
-
-* Tue Jun 26 2007 Jules Colding <colding@omesc.com> 0.9.0-1
+* Fri Mar 14 2008 Jules Colding <colding@42tools.com> 0.9.6-1
 - Initial RPM release
 
 
