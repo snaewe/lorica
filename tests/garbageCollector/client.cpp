@@ -55,6 +55,7 @@ parse_args (int argc, char *argv[])
 int
 main (int argc, char *argv[])
 {
+  int result = 0;
 	try
 	{
 		CORBA::ORB_var orb =
@@ -93,11 +94,13 @@ main (int argc, char *argv[])
 		try {
 			the_string = hello->get_string();
 			ACE_ERROR ((LM_ERROR,"ERROR: Client got third string!\n"));
+			result = 1;
 		}
-		catch (const CORBA::Exception& )
+		catch (const CORBA::Exception& ex)
 			{
 				ACE_DEBUG ((LM_DEBUG,
-										"Client - got expected exception on third try\n"));
+										"Client - got expected exception on third try: %s\n",
+										ex._name()));
 			}
 
 		orb->destroy ();
@@ -108,5 +111,5 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	return 0;
+	return result;
 }

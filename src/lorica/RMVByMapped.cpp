@@ -154,14 +154,14 @@ Lorica::RMVByMapped::unbind(ACE_UINT32 index,
 int
 Lorica::RMVByMapped::svc (void)
 {
-	ACE_Time_Value wait_period (this->gc_period_secs_ + ACE_OS::time(0));
-  if (Lorica_debug_level > 0)
+	if (Lorica_debug_level > 0)
 		ACE_DEBUG ((LM_DEBUG,
-								"(%P|%t) RMVByMapped::svc, garbage collection loop "
-								"commensing, wait_period set to %d\n", this->gc_period_secs_));
+			    "(%P|%t) RMVByMapped::svc, garbage collection loop "
+			    "commensing, wait_period set to %d\n", this->gc_period_secs_));
 	while (!this->gc_terminated_)
 		{
 			ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
+			ACE_Time_Value wait_period (this->gc_period_secs_ + ACE_OS::time(0));
 			int result = this->gc_terminate_.wait(&wait_period);
 
 			if (result == 0 || errno != ETIME)
@@ -169,8 +169,8 @@ Lorica::RMVByMapped::svc (void)
 			
 			if (Lorica_debug_level > 4)
 				ACE_DEBUG ((LM_DEBUG,
-										"(%P|%t) RMVByMapped::svc, invoking "
-										"collection, result = %d %p\n", result,"wait" ));
+					    "(%P|%t) RMVByMapped::svc, invoking "
+					    "collection, result = %d %p\n", result,"wait" ));
 			size_t page_offset = 0;
 			size_t test_count = 0;
 			size_t reap_count = 0;
@@ -180,8 +180,8 @@ Lorica::RMVByMapped::svc (void)
 				{
 					ReferenceMapValue **rmv = iter->page_;
 					for (size_t index = 0; 
-							 index < this->page_size_ && !this->gc_terminated_; 
-							 index++)
+					     index < this->page_size_ && !this->gc_terminated_; 
+					     index++)
 						{
 							if (rmv[index] != 0)
 								{

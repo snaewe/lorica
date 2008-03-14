@@ -59,7 +59,7 @@ $IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", "-ORBInit
 
 $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile");
 
-$CL = new PerlACE::Process ("client", " -k file://$mappedfile -ORBListenEndpoints iiop://:9952 -ORBDebugLevel $debug_level");
+$CL = new PerlACE::Process ("client", " -k file://$mappedfile -ORBListenEndpoints iiop://localhost.localdomain:9952 -ORBDebugLevel $debug_level");
 
 print "bidir generic evaluator test is started\n";
 

@@ -1,3 +1,22 @@
+Fri Mar 14 00:54:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * INSTALL:
+	  synching the repository version of this apparently generated file.
+	
+        * src/lorica/RMVByMapped.cpp:
+	  Fixed the recalculation of the timeout to ensure it is always set to
+	  the next absolute time value.
+	
+        * tests/garbageCollector/client.cpp:
+        * tests/garbageCollector/run_test.pl:
+	  Fix the test so that if the gc period is configured to something
+	  long to demonstrate the failure case actually fails.
+	
+        * tests/genericEvaluator/bidir/run_test.pl:
+        * tests/genericEvaluator/bidir/test.conf:
+	  Use localhost endpoints in an explicit configuration to ensure
+	  the test passes.
+	
 2008-03-14  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/Makefile.am (lorica_LDADD, TAO_LIBS):
@@ -9,44 +28,44 @@ Thu Mar 13 19:14:48 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * configure.ac:
         * m4/acetao.m4:
 
-	  Added checks for new BiDir_GIOP and config for buiding new tests.
+          Added checks for new BiDir_GIOP and config for buiding new tests.
 
         * src/lorica/ProxyMapper.h:
         * src/lorica/RMVByNative.h:
         * src/lorica/RMVByNative.cpp:
-	* src/lorica/Makefile.am:
+        * src/lorica/Makefile.am:
 
           Expunged references to the unneeded RMVByNative type.
-	
+
         * src/lorica/ProxyMapper.cpp:
         * src/lorica/lorica_EvaluatorBase.mpc:
 
-	  Added the initialization of the bidirectional GIOP policy.
-	
+          Added the initialization of the bidirectional GIOP policy.
+
         * src/lorica/RMVByMapped.h:
         * src/lorica/RMVByMapped.cpp:
 
-	  Added garbage collection strategy implementation
-	
+          Added garbage collection strategy implementation
+
         * src/proxy/lorica.conf:
 
-	  Documented the garbage collection period configuration option.
-	
+          Documented the garbage collection period configuration option.
+
         * src/proxy/proxy.mpc:
 
-	  Added explicit dependency on generic evaluator library. This 
-	  explicit dependency should not be necessary, but the order of
-	  initialization imposed by the IFR linkage demands it. There should
-	  be a better solution to avoid this linkage so that instances of
-	  Lorica may be created without adding in the generic evaluator.
-	
+          Added explicit dependency on generic evaluator library. This
+          explicit dependency should not be necessary, but the order of
+          initialization imposed by the IFR linkage demands it. There should
+          be a better solution to avoid this linkage so that instances of
+          Lorica may be created without adding in the generic evaluator.
+
         * tests/Makefile.am:
         * tests/garbageCollector:
         * tests/genericEvaluator/Makefile.am:
         * tests/genericEvaluator/bidir:
 
-	  New tests created to support the new garbage collector and bidir
-	  features.
+          New tests created to support the new garbage collector and bidir
+          features.
 
 2008-03-11  Jules Colding  <colding@42tools.com>
 

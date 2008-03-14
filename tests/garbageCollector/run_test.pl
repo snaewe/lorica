@@ -45,9 +45,9 @@ unlink $pidfile;
 
 $PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf -l 1");
 
-$SV1 = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile");
+$SV1 = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBEndpoint iiop://:10953 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile");
 
-$SV2 =  new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -n");
+$SV2 =  new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -ORBEndpoint iiop://:10953 -n");
 
 $CL = new PerlACE::Process ("client", " -k file://$mappedfile");
 
@@ -84,8 +84,8 @@ $client = $CL->Kill ();
 
 $proxy = $PR->Kill ();
 
-if ($proxy != 0) {
-    print STDERR "ERROR: server returned $server\n";
+if ($client != 0) {
+    print STDERR "ERROR: client returned $client\n";
     $status = 1;
 }
 
