@@ -125,17 +125,17 @@ if LORICA_RPMDEV_SETUPTREE
 	rpmdev-setuptree
 else
 	mkdir -p $(HOME)/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-	echo “%home $(echo $HOME)” > $HOME/.rpmmacros
-	echo “%_topdir     %{home}/rpmbuild” >> $HOME/.rpmmacros
+	echo '%home '$(HOME) > $(HOME)/.rpmmacros
+	echo '%_topdir     %{home}/rpmbuild' >> $(HOME)/.rpmmacros
 endif
 if LORICA_RPMDEV_WIPETREE
 	rpmdev-wipetree
 else
-	rm -rf $HOME/rpmbuild/BUILD/*
-	rm -rf $HOME/rpmbuild/RPMS/*
-	rm -rf $HOME/rpmbuild/SOURCES/*
-	rm -rf $HOME/rpmbuild/SPECS/*
-	rm -rf $HOME/rpmbuild/SRPMS/*
+	rm -rf $(HOME)/rpmbuild/BUILD/*
+	rm -rf $(HOME)/rpmbuild/RPMS/*
+	rm -rf $(HOME)/rpmbuild/SOURCES/*
+	rm -rf $(HOME)/rpmbuild/SPECS/*
+	rm -rf $(HOME)/rpmbuild/SRPMS/*
 endif
 	make
 	make dist

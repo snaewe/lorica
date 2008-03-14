@@ -136,32 +136,32 @@ else
 	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 endif
-	cd $(ACE_ROOT)/ace                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile
-	cd $(ACE_ROOT)/apps/gperf/src      && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile
-	cd $(ACE_ROOT)/ace/SSL             && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile
-	cd $(TAO_ROOT)/TAO_IDL             && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.TAO
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.Codeset
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.AnyTypeCode
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.Valuetype
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.CodecFactory
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.PI
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.PortableServer
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.Messaging
-	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.Svc_Utils
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.IORTable
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.PI_Server
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.IFR_Client
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.TypeCodeFactory
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.DynamicInterface
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.DynamicAny
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.ImR_Client
-	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.IFRService
-	cd $(TAO_ROOT)/orbsvcs/IFR_Service && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile
-	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.Security
-	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.SSLIOP
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.EndpointPolicy
-	cd $(TAO_ROOT)/tao                 && CFLAGS=$(LORICA_FIX_GXX_BUG_FLAG) $(MAKE) -f GNUmakefile.BiDir_GIOP
+	cd $(ACE_ROOT)/ace                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
+	cd $(ACE_ROOT)/apps/gperf/src      && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
+	cd $(ACE_ROOT)/ace/SSL             && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
+	cd $(TAO_ROOT)/TAO_IDL             && $(MAKE) -f GNUmakefile
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.TAO
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Codeset
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.AnyTypeCode
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Valuetype
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.CodecFactory
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.PI
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.PortableServer
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Messaging
+	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Svc_Utils
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.IORTable
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.PI_Server
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.IFR_Client
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.TypeCodeFactory
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.DynamicInterface
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.DynamicAny
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.ImR_Client
+	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.IFRService
+	cd $(TAO_ROOT)/orbsvcs/IFR_Service && $(MAKE) -f GNUmakefile
+	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Security
+	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.SSLIOP
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.EndpointPolicy
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.BiDir_GIOP
 
 $(ACE_ROOT):
 if LORICA_WGET
