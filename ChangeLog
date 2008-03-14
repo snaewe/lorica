@@ -1,8 +1,12 @@
+2008-03-14  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Added --with-acetao-X version options.
+
 Fri Mar 14 02:38:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/RMVByMapped.cpp:
 	  Add missing return to svc function.
-	
+
 Fri Mar 14 00:54:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * INSTALL:

@@ -18,7 +18,7 @@
 #  MA 02111-1307 USA
 
 AC_PREREQ(2.59)
-AC_INIT([lorica],[0.9.5],[bugs@42tools.com])
+AC_INIT([lorica],[0.9.6],[bugs@42tools.com])
 
 AC_COPYRIGHT([Copyright (C) 2008 OMC Denmark ApS])
 
@@ -59,16 +59,27 @@ AC_PROG_LIBTOOL
 dnl
 dnl ACE and TAO versions
 dnl
-LIBACE_CURRENT=5
+AC_ARG_WITH(acetao-major, AC_HELP_STRING([--with-acetao-major], [ACE+TAO major version number]), 
+			  [],
+			  [withval=none])
+if test "x$withval" = "xnone"; then
+   	LIBACE_CURRENT=5
+   	LIBTAO_CURRENT=1
+else
+   	let LIBACE_CURRENT=$withval+4
+   	LIBTAO_CURRENT=$withval
+fi
 AC_SUBST(LIBACE_CURRENT)
-
-LIBTAO_CURRENT=1
 AC_SUBST(LIBTAO_CURRENT)
 
-LIBACETAO_REVISION=6
+AC_ARG_WITH(acetao-minor, AC_HELP_STRING([--with-acetao-minor], [ACE+TAO minor version number]), 
+			  [LIBACETAO_REVISION=$withval],
+          		  [LIBACETAO_REVISION=6])
 AC_SUBST(LIBACETAO_REVISION)
 
-LIBACETAO_AGE=3
+AC_ARG_WITH(acetao-age, AC_HELP_STRING([--with-acetao-age], [ACE+TAO least significant version number]), 
+ 			[LIBACETAO_AGE=$withval],
+ 			[LIBACETAO_AGE=3])
 AC_SUBST(LIBACETAO_AGE)
 
 ACETAO="http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO-$LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE.tar.bz2"
