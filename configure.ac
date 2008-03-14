@@ -59,7 +59,7 @@ AC_PROG_LIBTOOL
 dnl
 dnl ACE and TAO versions
 dnl
-AC_ARG_WITH(acetao-major, AC_HELP_STRING([--with-acetao-major], [ACE+TAO major version number]), 
+AC_ARG_WITH(acetao-major, AS_HELP_STRING([--with-acetao-major], [ACE+TAO major version number]), 
 			  [],
 			  [withval=none])
 if test "x$withval" = "xnone"; then
@@ -72,12 +72,12 @@ fi
 AC_SUBST(LIBACE_CURRENT)
 AC_SUBST(LIBTAO_CURRENT)
 
-AC_ARG_WITH(acetao-minor, AC_HELP_STRING([--with-acetao-minor], [ACE+TAO minor version number]), 
+AC_ARG_WITH(acetao-minor, AS_HELP_STRING([--with-acetao-minor], [ACE+TAO minor version number]), 
 			  [LIBACETAO_REVISION=$withval],
           		  [LIBACETAO_REVISION=6])
 AC_SUBST(LIBACETAO_REVISION)
 
-AC_ARG_WITH(acetao-age, AC_HELP_STRING([--with-acetao-age], [ACE+TAO least significant version number]), 
+AC_ARG_WITH(acetao-age, AS_HELP_STRING([--with-acetao-age], [ACE+TAO least significant version number]), 
  			[LIBACETAO_AGE=$withval],
  			[LIBACETAO_AGE=3])
 AC_SUBST(LIBACETAO_AGE)
