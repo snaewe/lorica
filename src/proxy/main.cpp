@@ -307,8 +307,8 @@ Lorica::Service_Loader::parse_args(int argc,
 #else /* !ACE_WIN32 */
 		case 'V':
 			ACE_DEBUG((LM_INFO,
-				   ACE_TEXT("Lorica version %s"),
-				   VERSION,
+				   ACE_TEXT("Lorica version %s\n"),
+				   ACE_TEXT(VERSION),
 				   0));
 		case 'n':
 			no_fork_ = true;

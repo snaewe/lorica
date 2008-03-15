@@ -24,6 +24,8 @@
 #include "Server_Task.h"
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>
+#include <ace/OS_NS_unistd.h>
+
 #include <tao/BiDir_GIOP/BiDirGIOP.h>
 #include <tao/AnyTypeCode/Any.h>
 
@@ -83,7 +85,7 @@ main (int argc, char *argv[])
 		// Policies for the childPOA to be created.
 		CORBA::PolicyList policies (1);
 		policies.length (1);
-		
+
 		CORBA::Any pol;
 		pol <<= BiDirPolicy::BOTH;
 		policies[0] =
@@ -123,7 +125,7 @@ main (int argc, char *argv[])
 
 		PortableServer::ServantBase_var servant(receiver_impl);
 
-		PortableServer::ObjectId_var oid = 
+		PortableServer::ObjectId_var oid =
 			child_poa->activate_object(servant.in());
 		tmp = child_poa->id_to_reference (oid.in());
 		Test::Receiver_var receiver = Test::Receiver::_narrow(tmp.in());

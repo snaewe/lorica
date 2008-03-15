@@ -1,18 +1,27 @@
+Sat Mar 15 12:46:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/main.cpp:
+          clean up version message.
+
+        * tests/garbageCollector/client.cpp:
+        * tests/genericEvaluator/bidir/client.cpp:
+          Fix compile error introduced with post TAO 1.6.3
+
 2008-03-14  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Replaced obsolete macro AC_HELP_STRING
-	with AS_HELP_STRING
+        * configure.ac: Replaced obsolete macro AC_HELP_STRING
+        with AS_HELP_STRING
 
-	* acetao/Makefile.am ($(TAO_FILES)): Workaround for g++
-	bug on RHEL
+        * acetao/Makefile.am ($(TAO_FILES)): Workaround for g++
+        bug on RHEL
 
-	* configure.ac: Added --with-acetao-X version options.
-	(LORICA_FIX_GXX_BUG): Workaround for g++ bug on RHEL
+        * configure.ac: Added --with-acetao-X version options.
+        (LORICA_FIX_GXX_BUG): Workaround for g++ bug on RHEL
 
 Fri Mar 14 02:38:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/RMVByMapped.cpp:
-	  Add missing return to svc function.
+          Add missing return to svc function.
 
 Fri Mar 14 00:54:58 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
