@@ -1,3 +1,8 @@
+2008-03-15  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ReferenceMapValue.h (Lorica): Removed
+	unneeded member that was accidentally added by me
+
 Sat Mar 15 12:46:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/main.cpp:

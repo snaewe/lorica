@@ -48,7 +48,6 @@ namespace Lorica
 		std::string ior_table_name_;
 		bool require_secure_;
 		Lorica::ServerAgent_var agent_;
-		bool out_facing_;
 
 	private:
 		long ref_count_;

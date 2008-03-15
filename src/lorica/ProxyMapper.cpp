@@ -353,7 +353,6 @@ Lorica::ProxyMapper::add_native_unchecked(CORBA::Object_ptr native,
 	Lorica::ReferenceMapValue_var rmv;
 
 	rmv = new Lorica::ReferenceMapValue;
-	rmv->out_facing_ = out_facing;
 
 	if (this->supports_secure (native))
 		rmv->orig_ref_ = native->_set_policy_overrides(this->registry_.sec_policies(), CORBA::SET_OVERRIDE);
