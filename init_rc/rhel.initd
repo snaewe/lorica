@@ -1,0 +1,65 @@
+#!/bin/bash
+#
+# Init file for Lorica daemon
+#
+# chkconfig: 2345 55 25
+# description: Lorica daemon
+#
+# processname: lorica
+# config: /etc/lorica.conf
+
+# source function library
+. /etc/rc.d/init.d/functions
+
+# Include lorica defaults if available
+if [ -f /etc/sysconfig/lorica ]; then
+        . /etc/sysconfig/lorica
+fi
+
+LORICA_PID_FILE=${LORICA_PID_FILE:-/var/run/lorica.pid}
+LORICA_EXE_PATH=${LORICA_EXE_PATH:-/usr/sbin/lorica}
+
+test -x $LORICA_EXE_PATH || exit 0
+
+RETVAL=0
+
+start()
+{
+	echo -n $"Starting lorica:"
+	initlog -c "$LORICA_EXE_PATH $LORICA_OPTIONS" && success || failure
+	RETVAL=$?
+	[ "$RETVAL" = 0 ] && touch /var/lock/subsys/lorica
+	echo
+}
+
+stop()
+{
+	echo -n $"Stopping Lorica:"
+	if [ -f "$LORICA_PID_FILE" ]; then
+	    kill `cat "$LORICA_PID_FILE"`
+	fi
+	RETVAL=$?
+	[ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/lorica
+	echo
+}
+
+case "$1" in
+    start)
+	start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+        status lorica
+        ;;
+    restart|reload|condrestart)
+        stop
+        start
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart|reload|status}"
+        exit 1
+esac
+  
+exit 0
