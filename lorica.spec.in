@@ -111,7 +111,7 @@ rm -rf %{buildroot}
 %{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@/building_lorica
 
 %changelog
-* Mon Mar 17 2008 Jules Colding <colding@42tools.com> 0.9.6-1
+* Mon Mar 17 2008 Jules Colding <colding@42tools.com> 0.9.7-1
 - Initial RPM release
 
 

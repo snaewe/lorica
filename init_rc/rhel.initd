@@ -28,7 +28,7 @@ start()
 	echo -n $"Starting lorica:"
 	initlog -c "$LORICA_EXE_PATH $LORICA_OPTIONS" && success || failure
 	RETVAL=$?
-	[ "$RETVAL" = 0 ] && touch /var/lock/subsys/lorica
+	[ $RETVAL -eq 0 ] && touch /var/lock/subsys/lorica
 	echo
 }
 
@@ -36,10 +36,10 @@ stop()
 {
 	echo -n $"Stopping Lorica:"
 	if [ -f "$LORICA_PID_FILE" ]; then
-	    kill `cat "$LORICA_PID_FILE"`
+	    kill `cat "$LORICA_PID_FILE"` && success || failure
 	fi
 	RETVAL=$?
-	[ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/lorica 
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/lorica 
 	[ -f "$LORICA_PID_FILE" ] && rm -f "$LORICA_PID_FILE"
 	echo
 }
