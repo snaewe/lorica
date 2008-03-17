@@ -2,7 +2,7 @@
 #
 # Init file for Lorica daemon
 #
-# chkconfig: 2345 55 25
+# chkconfig: 2345 56 24
 # description: Lorica daemon
 #
 # processname: lorica
