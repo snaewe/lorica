@@ -39,7 +39,8 @@ stop()
 	    kill `cat "$LORICA_PID_FILE"`
 	fi
 	RETVAL=$?
-	[ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/lorica
+	[ "$RETVAL" = 0 ] && rm -f /var/lock/subsys/lorica 
+	[ -f "$LORICA_PID_FILE" ] && rm -f "$LORICA_PID_FILE"
 	echo
 }
 
