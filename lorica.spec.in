@@ -66,6 +66,8 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 make INSTALL="install -c -p" DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm {} ';'
+install -d $RPM_BUILD_ROOT/etc/init.d
+install -d $RPM_BUILD_ROOT/etc/sysconfig
 install -m755 init_rc/rhel.initd $RPM_BUILD_ROOT/etc/init.d/lorica
 install -m644 init_rc/generic.confd $RPM_BUILD_ROOT/etc/sysconfig/lorica
 
@@ -89,6 +91,8 @@ rm -rf %{buildroot}
 %config %{_sysconfdir}/lorica.conf
 %config %{_sysconfdir}/lorica.ssliop
 %config %{_sysconfdir}/lorica.conf.evolution-brutus
+%config %{_sysconfdir}/sysconfig/lorica
+%{_sysconfdir}/init.d/lorica
 %{_bindir}/*
 %{_sbindir}/*
 %{_libdir}/*
@@ -107,7 +111,7 @@ rm -rf %{buildroot}
 %{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@/building_lorica
 
 %changelog
-* Man Mar 17 2008 Jules Colding <colding@42tools.com> 0.9.6-1
+* Mon Mar 17 2008 Jules Colding <colding@42tools.com> 0.9.6-1
 - Initial RPM release
 
 
