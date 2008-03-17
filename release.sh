@@ -116,7 +116,7 @@ fi
 case "$action" in
     Red%20Hat%20Enterprise%20Linux%204)
 	cd $HOME/rpmbuild
-	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Fedora\ Core\ 4/'
+	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Red\ Hat\ Enterprise\ Linux\ 4/'
 	;;
     Fedora%20Core%204)
 	cd $HOME/rpmbuild
