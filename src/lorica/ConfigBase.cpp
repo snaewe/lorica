@@ -24,7 +24,9 @@
 #endif
 
 #include <iostream>
+#include <ACE/os_include/os_limits.h>
 #include <ace/OS_NS_stdlib.h>
+#include <ace/OS_NS_unistd.h>
 
 #include "ConfigBase.h"
 #include "debug.h"
@@ -154,6 +156,15 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 		this->hostname_ = primary_addr.substr(start, end);
 	}
 
+	// check for empty hostname and fix it up so that 
+	// we don't throw the MProfile exception
+	if (this->hostname_.empty()) {
+		char host_name[HOST_NAME_MAX] = { '\0' };
+		ACE_OS::hostname(host_name, sizeof(host_name));
+
+		this->hostname_ = (const char*)host_name;
+	}
+
 	if (option_pos != std::string::npos) {
 		// The rest are optional modifiers, ssl port, hostname alias
 		++option_pos;
@@ -232,7 +243,11 @@ Lorica::Config::get_orb_options(void)
 	// app name required to ensure proper argument alignment
 	orb_args_.push_back(LORICA_EXE_NAME);
 
-	std::string opts = this->get_value ("ORB_Option");
+	// use shared profiles by default
+	orb_args_.push_back("-ORBUseSharedProfile");
+	orb_args_.push_back("1");
+
+	std::string opts = this->get_value("ORB_Option");
 	if (!opts.empty()) {
 		size_t pos = 0;
 
@@ -362,9 +377,19 @@ Lorica::Config::init_endpoints(bool do_extern)
 	size_t pos = 0;
 	size_t tpos = 0;
 
-	if (eps_str.empty() || !eps_str.length())
-		eps_str = do_extern ? ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR : "localhost:"LORICA_DEFAULT_INSIDE_FACING_PORT_STR;
+	if (eps_str.empty() || !eps_str.length()) {
+		if (do_extern) {
+			char host_name[HOST_NAME_MAX] = { '\0' };
+			ACE_OS::hostname(host_name, sizeof(host_name));
 
+			eps_str = (const char*)host_name;
+			eps_str += ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for external endpoint\n")));
+		} else {
+			eps_str = "localhost:"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for internal endpoint\n")));
+		}
+	}
 	for (; tpos != std::string::npos; pos = tpos + 1) {
 		tpos = eps_str.find(' ', pos);
 		std::string ep_str = (tpos == std::string::npos) ? eps_str.substr(pos) : eps_str.substr(pos, tpos-pos);

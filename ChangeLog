@@ -1,5 +1,16 @@
 2008-03-17  Jules Colding  <colding@42tools.com>
 
+	* src/lorica/ConfigBase.cpp (Config::init_endpoints):
+	(Endpoint::parse_string): 
+	Supply a default hostname if not given in the
+	configuration file
+
+	* src/proxy/lorica.conf: Whitespace changes only to
+	make a comment more readable
+
+	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
+	Use shared profiles by default
+
 	* src/proxy/lorica.conf: Added '#' to preserve comment style
 
 	* src/lorica/RMVByMapped.cpp: Fix copyright year
