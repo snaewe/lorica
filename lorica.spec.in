@@ -29,6 +29,7 @@ BuildRoot:       %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 URL:             http://trac.42tools.com/lorica/
 Conflicts:       ACE
 Requires:        openssl
+Requires(post):  /sbin/chkconfig, /sbin/service
 BuildRequires:   openssl-devel
 
 %description
@@ -65,30 +66,34 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 make INSTALL="install -c -p" DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm {} ';'
-install -m755 init_rc/sshd.init     $RPM_BUILD_ROOT/etc/rc.d/init.d/sshd
+install -m755 init_rc/rhel.initd $RPM_BUILD_ROOT/etc/init.d/lorica
+install -m644 init_rc/generic.confd $RPM_BUILD_ROOT/etc/sysconfig/lorica
 
 %clean 
 rm -rf %{buildroot}
 
-%post devel -p /sbin/ldconfig
-%_post_service <initscript-name>
+%post 
+/sbin/ldconfig
+/sbin/chkconfig --add lorica
 
-%postun devel -p /sbin/ldconfig
+%postun
+/sbin/ldconfig
 
 %preun
-%_preun_service <initscript-name>
+/sbin/service lorica stop >/dev/null 2>&1
+/sbin/chkconfig --del lorica
 
 %files
 %defattr(-,root,root,-)
 %dir %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@
 %config %{_sysconfdir}/lorica.conf
-%config %{_sysconfdir}/etc/lorica.ssliop
-%config %{_sysconfdir}/etc/lorica.conf.evolution-brutus
+%config %{_sysconfdir}/lorica.ssliop
+%config %{_sysconfdir}/lorica.conf.evolution-brutus
 %{_bindir}/*
 %{_sbindir}/*
 %{_libdir}/*
 %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/lorica_configuration
-%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/brutus-keyring-guide
+%{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/using_the_generic_evaluator
 %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/COPYING
 %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/README
 %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@/AUTHORS
@@ -102,7 +107,7 @@ rm -rf %{buildroot}
 %{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@/building_lorica
 
 %changelog
-* Fri Mar 14 2008 Jules Colding <colding@42tools.com> 0.9.6-1
+* Man Mar 17 2008 Jules Colding <colding@42tools.com> 0.9.6-1
 - Initial RPM release
 
 

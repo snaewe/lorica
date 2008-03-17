@@ -17,12 +17,10 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 #  MA 02111-1307 USA
 
-
-if THIS_IS_NOT_A_DISTRIBUTION
-CLEAN_IN_FILES = Makefile.in
-else
-CLEAN_IN_FILES =
-endif
+noinst_HEADERS = \
+	gentoo.initd \
+	rhel.initd   \
+	ubuntu.initd
 
 all-local: generic.confd
 
@@ -41,6 +39,12 @@ generic.confd: Makefile
 if LORICA_DEBIAN
 	-cp $@ ../debian/$(LORICA_NAME).default
 	-cp ubuntu.initd ../debian/$(LORICA_NAME).init
+endif
+
+if THIS_IS_NOT_A_DISTRIBUTION
+CLEAN_IN_FILES = Makefile.in
+else
+CLEAN_IN_FILES =
 endif
 
 DISTCLEANFILES = $(CLEAN_IN_FILES) Makefile
