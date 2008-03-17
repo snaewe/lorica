@@ -1,3 +1,9 @@
+2008-03-17  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/lorica.conf: Added '#' to preserve comment style
+
+	* src/lorica/RMVByMapped.cpp: Fix copyright year
+
 2008-03-15  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ReferenceMapValue.h (Lorica): Removed

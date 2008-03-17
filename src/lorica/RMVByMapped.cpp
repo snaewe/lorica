@@ -2,7 +2,7 @@
 
 /*
  *    Lorica source file.
- *    Copyright (C) 2007-208 OMC Denmark ApS.
+ *    Copyright (C) 2007-2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
