@@ -34,7 +34,7 @@ fi
 product=lorica
 
 if [ "$action" = "windows" ]; then
-    scp -i $HOME/.ssh/no_passphrase_id_rsa $HOME/work/vmware-shared-folder/"$product"-install.exe colding@42tools.com:/var/www/omc/htdocs/sites/default/files/downloads/dist/"$product"/Windows/
+    scp -i $HOME/.ssh/no_passphrase_id_rsa $HOME/work/vmware-shared-folder/"$product"-install.exe colding@42tools.com:
     exit 0
 fi
 
