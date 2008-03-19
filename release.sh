@@ -157,7 +157,7 @@ case "$action" in
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/OpenSUSE\ 10.3/'
 	;;
     Gentoo)
-	scp -i $HOME/.ssh/no_passphrase_id_rsa -r ebuild/brutus-keyring-*.ebuild ebuild/ChangeLog ebuild/metadata.xml colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Gentoo/'
+	scp -i $HOME/.ssh/no_passphrase_id_rsa -r ebuild/lorica-*.ebuild ebuild/ChangeLog ebuild/metadata.xml colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Gentoo/'
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r *.tar.gz colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Gentoo/'
 	;;
     Ubuntu*)
