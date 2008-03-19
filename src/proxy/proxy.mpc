@@ -22,6 +22,8 @@ project : ssliop, taoexe, iortable, messaging, endpointpolicy, dynamicinterface,
   exename = lorica
   install = $(LORICA_ROOT)/bin
 
+  macros += LORICA_HAVE_DOC_MPC
+
   after += lorica_EvaluatorBase lorica_Client AsynchProxyTools
   libs += lorica_GenericEvaluator lorica_EvaluatorBase lorica_Client OCI_AsynchProxyTools
 

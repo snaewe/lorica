@@ -19,9 +19,7 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "defines/build-system-defs.h"
 
 #include <iostream>
 #include <ace/os_include/os_limits.h>
@@ -160,9 +158,14 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 	// we don't throw the MProfile exception
 	if (this->hostname_.empty()) {
 		char host_name[HOST_NAME_MAX] = { '\0' };
-		ACE_OS::hostname(host_name, sizeof(host_name));
 
+		ACE_OS::hostname(host_name, sizeof(host_name));
 		this->hostname_ = (const char*)host_name;
+		
+		if (outside_facing)
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for outside facing endpoint\n")));
+		else
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for inside facing endpoint\n")));
 	}
 
 	if (option_pos != std::string::npos) {
@@ -384,10 +387,10 @@ Lorica::Config::init_endpoints(bool do_extern)
 
 			eps_str = (const char*)host_name;
 			eps_str += ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for external endpoint\n")));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for outside facing endpoint\n")));
 		} else {
 			eps_str = "localhost:"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for internal endpoint\n")));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for inside facing endpoint\n")));
 		}
 	}
 	for (; tpos != std::string::npos; pos = tpos + 1) {

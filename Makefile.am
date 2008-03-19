@@ -105,6 +105,11 @@ distfiles:
 tarball:
 	$(CWD)/release.sh tarball
 
+if LORICA_DARWIN
+dist-dmg:
+	cd $(CWD)/packagemaker && ./make_dmg
+endif
+
 if LORICA_SUSE
 dist-rpm:
 	make

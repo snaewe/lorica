@@ -27,9 +27,7 @@
 //
 //**************************************************************************
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "defines/build-system-defs.h"
 
 #include <ace/Get_Opt.h>
 #include <ace/streams.h>
@@ -46,12 +44,6 @@
 
 #ifndef ACE_WIN32
 #include <unistd.h>
-#endif
-
-#ifdef ACE_WIN32
-#include "defines/windefs.h"
-#else
-#include "defines/pathdefs.h"
 #endif
 
 #ifndef ACE_WIN32

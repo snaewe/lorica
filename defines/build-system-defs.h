@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file.
- *    Copyright (C) 2007-2008 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -19,34 +19,21 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "defines/build-system-defs.h"
+#ifndef _BUILD_SYSTEM_DEFS_H_
+#define _BUILD_SYSTEM_DEFS_H_
 
-#include <ace/Dynamic_Service.h>
+// Using GNU autotools
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#include "defines/pathdefs.h"
+#endif
 
-#include "MapperRegistry.h"
-#include "EvaluatorLoader.h"
+// Using DOC MPC build system
+#ifdef LORICA_HAVE_DOC_MPC
+#include "defines/hardcoded-defs.h"
+#endif
 
-Lorica_EvaluatorLoader::Lorica_EvaluatorLoader(void)
-{
-}
+// Hardcoded fallback values
+#include "defines/hardcoded-defs.h"
 
-Lorica_EvaluatorLoader::~Lorica_EvaluatorLoader(void)
-{
-}
-
-int
-Lorica_EvaluatorLoader::init(int,
-			     ACE_TCHAR *[])
-{
-
-	this->mapperRegistry_ = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
-
-	return 1;
-}
-
-// Shared object finalizer
-int
-Lorica_EvaluatorLoader::fini(void)
-{
-	return 1;
-}
+#endif // _BUILD_SYSTEM_DEFS_H_

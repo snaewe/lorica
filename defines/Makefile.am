@@ -17,18 +17,14 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 #  MA 02111-1307 USA
 
-
-if THIS_IS_NOT_A_DISTRIBUTION
-CLEAN_IN_FILES = Makefile.in
-else
-CLEAN_IN_FILES =
-endif
-
 if LORICA_DARWIN
 CACHE_DIR = /var/db
 else
 CACHE_DIR = /var/cache
 endif
+
+noinst_HEADERS = \
+	hardcoded-defs.h
 
 all-local: pathdefs.h
 
@@ -46,6 +42,11 @@ pathdefs.h: Makefile
 	echo '#define TAO_IDL_EXE_PATH       "$(bindir)/tao_idl"' >>$@
 	echo '#define TAO_GPERF_EXE_PATH     "$(bindir)/tao_gperf"' >>$@
 
+if THIS_IS_NOT_A_DISTRIBUTION
+CLEAN_IN_FILES = Makefile.in
+else
+CLEAN_IN_FILES =
+endif
 
 DISTCLEANFILES = $(CLEAN_IN_FILES) Makefile
 

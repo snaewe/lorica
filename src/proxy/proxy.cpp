@@ -19,9 +19,7 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "defines/build-system-defs.h"
 
 #include "proxy/ReferenceMapper_i.h"
 #include "proxy/proxy.h"
@@ -43,12 +41,6 @@
 #include <ace/OS_NS_unistd.h>
 #include <ace/Service_Gestalt.h>
 #include <ace/Time_Value.h>
-
-#ifdef ACE_WIN32
-#include "defines/windefs.h"
-#else
-#include "defines/pathdefs.h"
-#endif
 
 #ifdef ACE_WIN32
 #include <io.h>

@@ -1,6 +1,6 @@
 //
 //    Lorica project file. 
-//    Copyright (C) 2007 OMC Denmark ApS.
+//    Copyright (C) 2007-2008 OMC Denmark ApS.
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ project: anytypecode,  portableserver, dynamicinterface, dynamicany, ifrservice,
   after += lorica_Client lorica_EvaluatorBase AsynchProxyTools
   libs += lorica_Client lorica_EvaluatorBase OCI_AsynchProxyTools
   sharedName = lorica_GenericEvaluator
+
+  macros += LORICA_HAVE_DOC_MPC
 
   DLL_EXPORT_Files {
     Lorica_GenericEvaluator

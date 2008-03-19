@@ -56,9 +56,7 @@
  *  3. mailto:support@ociweb.com
  */
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "defines/build-system-defs.h"
 
 #include "OperationTable.h"
 #include <tao/IFR_Client/IFR_BasicC.h>

@@ -1,7 +1,18 @@
+2008-03-19  Jules Colding  <colding@42tools.com>
+
+	* Lorica: config.h and windefs.h used to contain build
+	system specific defines. This gave rise to a lot of ifdef'ed
+	include statements. This has now been cleaned up and all
+	build system specific defines are now defined and imported
+	by including "defines/build-system-defs.h".
+
+	A new preprocessor define LORICA_HAS_DOC_MPC is defines in
+	the MPC project files to aid in recognizing usage of MPC.
+
 2008-03-17  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ConfigBase.cpp (Config::init_endpoints):
-	(Endpoint::parse_string): 
+	(Endpoint::parse_string):
 	Supply a default hostname if not given in the
 	configuration file
 

@@ -26,9 +26,7 @@
 //
 //**************************************************************************
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "defines/build-system-defs.h"
 
 #include "ntsvc.h"
 #include "proxy.h"
