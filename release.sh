@@ -41,10 +41,7 @@ fi
 prepare
 
 case "$action" in
-    Mac%20OS%20X%20Tiger)
-	make dist-dmg
-	;;
-    Mac%20OS%20X%20Leopard)
+    Mac%20OS%20X*)
 	make dist-dmg
 	;;
     Red%20Hat%20Enterprise%20Linux%204)
@@ -120,11 +117,8 @@ if [ $# -ge 2 ]; then
 fi
 
 case "$action" in
-    Mac%20OS%20X%20Tiger)
-	scp -i $HOME/.ssh/no_passphrase_id_rsa -r packagemaker/Lorica.dmg colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Mac\ OS\ X\ Tiger/'
-	;;
-    Mac%20OS%20X%20Leopard)
-	scp -i $HOME/.ssh/no_passphrase_id_rsa -r packagemaker/Lorica.dmg colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Mac\ OS\ X\ Leopard/'
+    Mac%20OS%20X*)
+	scp -i $HOME/.ssh/no_passphrase_id_rsa -r packagemaker/Lorica.dmg colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Mac\ OS\ X\ Tiger\ and\ above/'
 	;;
     Red%20Hat%20Enterprise%20Linux%204)
 	cd $HOME/rpmbuild
