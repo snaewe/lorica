@@ -136,6 +136,10 @@ else
 	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 endif
+if LORICA_STATIC
+	@echo 'static_link=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'static_libs_only=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif
 	cd $(ACE_ROOT)/ace                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/apps/gperf/src      && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/ace/SSL             && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile

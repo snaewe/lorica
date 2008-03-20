@@ -123,16 +123,16 @@ else
 fi
 
 dnl Link binaries statically
-AC_ARG_ENABLE(static-bins,
-	      [AS_HELP_STRING([--enable-static-bins[[[[=no/yes]]]]], [Enable statically linked binaries if possible [default=no]])],
+AC_ARG_ENABLE(static,
+	      [AS_HELP_STRING([--enable-static[[[[=no/yes]]]]], [Enable statically linked binaries if possible [default=no]])],
  	      [],
- 	      enable_static_bins=no)
-if test "x$enable_static_bins" = "xyes"; then
-	msg_static_bins=yes
+ 	      enable_static=no)
+if test "x$enable_static" = "xyes"; then
+	msg_static=yes
 else
-	msg_static_bins=no
+	msg_static=no
 fi
-AM_CONDITIONAL(LORICA_STATIC, test x$enable_static_bins = xyes)
+AM_CONDITIONAL(LORICA_STATIC, test x$enable_static = xyes)
 
 dnl Install development headers
 AC_ARG_ENABLE(lorica-devel,
@@ -296,6 +296,9 @@ LORICA_INCLUDES="$LORICA_INCLUDES $ACETAO_CPPFLAGS"
 
 dnl Now set the preprocessor arguments
 LORICA_CPPFLAGS="$LORICA_INCLUDES"
+if test "x$enable_static" = "xyes"; then
+   LORICA_CPPFLAGS="$LORICA_CPPFLAGS -DACE_AS_STATIC_LIBS"
+fi
 AC_SUBST(LORICA_CPPFLAGS)
 
 dnl CXXFLAGS
@@ -471,7 +474,7 @@ echo "\
 	Target Platform:                                      $lorica_target
 	Making a distribution build:                          $msg_lorica_dist
 	Making a debug build:                                 $msg_lorica_debug
-	Making static executables:                            $msg_static_bins
+	Making static executables:                            $msg_static
 	Install development header and IDL files:             $msg_lorica_devel
 	Download and build ACE and TAO locally if necessary:  $msg_tao_build
 "
