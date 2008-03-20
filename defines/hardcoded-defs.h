@@ -58,6 +58,10 @@
 #define LORICA_EXE_NAME "lorica.exe"
 #endif
 
+#ifndef LORICA_CACHE_DIR // Full path of Lorica cache directory
+#define LORICA_CACHE_DIR "."
+#endif
+
 #ifndef LORICA_IOR_FILE // Full path of RefernceMapper IOR file
 #define LORICA_IOR_FILE "lorica.ior"
 #endif
@@ -80,6 +84,10 @@
 
 #ifndef IFR_SERVICE_EXE_NAME // Full path of IFR_Service executable
 #define IFR_SERVICE_EXE_NAME "IFR_Service.exe"
+#endif
+
+#ifndef VERSION
+#define VERSION "0.9.7"
 #endif
 
 #endif // _HARD_CODED_DEFS_H_
