@@ -46,6 +46,12 @@ BUILT_SOURCES = OCI_AsynchProxyTools_Export.h
 $(BUILT_SOURCES):
 	generate_export_file.pl OCI_AsynchProxyTools > OCI_AsynchProxyTools_Export.h
 
+if LORICA_STATIC
+    STATIC_FLAGS = -all-static
+else
+    STATIC_FLAGS =
+endif
+
 noinst_LTLIBRARIES = libOCI_AsynchProxyTools.la
 
 libOCI_AsynchProxyTools_la_CPPFLAGS = \
@@ -58,7 +64,7 @@ libOCI_AsynchProxyTools_la_SOURCES = \
 	ProxyServant.cpp             \
 	OperationTable.cpp
 
-libOCI_AsynchProxyTools_la_LDFLAGS =
+libOCI_AsynchProxyTools_la_LDFLAGS = $(STATIC_FLAGS)
 
 noinst_HEADERS = \
 	OCI_AsynchProxyTools_Export.h \

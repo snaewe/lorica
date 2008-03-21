@@ -29,12 +29,6 @@
 #include "ConfigBase.h"
 #include "debug.h"
 
-#ifdef ACE_WIN32
-#include "defines/windefs.h"
-#else
-#include "defines/pathdefs.h"
-#endif
-
 const int Lorica::Config::SYS_PORT = -1;
 
 Lorica::Config::Endpoint::Endpoint ()

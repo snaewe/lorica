@@ -21,13 +21,13 @@
 Summary:         An IIOP Firewall daemon
 Name:            @LORICA_NAME@
 Version:         @LORICA_VERSION@
-Release:         1%{?dist}
+Release:         2%{?dist}
 License:         GPL
 Group:           Applications/Communications
 Source0:         http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz
 BuildRoot:       %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 URL:             http://trac.42tools.com/lorica/
-Conflicts:       ACE
+Conflicts:       ace, ACE, ACE-ACE
 Requires:        openssl
 Requires(post):  /sbin/chkconfig, /sbin/service
 BuildRequires:   openssl-devel
@@ -111,6 +111,9 @@ rm -rf %{buildroot}
 %{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@/building_lorica
 
 %changelog
+* Wed Mar 19 2008 Jules Colding <colding@42tools.com> 0.9.7-2
+- Updated Conflicts
+
 * Mon Mar 17 2008 Jules Colding <colding@42tools.com> 0.9.7-1
 - Initial RPM release
 

@@ -57,7 +57,7 @@ lorica_SOURCES =  \
 	proxy.h
 
 if LORICA_STATIC
-    STATIC_FLAGS = -all-static
+    STATIC_FLAGS = -static
 else
     STATIC_FLAGS =
 endif

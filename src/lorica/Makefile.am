@@ -94,6 +94,12 @@ if LORICA_DEVEL
     idl_DATA = $(IDL_FILES)
 endif
 
+if LORICA_STATIC
+    STATIC_FLAGS = -all-static
+else
+    STATIC_FLAGS =
+endif
+
 noinst_LTLIBRARIES = liblorica_Client.la
 
 liblorica_Client_la_CPPFLAGS = \
@@ -109,7 +115,7 @@ liblorica_Client_la_SOURCES = \
 	ServerAgent_impl.cpp  \
 	debug.cpp
 
-liblorica_Client_la_LDFLAGS =
+liblorica_Client_la_LDFLAGS = $(STATIC_FLAGS)
 
 noinst_HEADERS = \
 	ReferenceMapper.idl  \
@@ -146,7 +152,7 @@ liblorica_EvaluatorBase_la_SOURCES = \
 	RMVByMapped.cpp       \
 	ReferenceMapValue.cpp
 
-liblorica_EvaluatorBase_la_LDFLAGS =
+liblorica_EvaluatorBase_la_LDFLAGS = $(STATIC_FLAGS)
 
 noinst_HEADERS += \
 	ConfigBase.h        \
@@ -176,7 +182,7 @@ liblorica_GenericEvaluator_la_SOURCES = \
 	GenericMapper.cpp    \
 	IFRService.cpp
 
-liblorica_GenericEvaluator_la_LDFLAGS =
+liblorica_GenericEvaluator_la_LDFLAGS = $(STATIC_FLAGS)
 
 noinst_HEADERS += \
 	GenericEvaluator.h \

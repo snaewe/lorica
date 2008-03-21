@@ -121,24 +121,33 @@ if LORICA_MUST_BUILD_ACETAO
 
 all-local: $(TAO_FILES)
 
+#
+#	@echo 'static_link=1'      >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+#
 $(TAO_FILES): $(ACE_ROOT)
+	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+if LORICA_STATIC
+	@echo 'static_libs_only=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'optimize=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'inline=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'DEPGEN=$$(ACE_ROOT)/bin/depgen.pl' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo
+	@echo 'ssl=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+	@echo 'ipv6=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+endif
 if LORICA_DARWIN_TIGER
 	@echo '#include "ace/config-macosx-tiger.h"' > $(ACE_ROOT)/ace/config.h
-	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 endif
 if LORICA_DARWIN_LEOPARD
 	@echo '#include "ace/config-macosx-leopard.h"' > $(ACE_ROOT)/ace/config.h
-	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_leopard.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 else
 	@echo '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
-	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 endif
 if LORICA_STATIC
-	@echo 'static_link=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-	@echo 'static_libs_only=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	cd $(ACE_ROOT)/TAO                 && $(ACE_ROOT)/bin/mwc.pl -type gnuace -static TAO_ACE.mwc
 endif
 	cd $(ACE_ROOT)/ace                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/apps/gperf/src      && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
