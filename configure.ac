@@ -114,7 +114,7 @@ dnl
 dnl Enable build of TAO if need be
 AC_ARG_ENABLE(tao-build,
 	      [AS_HELP_STRING([--enable-tao-build[[[[=no/yes]]]]], [Enable download and local rebuild of ACE and TAO [default=no]])],
- 	      [],
+ 	      [],						   
  	      enable_tao_build=no)
 if test "x$enable_tao_build" = "xyes"; then
 	msg_tao_build=yes
@@ -123,16 +123,16 @@ else
 fi
 
 dnl Link binaries statically
-AC_ARG_ENABLE(static,
-	      [AS_HELP_STRING([--enable-static[[[[=no/yes]]]]], [Enable statically linked binaries if possible [default=no]])],
- 	      [],
- 	      enable_static=no)
-if test "x$enable_static" = "xyes"; then
+AC_ARG_ENABLE(static-lorica,
+ 	      [AS_HELP_STRING([--enable-static-lorica[[[[=no/yes]]]]], [Enable statically linked binaries if possible [default=no]])],
+  	      [],
+ 	      [enable_static_lorica=no])
+if test "x$enable_static_lorica" = "xyes"; then
 	msg_static=yes
 else
 	msg_static=no
 fi
-AM_CONDITIONAL(LORICA_STATIC, test x$enable_static = xyes)
+AM_CONDITIONAL(LORICA_STATIC, test x$enable_static_lorica = xyes)
 
 dnl Install development headers
 AC_ARG_ENABLE(lorica-devel,
