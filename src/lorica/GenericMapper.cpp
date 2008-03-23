@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- C++ -*- */
 
 /*
  *    Lorica source file.
@@ -27,6 +27,15 @@
 #include "GenericEvaluator.h"
 #include "EvaluatorBase.h"
 #include "ProxyServant.h"
+
+#if defined (ACE_AS_STATIC_LIBS) // should be TAO_AS_STATIC_LIBS
+# include "tao/IFR_Client/IFR_Client_Adapter_Impl.h"
+
+// This is necessary to ensure that the required service object
+// is initialized when statically linked.
+ACE_STATIC_SVC_REQUIRE (TAO_IFR_Client_Adapter_Impl)
+
+#endif /* TAO_AS_STATIC_LIBS */
 
 Lorica::GenericMapper::GenericMapper(const bool Debug,
 				     Lorica_MapperRegistry & mr)

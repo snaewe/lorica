@@ -1,3 +1,9 @@
+Sun Mar 23 00:06:11 UTC 2008  Phil Mesnier  <mesnier_p@42tools.com>
+
+        * src/lorica/GenericMapper.cpp:
+          Add the conditional explicit initialization of the IFR_Client
+          when statically linking.
+
 2008-03-21  Jules Colding  <colding@42tools.com>
 
 	* acetao/Makefile.am: Still working on static build...
