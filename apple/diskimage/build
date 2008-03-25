@@ -1,0 +1,25 @@
+#!/bin/bash
+# Creates a disk image contaning the files in $DIST and add a SLA which is shown before osx mounts the image.
+
+# Add background picture
+IMAGE_DIR=$DIST/.background
+mkdir $IMAGE_DIR
+cp image.png $IMAGE_DIR
+
+# Add handcrafted DS_Store file
+cp DS_Store $DIST/.DS_Store
+
+# Hide the installer package extension in finder
+osascript -e "tell application \"Finder\"" \
+          -e    "set extension hidden of file (POSIX file \"$DIST/Install $APP_NAME.pkg\") to true" \
+          -e "end tell"
+
+# Create disk image
+hdiutil create -srcfolder $DIST -format UDBZ -volname "$APP_NAME Install Disk" -mode 444 -noscrub $BUILD/$APP_NAME.dmg
+
+# Add SLA to disk image
+hdiutil unflatten $BUILD/$APP_NAME.dmg
+ditto -x SLA.bz2 $BUILD
+DeRez $BUILD/sla.rsrc > $BUILD/sla.r
+Rez -a $BUILD/sla.r -o $BUILD/$APP_NAME.dmg
+hdiutil flatten $BUILD/$APP_NAME.dmg

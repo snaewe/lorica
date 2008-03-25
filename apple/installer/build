@@ -1,0 +1,11 @@
+#!/bin/bash
+# Creates a installer package for installing Lorica using apple's Installer application.
+
+# Install launch deamon
+LAUNCH_DIR=$ROOT/Library/LaunchDaemons
+mkdir -p $LAUNCH_DIR
+cp com.42tools.lorica.plist $LAUNCH_DIR
+
+# Create package
+PM_CMD=/Developer/Applications/Utilities/PackageMaker.app/Contents/MacOS/PackageMaker
+$PM_CMD --root $ROOT --resources resources --scripts scripts --info Info.plist --version 1.0 --title $APP_NAME --target 10.4 --root-volume-only --out "$DIST/Install $APP_NAME.pkg"

@@ -21,6 +21,8 @@
 			<string>CPU</string>
 		</dict>
 	</array>
+	<key>IFPkgFlagAllowBackRev</key>
+	<false/>
 	<key>IFPkgFlagBackgroundAlignment</key>
 	<string>bottomleft</string>
 	<key>IFPkgFlagBackgroundScaling</key>

@@ -1,0 +1,41 @@
+#!/bin/bash
+# Creates a disk image contaning Lorica and osx support tools.
+
+export APP_NAME="Lorica"
+export BUILD="$(pwd)/$APP_NAME.build"
+export DIST="$BUILD/dist"
+
+# Create project folders
+mkdir -p $BUILD
+mkdir -p $DIST
+
+# Stage install
+ROOT="$BUILD/root"
+mkdir -p $ROOT
+
+pushd ..
+./bootstrap --enable-tao-build --enable-lorica-devel --enable-lorica-target=darwin --prefix="/usr" --sysconfdir="/private/etc"
+make && make DESTDIR=$ROOT install
+popd
+
+# Create installer package
+export ROOT
+
+pushd installer
+./build
+popd
+
+# Create uninstaller applicaion
+pushd uninstaller
+./build
+popd
+
+# Create disk iamge
+pushd diskimage
+./build
+popd
+
+# Clean up
+mv $BUILD/$APP_NAME.dmg .
+chmod -R u+w $BUILD
+rm -rf $BUILD

@@ -94,8 +94,8 @@ dist-hook:
 	-rm -f $(distdir)/init_rc/gentoo.confd
 	-rm -f $(distdir)/src/lorica/*S.*
 	-rm -f $(distdir)/src/lorica/*C.*
-	-rm -f $(distdir)/packagemaker/*.dmg
-	-rm -rf $(distdir)/packagemaker/distribution
+	-rm -f $(distdir)/apple/*.dmg
+	-rm -rf $(distdir)/apple/Lorica.build
 release:
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
 
@@ -107,7 +107,7 @@ tarball:
 
 if LORICA_DARWIN
 dist-dmg:
-	cd $(CWD)/packagemaker && ./make_dmg
+	cd $(CWD)/apple && ./build
 endif
 
 if LORICA_SUSE

@@ -1,0 +1,5 @@
+#!/bin/bash
+# Creates a uninstaller application for removing Lorica.
+
+# Create application
+xcodebuild install SYMROOT=$BUILD DSTROOT=$DIST INSTALL_PATH=/

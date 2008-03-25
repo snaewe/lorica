@@ -1,15 +1,17 @@
-#!/bin/bash
+#!/bin/bash -p
 
-# Check if lorica is installed
-if [ ! -e "/Library/Receipts/Install Lorica.pkg" ]; then
-    echo "Lorica is not installed"
-    exit 1
-fi
+echo "Uninstalling Lorica"
 
 # Check if sctipt is run with administator rights
 if [ $EUID -ne 0 ]; then
    echo "Script is not running with administrator rights"
    exit 1
+fi
+
+# Check if lorica is installed
+if [ ! -e "/Library/Receipts/Install Lorica.pkg" ]; then
+    echo "Lorica is not installed"
+    exit 2
 fi
 
 # Stop deamon
@@ -57,3 +59,4 @@ done
 
 # Remove Installer receipt
 rm -rf "/Library/Receipts/Install Lorica.pkg"
+exit 0
