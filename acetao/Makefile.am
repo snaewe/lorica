@@ -138,6 +138,7 @@ endif
 if LORICA_DARWIN_TIGER
 	@echo '#include "ace/config-macosx-tiger.h"' > $(ACE_ROOT)/ace/config.h
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+else
 if LORICA_DARWIN_LEOPARD
 	@echo '#include "ace/config-macosx-leopard.h"' > $(ACE_ROOT)/ace/config.h
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_leopard.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
