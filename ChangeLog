@@ -1,3 +1,7 @@
+2008-03-28  Jules Colding  <colding@42tools.com>
+
+	* acetao/Makefile.am ($(TAO_FILES)): Fix else statement
+
 Sun Mar 23 00:06:11 UTC 2008  Phil Mesnier  <mesnier_p@42tools.com>
 
         * src/lorica/GenericMapper.cpp:
