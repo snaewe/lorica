@@ -14,11 +14,14 @@ if [ ! -e "/Library/Receipts/Install Lorica.pkg" ]; then
     exit 2
 fi
 
-# Stop deamon
-deamon="/Library/LaunchDaemons/com.42tools.lorica.plist"
-if [ -e $deamon ]; then
-    launchctl unload $deamon 
+# Stop auto launching af daemon
+daemon="/Library/LaunchDaemons/com.42tools.lorica.plist"
+if [ -e $daemon ]; then
+    launchctl unload -w $daemon
 fi
+
+# Kill Lorica
+killall -e -u root lorica
 
 # Remove files installed by Lorica
 BOM_FILES="$(lsbom -s -f /Library/Receipts/Install\ Lorica.pkg/Contents/Archive.bom)"

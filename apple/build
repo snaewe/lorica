@@ -5,6 +5,10 @@ export APP_NAME="Lorica"
 export BUILD="$(pwd)/$APP_NAME.build"
 export DIST="$BUILD/dist"
 
+# Delete old build files
+chmod -R u+w $BUILD
+rm -rf $BUILD
+
 # Create project folders
 mkdir -p $BUILD
 mkdir -p $DIST
@@ -14,28 +18,39 @@ ROOT="$BUILD/root"
 mkdir -p $ROOT
 
 pushd ..
-./bootstrap --enable-tao-build --enable-lorica-devel --enable-lorica-target=darwin --prefix="/usr" --sysconfdir="/private/etc"
-make && make DESTDIR=$ROOT install
+if !(./bootstrap --enable-tao-build --enable-lorica-devel --enable-lorica-target=darwin --prefix="/usr" --sysconfdir="/private/etc"); then
+    echo "Could not bootstrap Lorica installation"
+    exit 1
+fi
+
+if !(make && make DESTDIR=$ROOT install); then
+    echo "Could not stage installation of Lorica"
+    exit 1
+fi
 popd
 
 # Create installer package
 export ROOT
 
 pushd installer
-./build
+if !(./build); then
+    echo "Could not create installer package"
+    exit 1
+fi
 popd
 
 # Create uninstaller applicaion
 pushd uninstaller
-./build
+if !(./build); then
+    echo "Could not create uninstaller application"
+    exit 1
+fi
 popd
 
 # Create disk iamge
 pushd diskimage
-./build
+if !(./build); then
+    echo "Could not create disk image"
+    exit 1
+fi
 popd
-
-# Clean up
-mv $BUILD/$APP_NAME.dmg .
-chmod -R u+w $BUILD
-rm -rf $BUILD
