@@ -1,3 +1,7 @@
+2008-03-31  Jules Colding  <colding@42tools.com>
+
+	* acetao/Makefile.am ($(TAO_FILES)): Cleanup
+
 2008-03-28  Jules Colding  <colding@42tools.com>
 
 	* acetao/Makefile.am ($(TAO_FILES)): Fix else statement
