@@ -146,7 +146,10 @@ if !LORICA_DARWIN
 	@echo '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
 	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 endif
-	cd $(ACE_ROOT)/TAO                 && $(ACE_ROOT)/bin/mwc.pl -type gnuace -static TAO_ACE.mwc
+if !LORICA_HAVE_STREAMS
+	@echo '#undef ACE_HAS_STRBUF_T' >> $(ACE_ROOT)/ace/config.h
+	@echo '#define ACE_LACKS_STRRECVFD' >> $(ACE_ROOT)/ace/config.h
+endif
 	cd $(ACE_ROOT)/ace                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/apps/gperf/src      && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/ace/SSL             && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile

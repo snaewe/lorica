@@ -16,7 +16,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-# serial 2
+# serial 3
 
 dnl AX_LORICA_CHECK_ACETAO()
 dnl Checks for all programs, libraries and header files that are 
@@ -124,6 +124,15 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
   oldLDFLAGS="$LDFLAGS"
   LDFLAGS=""
 
+  dnl Check for STREAMS support
+  AC_CHECK_HEADER([stropts.h], [lorica_have_streams="yes"], [lorica_have_streams="no"])
+  if test "x$lorica_have_streams" = "xyes"; then
+     AM_CONDITIONAL(LORICA_HAVE_STREAMS, true)
+  else
+     AM_CONDITIONAL(LORICA_HAVE_STREAMS, false)
+  fi
+
+  dnl Check if ACE and TAO are usable
   while [ true ]; do # level 5
   	while [ true ]; do # level 4
   	      while [ true ]; do # level 3
@@ -133,9 +142,9 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
                                       if test "x$ACE_ROOT" != "x"; then
                                          AM_CONDITIONAL(HAVE_ACE_ROOT, true)
                                          CONF_ACE_ROOT="$ACE_ROOT"
-                                         break 1 # check ACE_ROOT
+                                         break 1 # goto level 1
                                       else
-                                         break 2 # check sys
+                                         break 2 # goto level 2
                                       fi
                                 done
                                 # This is level 1 - check ACE_ROOT

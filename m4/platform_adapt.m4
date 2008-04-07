@@ -16,16 +16,21 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-# serial 1
+# serial 2
 
 dnl AX_LORICA_CHECK_PLATFORM()
 dnl Tries to determine the platform and defines the pretty LORICA_DIST_RELEASE
 dnl descriptive string as well as these AM_CONDITIONALS:
 dnl
+dnl LORICA_DARWIN
+dnl LORICA_DARWIN_TIGER
+dnl LORICA_DARWIN_LEOPARD
+dnl LORICA_LINUX
 dnl LORICA_FEDORA
+dnl LORICA_RHEL
+dnl LORICA_SUSE
 dnl LORICA_GENTOO
 dnl LORICA_DEBIAN
-dnl LORICA_SUSE
 dnl
 dnl These all defaults to false unless we hapen to be on one of those 
 dnl platforms .The not so pretty string lorica_target is also defined
@@ -117,7 +122,7 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 							lorica_target="OpenSUSE_10_3"
 						fi
 						;;
-					xFedoraCore)
+					xFedora*)
 						lorica_target="Fedora"
 						;;
 					xUbuntu)
