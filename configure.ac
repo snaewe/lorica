@@ -128,6 +128,7 @@ AC_ARG_ENABLE(static-lorica,
   	      [],
  	      [enable_static_lorica=no])
 if test "x$enable_static_lorica" = "xyes"; then
+	AC_DEFINE([LORICA_STATIC], [1], [Define if you want build and link statically with ACE and TAO])
 	msg_static=yes
 else
 	msg_static=no
