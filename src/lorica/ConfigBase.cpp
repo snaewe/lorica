@@ -157,9 +157,9 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 		this->hostname_ = (const char*)host_name;
 		
 		if (outside_facing)
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for outside facing endpoint\n")));
+			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default hostname for outside facing endpoint - %s\n", this->hostname_.c_str()));
 		else
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for inside facing endpoint\n")));
+			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default hostname for inside facing endpoint - %s\n", this->hostname_.c_str()));
 	}
 
 	if (option_pos != std::string::npos) {
@@ -381,17 +381,23 @@ Lorica::Config::init_endpoints(bool do_extern)
 
 			eps_str = (const char*)host_name;
 			eps_str += ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for outside facing endpoint\n")));
+			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default endpoint value (%s) for outside facing endpoint\n", eps_str.c_str()));
 		} else {
-			eps_str = "localhost:"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value for inside facing endpoint\n")));
+			eps_str = "localhost:"LORICA_DEFAULT_INSIDE_FACING_PORT_STR;
+			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default endpoint value (%s) for inside facing endpoint\n", eps_str.c_str()));
 		}
 	}
+
 	for (; tpos != std::string::npos; pos = tpos + 1) {
 		tpos = eps_str.find(' ', pos);
 		std::string ep_str = (tpos == std::string::npos) ? eps_str.substr(pos) : eps_str.substr(pos, tpos-pos);
 		if (ep_str.empty())
 			break;
+
+		if (do_extern)
+			ACE_DEBUG((LM_INFO, "External Endpoint String - %s\n", ep_str.c_str()));
+		else
+			ACE_DEBUG((LM_INFO, "Internal Endpoint String - %s\n", ep_str.c_str()));
 
 		Endpoint ep;
 		ep.external_ = do_extern;

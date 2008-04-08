@@ -1,3 +1,8 @@
+2008-04-08  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Config::init_endpoints): 
+	Use the correct port number for defaulted endpoints
+
 2008-03-31  Jules Colding  <colding@42tools.com>
 
 	* acetao/Makefile.am ($(TAO_FILES)): Cleanup
