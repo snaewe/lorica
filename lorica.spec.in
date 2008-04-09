@@ -22,7 +22,7 @@ Summary:         An IIOP Firewall daemon
 Name:            @LORICA_NAME@
 Version:         @LORICA_VERSION@
 Release:         1%{?dist}
-License:         GPL
+License:         GPLv2+
 Group:           Applications/Communications
 Source0:         http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz
 BuildRoot:       %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -78,8 +78,7 @@ rm -rf %{buildroot}
 /sbin/ldconfig
 /sbin/chkconfig --add lorica
 
-%postun
-/sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %preun
 /sbin/service lorica stop >/dev/null 2>&1
@@ -88,10 +87,10 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %dir %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@
-%config %{_sysconfdir}/lorica.conf
-%config %{_sysconfdir}/lorica.ssliop
-%config %{_sysconfdir}/lorica.conf.evolution-brutus
-%config %{_sysconfdir}/sysconfig/lorica
+%config(noreplace) %{_sysconfdir}/lorica.conf
+%config(noreplace) %{_sysconfdir}/lorica.ssliop
+%config(noreplace) %{_sysconfdir}/sysconfig/lorica
+%{_sysconfdir}/lorica.conf.evolution-brutus
 %{_sysconfdir}/init.d/lorica
 %{_bindir}/*
 %{_sbindir}/*
