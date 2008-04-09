@@ -21,7 +21,7 @@
 Summary:         An IIOP Firewall daemon
 Name:            @LORICA_NAME@
 Version:         @LORICA_VERSION@
-Release:         2%{?dist}
+Release:         1%{?dist}
 License:         GPL
 Group:           Applications/Communications
 Source0:         http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz

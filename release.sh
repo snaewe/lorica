@@ -42,41 +42,41 @@ prepare
 
 case "$action" in
     Mac%20OS%20X*)
-	make dist-dmg
+	make dist-dmg || exit 1
 	;;
     Red%20Hat%20Enterprise%20Linux%204)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     Fedora%20Core%204)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     Fedora%20Core%205)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     Fedora%20Core%206)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     Fedora%207)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     Fedora%208)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     Rawhide)
-	make dist-rpm
+	make dist-rpm || exit 1
 	;;
     OpenSUSE%2010.2)
-	make dist-rpm
+	make dist-rpm || exit 1
 	echo -n "Now cd to $(HOME)/suse_build/ and execute build as root in another terminal. I'll wait right here... "
 	read answer
 	;;
     OpenSUSE%2010.3)
-	make dist-rpm
+	make dist-rpm || exit 1
 	echo -n "Now cd to $(HOME)/suse_build/ and execute build as root in another terminal. I'll wait right here... "
 	read answer
 	;;
     Gentoo)
-	make dist-ebuild
+	make dist-ebuild || exit 1
 	;;
     Ubuntu*)
 	codename=`lsb_release -sc`
@@ -95,15 +95,15 @@ case "$action" in
 		exit 1
 		;;
 	esac
-	make dist-deb-bin
+	make dist-deb-bin || exit 1
 	;;
     tarball)
-	make
-	make dist
+	make || exit 1
+	make dist || exit 1
 	;;
     SOURCE)
-	make
-	make dist
+	make || exit 1
+	make dist || exit 1
 	;;
     *)
 	echo "Error - Unknown action"
@@ -121,39 +121,39 @@ case "$action" in
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r packagemaker/Lorica.dmg colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Mac\ OS\ X\ Tiger\ and\ above/'
 	;;
     Red%20Hat%20Enterprise%20Linux%204)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Red\ Hat\ Enterprise\ Linux\ 4/'
 	;;
     Fedora%20Core%204)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Fedora\ Core\ 4/'
 	;;
     Fedora%20Core%205)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Fedora\ Core\ 5/'
 	;;
     Fedora%20Core%206)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Fedora\ Core\ 6/'
 	;;
     Fedora%207)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Fedora\ 7/'
 	;;
     Fedora%208)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Fedora\ 8/'
 	;;
     Rawhide)
-	cd $HOME/rpmbuild
+	cd $HOME/rpmbuild || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES SPECS RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Rawhide'
 	;;
     OpenSUSE%2010.2)
-	cd /var/tmp/build-root/usr/src/packages
+	cd /var/tmp/build-root/usr/src/packages || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/OpenSUSE\ 10.2/'
 	;;
     OpenSUSE%2010.3)
-	cd /var/tmp/build-root/usr/src/packages
+	cd /var/tmp/build-root/usr/src/packages || exit 1
 	scp -i $HOME/.ssh/no_passphrase_id_rsa -r SOURCES RPMS SRPMS colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/OpenSUSE\ 10.3/'
 	;;
     Gentoo)
