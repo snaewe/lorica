@@ -110,6 +110,9 @@ rm -rf %{buildroot}
 %{_docdir}/@LORICA_NAME@-devel-@LORICA_VERSION@/building_lorica
 
 %changelog
+* Wed Apr 9 2008 Jules Colding <colding@42tools.com> 0.9.9-1
+- Fix endpoint bug for defaulted values
+
 * Wed Mar 19 2008 Jules Colding <colding@42tools.com> 0.9.7-2
 - Updated Conflicts
 
