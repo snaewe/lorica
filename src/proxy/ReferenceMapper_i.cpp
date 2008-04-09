@@ -40,7 +40,7 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i(CORBA::ORB_ptr orb,
 {
 	this->registry_ = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
 	if (this->registry_ == 0 && Lorica_debug_level > 0)
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) Lorica::ReferenceMapper_i, no registry\n"));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i, no registry\n")));
 
 	try {
 		if (this->has_security_) {
@@ -50,8 +50,7 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i(CORBA::ORB_ptr orb,
 			this->access_decision_ = TAO::SL2::AccessDecision::_narrow(sl2ad.in());
 		} else {
 			if (Lorica_debug_level > 0)
-				ACE_DEBUG ((LM_DEBUG,"(%P|%t) Lorica::ReferenceMapper_i, "
-					    "SSLIOP not available\n"));
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i, SSLIOP not available\n")));
 		}
 	}
 	catch (CORBA::Exception &) {
@@ -67,15 +66,15 @@ void
 Lorica::ReferenceMapper_i::allow_insecure_access(CORBA::Object_ptr self)
 {
 	if (this->has_security_ && !CORBA::is_nil(this->access_decision_))
-	{
-		CORBA::String_var orbid = this->orb_->id();
-		PortableServer::ObjectId_var oid;
-		CORBA::OctetSeq_var poaid;
+		{
+			CORBA::String_var orbid = this->orb_->id();
+			PortableServer::ObjectId_var oid;
+			CORBA::OctetSeq_var poaid;
 
-		if (this->registry_->poa_and_object_id (self, poaid.out(), oid.out()))
-			this->access_decision_->add_object(orbid.in(), poaid.in(), oid.in(),
-							   true);
-	}
+			if (this->registry_->poa_and_object_id (self, poaid.out(), oid.out()))
+				this->access_decision_->add_object(orbid.in(), poaid.in(), oid.in(),
+								   true);
+		}
 }
 
 CORBA::Object_ptr
@@ -112,34 +111,26 @@ Lorica::ReferenceMapper_i::as_server_i (bool require_secure,
 
 	if (rmv.get() == 0) {
 		if(Lorica_debug_level > 0)
-			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::ReferenceMapper_i::as_server_i "
-				   "Registry returned a null ReferenceMapValue\n"));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i Registry returned a null ReferenceMapValue\n")));
 
 		return CORBA::Object::_nil();
 	}
 
-	if (Lorica_debug_level > 5) {
-		ACE_DEBUG((LM_DEBUG,
-			   "(%P|%t) Lorica::ReferenceMapper_i::as_server_i "
-			   "Registry returned a non-null rmv\n"));
-	}
+	if (Lorica_debug_level > 5)
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i Registry returned a non-null rmv\n")));
 
 	if (corbaloc_name[0] != 0 && !CORBA::is_nil(this->ior_table_.in())) {
 		CORBA::String_var mapped = this->orb_->object_to_string(rmv->mapped_ref_.in());
 		if(Lorica_debug_level > 5) {
-			ACE_DEBUG ((LM_DEBUG,
-				    "(%P|%t) Lorica::ReferenceMapper_i::as_server_i "
-				    "adding mapped value to IORTable, %s, %s\n",
-				    corbaloc_name,mapped.in()));
+			ACE_DEBUG((LM_DEBUG,
+				   ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i adding mapped value to IORTable, %s, %s\n"),
+				   corbaloc_name,mapped.in()));
 		}
 
 		try {
 			ior_table_->bind (corbaloc_name,mapped.in());
 			if (Lorica_debug_level > 5)
-				ACE_DEBUG ((LM_DEBUG,
-					    "(%P|%t) Lorica::ReferenceMapper_i::as_server_i "
-					    "bound to ior table\n"));
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i bound to ior table\n")));
 			rmv->ior_table_name_ = corbaloc_name;
 		}
 		catch (IORTable::AlreadyBound &) {
@@ -179,8 +170,7 @@ Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	if ((rmv.get() != 0) && (rmv->ior_table_name_ != "")) {
 		if (Lorica_debug_level > 5) {
 			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::ReferenceMapper_i::remove_server "
-				   "unbinding %s from IOR Table\n",
+				   ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::remove_server unbinding %s from IOR Table\n"),
 				   rmv->ior_table_name_.c_str()));
 		}
 
@@ -188,8 +178,7 @@ Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	} else {
 		if (Lorica_debug_level > 5)
 			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::ReferenceMapper_i::remove_server "
-				   "remove reference returned rmv = 0x%x\n",
+				   ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::remove_server remove reference returned rmv = 0x%x\n"),
 				   rmv.get()));
 	}
 

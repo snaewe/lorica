@@ -65,7 +65,7 @@ Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR & incoming)
 
 		if ((this->out_args_.ptr() == 0)
 		    && (Lorica_debug_level > 0))
-			ACE_DEBUG((LM_DEBUG,"out args is null!\n"));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("out args is null!\n")));
 		else
 			this->out_args_->_tao_incoming_cdr(incoming,
 							   CORBA::ARG_OUT | CORBA::ARG_INOUT,
@@ -107,7 +107,7 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 	}
 
 	if (Lorica_debug_level > 0)
-		ACE_DEBUG((LM_DEBUG,"handle_excep_i: id = %s\n", id.in()));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("handle_excep_i: id = %s\n"), id.in()));
 
 	if (reply_status == TAO_AMI_REPLY_USER_EXCEPTION) {
 		TAO_OutputCDR encap;
@@ -133,9 +133,11 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 		}
 
 		if (Lorica_debug_level > 0) {
-			ACE_DEBUG ((LM_DEBUG,
-				    "Got system exception: %s, minor = %d, completed = %d\n",
-				    id.in(), minor, completion));
+			ACE_DEBUG((LM_DEBUG,
+				   ACE_TEXT("Got system exception: %s, minor = %d, completed = %d\n"),
+				   id.in(),
+				   minor,
+				   completion));
 		}
 
 		CORBA::SystemException *ex = TAO::create_system_exception(id.in());
@@ -147,7 +149,7 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 		response_handler_->invoke_excep(&h);
 	} else {
 		if (Lorica_debug_level > 0)
-			ACE_DEBUG((LM_DEBUG,"ignoring reply_status %ul\n", reply_status));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("ignoring reply_status %ul\n"), reply_status));
 	}
 }
 
@@ -176,7 +178,7 @@ Lorica::ProxyReplyHandler::handle_location_forward_i(TAO_InputCDR & incoming,
 
 	CORBA::ORB_var orb = mapper_.orb();
 	CORBA::String_var ior = orb->object_to_string (fwd.in());
-	ACE_DEBUG((LM_DEBUG, "forwarding IOR: %s\n", ior.in()));
+	ACE_DEBUG((LM_DEBUG, ACE_TEXT("forwarding IOR: %s\n"), ior.in()));
 
 	bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
 	response_handler_->invoke_location_forward(fwd, is_perm);

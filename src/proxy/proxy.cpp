@@ -143,7 +143,7 @@ Lorica::Proxy::get_lock(const char *lock_file_path)
 	// take the lock and write the pid
 	if (get_process_lock(this->lock_fd, lock_file_path))
 		return true;
- 
+
 	if (-1 != this->lock_fd) {
 		close(this->lock_fd);
 		this->lock_fd = -1;
@@ -233,7 +233,7 @@ get_file(const char *filename)
 #ifdef ACE_WIN32
 	file_fd = _open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 #else
-		file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 #endif
 	if (-1 == file_fd)
 		return NULL;
@@ -276,11 +276,11 @@ Lorica::Proxy::configure(Config & config)
 		int argc = arguments->argc();
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "passing %d args to ORB_init:\n", argc));
+				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure passing %d args to ORB_init:\n"), 
+				   argc));
 
 			for (int i = 0; i < argc; i++)
-				ACE_DEBUG((LM_DEBUG,"  %s\n", arguments->argv()[i]));
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("  %s\n"), arguments->argv()[i]));
 		}
 		orb_ = CORBA::ORB_init(argc, arguments->argv());//, "ProxyORB");
 
@@ -325,8 +325,7 @@ Lorica::Proxy::configure(Config & config)
 		list.length(ex_points.size());
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "Setting up External PM with %d endpoints\n",
+				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Setting up External PM with %d endpoints\n"),
 				   ex_points.size()));
 		}
 		for (size_t count = 0; count < ex_points.size(); count++) {
@@ -349,8 +348,7 @@ Lorica::Proxy::configure(Config & config)
 		list.length(in_points.size());
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "Setting up Internal PM with %d endpoints\n",
+				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Setting up Internal PM with %d endpoints\n"),
 				   in_points.size()));
 		}
 		for (size_t count = 0; count < in_points.size(); count++) {
@@ -369,9 +367,8 @@ Lorica::Proxy::configure(Config & config)
 
 
 		if (Lorica_debug_level > 2) {
-			ACE_DEBUG ((LM_DEBUG,
-				    "(%P|%t) Lorica::Proxy::configure "
-				    "Creating admin POA with internal PM\n"));
+			ACE_DEBUG((LM_DEBUG,
+				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Creating admin POA with internal PM\n")));
 		}
 		policies.length(0);
 		admin_poa_ = root_poa_->create_POA("adminPOA",
@@ -398,7 +395,6 @@ Lorica::Proxy::configure(Config & config)
 
 		std::string ior = orb_->object_to_string(refMapper_obj.in());
 		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY, ior.c_str());
-		ACE_DEBUG ((LM_DEBUG, "(%P|%t) Lorica::ReferenceMapper bound in IORTable: %s\n", Lorica::ReferenceMapper::IOR_TABLE_KEY));
 
 		this->ior_file_ = config.get_value("IOR_FILE");
 		if (!this->ior_file_.length()) {
@@ -437,10 +433,9 @@ Lorica::Proxy::configure(Config & config)
 		std::string ne_ids = config.null_eval_type_ids();
 		if (!ne_ids.empty()) {
 			if (Lorica_debug_level > 2) {
-				ACE_DEBUG ((LM_DEBUG,
-					    "(%P|%t) Lorica::Proxy::configure "
-					    "adding type ids for null evaluator: %s\n",
-					    ne_ids.c_str()));
+				ACE_DEBUG((LM_DEBUG,
+					   ACE_TEXT("(%P|%t) Lorica::Proxy::configure adding type ids for null evaluator: %s\n"),
+					   ne_ids.c_str()));
 			}
 
 			size_t space = ne_ids.find(' ');
@@ -454,16 +449,14 @@ Lorica::Proxy::configure(Config & config)
 		} else if (config.null_eval_any()) {
 			if (Lorica_debug_level > 2)
 				ACE_DEBUG((LM_DEBUG,
-					   "(%P|%t) Lorica::Proxy::configure "
-					   "creating default null mapper\n"));
+					   ACE_TEXT("(%P|%t) Lorica::Proxy::configure creating default null mapper\n")));
 			mreg->create_default_null_mapper();
 		}
 
 		if (config.generic_evaluator()) {
 			if (Lorica_debug_level > 0) {
 				ACE_DEBUG((LM_DEBUG,
-					   "(%P|%t) Lorica::Proxy::configure "
-					   "Loading generic evaluator\n"));
+					   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Loading generic evaluator\n")));
 			}
 #ifdef ACE_WIN32
 			this->orb_->orb_core()->configuration()->process_directive(ACE_TEXT_ALWAYS_CHAR

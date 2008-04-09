@@ -73,7 +73,7 @@ Lorica::RMVByMapped::next_index(void)
 
 bool
 Lorica::RMVByMapped::bind(ACE_UINT32 index,
-			  ReferenceMapValue *value)
+													ReferenceMapValue *value)
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
@@ -93,7 +93,7 @@ Lorica::RMVByMapped::bind(ACE_UINT32 index,
 
 bool
 Lorica::RMVByMapped::rebind(ACE_UINT32 index,
-			    ReferenceMapValue *value)
+														ReferenceMapValue *value)
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
@@ -112,7 +112,7 @@ Lorica::RMVByMapped::rebind(ACE_UINT32 index,
 
 bool
 Lorica::RMVByMapped::find(ACE_UINT32 index,
-			  ReferenceMapValue *& value)
+													ReferenceMapValue *& value)
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
@@ -131,7 +131,7 @@ Lorica::RMVByMapped::find(ACE_UINT32 index,
 
 bool
 Lorica::RMVByMapped::unbind(ACE_UINT32 index,
-			    ReferenceMapValue *& value)
+														ReferenceMapValue *& value)
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (index >= num_pages_ * page_size_)
@@ -153,9 +153,9 @@ int
 Lorica::RMVByMapped::svc (void)
 {
 	if (Lorica_debug_level > 0)
-		ACE_DEBUG ((LM_DEBUG,
-			    "(%P|%t) RMVByMapped::svc, garbage collection loop "
-			    "commensing, wait_period set to %d\n", this->gc_period_secs_));
+		ACE_DEBUG((LM_DEBUG,
+							 ACE_TEXT("(%P|%t) RMVByMapped::svc, garbage collection loop commensing, wait_period set to %d\n"),
+							 this->gc_period_secs_));
 	while (!this->gc_terminated_)
 		{
 			ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
@@ -164,11 +164,12 @@ Lorica::RMVByMapped::svc (void)
 
 			if (result == 0 || errno != ETIME)
 				break;
-			
+
 			if (Lorica_debug_level > 4)
-				ACE_DEBUG ((LM_DEBUG,
-					    "(%P|%t) RMVByMapped::svc, invoking "
-					    "collection, result = %d %p\n", result,"wait" ));
+				ACE_DEBUG((LM_DEBUG,
+									 ACE_TEXT("(%P|%t) RMVByMapped::svc, invoking collection, result = %d %p\n"),
+									 result,
+									 "wait" ));
 			size_t page_offset = 0;
 			size_t test_count = 0;
 			size_t reap_count = 0;
@@ -177,8 +178,8 @@ Lorica::RMVByMapped::svc (void)
 					 iter = iter->next_)
 				{
 					ReferenceMapValue **rmv = iter->page_;
-					for (size_t index = 0; 
-					     index < this->page_size_ && !this->gc_terminated_; 
+					for (size_t index = 0;
+					     index < this->page_size_ && !this->gc_terminated_;
 					     index++)
 						{
 							if (rmv[index] != 0)
@@ -207,22 +208,22 @@ Lorica::RMVByMapped::svc (void)
 											this->free_stack_ =
 												new free_stack_node(page_offset + index,
 																						this->free_stack_);
-												
+
 										}
 								}
 						}
 					page_offset += this->page_size_;
 				}
 			if (!this->gc_terminated_ && reap_count > 0 && Lorica_debug_level > 0)
-				ACE_DEBUG ((LM_DEBUG,
-										"(%P|%t) RMVByMapped::svc, garbage collector reaped "
-										"%d out of %d references\n", reap_count, test_count));
+				ACE_DEBUG((LM_DEBUG,
+									 ACE_TEXT("(%P|%t) RMVByMapped::svc, garbage collector reaped %d out of %d references\n"),
+									 reap_count,
+									 test_count));
 
 		}
   if (Lorica_debug_level > 0)
-		ACE_DEBUG ((LM_DEBUG,
-								"(%P|%t) RMVByMapped::svc, garbage collection loop "
-								"terminating\n"));
+		ACE_DEBUG((LM_DEBUG,
+							 ACE_TEXT("(%P|%t) RMVByMapped::svc, garbage collection loop terminating\n")));
 
 	return 0;
 }

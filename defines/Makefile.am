@@ -24,6 +24,7 @@ CACHE_DIR = /var/cache
 endif
 
 noinst_HEADERS = \
+	build-system-defs.h \
 	hardcoded-defs.h
 
 all-local: pathdefs.h

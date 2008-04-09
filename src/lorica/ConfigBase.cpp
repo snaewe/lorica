@@ -148,18 +148,18 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 		this->hostname_ = primary_addr.substr(start, end);
 	}
 
-	// check for empty hostname and fix it up so that 
+	// check for empty hostname and fix it up so that
 	// we don't throw the MProfile exception
 	if (this->hostname_.empty()) {
 		char host_name[HOST_NAME_MAX] = { '\0' };
 
 		ACE_OS::hostname(host_name, sizeof(host_name));
 		this->hostname_ = (const char*)host_name;
-		
+
 		if (outside_facing)
-			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default hostname for outside facing endpoint - %s\n", this->hostname_.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default hostname for outside facing endpoint - %s\n"), this->hostname_.c_str()));
 		else
-			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default hostname for inside facing endpoint - %s\n", this->hostname_.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default hostname for inside facing endpoint - %s\n"), this->hostname_.c_str()));
 	}
 
 	if (option_pos != std::string::npos) {
@@ -381,10 +381,10 @@ Lorica::Config::init_endpoints(bool do_extern)
 
 			eps_str = (const char*)host_name;
 			eps_str += ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default endpoint value (%s) for outside facing endpoint\n", eps_str.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value (%s) for outside facing endpoint\n"), eps_str.c_str()));
 		} else {
 			eps_str = "localhost:"LORICA_DEFAULT_INSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, "DEPRECATED - Using default endpoint value (%s) for inside facing endpoint\n", eps_str.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value (%s) for inside facing endpoint\n"), eps_str.c_str()));
 		}
 	}
 
@@ -395,9 +395,9 @@ Lorica::Config::init_endpoints(bool do_extern)
 			break;
 
 		if (do_extern)
-			ACE_DEBUG((LM_INFO, "External Endpoint String - %s\n", ep_str.c_str()));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("External Endpoint String - %s\n"), ep_str.c_str()));
 		else
-			ACE_DEBUG((LM_INFO, "Internal Endpoint String - %s\n", ep_str.c_str()));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("Internal Endpoint String - %s\n"), ep_str.c_str()));
 
 		Endpoint ep;
 		ep.external_ = do_extern;

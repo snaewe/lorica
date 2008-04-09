@@ -53,7 +53,7 @@ DISTCLEANFILES = \
 EXTRA_DIST = \
 	docs                                    \
 	configurations                          \
-	packagemaker                            \
+	apple                                   \
 	ebuild/$(LORICA_NAME).ebuild.in         \
 	ebuild/ChangeLog                        \
 	ebuild/metadata.xml                     \

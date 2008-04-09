@@ -126,7 +126,7 @@ become_daemon(const bool NoFork,
 
 		return EXIT_OK;
 	}
-fork_done:
+ fork_done:
 
 	/*
 	 * We are now effectively the daemon and must continue
@@ -236,31 +236,31 @@ void
 Lorica::Service_Loader::print_usage_and_die(void)
 {
 #if defined (ACE_WIN32)
-	ACE_DEBUG ((LM_INFO,
-		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -i -r -t -k -d -f -c -l\n")
-		    ACE_TEXT(" -i: Install this program as an NT service\n")
-		    ACE_TEXT(" -r: Remove this program from the Service Manager\n")
-		    ACE_TEXT(" -s: Start the service\n")
-		    ACE_TEXT(" -k: Stop the service\n")
-		    ACE_TEXT(" -d: Debug; run as a regular application\n")
-		    ACE_TEXT(" -f: <file> Configuration file, default is \"lorica.conf\"\n")
-		    ACE_TEXT(" -c: <level> Turn on CORBA debugging, default 0\n")
-		    ACE_TEXT(" -l: <level> Turn on Lorica debugging, default 0\n"),
-		    program_name.c_str(),
-		    0));
+	ACE_DEBUG((LM_INFO,
+		   ACE_TEXT("Usage: %s")
+		   ACE_TEXT(" -i -r -t -k -d -f -c -l\n")
+		   ACE_TEXT(" -i: Install this program as an NT service\n")
+		   ACE_TEXT(" -r: Remove this program from the Service Manager\n")
+		   ACE_TEXT(" -s: Start the service\n")
+		   ACE_TEXT(" -k: Stop the service\n")
+		   ACE_TEXT(" -d: Debug; run as a regular application\n")
+		   ACE_TEXT(" -f: <file> Configuration file, default is \"lorica.conf\"\n")
+		   ACE_TEXT(" -c: <level> Turn on CORBA debugging, default 0\n")
+		   ACE_TEXT(" -l: <level> Turn on Lorica debugging, default 0\n"),
+		   program_name.c_str(),
+		   0));
 #else
-	ACE_DEBUG ((LM_INFO,
-		    ACE_TEXT("Usage: %s")
-		    ACE_TEXT(" -V -n -d -f <file> -c <level> -l <level> -n\n")
-		    ACE_TEXT(" -V: Print the version\n")
-		    ACE_TEXT(" -n: No fork - Run as a regular application\n")
-		    ACE_TEXT(" -d: Debug - Use current directory as working directory\n")
-		    ACE_TEXT(" -f: <file> Configuration file, default is \"/etc/lorica.conf\"\n")
-		    ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
-		    ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging\n"),
-		    program_name.c_str(),
-		    0));
+	ACE_DEBUG((LM_INFO,
+		   ACE_TEXT("Usage: %s")
+		   ACE_TEXT(" -V -n -d -f <file> -c <level> -l <level> -n\n")
+		   ACE_TEXT(" -V: Print the version\n")
+		   ACE_TEXT(" -n: No fork - Run as a regular application\n")
+		   ACE_TEXT(" -d: Debug - Use current directory as working directory\n")
+		   ACE_TEXT(" -f: <file> Configuration file, default is \"/etc/lorica.conf\"\n")
+		   ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
+		   ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging\n"),
+		   program_name.c_str(),
+		   0));
 #endif /* ACE_WIN32 */
 	ACE_OS::exit(1);
 }
@@ -344,21 +344,21 @@ Lorica::Service_Loader::run_service_command(void)
 	int result = 1;
 	switch (service_command_) {
 	case SC_INSTALL:
-	{
-		char pathname[_MAX_PATH] = { '\0' };
-		DWORD length = ACE_TEXT_GetModuleFileName(NULL,
-							  pathname,
-							  _MAX_PATH);
+		{
+			char pathname[_MAX_PATH] = { '\0' };
+			DWORD length = ACE_TEXT_GetModuleFileName(NULL,
+								  pathname,
+								  _MAX_PATH);
 
-		// Append the command used for running as a service
-		ACE_OS::strcat(pathname, ACE_TEXT(" -s"));
-		if (-1 == Lorica::SERVICE::instance()->insert(SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, pathname)) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("Error inserting service")));
-			result = -1;
+			// Append the command used for running as a service
+			ACE_OS::strcat(pathname, ACE_TEXT(" -s"));
+			if (-1 == Lorica::SERVICE::instance()->insert(SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, pathname)) {
+				ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("Error inserting service")));
+				result = -1;
+			}
+
+			break;
 		}
-
-		break;
-	}
 	case SC_REMOVE :
 		if (-1 == Lorica::SERVICE::instance()->remove()) {
 			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("remove")));
@@ -476,7 +476,7 @@ Lorica::Service_Loader::run_service(void)
 				ACE_ERROR((LM_ERROR, "(%P|%t) Lorica::Service_Loader::run_service Could not initialize proxy\n"));
 				return -1;
 			}
-		        
+
 			try {
 				proxy->activate();
 			}
@@ -591,9 +591,9 @@ ACE_TMAIN(int argc,
 		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
 
 #if defined (ACE_WIN32)
- 	if (lorica.is_service())
+	if (lorica.is_service())
 		result = lorica.run_service();
- 	else
+	else
 		result = lorica.run_standalone();
 #else
 	result = lorica.run_service();

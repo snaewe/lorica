@@ -60,9 +60,9 @@ Lorica::GenericEvaluator::evaluate_request(const char *operation,
 
 	if (Lorica_debug_level > 4)
 		ACE_DEBUG((LM_DEBUG,
-			   "(%P|%t) Lorica::GenericEvaluator::evaluate_request "
-			   "GenericEvaluator::evaluate_request, op = %s, type = %s\n",
-			   operation, rep_id.c_str()));
+			   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_request GenericEvaluator::evaluate_request, op = %s, type = %s\n"),
+			   operation, 
+			   rep_id.c_str()));
 
 	OCI_APT::ArgList *arg_list = this->optable_->find(operation,
 							  rep_id.c_str());
@@ -154,8 +154,8 @@ Lorica::GenericEvaluator::evaluate_exception(const char *operation,
 {
 	if (Lorica_debug_level > 4)
 		ACE_DEBUG((LM_DEBUG,
-			   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-			   "invoked, operation = %s\n", operation));
+			   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_exception invoked, operation = %s\n"),
+			   operation));
 
 	const std::string & rep_id = this->type_id();
 	OCI_APT::ArgList *arg_list = this->optable_->find(operation,
@@ -178,13 +178,11 @@ Lorica::GenericEvaluator::evaluate_exception(const char *operation,
 	if (any->impl()->marshal_value(encap)) {
 		if (Lorica_debug_level > 4)
 			ACE_DEBUG((LM_DEBUG,
-				   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-				   "Marshal_value succeeded, buflen = %d\n",
+				   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_exception Marshal_value succeeded, buflen = %d\n"),
 				   encap.length()));
 	} else if (Lorica_debug_level > 0)
 		ACE_DEBUG((LM_DEBUG,
-			   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-			   "Marshal_value failed\n"));
+			   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_exception Marshal_value failed\n")));
 
 	return true;
 }
