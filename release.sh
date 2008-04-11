@@ -35,6 +35,10 @@ product=lorica
 
 if [ "$action" = "windows" ]; then
     scp -i $HOME/.ssh/no_passphrase_id_rsa $HOME/work/vmware-shared-folder/"$product"-install.exe colding@42tools.com:
+    echo ""
+    echo "Download location:"
+    echo "   <http://www.42tools.com/sites/default/files/downloads/dist/lorica/Windows/lorica-install.exe>"
+    echo ""
     exit 0
 fi
 
