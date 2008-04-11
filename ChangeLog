@@ -1,15 +1,25 @@
+Fri Apr 11 17:59:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ProxyMapper.cpp:
+          Make the already_mapped() method tolerant of IORs with null
+          object keys. At least ORBit encodes its IOR putting object key
+          information in a non-standard profile rather than using the
+          object key field. At least that is how TAO parses it. With this
+          change NULL object keys are treated as unmapped references,
+          since mapped references will have a known object key.
+
 2008-04-08  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ConfigBase.cpp (Config::init_endpoints): 
-	Use the correct port number for defaulted endpoints
+        * src/lorica/ConfigBase.cpp (Config::init_endpoints):
+        Use the correct port number for defaulted endpoints
 
 2008-03-31  Jules Colding  <colding@42tools.com>
 
-	* acetao/Makefile.am ($(TAO_FILES)): Cleanup
+        * acetao/Makefile.am ($(TAO_FILES)): Cleanup
 
 2008-03-28  Jules Colding  <colding@42tools.com>
 
-	* acetao/Makefile.am ($(TAO_FILES)): Fix else statement
+        * acetao/Makefile.am ($(TAO_FILES)): Fix else statement
 
 Sun Mar 23 00:06:11 UTC 2008  Phil Mesnier  <mesnier_p@42tools.com>
 
@@ -19,44 +29,44 @@ Sun Mar 23 00:06:11 UTC 2008  Phil Mesnier  <mesnier_p@42tools.com>
 
 2008-03-21  Jules Colding  <colding@42tools.com>
 
-	* acetao/Makefile.am: Still working on static build...
+        * acetao/Makefile.am: Still working on static build...
 
 2008-03-20  Jules Colding  <colding@42tools.com>
 
-	* defines/hardcoded-defs.h: Added a few missing defines
+        * defines/hardcoded-defs.h: Added a few missing defines
 
 2008-03-19  Jules Colding  <colding@42tools.com>
 
-	* Lorica: config.h and windefs.h used to contain build
-	system specific defines. This gave rise to a lot of ifdef'ed
-	include statements. This has now been cleaned up and all
-	build system specific defines are now defined and imported
-	by including "defines/build-system-defs.h".
+        * Lorica: config.h and windefs.h used to contain build
+        system specific defines. This gave rise to a lot of ifdef'ed
+        include statements. This has now been cleaned up and all
+        build system specific defines are now defined and imported
+        by including "defines/build-system-defs.h".
 
-	A new preprocessor define LORICA_HAS_DOC_MPC is defines in
-	the MPC project files to aid in recognizing usage of MPC.
+        A new preprocessor define LORICA_HAS_DOC_MPC is defines in
+        the MPC project files to aid in recognizing usage of MPC.
 
 2008-03-17  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ConfigBase.cpp (Config::init_endpoints):
-	(Endpoint::parse_string):
-	Supply a default hostname if not given in the
-	configuration file
+        * src/lorica/ConfigBase.cpp (Config::init_endpoints):
+        (Endpoint::parse_string):
+        Supply a default hostname if not given in the
+        configuration file
 
-	* src/proxy/lorica.conf: Whitespace changes only to
-	make a comment more readable
+        * src/proxy/lorica.conf: Whitespace changes only to
+        make a comment more readable
 
-	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
-	Use shared profiles by default
+        * src/lorica/ConfigBase.cpp (Config::get_orb_options):
+        Use shared profiles by default
 
-	* src/proxy/lorica.conf: Added '#' to preserve comment style
+        * src/proxy/lorica.conf: Added '#' to preserve comment style
 
-	* src/lorica/RMVByMapped.cpp: Fix copyright year
+        * src/lorica/RMVByMapped.cpp: Fix copyright year
 
 2008-03-15  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ReferenceMapValue.h (Lorica): Removed
-	unneeded member that was accidentally added by me
+        * src/lorica/ReferenceMapValue.h (Lorica): Removed
+        unneeded member that was accidentally added by me
 
 Sat Mar 15 12:46:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 

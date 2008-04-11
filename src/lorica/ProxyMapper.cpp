@@ -235,17 +235,17 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 {
 	if (this->mapped_values_ != 0) {
 		TAO::ObjectKey *key = native->_key();
-		if (key == 0) {
-			if (Lorica_debug_level > 0) {
-				ACE_ERROR((LM_ERROR,
-					   "(%P|%t) Lorica::ProxyMapper::already_mapped "
-					   "error - key is null\n"));
+		if (key == 0)
+			{
+				if (Lorica_debug_level > 4)
+					{
+						ACE_DEBUG((LM_DEBUG,
+											 ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped, key is null\n")));
+					}
+				return NOT_MAPPED;
 			}
-
-			return MAPPER_ERROR;
-		}
 		if (Lorica_debug_level > 4) {
-			ACE_DEBUG((LM_DEBUG,
+				ACE_DEBUG((LM_DEBUG,
 				   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped, key len = %d, mapped id len = %d\n"),
 				   key->length(),
 				   sizeof(mapped_object_id_)));
@@ -257,7 +257,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 
 		if (Lorica_debug_level > 4) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::MappedStatus Key at offset = ")));
+				   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped Key at offset = ")));
 
 			for (size_t x = offset; x < offset+6; x++)
 				ACE_DEBUG((LM_DEBUG,
@@ -272,7 +272,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 			ptr =  reinterpret_cast<Lorica::MappedObjectId *>(buffer+offset);
 			if (Lorica_debug_level > 4) {
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::MappedStatus Got a potential match\n")));
+					   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped Got a potential match\n")));
 			}
 		}
 
@@ -284,7 +284,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 
 				if (Lorica_debug_level > 4) {
 					ACE_DEBUG((LM_DEBUG,
-						   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::MappedStatus already_mapped got a match, index = %d, io = %c, in_out = %c\n"),
+						   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped got a match, index = %d, io = %c, in_out = %c\n"),
 						   index,
 						   io,
 						   ptr->in_out));
@@ -293,14 +293,14 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 				return ptr->in_out == io ? ALREADY_MAPPED : REVERSE_MAPPED;
 			}
 			ACE_ERROR((LM_ERROR,
-				   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::MappedStatus already_mapped failed on pid, got %d, expected %d\n"),
+				   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped failed on pid, got %d, expected %d\n"),
 				   ptr->pid,
 				   mapped_object_id_.pid));
 		}
 	}
 	if (Lorica_debug_level > 4) {
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::MappedStatus already_mapped failed to match\n")));
+			   ACE_TEXT("(%P|%t) Lorica::ProxyMapper::already_mapped failed to match\n")));
 	}
 
 	return NOT_MAPPED;
