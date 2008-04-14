@@ -47,7 +47,7 @@ if !(./build); then
 fi
 popd
 
-# Create disk iamge
+# Create disk image
 pushd diskimage
 if !(./build); then
     echo "Could not create disk image"

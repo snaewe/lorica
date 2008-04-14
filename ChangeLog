@@ -1,3 +1,10 @@
+2008-04-14  Jules Colding  <colding@42tools.com>
+
+	* init.d: Added "sleep 3" between stop and start to fix restart
+
+	* src/proxy/main.cpp (ACE_TMAIN):
+	Renamed log file to "lorica.log"
+
 Fri Apr 11 17:59:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ProxyMapper.cpp:

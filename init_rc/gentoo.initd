@@ -10,22 +10,20 @@ LORICA_EXE_PATH=${LORICA_EXE_PATH:-/usr/sbin/lorica}
 
 start() {
 	ebegin "Starting ${SVCNAME}"
-	start-stop-daemon --start --exec "${LORICA_EXE_PATH}" \
-			  --pidfile "${LORICA_PID_FILE}" \
-			  -- "${LORICA_OPTIONS}"
+	start-stop-daemon --start --oknodo --exec "${LORICA_EXE_PATH}" --pidfile "${LORICA_PID_FILE}" -- "${LORICA_OPTIONS}"
 	eend $?
 }
 
 stop() {
         ebegin "Stopping ${SVCNAME}"
-        start-stop-daemon --stop --exec "${LORICA_EXE_PATH}" \
-            --pidfile "${LORICA_PID_FILE}" --quiet
-        eend $?
+        start-stop-daemon --stop --oknodo --exec "${LORICA_EXE_PATH}" --pidfile "${LORICA_PID_FILE}"
+	eend $?
 }
 
 restart() {
         ebegin "Reloading ${SVCNAME}"
 	stop
+	sleep 3
 	start
         eend $?
 }

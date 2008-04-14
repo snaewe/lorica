@@ -23,25 +23,27 @@ fi
 LORICA_PID_FILE=${LORICA_PID_FILE:-/var/run/lorica.pid}
 LORICA_EXE_PATH=${LORICA_EXE_PATH:-/usr/sbin/lorica}
 
-test -x $LORICA_EXE_PATH || exit 0
+test -x $LORICA_EXE_PATH || exit 1
 
 case "$1" in
   start)
 	log_daemon_msg "Starting Lorica"
-	start-stop-daemon --start -oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE" -- "$LORICA_OPTIONS"
+	start-stop-daemon --start --oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE" -- "$LORICA_OPTIONS"
 	;;
   stop)
 	log_daemon_msg "Stopping Lorica"
-        start-stop-daemon --stop -oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+        start-stop-daemon --stop --oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
 	;;
   restart)
 	log_daemon_msg "Restarting Lorica"
-        start-stop-daemon --stop -oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+        start-stop-daemon --stop --oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+	sleep 3
 	start-stop-daemon --start --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE" -- "$LORICA_OPTIONS"
 	;;
   force-reload)
 	log_daemon_msg "Reloading Lorica"
-        start-stop-daemon --stop -oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+        start-stop-daemon --stop --oknodo --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE"
+	sleep 3
 	start-stop-daemon --start --exec "$LORICA_EXE_PATH" --pidfile "$LORICA_PID_FILE" -- "$LORICA_OPTIONS"
 	;;
   *)
