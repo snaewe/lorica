@@ -1,7 +1,7 @@
 #
-#             LORICA DEFAULT CONFIGURATION FILE
+#            LORICA DEFAULT CONFIGURATION FILE
 #
-#             Copyright (C) 2008 OMC Denmark ApS
+#            Copyright (C) 2008 OMC Denmark ApS.
 #
 #   COPYING AND DISTRIBUTION OF THIS FILE, WITH OR WITHOUT 
 #   MODIFICATION, ARE PERMITTED IN ANY MEDIUM WITHOUT ROYALTY 
@@ -151,6 +151,23 @@
 # [ipv6_host.test.com]:123/ssl_port=124
 # [::1]:123
 #
+
+# Lorica may accumulate stale object references over time. This 
+# can result from implicit object references being registered
+# for transient objects or from references explicitly added 
+# through a third party agent that then fails to remove the
+# reference.
+#
+# To mitigate this problem, Lorica periodically  traverses its
+# list of registered references and uses a standard CORBA
+# operation, _non_existent() to ping the proxied object to
+# ensure it is still valid.
+#
+# The frequency of this garbage collection activity may be
+# configured setting the GC_Period_Seconds value, which
+# defaults to 60.
+#
+#GC_Period_Seconds 60
 
 # The hostname and port used to listen for connections coming
 # from inside the network enclave. This includes connections

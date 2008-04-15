@@ -1,3 +1,9 @@
+2008-04-15  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/RMVByMapped.cpp (RMVByMapped::svc):
+	Experimenting with %n:%l in ACE_DEBUG to see if readability
+	is improved thereof.
+
 2008-04-14  Jules Colding  <colding@42tools.com>
 
 	* init.d: Added "sleep 3" between stop and start to fix restart
