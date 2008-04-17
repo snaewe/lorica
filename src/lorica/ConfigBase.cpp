@@ -116,7 +116,7 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 	size_t port_sep = primary_addr.rfind(':');
 	if (port_sep == std::string::npos) {
 		ACE_ERROR((LM_ERROR,
-			   "configured endpoint \"%s\" lacks port separator\n",
+			   "%N:%l - configured endpoint \"%s\" lacks port separator\n",
 			   primary_addr.c_str()));
 		return false;
 	}
@@ -157,9 +157,9 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 		this->hostname_ = (const char*)host_name;
 
 		if (outside_facing)
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default hostname for outside facing endpoint - %s\n"), this->hostname_.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - DEPRECATED: Using default hostname for outside facing endpoint - %s\n"), this->hostname_.c_str()));
 		else
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default hostname for inside facing endpoint - %s\n"), this->hostname_.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - DEPRECATED: Using default hostname for inside facing endpoint - %s\n"), this->hostname_.c_str()));
 	}
 
 	if (option_pos != std::string::npos) {
@@ -274,7 +274,7 @@ Lorica::Config::get_orb_options(void)
 		endpoints_.clear();
 		orb_args_.clear();
 		ACE_ERROR_RETURN((LM_ERROR,
-				  "Unable to parse endpoint configuration values\n"),
+				  "%N:%l - Unable to parse endpoint configuration values\n"),
 				 0);
 	}
 
@@ -381,10 +381,10 @@ Lorica::Config::init_endpoints(bool do_extern)
 
 			eps_str = (const char*)host_name;
 			eps_str += ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value (%s) for outside facing endpoint\n"), eps_str.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - DEPRECATED: Using default endpoint value (%s) for outside facing endpoint\n"), eps_str.c_str()));
 		} else {
 			eps_str = "localhost:"LORICA_DEFAULT_INSIDE_FACING_PORT_STR;
-			ACE_DEBUG((LM_WARNING, ACE_TEXT("DEPRECATED - Using default endpoint value (%s) for inside facing endpoint\n"), eps_str.c_str()));
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - DEPRECATED: Using default endpoint value (%s) for inside facing endpoint\n"), eps_str.c_str()));
 		}
 	}
 
@@ -395,9 +395,9 @@ Lorica::Config::init_endpoints(bool do_extern)
 			break;
 
 		if (do_extern)
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("External Endpoint String - %s\n"), ep_str.c_str()));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - External Endpoint String - %s\n"), ep_str.c_str()));
 		else
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("Internal Endpoint String - %s\n"), ep_str.c_str()));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - Internal Endpoint String - %s\n"), ep_str.c_str()));
 
 		Endpoint ep;
 		ep.external_ = do_extern;

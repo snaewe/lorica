@@ -82,8 +82,7 @@ Lorica::GenericMapper::add_operation(const std::string & typeId,
 
 	if (CORBA::is_nil(intDef.in())) {
 		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT ("[Lorica::ProxyServantArgList] ")
-			   ACE_TEXT ("_get_interface returned nil\n")));
+			   ACE_TEXT("%N:%l - get_interface returned nil\n")));
 
 		throw CORBA::BAD_OPERATION(CORBA::OMGVMCID | 2,
 					   CORBA::COMPLETED_NO);

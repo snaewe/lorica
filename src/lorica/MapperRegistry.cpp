@@ -80,7 +80,7 @@ Lorica_MapperRegistry::create_default_null_mapper(void)
 	if (this->mappers_ready_) {
 		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t)Lorica_MapperRegistry::create_default_null_mapper called after mappers are ready\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - called after mappers are ready\n")));
 		}
 
 		return;
@@ -96,7 +96,7 @@ Lorica_MapperRegistry::set_generic_mapper(Lorica::ProxyMapper *mapper)
 	if (this->mappers_ready_) {
 		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t)Lorica_MapperRegistry::set_generic_mapper called after mappers are ready\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - called after mappers are ready\n")));
 		}
 
 		return;
@@ -148,7 +148,7 @@ Lorica_MapperRegistry::init_mappers(PortableServer::POAManager_ptr outward,
 	if (this->generic_mapper_ != 0) {
 		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t)Lorica_MapperRegistry::init_mappers adding generic mapper\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - adding generic mapper\n")));
 		}
 
 		this->add_proxy_mapper(this->generic_mapper_);
@@ -158,7 +158,7 @@ Lorica_MapperRegistry::init_mappers(PortableServer::POAManager_ptr outward,
 	if (this->null_mapper_ != 0) {
 		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t)Lorica_MapperRegistry::init_mappers adding null mapper\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - adding null mapper\n")));
 		}
 
 		this->add_proxy_mapper (this->null_mapper_);
@@ -168,7 +168,7 @@ Lorica_MapperRegistry::init_mappers(PortableServer::POAManager_ptr outward,
 	if (this->mappers_ != 0) {
 		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t)Lorica_MapperRegistry::init_mappers calling mapper init on the root.\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - calling mapper init on the root.\n")));
 		}
 
 		this->mappers_->proxy_mapper_init(outward, inward, orb);
@@ -218,7 +218,7 @@ Lorica_MapperRegistry::map_reference(CORBA::Object_ptr native,
 	if (this->mappers_ != 0) {
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica_MapperRegistry::map_reference adding %s\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - adding %s\n"),
 				   typeId.c_str()));
 		}
 
@@ -229,7 +229,7 @@ Lorica_MapperRegistry::map_reference(CORBA::Object_ptr native,
 	} else {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica_MapperRegistry::map_reference has no mappers registered\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - no mappers registered\n")));
 	}
 
 	return rmv.release();

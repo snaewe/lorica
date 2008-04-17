@@ -152,71 +152,71 @@ Lorica::RMVByMapped::unbind(ACE_UINT32 index,
 int
 Lorica::RMVByMapped::svc(void)
 {
-	if (Lorica_debug_level > 0)
-		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) %N:%l - garbage collection loop commensing, wait_period set to %d\n"),
-			   this->gc_period_secs_));
+				if (Lorica_debug_level > 0)
+								ACE_DEBUG((LM_DEBUG,
+													 ACE_TEXT("(%P|%t) %N:%l - garbage collection loop commensing, wait_period set to %d\n"),
+													 this->gc_period_secs_));
 
-	while (!this->gc_terminated_) {
-		ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
-		ACE_Time_Value wait_period (this->gc_period_secs_ + ACE_OS::time(0));
-		int result = this->gc_terminate_.wait(&wait_period);
+				while (!this->gc_terminated_) {
+								ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
+								ACE_Time_Value wait_period (this->gc_period_secs_ + ACE_OS::time(0));
+								int result = this->gc_terminate_.wait(&wait_period);
 
-		if (result == 0 || errno != ETIME)
-			break;
+								if (result == 0 || errno != ETIME)
+												break;
 
-		if (Lorica_debug_level > 4)
-			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - invoking collection, result = %d %p\n"),
-				   result,
-				   "wait" ));
-		size_t page_offset = 0;
-		size_t test_count = 0;
-		size_t reap_count = 0;
-		for (page_list_node *iter = this->pages_;
-		     iter != 0 && !this->gc_terminated_;
-		     iter = iter->next_) {
-			ReferenceMapValue **rmv = iter->page_;
-			for (size_t index = 0; index < this->page_size_ && !this->gc_terminated_; index++) {
-				if (rmv[index] != 0) {
-					test_count++;
-					ReferenceMapValue *value = rmv[index];
-					bool expired = false;
-					try {
-						CORBA::Object_var obj = value->orig_ref_;
-						guard.release();
-						expired = obj->_non_existent();
-					}
-					catch (CORBA::Exception &) {
-						expired = true;
-					}
-					guard.acquire();
+								if (Lorica_debug_level > 4)
+												ACE_DEBUG((LM_DEBUG,
+																	 ACE_TEXT("(%P|%t) %N:%l - invoking collection, result = %d %p\n"),
+																	 result,
+																	 "wait" ));
+								size_t page_offset = 0;
+								size_t test_count = 0;
+								size_t reap_count = 0;
+								for (page_list_node *iter = this->pages_;
+										 iter != 0 && !this->gc_terminated_;
+										 iter = iter->next_) {
+												ReferenceMapValue **rmv = iter->page_;
+												for (size_t index = 0; index < this->page_size_ && !this->gc_terminated_; index++) {
+																if (rmv[index] != 0) {
+																				test_count++;
+																				ReferenceMapValue *value = rmv[index];
+																				bool expired = false;
+																				try {
+																								CORBA::Object_var obj = value->orig_ref_;
+																								guard.release();
+																								expired = obj->_non_existent();
+																				}
+																				catch (CORBA::Exception &) {
+																								expired = true;
+																				}
+																				guard.acquire();
 
-					// recheck, since we released the lock, an unbind
-					// may have occured.
-					if (expired && rmv[index] == value) {
-						if (Lorica_debug_level > 6)
-							ACE_DEBUG((LM_DEBUG,
-								   ACE_TEXT("(%P|%t) %N:%l - reaping dead mapping\n")));
-						reap_count++;
-						rmv[index]->decr_refcount();
-						rmv[index] = 0;
-						this->free_stack_ = new free_stack_node(page_offset + index,
-											this->free_stack_);
-					}
+																				// recheck, since we released the lock, an unbind
+																				// may have occured.
+																				if (expired && rmv[index] == value) {
+																								if (Lorica_debug_level > 6)
+																												ACE_DEBUG((LM_DEBUG,
+																																	 ACE_TEXT("(%P|%t) %N:%l - reaping dead mapping\n")));
+																								reap_count++;
+																								rmv[index]->decr_refcount();
+																								rmv[index] = 0;
+																								this->free_stack_ = new free_stack_node(page_offset + index,
+																																												this->free_stack_);
+																				}
+																}
+												}
+												page_offset += this->page_size_;
+								}
+								if (!this->gc_terminated_ && reap_count > 0 && Lorica_debug_level > 0)
+												ACE_DEBUG((LM_DEBUG,
+																	 ACE_TEXT("(%P|%t) %N:%l - garbage collector reaped %d out of %d references\n"),
+																	 reap_count,
+																	 test_count));
+
 				}
-			}
-			page_offset += this->page_size_;
-		}
-		if (!this->gc_terminated_ && reap_count > 0 && Lorica_debug_level > 0)
-			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - garbage collector reaped %d out of %d references\n"),
-				   reap_count,
-				   test_count));
-
-	}
-	if (Lorica_debug_level > 0)
-		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) %N:%l - garbage collection loop terminating\n")));
-	return 0;
+				if (Lorica_debug_level > 0)
+								ACE_DEBUG((LM_DEBUG,
+													 ACE_TEXT("(%P|%t) %N:%l - garbage collection loop terminating\n")));
+				return 0;
 }

@@ -77,8 +77,7 @@ Lorica::ProxyServant::invoke_i(CORBA::ServerRequest_ptr request,
 
 			if (Lorica_debug_level > 0) {
 				ACE_ERROR((LM_ERROR,
-					   "(%P|%t) Lorica::ProxyServant::invoke_i evaluate_"
-					   "request failed. Caught CORBA::BAD_OPERATION()\n"));
+					   "(%P|%t) %N:%l - evaluate_request failed. Caught CORBA::BAD_OPERATION()\n"));
 			}
 
 			throw CORBA::BAD_OPERATION();
@@ -95,8 +94,7 @@ Lorica::ProxyServant::invoke_i(CORBA::ServerRequest_ptr request,
 		}
 
 		if (Lorica_debug_level > 0) {
-			ACE_ERROR((LM_ERROR, "(%P|%t) Lorica::ProxyServant::invoke_i "
-				   "evaluate_request raised %s\n",
+			ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - evaluate_request raised %s\n",
 				   ex._name()));
 		}
 

@@ -353,7 +353,7 @@ Lorica::Service_Loader::run_service_command(void)
 			// Append the command used for running as a service
 			ACE_OS::strcat(pathname, ACE_TEXT(" -s"));
 			if (-1 == Lorica::SERVICE::instance()->insert(SERVICE_AUTO_START, SERVICE_ERROR_NORMAL, pathname)) {
-				ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("Error inserting service")));
+				ACE_ERROR ((LM_ERROR, ACE_TEXT("%N:%l - error inserting service\n")));
 				result = -1;
 			}
 
@@ -361,19 +361,19 @@ Lorica::Service_Loader::run_service_command(void)
 		}
 	case SC_REMOVE :
 		if (-1 == Lorica::SERVICE::instance()->remove()) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("remove")));
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%N:%l - remove\n")));
 			result = -1;
 		}
 		break;
 	case SC_START :
 		if (-1 == Lorica::SERVICE::instance()->start_svc()) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("start")));
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%N:%l - start\n")));
 			result = -1;
 		}
 		break;
 	case SC_STOP :
 		if (-1 == Lorica::SERVICE::instance()->stop_svc()) {
-			ACE_ERROR ((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("stop")));
+			ACE_ERROR ((LM_ERROR, ACE_TEXT("%N:%l - stop\n")));
 			result = -1;
 		}
 		break;
@@ -410,7 +410,7 @@ Lorica::Service_Loader::init_proxy(void)
 		config->init(config_file_, corba_debug_level_);
 	}
 	catch (const Lorica::FileConfig::InitError &) {
-		ACE_ERROR((LM_ERROR, ACE_TEXT("Proxy could not read %s.\n"),
+		ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l - proxy could not read %s.\n"),
 			   this->config_file_.c_str()));
 		return 0;
 	}
@@ -422,7 +422,7 @@ Lorica::Service_Loader::init_proxy(void)
 		return proxy.release();
 	}
 	catch (const Lorica::Proxy::InitError &) {
-		ACE_ERROR((LM_ERROR, ACE_TEXT("Proxy initialization failed.\n")));
+		ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l - proxy initialization failed.\n")));
 	}
 
 	return 0;
@@ -437,8 +437,7 @@ Lorica::Service_Loader::run_service(void)
 	}
 	catch (...) {
 		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT("%s\n"),
-			   ACE_TEXT("Couldn't start Lorica server - init_proxy() failed")));
+			   ACE_TEXT("%N:%l - couldn't start Lorica server - init_proxy() failed\n")));
 		return -1;
 	}
 
@@ -447,7 +446,7 @@ Lorica::Service_Loader::run_service(void)
 			   Lorica::SERVICE::instance(),
 			   ret);
 	if (0 == ret) {
-		ACE_ERROR((LM_ERROR, ACE_TEXT("%s\n"), ACE_TEXT("Couldn't start Lorica server - Service start failed")));
+		ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l - couldn't start Lorica server - Service start failed\n")));
 	}
 
 	return ret;
@@ -473,7 +472,7 @@ Lorica::Service_Loader::run_service(void)
 		try {
 			std::auto_ptr<Proxy>proxy (this->init_proxy());
 			if (!proxy.get()) {
-				ACE_ERROR((LM_ERROR, "(%P|%t) Lorica::Service_Loader::run_service Could not initialize proxy\n"));
+				ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not initialize proxy\n"));
 				return -1;
 			}
 
@@ -481,11 +480,11 @@ Lorica::Service_Loader::run_service(void)
 				proxy->activate();
 			}
 			catch (CORBA::Exception & ex) {
-				ex._tao_print_exception("(%P|%t) Lorica::Service_Loader::run_service Caught a CORBA exception while activating proxy\n");
+				ex._tao_print_exception("(%P|%t) %N:%l - caught a CORBA exception while activating proxy\n");
 				return -1;
 			}
 			catch (...) {
-				ACE_ERROR((LM_ERROR, "(%P|%t) Lorica::Service_Loader::run_service Caught an otherwise unknown exception while activating proxy\n"));
+				ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - caught an otherwise unknown exception while activating proxy\n"));
 				return -1;
 			}
 
@@ -497,16 +496,16 @@ Lorica::Service_Loader::run_service(void)
 				return -1;
 			}
 			catch (...) {
-				ACE_ERROR((LM_ERROR, "(%P|%t) Lorica::Service_Loader::run_service Caught an otherwise unknown exception while waiting for proxy\n"));
+				ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - caught an otherwise unknown exception while waiting for proxy\n"));
 				return -1;
 			}
 		}
 		catch (CORBA::Exception & ex) {
-			ex._tao_print_exception("(%P|%t) Lorica::Service_Loader::run_service Caught a CORBA exception while initializing proxy\n");
+			ex._tao_print_exception("(%P|%t) %N:%l - caught a CORBA exception while initializing proxy\n");
 			return -1;
 		}
 		catch (...) {
-			ACE_ERROR((LM_ERROR, "(%P|%t) Lorica::Service_Loader::run_service Caught an otherwise unknown exception while initializing proxy\n"));
+			ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - caught an otherwise unknown exception while initializing proxy\n"));
 			return -1;
 		}
 	}

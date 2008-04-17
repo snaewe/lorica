@@ -60,7 +60,7 @@ Lorica::GenericEvaluator::evaluate_request(const char *operation,
 
 	if (Lorica_debug_level > 4)
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_request GenericEvaluator::evaluate_request, op = %s, type = %s\n"),
+			   ACE_TEXT("(%P|%t) %N:%l -  op = %s, type = %s\n"),
 			   operation, 
 			   rep_id.c_str()));
 
@@ -154,7 +154,7 @@ Lorica::GenericEvaluator::evaluate_exception(const char *operation,
 {
 	if (Lorica_debug_level > 4)
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_exception invoked, operation = %s\n"),
+			   ACE_TEXT("(%P|%t) %N:%l - operation = %s\n"),
 			   operation));
 
 	const std::string & rep_id = this->type_id();
@@ -167,8 +167,8 @@ Lorica::GenericEvaluator::evaluate_exception(const char *operation,
 	if (excep == 0) {
 		if (Lorica_debug_level > 0)
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) Lorica::GenericEvaluator::evaluate_exception "
-				   "could not find exception type %s\n", ex_type));
+				   "(%P|%t) %N:%l - could not find exception type %s\n", 
+				   ex_type));
 		return false;
 	}
 
@@ -178,11 +178,11 @@ Lorica::GenericEvaluator::evaluate_exception(const char *operation,
 	if (any->impl()->marshal_value(encap)) {
 		if (Lorica_debug_level > 4)
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_exception Marshal_value succeeded, buflen = %d\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - Marshal_value succeeded, buflen = %d\n"),
 				   encap.length()));
 	} else if (Lorica_debug_level > 0)
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) Lorica::GenericEvaluator::evaluate_exception Marshal_value failed\n")));
+			   ACE_TEXT("(%P|%t) %N:%l -  Marshal_value failed\n")));
 
 	return true;
 }
@@ -298,14 +298,14 @@ Lorica::GenericEvaluator::has_objref(CORBA::TypeCode_ptr tc) const
 	{
 		sysEx._tao_print_system_exception ();
 		ACE_ERROR ((LM_ERROR,
-			    "[Lorica::GenericEvaluator::has_objref] MinorCode = %d \n",
-			    sysEx . minor ()));
+			    "%N:%l - minorcode = %d\n",
+			    sysEx.minor()));
 		throw;
 	}
 	catch (...)
 	{
 		ACE_ERROR ((LM_ERROR,
-			    "[Lorica::GenericEvaluator::has_objref] Unknown Exception  \n"));
+			    "%N:%l - unknown exception\n"));
 		throw;
 	}
 
@@ -454,13 +454,13 @@ Lorica::GenericEvaluator::proxify (PortableServer::POA_ptr req_poa,
 	catch (CORBA::Exception& Ex)
 	{
 		ACE_ERROR ((LM_ERROR,
-			    "(%P|%t) Lorica::GenericEvaluator::proxify caught: %s\n", Ex._name ()));
+			    "(%P|%t) %N:%l - caught: %s\n", Ex._name ()));
 		throw;
 	}
 	catch (...)
 	{
 		ACE_ERROR ((LM_ERROR,
-			    "(%P|%t) Lorica::GenericEvaluator::proxify caught unknown exception\n"));
+			    "(%P|%t) %N:%l - caught unknown exception\n"));
 		throw;
 	}
 

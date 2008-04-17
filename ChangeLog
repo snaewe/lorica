@@ -1,3 +1,7 @@
+2008-04-17  Jules Colding  <colding@42tools.com>
+
+	* Lorica: Improved logging output format
+
 2008-04-15  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/RMVByMapped.cpp (RMVByMapped::svc):

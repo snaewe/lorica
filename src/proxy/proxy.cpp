@@ -205,7 +205,7 @@ Lorica::Proxy::open(void *args)
 	}
 	catch (const FileConfig::InitError &) {
 		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT("Proxy could not read config file %s.\n"),
+			   ACE_TEXT("%N:%l - proxy could not read config file %s.\n"),
 			   config_file_));
 
 		return 0;
@@ -216,7 +216,7 @@ Lorica::Proxy::open(void *args)
 	}
 	catch (const Lorica::Proxy::InitError &) {
 		ACE_ERROR((LM_ERROR,
-			   ACE_TEXT("Proxy configuration failed.\n")));
+			   ACE_TEXT("%N:%l - proxy configuration failed.\n")));
 
 		return 0;
 	}
@@ -276,11 +276,11 @@ Lorica::Proxy::configure(Config & config)
 		int argc = arguments->argc();
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure passing %d args to ORB_init:\n"), 
+				   ACE_TEXT("(%P|%t) %N:%l - passing %d args to ORB_init:\n"), 
 				   argc));
 
 			for (int i = 0; i < argc; i++)
-				ACE_DEBUG((LM_DEBUG, ACE_TEXT("  %s\n"), arguments->argv()[i]));
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - %s\n"), arguments->argv()[i]));
 		}
 		orb_ = CORBA::ORB_init(argc, arguments->argv());//, "ProxyORB");
 
@@ -293,16 +293,14 @@ Lorica::Proxy::configure(Config & config)
 		root_poa_ = PortableServer::POA::_narrow(obj.in());
 		if (CORBA::is_nil(root_poa_.in())) {
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "Could not get root POA\n"));
+				   "(%P|%t) %N:%l - could not get root POA\n"));
 			throw InitError();
 		}
 
 		pmf_ = root_poa_->the_POAManagerFactory();
 		if (CORBA::is_nil(pmf_.in())) {
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "Could not get PMF\n"));
+				   "(%P|%t) %N:%l - could not get PMF\n"));
 			throw InitError();
 		}
 
@@ -310,8 +308,7 @@ Lorica::Proxy::configure(Config & config)
 		iorTable_ = IORTable::Table::_narrow(obj.in());
 		if (CORBA::is_nil(iorTable_.in())) {
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "Could not get IORTable\n"));
+				   "(%P|%t) %N:%l - could not get IORTable\n"));
 			throw InitError();
 		}
 
@@ -325,7 +322,7 @@ Lorica::Proxy::configure(Config & config)
 		list.length(ex_points.size());
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Setting up External PM with %d endpoints\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - setting up External POA manager with %d endpoints\n"),
 				   ex_points.size()));
 		}
 		for (size_t count = 0; count < ex_points.size(); count++) {
@@ -348,7 +345,7 @@ Lorica::Proxy::configure(Config & config)
 		list.length(in_points.size());
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Setting up Internal PM with %d endpoints\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - setting up Internal POA manager with %d endpoints\n"),
 				   in_points.size()));
 		}
 		for (size_t count = 0; count < in_points.size(); count++) {
@@ -368,7 +365,7 @@ Lorica::Proxy::configure(Config & config)
 
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Creating admin POA with internal PM\n")));
+				   ACE_TEXT("(%P|%t) %N:%l - creating admin POA with internal POA manager\n")));
 		}
 		policies.length(0);
 		admin_poa_ = root_poa_->create_POA("adminPOA",
@@ -410,9 +407,8 @@ Lorica::Proxy::configure(Config & config)
 		FILE *output_file = get_file(this->ior_file_.c_str());
 		if (!output_file) {
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) Lorica::Proxy::configure "
-				   "Cannot open output file for writing IOR: %s\n",
-				   "lorica.ior"));
+				   "(%P|%t) %N:%l - cannot open output file for writing IOR: %s\n",
+				   this->ior_file_.c_str()));
 		} else {
 			ACE_OS::fprintf(output_file, "%s", ior.c_str());
 			ACE_OS::fclose(output_file);
@@ -420,8 +416,7 @@ Lorica::Proxy::configure(Config & config)
 
 		if (!setup_shutdown_handler()) {
 			ACE_ERROR ((LM_ERROR,
-				    "(%P|%t) Lorica::Proxy::configure "
-				    "Could not set up shutdown handler\n"));
+				    "(%P|%t) %N:%l - could not set up shutdown handler\n"));
 			throw InitError();
 		}
 
@@ -434,7 +429,7 @@ Lorica::Proxy::configure(Config & config)
 		if (!ne_ids.empty()) {
 			if (Lorica_debug_level > 2) {
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) Lorica::Proxy::configure adding type ids for null evaluator: %s\n"),
+					   ACE_TEXT("(%P|%t) %N:%l - adding type ids for null evaluator: %s\n"),
 					   ne_ids.c_str()));
 			}
 
@@ -449,14 +444,14 @@ Lorica::Proxy::configure(Config & config)
 		} else if (config.null_eval_any()) {
 			if (Lorica_debug_level > 2)
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) Lorica::Proxy::configure creating default null mapper\n")));
+					   ACE_TEXT("(%P|%t) %N:%l - creating default null mapper\n")));
 			mreg->create_default_null_mapper();
 		}
 
 		if (config.generic_evaluator()) {
 			if (Lorica_debug_level > 0) {
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) Lorica::Proxy::configure Loading generic evaluator\n")));
+					   ACE_TEXT("(%P|%t) %N:%l - loading generic evaluator\n")));
 			}
 #ifdef ACE_WIN32
 			this->orb_->orb_core()->configuration()->process_directive(ACE_TEXT_ALWAYS_CHAR
@@ -483,8 +478,7 @@ Lorica::Proxy::configure(Config & config)
 	}
 	catch (...) {
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) Lorica::Proxy::configure "
-			   "Caught an otherwise unknown exception\n"));
+			   "(%P|%t) %N:%l - aught an otherwise unknown exception\n"));
 		throw InitError();
 	}
 }
@@ -512,7 +506,7 @@ Lorica::Proxy::svc(void)
 	FILE *output_file= ACE_OS::fopen(this->pid_file_.c_str(), "w");
 	if (output_file == 0) {
 		ACE_ERROR_RETURN((LM_ERROR,
-				  "Cannot open output file for writing PID: %s\n",
+				  "%N:%l - cannot open output file for writing PID: %s\n",
 				  this->pid_file_.c_str()),
 				 1);
 	}

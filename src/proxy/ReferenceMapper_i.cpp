@@ -40,7 +40,7 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i(CORBA::ORB_ptr orb,
 {
 	this->registry_ = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
 	if (this->registry_ == 0 && Lorica_debug_level > 0)
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i, no registry\n")));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - no registry\n")));
 
 	try {
 		if (this->has_security_) {
@@ -50,11 +50,11 @@ Lorica::ReferenceMapper_i::ReferenceMapper_i(CORBA::ORB_ptr orb,
 			this->access_decision_ = TAO::SL2::AccessDecision::_narrow(sl2ad.in());
 		} else {
 			if (Lorica_debug_level > 0)
-				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i, SSLIOP not available\n")));
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - SSLIOP not available\n")));
 		}
 	}
 	catch (CORBA::Exception &) {
-		ACE_ERROR ((LM_ERROR,"Cannot initialize access decision object\n"));
+		ACE_ERROR ((LM_ERROR, "%N:%l - cannot initialize access decision object\n"));
 	}
 }
 
@@ -111,32 +111,31 @@ Lorica::ReferenceMapper_i::as_server_i (bool require_secure,
 
 	if (rmv.get() == 0) {
 		if(Lorica_debug_level > 0)
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i Registry returned a null ReferenceMapValue\n")));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - registry returned a null ReferenceMapValue\n")));
 
 		return CORBA::Object::_nil();
 	}
 
 	if (Lorica_debug_level > 5)
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i Registry returned a non-null rmv\n")));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - registry returned a non-null rmv\n")));
 
 	if (corbaloc_name[0] != 0 && !CORBA::is_nil(this->ior_table_.in())) {
 		CORBA::String_var mapped = this->orb_->object_to_string(rmv->mapped_ref_.in());
 		if(Lorica_debug_level > 5) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i adding mapped value to IORTable, %s, %s\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - adding mapped value to IORTable, %s, %s\n"),
 				   corbaloc_name,mapped.in()));
 		}
 
 		try {
 			ior_table_->bind (corbaloc_name,mapped.in());
 			if (Lorica_debug_level > 5)
-				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::as_server_i bound to ior table\n")));
+				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - bound to ior table\n")));
 			rmv->ior_table_name_ = corbaloc_name;
 		}
 		catch (IORTable::AlreadyBound &) {
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) Lorica::ReferenceMapper_i::as_server_i "
-				   "ior_table cannot bind to %s\n",
+				   "(%P|%t) %N:%l - ior_table cannot bind to %s\n",
 				   corbaloc_name));
 		}
 	}
@@ -170,7 +169,7 @@ Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	if ((rmv.get() != 0) && (rmv->ior_table_name_ != "")) {
 		if (Lorica_debug_level > 5) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::remove_server unbinding %s from IOR Table\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - unbinding %s from IOR Table\n"),
 				   rmv->ior_table_name_.c_str()));
 		}
 
@@ -178,7 +177,7 @@ Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	} else {
 		if (Lorica_debug_level > 5)
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) Lorica::ReferenceMapper_i::remove_server remove reference returned rmv = 0x%x\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - remove reference returned rmv = 0x%x\n"),
 				   rmv.get()));
 	}
 

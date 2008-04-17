@@ -36,7 +36,7 @@ ServerAgent_impl::error_occured(CORBA::Long code,
 				const char *message)
 {
 	ACE_DEBUG((LM_INFO,
-		   ACE_TEXT("ERROR occurred in the proxy - Error code: %d,  Error message :%s\n"),
+		   ACE_TEXT("%N:%l - error code: %d,  error message :%s\n"),
 		   code,
 		   message));
 
@@ -45,5 +45,5 @@ ServerAgent_impl::error_occured(CORBA::Long code,
 void
 ServerAgent_impl::proxy_disconnect()
 {
-	ACE_DEBUG((LM_INFO, ACE_TEXT("The proxy is shutting down\n")));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - the proxy is shutting down\n")));
 }
