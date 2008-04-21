@@ -28,7 +28,7 @@
 # port.
 #
 # Other configurations are possible but then you need to generate
-# the Interface Reposotory cache yourself. See the Lorica 
+# the Interface Repository cache yourself. See the Lorica 
 # documentation on how to do that.
 #
 #                       *  ***  * 
@@ -273,6 +273,9 @@ Collocate_IFR no
 # as used by a remote IFR server instance.
 #
 ORB_Option -ORBInitRef InterfaceRepository=corbaloc:iiop:lorica.domain.test:4082/InterfaceRepository
+ORB_Option -ORBSvcConfDirective "dynamic UIOP_Factory Service_Object * TAO_Strategies:_make_TAO_UIOP_Protocol_Factory () \"\""
+ORB_Option -ORBSvcConfDirective "dynamic Advanced_Resource_Factory Service_Object * TAO_Strategies:_make_TAO_Advanced_Resource_Factory () \"-ORBProtocolFactory IIOP_Factory -ORBProtocolFactory UIOP_Factory\""
+
 
 # Full path to IFR reference file. 
 # Default is "/var/cache/lorica/ifr.ior" on anything but Windows

@@ -1,3 +1,9 @@
+2008-04-21  Jules Colding  <colding@42tools.com>
+
+	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
+	Added UIOP support which is needed to support the way ORBit2
+	does local-only native references.
+
 2008-04-17  Jules Colding  <colding@42tools.com>
 
 	* Lorica: Improved logging output format
