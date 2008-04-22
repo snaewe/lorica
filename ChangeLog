@@ -6,6 +6,9 @@
 	(ReferenceMapper_i::remove_client):
 	Handle NIL input references early
 
+	* bootstrap (srcdir): Reversed order of autoconf and automake
+	when not using the reconf option.
+
 	* acetao/Makefile.am: Added TAO_Strategies library which is
 	needed for UIOP support.
 

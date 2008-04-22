@@ -22,7 +22,7 @@
 prepare ()
 {
     make distclean
-    ./bootstrap --enable-tao-build
+    ./bootstrap reconf --enable-tao-build
 }
 
 if [ $# -eq 0 ]; then

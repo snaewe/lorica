@@ -80,11 +80,11 @@ else
     # change.
     test -f config.h.in && touch config.h.in
 
-    printbold "Running Automake..."
-    automake --warnings=all --Werror --gnu --add-missing --force --copy 
-
     printbold "Running Autoconf..."
     autoconf
+
+    printbold "Running Automake..."
+    automake --warnings=all --Werror --gnu --add-missing --force --copy 
 fi
 
 
