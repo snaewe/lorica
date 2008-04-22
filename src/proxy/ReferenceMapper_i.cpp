@@ -175,7 +175,7 @@ Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	throw (CORBA::SystemException)
 {
 	if (CORBA::is_nil(mapped))
-		return CORBA::Object::_nil();
+		return;
 
 	Lorica::ReferenceMapValue_var rmv = this->registry_->remove_reference (mapped, true);
 	if ((rmv.get() != 0) && (rmv->ior_table_name_ != "")) {
@@ -201,7 +201,7 @@ Lorica::ReferenceMapper_i::remove_client(CORBA::Object_ptr mapped)
 	throw (CORBA::SystemException)
 {
 	if (CORBA::is_nil(mapped))
-		return CORBA::Object::_nil();
+		return;
 
 	Lorica::ReferenceMapValue_var rmv = this->registry_->remove_reference(mapped, false);
 }
