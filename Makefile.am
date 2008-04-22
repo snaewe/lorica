@@ -24,6 +24,8 @@ MKDIR_P ?= $(mkdir_p)
 MKDIR = $(MKDIR_P) 
 TAR=/bin/tar
 
+SVN_REV=$(svn info | grep Revision | awk '{ print $2 }')
+
 SUBDIRS = \
 	init_rc \
 	defines \
@@ -87,7 +89,10 @@ EXTRA_DIST = \
 	src/OCI/AsynchProxyTools.mpc            \
 	src/proxy/proxy.mpc
 
-
+svnrev:
+	@echo ""
+	@echo $(SVN_REV)
+	@echo ""
 
 dist-hook:
 	-rm -f $(distdir)/defines/pathdefs.h

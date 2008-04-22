@@ -72,8 +72,9 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.dylib  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.dylib        \
 	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.dylib              \
-	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.dylib
-else
+	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.dylib              \
+	$(ACE_ROOT)/TAO/tao/libTAO_Strategies.dylib
+else # !LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
 	$(ACE_ROOT)/ace/SSL/libACE_SSL.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                    \
@@ -100,7 +101,8 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        \
 	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
-	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
+	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
+	$(ACE_ROOT)/TAO/tao/libTAO_Strategies.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
 endif # LORICA_DARWIN
 
 else # !HAVE_ACE_ROOT
@@ -176,6 +178,7 @@ endif
 	cd $(TAO_ROOT)/orbsvcs/orbsvcs     && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.SSLIOP
 	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.EndpointPolicy
 	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.BiDir_GIOP
+	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Strategies
 
 $(ACE_ROOT):
 if LORICA_WGET

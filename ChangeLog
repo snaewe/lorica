@@ -1,3 +1,8 @@
+2008-04-22  Jules Colding  <colding@42tools.com>
+
+	* acetao/Makefile.am: Added TAO_Strategies library which is
+	needed for UIOP support.
+
 2008-04-21  Jules Colding  <colding@42tools.com>
 
 	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
