@@ -1,5 +1,11 @@
 2008-04-22  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_server)
+	(ReferenceMapper_i::as_secure_server)
+	(ReferenceMapper_i::as_client, ReferenceMapper_i::remove_server)
+	(ReferenceMapper_i::remove_client):
+	Handle NIL input references early
+
 	* acetao/Makefile.am: Added TAO_Strategies library which is
 	needed for UIOP support.
 

@@ -66,15 +66,15 @@ void
 Lorica::ReferenceMapper_i::allow_insecure_access(CORBA::Object_ptr self)
 {
 	if (this->has_security_ && !CORBA::is_nil(this->access_decision_))
-		{
-			CORBA::String_var orbid = this->orb_->id();
-			PortableServer::ObjectId_var oid;
-			CORBA::OctetSeq_var poaid;
+	{
+		CORBA::String_var orbid = this->orb_->id();
+		PortableServer::ObjectId_var oid;
+		CORBA::OctetSeq_var poaid;
 
-			if (this->registry_->poa_and_object_id (self, poaid.out(), oid.out()))
-				this->access_decision_->add_object(orbid.in(), poaid.in(), oid.in(),
-								   true);
-		}
+		if (this->registry_->poa_and_object_id (self, poaid.out(), oid.out()))
+			this->access_decision_->add_object(orbid.in(), poaid.in(), oid.in(),
+							   true);
+	}
 }
 
 CORBA::Object_ptr
@@ -87,24 +87,30 @@ Lorica::ReferenceMapper_i::as_secure_server(CORBA::Object_ptr orig,
 	if (!this->has_security_)
 		throw Lorica::ReferenceMapper::SecurityNotAvailable();
 
+	if (CORBA::is_nil(orig))
+		return CORBA::Object::_nil();
+
 	return this->as_server_i(true, orig, corbaloc_name, agent);
 }
 
 
 CORBA::Object_ptr
-Lorica::ReferenceMapper_i::as_server (CORBA::Object_ptr orig,
-				      const char *corbaloc_name,
-				      Lorica::ServerAgent_ptr agent)
+Lorica::ReferenceMapper_i::as_server(CORBA::Object_ptr orig,
+				     const char *corbaloc_name,
+				     Lorica::ServerAgent_ptr agent)
 	throw (CORBA::SystemException)
 {
+	if (CORBA::is_nil(orig))
+		return CORBA::Object::_nil();
+
 	return this->as_server_i (false, orig, corbaloc_name, agent);
 }
 
 CORBA::Object_ptr
-Lorica::ReferenceMapper_i::as_server_i (bool require_secure,
-					CORBA::Object_ptr orig,
-					const char *corbaloc_name,
-					Lorica::ServerAgent_ptr agent)
+Lorica::ReferenceMapper_i::as_server_i(bool require_secure,
+				       CORBA::Object_ptr orig,
+				       const char *corbaloc_name,
+				       Lorica::ServerAgent_ptr agent)
 	throw (CORBA::SystemException)
 {
 	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference(orig, true, require_secure);
@@ -154,6 +160,9 @@ CORBA::Object_ptr
 Lorica::ReferenceMapper_i::as_client(CORBA::Object_ptr orig)
 	throw (CORBA::SystemException)
 {
+	if (CORBA::is_nil(orig))
+		return CORBA::Object::_nil();
+
 	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference(orig, false);
 	if (rmv.get() == 0)
 		return CORBA::Object::_nil();
@@ -165,6 +174,9 @@ void
 Lorica::ReferenceMapper_i::remove_server(CORBA::Object_ptr mapped)
 	throw (CORBA::SystemException)
 {
+	if (CORBA::is_nil(mapped))
+		return CORBA::Object::_nil();
+
 	Lorica::ReferenceMapValue_var rmv = this->registry_->remove_reference (mapped, true);
 	if ((rmv.get() != 0) && (rmv->ior_table_name_ != "")) {
 		if (Lorica_debug_level > 5) {
@@ -188,6 +200,9 @@ void
 Lorica::ReferenceMapper_i::remove_client(CORBA::Object_ptr mapped)
 	throw (CORBA::SystemException)
 {
+	if (CORBA::is_nil(mapped))
+		return CORBA::Object::_nil();
+
 	Lorica::ReferenceMapValue_var rmv = this->registry_->remove_reference(mapped, false);
 }
 
