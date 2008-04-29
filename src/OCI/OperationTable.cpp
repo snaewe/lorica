@@ -478,8 +478,8 @@ OCI_APT::ArgList *
 OCI_APT::OperationTable::add_interface (CORBA::InterfaceDef_ptr intDef,
 					const char * desired_op)
 {
-  bool want_attribute = false;
-  if (desired_op && desired_op[0] == '_')
+	bool want_attribute = false;
+	if (desired_op && desired_op[0] == '_')
 		want_attribute = ACE_OS::strncmp(desired_op+2,"et_",3) == 0;
 
 	ACE_Write_Guard<ACE_RW_Thread_Mutex>(this->lock_);
@@ -510,101 +510,101 @@ OCI_APT::OperationTable::add_interface (CORBA::InterfaceDef_ptr intDef,
 			intDef->contents (CORBA::dk_Attribute,1);
 		CORBA::ULong n_ats = attributes->length();
 		for (CORBA::ULong at = 0; at < n_ats; ++at)
+		{
+			CORBA::String_var attr_name = attributes[at]->name();
+			CORBA::AttributeDef_var attr =
+				CORBA::AttributeDef::_narrow (attributes[at]);
+			CORBA::String_var attr_op =
+				CORBA::string_alloc(ACE_OS::strlen(attr_name.in()) + 5);
+			ACE_OS::strcpy(attr_op.inout(),"_get_");
+			ACE_OS::strcat(attr_op.inout(),attr_name.in());
+			OCI_APT::Operation *op_ptr = this->find_or_add(attr_op.in());
+			OCI_APT::ArgList *arg_list =
+				new OCI_APT::ArgList (0, 0, false);
+			arg_list->result (attr->type());
+			if (want_attribute && ACE_OS::strcmp (attr_op.in(),desired_op) == 0)
 			{
-				CORBA::String_var attr_name = attributes[at]->name();
-				CORBA::AttributeDef_var attr =
-					CORBA::AttributeDef::_narrow (attributes[at]);
-				CORBA::String_var attr_op =
-					CORBA::string_alloc(ACE_OS::strlen(attr_name.in()) + 5);
-				ACE_OS::strcpy(attr_op.inout(),"_get_");
-				ACE_OS::strcat(attr_op.inout(),attr_name.in());
-				OCI_APT::Operation *op_ptr = this->find_or_add(attr_op.in());
-				OCI_APT::ArgList *arg_list =
-					new OCI_APT::ArgList (0, 0, false);
-				arg_list->result (attr->type());
-				if (want_attribute && ACE_OS::strcmp (attr_op.in(),desired_op) == 0)
-					{
-						arg_list->add_ref();
-						result = arg_list;
-					}
-
-				op_ptr->add_set (new OpArgs(rep_id.in(),arg_list));
-				for (CORBA::ULong d = 0; d < i; d++)
-					op_ptr->add_set (new OpArgs(derived[d],arg_list));
-				arg_list->remove_ref();
-
-				if (attr->mode() == CORBA::ATTR_READONLY)
-					continue;
-
-				attr_op.inout()[1] = 's'; // from _get_ to _set_
-				op_ptr = this->find_or_add(attr_op.in());
-				arg_list =
-					new OCI_APT::ArgList (1, 0, false);
-				arg_list->set_arg(0, attr->type(),CORBA::ARG_IN);
-				arg_list->result (CORBA::_tc_void);
-				if (want_attribute && ACE_OS::strcmp (attr_op.in(),desired_op) == 0)
-					{
-						arg_list->add_ref();
-						result = arg_list;
-					}
-
-				op_ptr->add_set (new OpArgs(rep_id.in(),arg_list));
-				for (CORBA::ULong d = 0; d < i; d++)
-					op_ptr->add_set (new OpArgs(derived[d],arg_list));
-				arg_list->remove_ref();
-
+				arg_list->add_ref();
+				result = arg_list;
 			}
+
+			op_ptr->add_set (new OpArgs(rep_id.in(),arg_list));
+			for (CORBA::ULong d = 0; d < i; d++)
+				op_ptr->add_set (new OpArgs(derived[d],arg_list));
+			arg_list->remove_ref();
+
+			if (attr->mode() == CORBA::ATTR_READONLY)
+				continue;
+
+			attr_op.inout()[1] = 's'; // from _get_ to _set_
+			op_ptr = this->find_or_add(attr_op.in());
+			arg_list =
+				new OCI_APT::ArgList (1, 0, false);
+			arg_list->set_arg(0, attr->type(),CORBA::ARG_IN);
+			arg_list->result (CORBA::_tc_void);
+			if (want_attribute && ACE_OS::strcmp (attr_op.in(),desired_op) == 0)
+			{
+				arg_list->add_ref();
+				result = arg_list;
+			}
+
+			op_ptr->add_set (new OpArgs(rep_id.in(),arg_list));
+			for (CORBA::ULong d = 0; d < i; d++)
+				op_ptr->add_set (new OpArgs(derived[d],arg_list));
+			arg_list->remove_ref();
+
+		}
 
 		CORBA::ContainedSeq_var operations =
 			intDef->contents (CORBA::dk_Operation,1);
 
 		CORBA::ULong n_ops = operations->length ();
 		for (CORBA::ULong op = 0; op < n_ops; ++op)
+		{
+			CORBA::String_var op_name = operations[op]->name();
+			OCI_APT::Operation *op_ptr = this->find_or_add(op_name.in());
+
+			CORBA::OperationDef_var opDef =
+				CORBA::OperationDef::_narrow (operations[op]);
+			CORBA::ParDescriptionSeq_var params = opDef->params ();
+			CORBA::ExceptionDefSeq_var excepts = opDef->exceptions();
+
+			int is_oneway = opDef->mode() == CORBA::OP_ONEWAY;
+			OCI_APT::ArgList *arg_list =
+				new OCI_APT::ArgList (params->length(),
+						      excepts->length(),
+						      is_oneway);
+			if (!is_oneway)
+				arg_list->result (opDef->result());
+
+			for (CORBA::ULong p = 0; p < params->length (); ++p)
 			{
-				CORBA::String_var op_name = operations[op]->name();
-				OCI_APT::Operation *op_ptr = this->find_or_add(op_name.in());
+				CORBA::Flags mode = CORBA::ARG_IN;
+				if (params[p].mode == CORBA::PARAM_OUT)
+					mode = CORBA::ARG_OUT;
+				else if (params[p].mode == CORBA::PARAM_INOUT)
+					mode = CORBA::ARG_INOUT;
 
-				CORBA::OperationDef_var opDef =
-					CORBA::OperationDef::_narrow (operations[op]);
-				CORBA::ParDescriptionSeq_var params = opDef->params ();
-				CORBA::ExceptionDefSeq_var excepts = opDef->exceptions();
-
-				int is_oneway = opDef->mode() == CORBA::OP_ONEWAY;
-				OCI_APT::ArgList *arg_list =
-					new OCI_APT::ArgList (params->length(),
-																excepts->length(),
-																is_oneway);
-				if (!is_oneway)
-					arg_list->result (opDef->result());
-
-				for (CORBA::ULong p = 0; p < params->length (); ++p)
-					{
-						CORBA::Flags mode = CORBA::ARG_IN;
-						if (params[p].mode == CORBA::PARAM_OUT)
-							mode = CORBA::ARG_OUT;
-						else if (params[p].mode == CORBA::PARAM_INOUT)
-							mode = CORBA::ARG_INOUT;
-
-						arg_list->set_arg(p, params[p].type.in(),mode);
-					}
-
-				for (CORBA::ULong e = 0; e < excepts->length (); ++e)
-					{
-						CORBA::TypeCode_var tc = excepts[e]->type();
-						arg_list->set_excep(e, tc.in());
-					}
-
-				if (!want_attribute && desired_op && ACE_OS::strcmp(op_name,desired_op) == 0)
-					{
-						arg_list->add_ref();
-						result = arg_list;
-					}
-
-				op_ptr->add_set (new OpArgs(rep_id.in(),arg_list));
-				for (CORBA::ULong d = 0; d < i; d++)
-					op_ptr->add_set (new OpArgs(derived[d],arg_list));
-				arg_list->remove_ref();
+				arg_list->set_arg(p, params[p].type.in(),mode);
 			}
+
+			for (CORBA::ULong e = 0; e < excepts->length (); ++e)
+			{
+				CORBA::TypeCode_var tc = excepts[e]->type();
+				arg_list->set_excep(e, tc.in());
+			}
+
+			if (!want_attribute && desired_op && ACE_OS::strcmp(op_name,desired_op) == 0)
+			{
+				arg_list->add_ref();
+				result = arg_list;
+			}
+
+			op_ptr->add_set (new OpArgs(rep_id.in(),arg_list));
+			for (CORBA::ULong d = 0; d < i; d++)
+				op_ptr->add_set (new OpArgs(derived[d],arg_list));
+			arg_list->remove_ref();
+		}
 
 		if (i < bases->length())
 		{
@@ -626,6 +626,10 @@ OCI_APT::OperationTable::add_is_a (const char *rep_id)
 
 	arg_list->set_arg(0, CORBA::_tc_string,CORBA::ARG_IN);
 	op->add_set (new OpArgs(rep_id,arg_list));
+
+	ACE_DEBUG((LM_DEBUG,
+		   ACE_TEXT("(%P|%t) %N:%l - _is_a() added\n")));
+
 	return arg_list;
 }
 
@@ -638,5 +642,9 @@ OCI_APT::OperationTable::add_non_existent (const char *rep_id)
 	arg_list->result (CORBA::_tc_boolean);
 
 	op->add_set (new OCI_APT::OpArgs(rep_id,arg_list));
+
+	ACE_DEBUG((LM_DEBUG,
+		   ACE_TEXT("(%P|%t) %N:%l - _non_existent() added\n")));
+
 	return arg_list;
 }

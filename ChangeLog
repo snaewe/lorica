@@ -1,3 +1,9 @@
+2008-04-29  Jules Colding  <colding@42tools.com>
+
+	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)
+	(OperationTable::add_non_existent): Added temporary debug norice
+	to ensure that these operations really are used appropriately.
+
 2008-04-22  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_server)
