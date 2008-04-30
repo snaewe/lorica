@@ -1,3 +1,13 @@
+Tue Apr 29 23:44:01 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/RMVByMapped.cpp (svc):
+          Fix the garbage collector to assume a BAD_OPERATION exception
+          comes from an otherwise existing peer object that happens to not
+          implement CORBA::Object::_non_existent(). Other exceptions, such
+          as INV_OBJREF, and COMM_FAILURE will still expire the map
+          entry. TRANSIENT will too, for the moment, but that may not
+          always be the case.
+
 2008-04-29  Jules Colding  <colding@42tools.com>
 
 	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)

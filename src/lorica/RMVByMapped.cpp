@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: r8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
  *    Lorica source file.
@@ -186,6 +186,11 @@ Lorica::RMVByMapped::svc(void)
 						CORBA::Object_var obj = value->orig_ref_;
 						guard.release();
 						expired = obj->_non_existent();
+					}
+					catch (CORBA::BAD_OPERATION &bo) {
+						if (Lorica_debug_level > 6)
+							ACE_DEBUG((LM_DEBUG,
+								   ACE_TEXT("(%P|%t) %N:%l - peer does not implement _non_existent, assuming not expired\n")));
 					}
 					catch (CORBA::Exception &) {
 						expired = true;
