@@ -291,10 +291,10 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 
 				return ptr->in_out == io ? ALREADY_MAPPED : REVERSE_MAPPED;
 			}
-			ACE_ERROR((LM_ERROR,
-				   ACE_TEXT("(%P|%t) %N:%l - failed on pid, got %d, expected %d\n"),
+			ACE_DEBUG((LM_WARNING, 
+				   ACE_TEXT("(%P|%t) %N:%l - got a reference mapped by another Lorica - pid = %d and host = \"%s\"\n"),
 				   ptr->pid,
-				   mapped_object_id_.pid));
+				   ptr->hostid));
 		}
 	}
 	if (Lorica_debug_level > 4) {
