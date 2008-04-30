@@ -18,7 +18,7 @@
 #  MA 02111-1307 USA
 
 AC_PREREQ(2.59)
-AC_INIT([lorica],[0.9.14],[bugs@42tools.com])
+AC_INIT([lorica],[0.9.16],[bugs@42tools.com])
 
 AC_COPYRIGHT([Copyright (C) 2008 OMC Denmark ApS])
 

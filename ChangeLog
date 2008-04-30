@@ -1,3 +1,9 @@
+2008-04-30  Jules Colding  <colding@42tools.com>
+
+	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)
+	(OperationTable::add_non_existent): Removed the debug notices
+	mention in the entry of 2008-04-29.
+
 Tue Apr 29 23:44:01 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/RMVByMapped.cpp (svc):

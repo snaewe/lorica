@@ -622,13 +622,10 @@ OCI_APT::OperationTable::add_is_a (const char *rep_id)
 	OCI_APT::Operation *op = this->find_or_add("_is_a");
 	int is_oneway = 0;
 	OCI_APT::ArgList *arg_list = new OCI_APT::ArgList (1,0, is_oneway);
-	arg_list->result (CORBA::_tc_boolean);
 
+	arg_list->result (CORBA::_tc_boolean);
 	arg_list->set_arg(0, CORBA::_tc_string,CORBA::ARG_IN);
 	op->add_set (new OpArgs(rep_id,arg_list));
-
-	ACE_DEBUG((LM_DEBUG,
-		   ACE_TEXT("(%P|%t) %N:%l - _is_a() added\n")));
 
 	return arg_list;
 }
@@ -639,12 +636,9 @@ OCI_APT::OperationTable::add_non_existent (const char *rep_id)
 	OCI_APT::Operation *op = this->find_or_add("_non_existent");
 	int is_oneway = 0;
 	OCI_APT::ArgList *arg_list = new OCI_APT::ArgList (0,0, is_oneway);
+
 	arg_list->result (CORBA::_tc_boolean);
-
 	op->add_set (new OCI_APT::OpArgs(rep_id,arg_list));
-
-	ACE_DEBUG((LM_DEBUG,
-		   ACE_TEXT("(%P|%t) %N:%l - _non_existent() added\n")));
 
 	return arg_list;
 }
