@@ -292,9 +292,9 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 				return ptr->in_out == io ? ALREADY_MAPPED : REVERSE_MAPPED;
 			}
 			ACE_DEBUG((LM_WARNING, 
-				   ACE_TEXT("(%P|%t) %N:%l - got a reference mapped by another Lorica - pid = %d and host = \"%s\"\n"),
+				   ACE_TEXT("(%P|%t) %N:%l - got a reference mapped by another Lorica - pid = %d and hostid = %d\n"),
 				   ptr->pid,
-				   ((0 != ptr->hostid) ? ptr->hostid : "")));
+				   ptr->hostid));
 		}
 	}
 	if (Lorica_debug_level > 4) {

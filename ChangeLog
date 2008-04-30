@@ -2,6 +2,8 @@
 
 	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
 	Fix potential segv.
+	(ProxyMapper::already_mapped): Reverted the above nonsense and
+	corrected the input format of the ACE_DEBUG statement.
 
 	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)
 	(OperationTable::add_non_existent): Removed the debug notices

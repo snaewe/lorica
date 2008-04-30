@@ -59,6 +59,7 @@
 				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4355;4250;4290"
+				EnablePREfast="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -238,6 +239,7 @@
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DisableSpecificWarnings="4355;4250;4290"
+				EnablePREfast="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

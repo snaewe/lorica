@@ -567,9 +567,11 @@ ACE_TMAIN(int argc,
 		size_t len = strlen("Lorica");
 		char *name = (char*)malloc(len + 4 + 1);
 #ifdef ACE_WIN32
-		sprintf_s(name, len + 4 + 1, "%s.log", "lorica");
+		if (name)
+			sprintf_s(name, len + 4 + 1, "%s.log", "lorica");
 #else
-		snprintf(name, len + 4 + 1, "%s.log", "lorica");
+		if (name)
+			snprintf(name, len + 4 + 1, "%s.log", "lorica");
 #endif
 		ofstream *output_file = new ofstream(ACE_TEXT(name), ios::out);
 		free(name);
