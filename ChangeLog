@@ -1,5 +1,8 @@
 2008-04-30  Jules Colding  <colding@42tools.com>
 
+	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
+	Fix potential segv.
+
 	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)
 	(OperationTable::add_non_existent): Removed the debug notices
 	mention in the entry of 2008-04-29.

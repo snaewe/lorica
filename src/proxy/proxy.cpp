@@ -478,7 +478,7 @@ Lorica::Proxy::configure(Config & config)
 	}
 	catch (...) {
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) %N:%l - aught an otherwise unknown exception\n"));
+			   "(%P|%t) %N:%l - Caught an otherwise unknown exception\n"));
 		throw InitError();
 	}
 }

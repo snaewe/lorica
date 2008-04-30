@@ -294,7 +294,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 			ACE_DEBUG((LM_WARNING, 
 				   ACE_TEXT("(%P|%t) %N:%l - got a reference mapped by another Lorica - pid = %d and host = \"%s\"\n"),
 				   ptr->pid,
-				   ptr->hostid));
+				   ((0 != ptr->hostid) ? ptr->hostid : "")));
 		}
 	}
 	if (Lorica_debug_level > 4) {
