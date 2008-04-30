@@ -187,7 +187,7 @@ Lorica::RMVByMapped::svc(void)
 						guard.release();
 						expired = obj->_non_existent();
 					}
-					catch (CORBA::BAD_OPERATION &bo) {
+					catch (CORBA::BAD_OPERATION &) {
 						if (Lorica_debug_level > 6)
 							ACE_DEBUG((LM_DEBUG,
 								   ACE_TEXT("(%P|%t) %N:%l - peer does not implement _non_existent, assuming not expired\n")));
