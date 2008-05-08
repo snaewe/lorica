@@ -6,7 +6,6 @@
 	ProjectGUID="{9EEF2911-FECA-1BAD-D8B9-F4D686000F50}"
 	RootNamespace="lorica_GenericEvaluator"
 	Keyword="Win32Proj"
-	SignManifests="true"
 	>
 	<Platforms>
 		<Platform
@@ -49,6 +48,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				UseUnicodeResponseFiles="false"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
 				PreprocessorDefinitions="LORICA_GENERICEVALUATOR_BUILD_DLL;_DEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
@@ -56,10 +56,13 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
+				BrowseInformation="1"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
+				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4355;4250;4290"
+				EnablePREfast="true"
+				UseFullPaths="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -77,11 +80,14 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ACEd.lib TAOd.lib TAO_AnyTypeCoded.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAO_CodecFactoryd.lib TAO_PId.lib TAO_Messagingd.lib TAO_DynamicInterfaced.lib TAO_DynamicAnyd.lib TAO_IORTabled.lib TAO_Svc_Utilsd.lib TAO_IFR_Clientd.lib TAO_TypeCodeFactoryd.lib TAO_PI_Serverd.lib TAO_IFRServiced.lib TAO_Securityd.lib ACE_SSLd.lib TAO_SSLIOPd.lib OCI_AsynchProxyToolsd.lib lorica_EvaluatorBased.lib lorica_Clientd.lib ssleay32.lib libeay32.lib"
 				OutputFile="$(OutDir)\lorica_GenericEvaluatord.dll"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
 				GenerateDebugInformation="true"
+				GenerateMapFile="true"
+				MapExports="true"
 				SubSystem="2"
+				OptimizeForWindows98="1"
 				ImportLibrary="..\..\lib\lorica_GenericEvaluatord.lib"
 				TargetMachine="1"
 			/>
@@ -89,85 +95,7 @@
 				Name="VCALinkTool"
 			/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
-			/>
-			<Tool
-				Name="VCPostBuildEventTool"
-			/>
-		</Configuration>
-		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="..\..\lib"
-			IntermediateDirectory="Release\lorica_GenericEvaluator\I386"
-			ConfigurationType="2"
-			CharacterSet="0"
-			>
-			<Tool
-				Name="VCPreBuildEventTool"
-			/>
-			<Tool
-				Name="VCCustomBuildTool"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
-				Name="VCMIDLTool"
-				AdditionalOptions=""
-				AdditionalIncludeDirectories=""
-				TypeLibraryName="$(InputName).tlb"
-				HeaderFileName="$(InputName).h"
-				InterfaceIdentifierFileName="$(InputName)_i.c"
-				ProxyFileName="$(InputName)_p.c"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-				Optimization="2"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
-				PreprocessorDefinitions="LORICA_GENERICEVALUATOR_BUILD_DLL;NDEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="true"
-				WarningLevel="3"
-				Detect64BitPortabilityProblems="false"
-				DisableSpecificWarnings="4355;4250;4290"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLinkerTool"
-				AdditionalDependencies="ACE.lib TAO.lib TAO_AnyTypeCode.lib TAO_PortableServer.lib TAO_Valuetype.lib TAO_CodecFactory.lib TAO_PI.lib TAO_Messaging.lib TAO_DynamicInterface.lib TAO_DynamicAny.lib TAO_IORTable.lib TAO_Svc_Utils.lib TAO_IFR_Client.lib TAO_TypeCodeFactory.lib TAO_PI_Server.lib TAO_IFRService.lib TAO_Security.lib ACE_SSL.lib TAO_SSLIOP.lib OCI_AsynchProxyTools.lib lorica_EvaluatorBase.lib lorica_Client.lib ssleay32.lib libeay32.lib"
-				OutputFile="$(OutDir)\lorica_GenericEvaluator.dll"
-				LinkIncremental="1"
-				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
-				GenerateDebugInformation="true"
-				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				ImportLibrary="..\..\lib\lorica_GenericEvaluator.lib"
-				TargetMachine="1"
-			/>
-			<Tool
-				Name="VCALinkTool"
+				Name="VCManifestTool"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -177,6 +105,12 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -253,6 +187,9 @@
 				Name="VCALinkTool"
 			/>
 			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
 				Name="VCXDCMakeTool"
 			/>
 			<Tool
@@ -260,6 +197,103 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\..\lib"
+			IntermediateDirectory="Release\lorica_GenericEvaluator\I386"
+			ConfigurationType="2"
+			CharacterSet="0"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				AdditionalOptions=""
+				AdditionalIncludeDirectories=""
+				TypeLibraryName="$(InputName).tlb"
+				HeaderFileName="$(InputName).h"
+				InterfaceIdentifierFileName="$(InputName)_i.c"
+				ProxyFileName="$(InputName)_p.c"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
+				PreprocessorDefinitions="LORICA_GENERICEVALUATOR_BUILD_DLL;NDEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				WarningLevel="3"
+				Detect64BitPortabilityProblems="false"
+				DisableSpecificWarnings="4355;4250;4290"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="ACE.lib TAO.lib TAO_AnyTypeCode.lib TAO_PortableServer.lib TAO_Valuetype.lib TAO_CodecFactory.lib TAO_PI.lib TAO_Messaging.lib TAO_DynamicInterface.lib TAO_DynamicAny.lib TAO_IORTable.lib TAO_Svc_Utils.lib TAO_IFR_Client.lib TAO_TypeCodeFactory.lib TAO_PI_Server.lib TAO_IFRService.lib TAO_Security.lib ACE_SSL.lib TAO_SSLIOP.lib OCI_AsynchProxyTools.lib lorica_EvaluatorBase.lib lorica_Client.lib ssleay32.lib libeay32.lib"
+				OutputFile="$(OutDir)\lorica_GenericEvaluator.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
+				ImportLibrary="..\..\lib\lorica_GenericEvaluator.lib"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -335,6 +369,9 @@
 				Name="VCALinkTool"
 			/>
 			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
 				Name="VCXDCMakeTool"
 			/>
 			<Tool
@@ -342,6 +379,12 @@
 			/>
 			<Tool
 				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -353,166 +396,226 @@
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;cxx;cc;C;c">
+			Filter="cpp;cxx;cc;C;c"
+			>
 			<File
-				RelativePath="GenericEvaluator.cpp">
+				RelativePath="GenericEvaluator.cpp"
+				>
 			</File>
 			<File
-				RelativePath="GenericLoader.cpp">
+				RelativePath="GenericLoader.cpp"
+				>
 			</File>
 			<File
-				RelativePath="GenericMapper.cpp">
+				RelativePath="GenericMapper.cpp"
+				>
 			</File>
 			<File
-				RelativePath="IFRService.cpp">
+				RelativePath="IFRService.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hh">
+			Filter="h;hpp;hxx;hh"
+			>
 			<File
-				RelativePath="GenericEvaluator.h">
+				RelativePath="GenericEvaluator.h"
+				>
 			</File>
 			<File
-				RelativePath="GenericLoader.h">
+				RelativePath="GenericLoader.h"
+				>
 			</File>
 			<File
-				RelativePath="GenericMapper.h">
+				RelativePath="GenericMapper.h"
+				>
 			</File>
 			<File
-				RelativePath="IFRService.h">
+				RelativePath="IFRService.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Build Files"
-			Filter="mpc;mpb;mwc">
+			Filter="mpc;mpb;mwc"
+			>
 			<File
-				RelativePath="lorica_Client.mpc">
+				RelativePath="lorica_Client.mpc"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
-				>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
 					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="lorica_EvaluatorBase.mpc">
+				RelativePath="lorica_EvaluatorBase.mpc"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
-				>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
 					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath="lorica_GenericEvaluator.mpc">
+				RelativePath="lorica_GenericEvaluator.mpc"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
 					ExcludedFromBuild="true"
-				>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
 					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
 					ExcludedFromBuild="true"
-				>
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+					/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Dll Export Files"
-			Filter="">
+			>
 			<File
-				RelativePath="Lorica_GenericEvaluator">
+				RelativePath="Lorica_GenericEvaluator"
+				>
 				<FileConfiguration
 					Name="Debug|Win32"
-				>
+					>
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Invoking generate_export_file.pl on Lorica_GenericEvaluator"
-						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; > &quot;Lorica_GenericEvaluator_Export.h&quot;"
-						Outputs="Lorica_GenericEvaluator_Export.h"/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-				>
-					<Tool
-						Name="VCCustomBuildTool"
-						Description="Invoking generate_export_file.pl on Lorica_GenericEvaluator"
-						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; > &quot;Lorica_GenericEvaluator_Export.h&quot;"
-						Outputs="Lorica_GenericEvaluator_Export.h"/>
+						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; &gt; &quot;Lorica_GenericEvaluator_Export.h&quot;&#x0D;&#x0A;"
+						Outputs="Lorica_GenericEvaluator_Export.h"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Debug|x64"
-				>
+					>
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Invoking generate_export_file.pl on Lorica_GenericEvaluator"
-						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; > &quot;Lorica_GenericEvaluator_Export.h&quot;"
-						Outputs="Lorica_GenericEvaluator_Export.h"/>
+						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; &gt; &quot;Lorica_GenericEvaluator_Export.h&quot;&#x0D;&#x0A;"
+						Outputs="Lorica_GenericEvaluator_Export.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Invoking generate_export_file.pl on Lorica_GenericEvaluator"
+						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; &gt; &quot;Lorica_GenericEvaluator_Export.h&quot;&#x0D;&#x0A;"
+						Outputs="Lorica_GenericEvaluator_Export.h"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
 					Name="Release|x64"
-				>
+					>
 					<Tool
 						Name="VCCustomBuildTool"
 						Description="Invoking generate_export_file.pl on Lorica_GenericEvaluator"
-						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; > &quot;Lorica_GenericEvaluator_Export.h&quot;"
-						Outputs="Lorica_GenericEvaluator_Export.h"/>
+						CommandLine="generate_export_file.pl  &quot;Lorica_GenericEvaluator&quot; &gt; &quot;Lorica_GenericEvaluator_Export.h&quot;&#x0D;&#x0A;"
+						Outputs="Lorica_GenericEvaluator_Export.h"
+					/>
 				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
 			Name="Inline Files"
-			Filter="i;inl">
+			Filter="i;inl"
+			>
 			<File
-				RelativePath="ReferenceMapperC.inl">
+				RelativePath="ReferenceMapperC.inl"
+				>
 			</File>
 			<File
-				RelativePath="ReferenceMapperS.inl">
+				RelativePath="ReferenceMapperS.inl"
+				>
 			</File>
 			<File
-				RelativePath="ServerAgentC.inl">
+				RelativePath="ServerAgentC.inl"
+				>
 			</File>
 			<File
-				RelativePath="ServerAgentS.inl">
+				RelativePath="ServerAgentS.inl"
+				>
 			</File>
 		</Filter>
 	</Files>

@@ -170,20 +170,18 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 
 		if (opt != std::string::npos) {
 			size_t comma = ep_str.find (',',opt);
-			size_t start = opt + test.length();
+			size_t begin = opt + test.length();
 
-			this->alias_ = comma == std::string::npos ?
-				ep_str.substr(start) :
-				ep_str.substr(start, comma - start);
+			this->alias_ = (comma == std::string::npos) ? ep_str.substr(begin) : ep_str.substr(begin, comma - begin);
 		}
 		test = "ssl_port=";
 		opt = ep_str.find (test, option_pos);
 
 		if (opt != std::string::npos) {
 			size_t comma = ep_str.find (',',opt);
-			size_t start = opt + test.length();
+			size_t begin = opt + test.length();
 
-			std::string portstr = (comma == std::string::npos) ? ep_str.substr(start) : ep_str.substr(start, comma - start);
+			std::string portstr = (comma == std::string::npos) ? ep_str.substr(begin) : ep_str.substr(begin, comma - begin);
 			this->ssl_port_ = static_cast<int> (ACE_OS::strtol(portstr.c_str(), 0, 10));
 			if (0 >= this->ssl_port_) {
 				if (outside_facing)
