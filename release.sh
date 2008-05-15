@@ -34,7 +34,7 @@ fi
 product=lorica
 
 if [ "$action" = "windows" ]; then
-    scp -i $HOME/.ssh/no_passphrase_id_rsa $HOME/work/vmware-shared-folder/"$product"-install.exe colding@42tools.com:
+    scp -i $HOME/.ssh/no_passphrase_id_rsa $HOME/work/vmware-shared-folder/"$product"-install*.exe colding@42tools.com:
     echo ""
     echo "Download location:"
     echo "   <http://www.42tools.com/sites/default/files/downloads/dist/lorica/Windows/lorica-install.exe>"
@@ -51,30 +51,13 @@ case "$action" in
     Red%20Hat%20Enterprise%20Linux%204)
 	make dist-rpm || exit 1
 	;;
-    Fedora%20Core%204)
-	make dist-rpm || exit 1
-	;;
-    Fedora%20Core%205)
-	make dist-rpm || exit 1
-	;;
-    Fedora%20Core%206)
-	make dist-rpm || exit 1
-	;;
-    Fedora%207)
-	make dist-rpm || exit 1
-	;;
-    Fedora%208)
+    Fedora*)
 	make dist-rpm || exit 1
 	;;
     Rawhide)
 	make dist-rpm || exit 1
 	;;
-    OpenSUSE%2010.2)
-	make dist-rpm || exit 1
-	echo -n "Now cd to $(HOME)/suse_build/ and execute build as root in another terminal. I'll wait right here... "
-	read answer
-	;;
-    OpenSUSE%2010.3)
+    OpenSUSE*)
 	make dist-rpm || exit 1
 	echo -n "Now cd to $(HOME)/suse_build/ and execute build as root in another terminal. I'll wait right here... "
 	read answer

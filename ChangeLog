@@ -1,3 +1,12 @@
+2008-05-15  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Tentatively up the version to 1.0.0
+
+	* release.sh (product): Make RPMs on any Fedora platform.
+
+	* m4/platform_adapt.m4: Relax on the Fedora version when deciding
+	the build platform.
+
 2008-04-30  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):

@@ -144,7 +144,7 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 			if test "x$rhel_release" = "x0"; then
 				LORICA_DIST_RELEASE="Red%20Hat%20Enterprise%20Linux%204"
 			fi
-			if test "x$LORICA_DIST_RELEASE" = "x"; then
+			if test "x$LORICA_DIST_RELEASE" = "xUNKNOWN"; then
 				AC_MSG_ERROR([[Unable to determine Red Hat Enterprise Linux release number]])
 			fi
 		fi
@@ -194,7 +194,8 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 			if test "x$fedora_release" = "x0"; then
 				LORICA_DIST_RELEASE="Rawhide"
 			fi
-			if test "x$LORICA_DIST_RELEASE" = "x"; then
+			if test "x$LORICA_DIST_RELEASE" = "xUNKNOWN"; then
+				LORICA_DIST_RELEASE="Fedora"
 				AC_MSG_ERROR([[Unable to determine Fedora release number]])
 			fi
 		fi
