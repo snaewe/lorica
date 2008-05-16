@@ -56,8 +56,6 @@ the Lorica IDL files. This package contain those.
 %prep
 %setup -q 
 
-autoreconf 
-
 %build
 ./bootstrap --enable-tao-build
 @RPM_SPEC_CONFIGURE@
