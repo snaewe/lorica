@@ -105,7 +105,7 @@ fi
 
 case "$action" in
     Mac%20OS%20X*)
-	scp -i $HOME/.ssh/no_passphrase_id_rsa -r packagemaker/Lorica.dmg colding@42tools.com:'/var/www/omc/htdocs/sites/default/files/downloads/dist/'"$product"'/Mac\ OS\ X\ Tiger\ and\ above/'
+	scp -i $HOME/.ssh/no_passphrase_id_rsa apple/Lorica.build/Lorica.dmg colding@42tools.com:
 	;;
     Red%20Hat%20Enterprise%20Linux%204)
 	cd $HOME/rpmbuild || exit 1

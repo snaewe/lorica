@@ -22,9 +22,6 @@ ACLOCAL_AMFLAGS = -I m4
 CWD = $(CURDIR)
 MKDIR_P ?= $(mkdir_p)
 MKDIR = $(MKDIR_P) 
-TAR=/bin/tar
-
-SVN_REV=$(svn info | grep Revision | awk '{ print $2 }')
 
 SUBDIRS = \
 	init_rc \
@@ -49,7 +46,7 @@ DISTCLEANFILES = \
 	intltool-update   \
 	iconv-detect.c    \
 	Makefile          \
-	*.tar.gz          \
+	*.tar*            \
 	$(CLEAN_IN_FILES)
 
 EXTRA_DIST = \
@@ -89,10 +86,16 @@ EXTRA_DIST = \
 	src/OCI/AsynchProxyTools.mpc            \
 	src/proxy/proxy.mpc
 
-svnrev:
-	@echo ""
-	@echo $(SVN_REV)
-	@echo ""
+if LORICA_SVNREV
+release-svnrev: dist-svnrev
+	scp -i $(HOME)/.ssh/no_passphrase_id_rsa lorica-rev$(SVN_REV).tar.gz colding@42tools.com:/var/www/omc/htdocs/sites/default/files/downloads/dist/$(LORICA_NAME)/SOURCES/
+
+dist-svnrev:
+	-rm -rf ./lorica-rev$(SVN_REV)
+	svn export . ./lorica-rev$(SVN_REV)
+	tar cf lorica-rev$(SVN_REV).tar ./lorica-rev$(SVN_REV)
+	gzip lorica-rev$(SVN_REV).tar
+endif
 
 dist-hook:
 	-rm -f $(distdir)/defines/pathdefs.h
@@ -119,7 +122,7 @@ if LORICA_SUSE
 dist-rpm:
 	make
 	make dist
-	rm -rf $(HOME)/suse_build/*
+	-rm -rf $(HOME)/suse_build/*
 	$(MKDIR) $(HOME)/suse_build
 	cp -f $(CWD)/$(LORICA_NAME).spec $(HOME)/suse_build/
 	cp -f $(CWD)/$(LORICA_NAME)-$(LORICA_VERSION).tar.gz $(HOME)/suse_build/
@@ -141,11 +144,11 @@ endif
 if LORICA_RPMDEV_WIPETREE
 	rpmdev-wipetree
 else
-	rm -rf $(HOME)/rpmbuild/BUILD/*
-	rm -rf $(HOME)/rpmbuild/RPMS/*
-	rm -rf $(HOME)/rpmbuild/SOURCES/*
-	rm -rf $(HOME)/rpmbuild/SPECS/*
-	rm -rf $(HOME)/rpmbuild/SRPMS/*
+	-rm -rf $(HOME)/rpmbuild/BUILD/*
+	-rm -rf $(HOME)/rpmbuild/RPMS/*
+	-rm -rf $(HOME)/rpmbuild/SOURCES/*
+	-rm -rf $(HOME)/rpmbuild/SPECS/*
+	-rm -rf $(HOME)/rpmbuild/SRPMS/*
 endif
 	make
 	make dist
@@ -172,7 +175,7 @@ dist-deb-prep:
 	make
 	make dist
 	cp $(CWD)/$(LORICA_NAME)-$(LORICA_VERSION).tar.gz $(CWD)/deb/$(LORICA_NAME)_$(LORICA_VERSION).orig.tar.gz
-	cd $(CWD)/deb && $(TAR) xzf $(LORICA_NAME)_$(LORICA_VERSION).orig.tar.gz
+	cd $(CWD)/deb && tar xzf $(LORICA_NAME)_$(LORICA_VERSION).orig.tar.gz
 	cd $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION) && $(MKDIR) debian
 	cp $(CWD)/deb/compat $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/changelog $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
@@ -187,4 +190,5 @@ dist-deb-prep:
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install.in $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 
-
+clean-local: 
+	-rm -rf lorica-rev*

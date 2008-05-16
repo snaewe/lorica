@@ -246,6 +246,18 @@ else
    AM_CONDITIONAL(LORICA_DPKG_BUILDPACKAGE, true)
 fi
 
+dnl Subversion revision number
+AC_CHECK_PROG(HAVE_AWK, [awk], yes, no)
+if test "x$HAVE_AWK" = "xno"; then
+   AM_CONDITIONAL(LORICA_SVNREV, false)
+   AC_MSG_WARN([[You will need the awk(1) program to use the dist-svnrev make target]])
+else
+   AM_CONDITIONAL(LORICA_SVNREV, true)
+   SVN_REV=`svn info | grep Revision | awk '{ print $2 }'`
+   AC_SUBST(SVN_REV)
+fi
+
+
 dnl
 dnl Which Linux distribution or UNIX platform?
 dnl

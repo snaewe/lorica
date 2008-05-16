@@ -72,8 +72,7 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.dylib  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.dylib        \
 	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.dylib              \
-	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.dylib              \
-	$(ACE_ROOT)/TAO/tao/libTAO_Strategies.dylib
+	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.dylib
 else # !LORICA_DARWIN
 TAO_LIBS = \
 	$(ACE_ROOT)/ace/libACE.so.$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)                            \
@@ -101,8 +100,7 @@ TAO_LIBS = \
 	$(ACE_ROOT)/TAO/orbsvcs/orbsvcs/libTAO_Svc_Utils.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)  \
 	$(ACE_ROOT)/TAO/tao/libTAO_TypeCodeFactory.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)        \
 	$(ACE_ROOT)/TAO/tao/libTAO_Valuetype.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
-	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)              \
-	$(ACE_ROOT)/TAO/tao/libTAO_Strategies.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
+	$(ACE_ROOT)/TAO/tao/libTAO_BiDirGIOP.so.$(LIBTAO_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE)
 endif # LORICA_DARWIN
 
 else # !HAVE_ACE_ROOT
