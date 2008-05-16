@@ -59,6 +59,7 @@ the Lorica IDL files. This package contain those.
 autoreconf 
 
 %build
+./bootstrap --enable-tao-build
 @RPM_SPEC_CONFIGURE@
 make %{?_smp_mflags}
 

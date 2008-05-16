@@ -186,6 +186,7 @@ release-svnrev: dist-svnrev
 dist-svnrev:
 	-rm -rf ./lorica-$(LORICA_VERSION)
 	svn export . ./lorica-$(LORICA_VERSION)
+	find ./lorica-$(LORICA_VERSION) -exec touch {} \;
 	tar cf lorica-rev$(SVN_REV).tar ./lorica-$(LORICA_VERSION)
 	gzip lorica-rev$(SVN_REV).tar
 endif
