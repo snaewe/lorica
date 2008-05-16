@@ -86,17 +86,6 @@ EXTRA_DIST = \
 	src/OCI/AsynchProxyTools.mpc            \
 	src/proxy/proxy.mpc
 
-if LORICA_SVNREV
-release-svnrev: dist-svnrev
-	scp -i $(HOME)/.ssh/no_passphrase_id_rsa lorica-rev$(SVN_REV).tar.gz colding@42tools.com:/var/www/omc/htdocs/sites/default/files/downloads/dist/$(LORICA_NAME)/SOURCES/
-
-dist-svnrev:
-	-rm -rf ./lorica-rev$(SVN_REV)
-	svn export . ./lorica-rev$(SVN_REV)
-	tar cf lorica-rev$(SVN_REV).tar ./lorica-rev$(SVN_REV)
-	gzip lorica-rev$(SVN_REV).tar
-endif
-
 dist-hook:
 	-rm -f $(distdir)/defines/pathdefs.h
 	-rm -f $(distdir)/init_rc/gentoo.confd
@@ -189,6 +178,17 @@ dist-deb-prep:
 	cp $(CWD)/deb/$(LORICA_NAME).install.in $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
 	cp $(CWD)/deb/$(LORICA_NAME)-dev.install.in $(CWD)/deb/$(LORICA_NAME)-$(LORICA_VERSION)/debian/
+
+if LORICA_SVNREV
+release-svnrev: dist-svnrev
+	scp -i $(HOME)/.ssh/no_passphrase_id_rsa lorica-rev$(SVN_REV).tar.gz colding@42tools.com:/var/www/omc/htdocs/sites/default/files/downloads/dist/$(LORICA_NAME)/SOURCES/
+
+dist-svnrev:
+	-rm -rf ./lorica-rev$(SVN_REV)
+	svn export . ./lorica-rev$(SVN_REV)
+	tar cf lorica-rev$(SVN_REV).tar ./lorica-rev$(SVN_REV)
+	gzip lorica-rev$(SVN_REV).tar
+endif
 
 clean-local: 
 	-rm -rf lorica-rev*

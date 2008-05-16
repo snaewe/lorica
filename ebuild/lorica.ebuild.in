@@ -26,7 +26,7 @@ inherit eutils
 
 DESCRIPTION="Lorica IIOP Firewall"
 HOMEPAGE="http://www.42tools.com/"
-SRC_URI="http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/Gentoo/@LORICA_NAME@-@LORICA_VERSION@.tar.gz"
+SRC_URI="http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/SOURCES/@LORICA_NAME@-rev@SVN_REV@.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"

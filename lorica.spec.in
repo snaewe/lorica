@@ -24,7 +24,7 @@ Version:         @LORICA_VERSION@
 Release:         1%{?dist}
 License:         GPLv2+
 Group:           Applications/Communications
-Source0:         http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz
+Source0:         http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/SOURCES/@LORICA_NAME@-rev@SVN_REV@.tar.gz
 BuildRoot:       %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 URL:             http://trac.42tools.com/lorica/
 Conflicts:       ace, ACE, ACE-ACE

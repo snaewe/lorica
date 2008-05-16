@@ -1,7 +1,7 @@
 This packages was debianized by Jules Colding <colding@42tools.com>
 on @RFC_822_DATE@
 
-It was downloaded from <http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/@LORICA_DIST_RELEASE@/@LORICA_NAME@-@LORICA_VERSION@.tar.gz>
+It was downloaded from <http://www.42tools.com/sites/default/files/downloads/dist/@LORICA_NAME@/SOURCES/@LORICA_NAME@-rev@SVN_REV@.tar.gz>
 
 Upstream author: Jules Colding <colding@42tools.com>
 
