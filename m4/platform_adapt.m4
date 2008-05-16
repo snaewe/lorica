@@ -254,11 +254,11 @@ AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
   case "$lorica_target" in
 	RHEL)
 		RPM_SPEC_DEBUGINFO=''
-		RPM_SPEC_CONFIGURE='bootstrap --enable-lorica-target=rhel --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
+		RPM_SPEC_CONFIGURE='./bootstrap --enable-tao-build && %configure --enable-lorica-target=rhel --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
 	Fedora)
 		RPM_SPEC_DEBUGINFO=''
-		RPM_SPEC_CONFIGURE='bootstrap --enable-lorica-target=fedora --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
+		RPM_SPEC_CONFIGURE='./bootstrap --enable-tao-build && %configure --enable-lorica-target=rhel --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
 	*)
 		RPM_SPEC_DEBUGINFO='%debug_package'
