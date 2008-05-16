@@ -122,7 +122,7 @@ dist-rpm:
 	@echo ""
 else 
 if LORICA_RPMBUILD
-dist-rpm:
+dist-rpm: dist-svnrev
 if LORICA_RPMDEV_SETUPTREE
 	rpmdev-setuptree
 else
@@ -139,10 +139,10 @@ else
 	-rm -rf $(HOME)/rpmbuild/SPECS/*
 	-rm -rf $(HOME)/rpmbuild/SRPMS/*
 endif
-	make
-	make dist
+#	make
+#	make dist
 	cp $(CWD)/$(LORICA_NAME).spec $(HOME)/rpmbuild/SPECS/
-	cp $(CWD)/$(LORICA_NAME)-$(LORICA_VERSION).tar.gz $(HOME)/rpmbuild/SOURCES/
+	cp $(CWD)/$(LORICA_NAME)-rev$(SVN_REV).tar.gz $(HOME)/rpmbuild/SOURCES/
 	cd $(HOME)/rpmbuild/SPECS && rpmbuild -ba $(LORICA_NAME).spec
 endif
 endif

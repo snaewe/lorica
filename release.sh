@@ -160,6 +160,4 @@ case "$action" in
 	;;
 esac
 
-make release_svnrev
-
 exit 0
