@@ -184,9 +184,9 @@ release-svnrev: dist-svnrev
 	scp -i $(HOME)/.ssh/no_passphrase_id_rsa lorica-rev$(SVN_REV).tar.gz colding@42tools.com:/var/www/omc/htdocs/sites/default/files/downloads/dist/$(LORICA_NAME)/SOURCES/
 
 dist-svnrev:
-	-rm -rf ./lorica-rev$(SVN_REV)
-	svn export . ./lorica-rev$(SVN_REV)
-	tar cf lorica-rev$(SVN_REV).tar ./lorica-rev$(SVN_REV)
+	-rm -rf ./lorica-$(LORICA_VERSION)
+	svn export . ./lorica-$(LORICA_VERSION)
+	tar cf lorica-rev$(SVN_REV).tar ./lorica-$(LORICA_VERSION)
 	gzip lorica-rev$(SVN_REV).tar
 endif
 
