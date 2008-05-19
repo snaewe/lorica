@@ -1,8 +1,15 @@
 #!/bin/bash -p
 
+SUDO_USER=$USER
+
+#echo "EUID=$EUID" 			>  /debug.lorica
+#echo "UID=$UID" 			>> /debug.lorica
+#echo "USER=$USER" 			>> /debug.lorica
+#echo "SUDO_USER=$SUDO_USER" >> /debug.lorica
+
 echo "Uninstalling Lorica"
 
-# Check if sctipt is run with administator rights
+# Check if sctipt is run with administator rights (bash needs -p for this to work)
 if [ $EUID -ne 0 ]; then
    echo "Script is not running with administrator rights"
    exit 1
@@ -17,11 +24,18 @@ fi
 # Stop auto launching af daemon
 daemon="/Library/LaunchDaemons/com.42tools.lorica.plist"
 if [ -e $daemon ]; then
-    launchctl unload -w $daemon
+    sudo launchctl unload $daemon
 fi
 
-# Kill Lorica
-killall -e -u root lorica
+# The unloading above doesn't work! As a work around we have modified the
+# launchdaemon so it doesn't restart Lorica when it is killed.
+pid="/private/var/run/lorica.pid"
+if [ -e $pid ]; then
+    kill `cat $pid`
+fi
+
+## Kill Lorica (If we want to kill all instances instead of only the one started with launchctl)
+#killall -e -u root lorica
 
 # Remove files installed by Lorica
 BOM_FILES="$(lsbom -s -f /Library/Receipts/Install\ Lorica.pkg/Contents/Archive.bom)"

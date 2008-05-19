@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -p
 
 daemon="/Library/LaunchDaemons/com.42tools.lorica.plist"
 storage="/private/var/db/lorica"
@@ -10,5 +10,5 @@ mkdir -p $storage
 chmod 644 $daemon
 
 # Restart Lorica
-launchctl unload $daemon
-launchctl load $daemon
+sudo launchctl unload $daemon
+sudo launchctl load $daemon

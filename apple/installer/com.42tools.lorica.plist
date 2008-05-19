@@ -9,12 +9,7 @@
         <string>/usr/sbin/lorica</string>
         <string>-n</string>
     </array>
-    <key>ThrottleInterval</key>
-    <integer>30</integer>
-    <key>KeepAlive</key>
-    <dict>
-        <key>NetworkState</key>
-        <true/>
-    </dict>
+	<key>RunAtLoad</key>
+    <true/>
 </dict>
 </plist>
