@@ -1,3 +1,8 @@
+2008-05-20  Jules Colding  <colding@42tools.com>
+
+	* acetao/Makefile.am ($(ACE_ROOT)): Fix timestamp on untarred
+	files.
+
 2008-05-15  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Tentatively up the version to 1.0.0
