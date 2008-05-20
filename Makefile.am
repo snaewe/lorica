@@ -93,6 +93,7 @@ dist-hook:
 	-rm -f $(distdir)/src/lorica/*C.*
 	-rm -f $(distdir)/apple/*.dmg
 	-rm -rf $(distdir)/apple/Lorica.build
+
 release:
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
 
