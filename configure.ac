@@ -79,7 +79,7 @@ AC_SUBST(LIBACETAO_REVISION)
 
 AC_ARG_WITH(acetao-age, AS_HELP_STRING([--with-acetao-age], [ACE+TAO least significant version number]), 
  			[LIBACETAO_AGE=$withval],
- 			[LIBACETAO_AGE=3])
+ 			[LIBACETAO_AGE=5])
 AC_SUBST(LIBACETAO_AGE)
 
 ACETAO="http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO-$LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE.tar.bz2"
