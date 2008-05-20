@@ -185,8 +185,7 @@ endif
 if LORICA_CURL
 	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 endif
-	$(TAR) --overwrite -xjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
-	cd ACE_wrappers && find . -exec touch {} \;
+	$(TAR) --overwrite -mxjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 	-mv -f ACE_wrappers $(CONF_ACE_ROOT)
 
 endif # LORICA_MUST_BUILD_ACETAO
