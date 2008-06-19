@@ -26,10 +26,88 @@
 #include <ace/OS_NS_stdlib.h>
 #include <ace/OS_NS_unistd.h>
 
+// used by get_ip_from_ifname()
+#ifndef ACE_WIN32
+#include <string.h>
+#include <stdlib.h>
+#include <arpa/inet.h>
+#include <net/if.h>
+#include <ifaddrs.h>
+#endif
+
 #include "ConfigBase.h"
 #include "debug.h"
 
 const int Lorica::Config::SYS_PORT = -1;
+
+#ifdef ACE_WIN32
+static const char *
+static char*
+get_ip_from_ifname(const int inet_family,
+		   const char *ifname)
+{
+	return NULL;
+}
+#else
+static char*
+get_ip_from_ifname(const int inet_family,
+		   const char *ifname)
+{
+	char *retv = NULL;
+	struct ifaddrs *myaddrs;
+	struct ifaddrs *ifa;
+	struct sockaddr_in *s4;
+	struct sockaddr_in6 *s6;
+	char buf[64] = { '\0' }; 
+
+	if (getifaddrs(&myaddrs))
+		return NULL;
+
+	switch (inet_family) {
+	case AF_INET :
+	case AF_INET6 :
+		break;
+	default :
+		return NULL;
+	}
+
+	for (ifa = myaddrs; ifa != NULL; ifa = ifa->ifa_next) {
+		if (NULL == ifa->ifa_addr)
+			continue;
+		if (0 == (ifa->ifa_flags & IFF_UP)) 
+			continue;
+		if (strcmp(ifname, ifa->ifa_name))
+			continue;
+
+		if (AF_INET == inet_family) {
+			if (ifa->ifa_addr->sa_family == AF_INET) {
+				s4 = (struct sockaddr_in *)(ifa->ifa_addr);
+				if (inet_ntop(ifa->ifa_addr->sa_family, (void *)&(s4->sin_addr), buf, sizeof(buf)) == NULL) {
+					break;
+				} else {
+					retv = strdup(buf);
+					break;
+				}
+			}
+		}
+ 
+		if (AF_INET6 == inet_family) {
+			if (ifa->ifa_addr->sa_family == AF_INET6) {
+				s6 = (struct sockaddr_in6 *)(ifa->ifa_addr);
+				if (inet_ntop(ifa->ifa_addr->sa_family, (void *)&(s6->sin6_addr), buf, sizeof(buf)) == NULL) {
+					break;
+				} else {
+					retv = strdup(buf);
+					break;
+				}
+			}
+		}
+	}
+	freeifaddrs(myaddrs);
+	
+	return retv;
+} 
+#endif
 
 Lorica::Config::Endpoint::Endpoint ()
 	: external_(false),
@@ -146,6 +224,36 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 			end -= 2;
 		}
 		this->hostname_ = primary_addr.substr(start, end);
+	}
+
+	// IPv4 - check for the interface name extension
+	if (!this->hostname_.empty() && '%' == this->hostname_[0]) {
+		std::string ifname = this->hostname_.substr(1);
+		
+		if (ifname.empty())
+			this->hostname_ = "";
+		else {
+			char *ip_addr = get_ip_from_ifname(AF_INET, ifname.c_str());
+			this->hostname_ = ip_addr ? "" : (const char*)ip_addr;
+			if (ip_addr)
+				free(ip_addr);
+		}
+	}
+
+	// IPv6 - check for the interface name extension
+	if (!this->hostname_.empty() && '+' == this->hostname_[0]) {
+		std::string ifname = this->hostname_.substr(1);
+
+		this->is_ipv6_ = true;
+		
+		if (ifname.empty())
+			this->hostname_ = "";
+		else {
+			char *ip_addr = get_ip_from_ifname(AF_INET6, ifname.c_str());
+			this->hostname_ = ip_addr ? "" : (const char*)ip_addr;
+			if (ip_addr)
+				free(ip_addr);
+		}
 	}
 
 	// check for empty hostname and fix it up so that

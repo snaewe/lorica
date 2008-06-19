@@ -1,3 +1,18 @@
+2008-06-19  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):
+	Added configuration extension. It is now possible to use the
+	interface name instead of a hostname or an ip address when
+	specifying a Lorica endpoint.
+
+	Prefix, say, eth0 with '%' to use the IPv4 address on eth0
+	in the endpoint specification.
+
+	Prefix, say, eth0 with '+' to use the IPv6 address on eth0
+	in the endpoint specification.
+
+	This closes http://bugzilla.42tools.net/show_bug.cgi?id=14.
+
 2008-05-20  Jules Colding  <colding@42tools.com>
 
 	* acetao/Makefile.am ($(ACE_ROOT)): Fix timestamp on untarred
