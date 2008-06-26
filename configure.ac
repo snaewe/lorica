@@ -257,6 +257,21 @@ else
    AC_SUBST(SVN_REV)
 fi
 
+dnl
+dnl Header file availability checks
+dnl
+
+dnl OpenSSL
+AC_CHECK_HEADERS([openssl/err.h], [], [AC_MSG_ERROR([ development header not installed])],
+[[#ifdef HAVE_OPENSSL_ERR_H
+#include <openssl/err.h>
+#endif
+]])
+AC_CHECK_HEADERS([openssl/ssl.h], [], [AC_MSG_ERROR([ development header not installed])],
+[[#ifdef HAVE_OPENSSL_SSL_H
+#include <openssl/ssl.h>
+#endif
+]])
 
 dnl
 dnl Which Linux distribution or UNIX platform?

@@ -77,6 +77,9 @@ case "$action" in
 	    "gutsy")
 		codename="Gutsy"
 		;;
+	    "hardy")
+		codename="Hardy"
+		;;
 	    *)
 		echo "Unsupported Ubuntu release"
 		exit 1

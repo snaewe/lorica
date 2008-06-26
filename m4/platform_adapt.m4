@@ -229,6 +229,9 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 		     "gutsy")
 			LORICA_DIST_RELEASE="Ubuntu%20Gutsy"
 			;;
+		     "hardy")
+			LORICA_DIST_RELEASE="Ubuntu%20Hardy"
+			;;
 	    	     *)
 			AC_MSG_ERROR([[Unable to determine Ubuntu release]])
 			;;
@@ -270,7 +273,7 @@ AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
 
   dnl For the dist-deb targets
   AC_CHECK_PROG(HAVE_DATE, [date], yes, no)
-  if test "$lorica_target" = "Ubuntu"; then
+  if test "x$lorica_target" = "xUbuntu"; then
 	  if test "x$HAVE_DATE" = "xyes"; then
 		  RFC_822_DATE=`date -R`
 		  RFC_822_YEAR=`date +%Y`
