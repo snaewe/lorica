@@ -41,7 +41,6 @@
 const int Lorica::Config::SYS_PORT = -1;
 
 #ifdef ACE_WIN32
-static const char *
 static char*
 get_ip_from_ifname(const int inet_family,
 		   const char *ifname)
