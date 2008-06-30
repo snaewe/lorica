@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="8,00"
 	Name="proxy"
 	ProjectGUID="{B9030015-FECA-1BAD-48FB-8A14187DCCF9}"
 	RootNamespace="proxy"
@@ -48,7 +48,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				UseUnicodeResponseFiles="false"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
 				PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
@@ -56,13 +55,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="true"
-				BrowseInformation="1"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="3"
 				DisableSpecificWarnings="4355;4250;4290"
-				EnablePREfast="true"
-				UseFullPaths="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -80,15 +76,11 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ACEd.lib TAOd.lib TAO_AnyTypeCoded.lib TAO_PortableServerd.lib TAO_Valuetyped.lib TAO_CodecFactoryd.lib TAO_PId.lib TAO_Securityd.lib ACE_SSLd.lib TAO_PI_Serverd.lib TAO_SSLIOPd.lib TAO_IORTabled.lib TAO_Messagingd.lib TAO_EndpointPolicyd.lib TAO_DynamicInterfaced.lib TAO_IFR_Clientd.lib OCI_AsynchProxyToolsd.lib lorica_Clientd.lib lorica_EvaluatorBased.lib lorica_GenericEvaluatord.lib ssleay32.lib libeay32.lib"
 				OutputFile="$(OutDir)\lorica.exe"
-				Version=""
-				LinkIncremental="1"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
 				GenerateDebugInformation="true"
-				GenerateMapFile="true"
-				MapExports="true"
 				SubSystem="1"
-				OptimizeForWindows98="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -245,7 +237,6 @@
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="false"
 				DisableSpecificWarnings="4355;4250;4290"
-				EnablePREfast="true"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -263,7 +254,6 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="ACE.lib TAO.lib TAO_AnyTypeCode.lib TAO_PortableServer.lib TAO_Valuetype.lib TAO_CodecFactory.lib TAO_PI.lib TAO_Security.lib ACE_SSL.lib TAO_PI_Server.lib TAO_SSLIOP.lib TAO_IORTable.lib TAO_Messaging.lib TAO_EndpointPolicy.lib TAO_DynamicInterface.lib TAO_IFR_Client.lib OCI_AsynchProxyTools.lib lorica_Client.lib lorica_EvaluatorBase.lib lorica_GenericEvaluator.lib ssleay32.lib libeay32.lib"
 				OutputFile="$(OutDir)\lorica.exe"
-				Version=""
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
@@ -271,7 +261,6 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -476,10 +465,15 @@
 				</FileConfiguration>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\proxy.rc"
+		<Filter
+			Name="Resource Files"
+			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;cnt;rtf;gif;jpg;jpeg;jpe"
 			>
-		</File>
+			<File
+				RelativePath="proxy.rc"
+				>
+			</File>
+		</Filter>
 	</Files>
 	<Globals>
 	</Globals>

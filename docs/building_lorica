@@ -101,8 +101,12 @@ the setup_visual_studio.txt file as distributed with the brutus-server source.
 Prerequisite 
 ------------
 
-The following environment variables must be created. It should point to the
-directory where the Lorica project is hosted:
+This document is assuming that the Lorica source tree are available in
+in "C:\work\src\42tools" and all settings will be relative to this root.
+
+The following environment variable must be created. It should point to the
+directory where the Lorica project is hosted, in our case 
+"C:\work\src\42tools\lorica":
 
   %LORICA_ROOT%
 
@@ -133,6 +137,26 @@ To create the Microsoft Visual Studio project files, open a console, make
 %LORICA_ROOT% the current directory and execute the following command:
 
    %ACE_ROOT%\bin\mwc.pl -type vc8 lorica.mwc
+
+You are now almost ready to build Lorica. Restart Visual C++ 2005 (if 
+it was already up and running) and open the Lorica Solution file:
+
+   %LORICA_ROOT%\lorica.sln
+
+Now open "Tools->Options...". Go to "Projects and Solutions->VC++ Directories" 
+and add the following paths:
+
+   Executable files:
+      C:\ACE_wrappers\bin
+
+   Include files:
+      C:\work\src\42tools\lorica\src
+      C:\ACE_wrappers\TAO
+      C:\work\src\openssl-0.9.8g\inc32
+
+   Library files:
+      C:\ACE_wrappers\lib
+      C:\work\src\openssl-0.9.8g\out32dll
 
 
 Starting Lorica 
