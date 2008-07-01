@@ -1,7 +1,7 @@
 #
-#             LORICA DEFAULT CONFIGURATION FILE
+#            LORICA DEFAULT CONFIGURATION FILE
 #
-#             Copyright (C) 2008 OMC Denmark ApS
+#            Copyright (C) 2008 OMC Denmark ApS.
 #
 #   COPYING AND DISTRIBUTION OF THIS FILE, WITH OR WITHOUT 
 #   MODIFICATION, ARE PERMITTED IN ANY MEDIUM WITHOUT ROYALTY 
@@ -11,27 +11,6 @@
 #
 #   IT IS OF VITAL IMPORTANCE THAT THIS FILE IS KEPT SECURE
 #   AND INACCESSIBLE BY ANYONE EXCEPT AUTHORIZED PERSONNEL.
-#
-#                       *  ***  * 
-#
-#           CUSTOMIZED FOR BRUTUS SERVER INTEGRATION
-#
-# This configuration file has been specially crafted to support
-# integration with Brutus Server. The Interface Repository cache
-# file "ifr.cache" must be manually created unless it is contained 
-# in the distribution from 42tools.
-#
-# You can create the cache file by importing the Brutus IDL files 
-# into the Interface Repository. IDL_ROOT is where the Brutus IDL
-# files are stored. LORICA_ROOT is the installation directory of 
-# Lorica. You will need Visual Studio C++ to do this.
-#
-# The import is accomplished in a Visual Studio command prompt with:
-#
-# cd %IDL_ROOT%
-# %LORICA_ROOT%\tao_ifr -ORBInitRef InterfaceRepository=file://%LORICA_ROOT%\ifr.ior BrutusSession.idl
-# %LORICA_ROOT%\tao_ifr -ORBInitRef InterfaceRepository=file://%LORICA_ROOT%\ifr.ior -Si IMailUser.idl
-# %LORICA_ROOT%\tao_ifr -ORBInitRef InterfaceRepository=file://%LORICA_ROOT%\ifr.ior -Si IDistList.idl 
 #
 #                       *  ***  * 
 #
@@ -65,8 +44,7 @@
 # do things like:
 #
 # ORB_Option -ORBDebug
-# ORB_Option -ORBLogFile
-# ORB_Option C:\orb.log
+# ORB_Option -ORBLogFile C:\orb.log
 #
 # While on e.g. Linux you can do:
 #
@@ -153,6 +131,63 @@
 # [ipv6_host.test.com]:123/ssl_port=124
 # [::1]:123
 #
+#
+# Network Interface Name extension:
+# ---------------------------------
+#
+# On platforms other than Windows you may use the network interface 
+# name in the endpoint specification instead of hostname or an 
+# IPv4/6 address. This is useful for Lorica servers with DHCP 
+# assigned addresses.
+#
+#
+# If the HOSTNAME part is prefixed by '%' it will be interpreted as
+# an IPv4 enabled network interface name. This extension is only 
+# valid for active network interfaces with IPv4 addresses. The 
+# extended format of a Lorica IPv4 endpoint is therefore:
+#
+# [%IFNAME]<:PORT NUMBER>[/ssl_port=SSL_PORT_NUMBER]
+#
+# Examples:
+#
+# IPv4 interfaces with endpoints on ports 123 and 124
+# ===================================================
+# %eth0:123
+# %en1:123/ssl_port=124
+#
+#
+# If the HOSTNAME part is prefixed by '+' it will be interpreted as
+# an IPv6 enabled network interface name. This extension is only 
+# valid for active network interfaces with IPv6 addresses. The
+# extended format of a Lorica IPv6 endpoint is therefore:
+#
+# [+IFNAME]<:PORT NUMBER>[/ssl_port=SSL_PORT_NUMBER]
+#
+# Examples:
+#
+# IPv6 interfaces with endpoints on ports 123 and 124
+# ===================================================
+# +eth0:123
+# +en1:123/ssl_port=124
+#
+
+
+# Lorica may accumulate stale object references over time. This 
+# can result from implicit object references being registered
+# for transient objects or from references explicitly added 
+# through a third party agent that then fails to remove the
+# reference.
+#
+# To mitigate this problem, Lorica periodically  traverses its
+# list of registered references and uses a standard CORBA
+# operation, _non_existent() to ping the proxied object to
+# ensure it is still valid.
+#
+# The frequency of this garbage collection activity may be
+# configured setting the GC_Period_Seconds value, which
+# defaults to 60.
+#
+#GC_Period_Seconds 60
 
 # The hostname and port used to listen for connections coming
 # from inside the network enclave. This includes connections
@@ -171,7 +206,7 @@
 # definitions if you deploy Lorica on Windows.
 #
 # A workaround has been implemented if you fail to observe this 
-# notice. 
+# notice.
 #
 # It is a REQUIREMENT for this workaround to work that the hostname
 # of the Lorica host, as reported by the hostname command line
@@ -216,10 +251,9 @@ Internal_Address localhost:4080
 #
 # ORB_Option -ORBSvcConf lorica.ssliop
 #
-# You must, on the opther hand, use the full path on non-Windows
-# platforms.
+# You must use the full path on non-Windows platforms.
 #
-#ORB_Option -ORBSvcConf lorica.ssliop
+#ORB_Option -ORBSvcConf /etc/lorica.ssliop
 
 
 #################################################################
@@ -251,7 +285,7 @@ Generic_Evaluator yes
 # (IFR) you may obtain a performance boost by collocating the
 # IFR with the proxy instance (default is yes).
 #
-Collocate_IFR yes
+#Collocate_IFR yes
 
 # Remote IFR location used by the generic evaluator. This is
 # mandatory if you specified "no" to "Collocate_IFR" above.
@@ -270,18 +304,18 @@ Collocate_IFR yes
 # Default is "/var/cache/lorica/ifr.ior" on anything but Windows
 # where the default is "ifr.ior" in the current working directory.
 #
-IFR_IOR_FILE ifr.ior 
+#IFR_IOR_FILE /home/some_user/tmp/ifr.ior 
 
 # Should the IFR data be cached across invocations?
 # Default is yes.
 #
-IFR_PERSISTENT yes
+#IFR_PERSISTENT yes
 
 # Full path to IFR cache file. 
 # Default is "/var/cache/lorica/ifr.cache" on anything but Windows
 # where the default is "ifr.cache" in the current working directory.
 #
-IFR_CACHE ifr.cache
+#IFR_CACHE /home/some_user/tmp/ifr.cache
 
 # You can also directly specify standard TAO IFR command line 
 # options. 
@@ -289,9 +323,9 @@ IFR_CACHE ifr.cache
 # These options will override any previously defined and existing
 # default IFR options.
 #
-#IFR_CmdOption -o ifr.ior
+#IFR_CmdOption -o /home/some_user/tmp/ifr.ior
 #IFR_CmdOption -p
-#IFR_CmdOption -b ifr_cache.bin
+#IFR_CmdOption -b /home/some_user/tmp/ifr_cache
 
 
 #################################################################

@@ -282,10 +282,9 @@ Lorica::Proxy::configure(Config & config)
 			for (int i = 0; i < argc; i++)
 				ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - %s\n"), arguments->argv()[i]));
 		}
-		orb_ = CORBA::ORB_init(argc, arguments->argv());//, "ProxyORB");
+		orb_ = CORBA::ORB_init(argc, arguments->argv());
 
 		// test that we have any security functionality
-
 		ACE_Service_Repository * repo = orb_->orb_core()->configuration()->current_service_repository();
 		config.secure_available(repo->find("SSLIOP_Factory") == 0);
 
