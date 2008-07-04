@@ -1,3 +1,7 @@
+2008-07-04  Jules Colding  <colding@42tools.com>
+
+	* m4/platform_adapt.m4: CentOS build support.
+
 2008-06-19  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):

@@ -28,6 +28,7 @@ dnl LORICA_DARWIN_LEOPARD
 dnl LORICA_LINUX
 dnl LORICA_FEDORA
 dnl LORICA_RHEL
+dnl LORICA_CENT_OS
 dnl LORICA_SUSE
 dnl LORICA_GENTOO
 dnl LORICA_DEBIAN
@@ -44,11 +45,12 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
   AM_CONDITIONAL(LORICA_LINUX,          false)
   AM_CONDITIONAL(LORICA_FEDORA,         false)
   AM_CONDITIONAL(LORICA_RHEL,           false)
+  AM_CONDITIONAL(LORICA_CENT_OS,        false)
   AM_CONDITIONAL(LORICA_SUSE,           false)
   AM_CONDITIONAL(LORICA_GENTOO,         false)
   AM_CONDITIONAL(LORICA_DEBIAN,         false)
   AC_ARG_ENABLE(lorica-target,
-		[AS_HELP_STRING([--enable-lorica-target[[[[=rhel/fedora/opensuse102/opensuse103/gentoo/ubuntu/darwin]]]]], [Distribution target [default=UNKNOWN]])],
+		[AS_HELP_STRING([--enable-lorica-target[[[[=centos/rhel/fedora/opensuse102/opensuse103/gentoo/ubuntu/darwin]]]]], [Distribution target [default=UNKNOWN]])],
 	      	[],
 	      	enable_lorica_target=UNKNOWN)
 
@@ -70,6 +72,9 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 
   dnl Determine system sub-type
   case "x$enable_lorica_target" in
+	xcentos)
+		lorica_target="CentOS"
+		;;
 	xrhel)
 		lorica_target="RHEL"
 		;;
@@ -97,6 +102,10 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 			lorica_target=Gentoo
 		fi
 		if test -f /etc/redhat-release; then
+			is_cent_os="`grep CentOS /etc/redhat-release >/dev/null ; echo $?`"
+			if test "x$is_cent_os" = "x0"; then
+			   	lorica_target="CentOS"
+			fi
 			is_fedora="`grep Fedora /etc/redhat-release >/dev/null ; echo $?`"
 			if test "x$is_fedora" = "x0"; then
 			   	lorica_target="Fedora"
@@ -111,6 +120,9 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 				lsb_name=`lsb_release -si`
 				lsb_version=`lsb_release -sr`
 				case "x$lsb_name" in
+					xCentOS)
+						lorica_target="CentOS"
+						;;
 					xRedHatEnterprise*)
 						lorica_target="RHEL"
 						;;
@@ -136,6 +148,19 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 
   dnl Determine system sub-type variant
   case "x$lorica_target" in
+        xCentOS)
+		AM_CONDITIONAL(LORICA_CENT_OS, true)
+		AC_DEFINE([LORICA_CENT_OS], [1], [Define if this is a CentOS based distribution])
+		lsb_version=`lsb_release -sr`
+		case "x$lsb_version" in
+		     x5.2)
+			LORICA_DIST_RELEASE="CentOS%205.2"
+			;;
+		     *)
+			AC_MSG_ERROR([[Unable to determine CentOS release]])
+			;;
+		esac
+		;;
         xRHEL)
 		AM_CONDITIONAL(LORICA_RHEL, true)
 		AC_DEFINE([LORICA_RHEL], [1], [Define if this is a Red Hat Enterprise Linux based distribution])
@@ -219,17 +244,17 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 		AM_CONDITIONAL(LORICA_DEBIAN, true)
 		AC_DEFINE([LORICA_DEBIAN], [1], [Define if this is a Debian based distribution])
 		codename=`lsb_release -sc`
-		case "$codename" in
-		     "edgy")
+		case "x$codename" in
+		     "xedgy")
 			LORICA_DIST_RELEASE="Ubuntu%20Edgy"
 			;;
-	    	     "feisty")
+	    	     "xfeisty")
 			LORICA_DIST_RELEASE="Ubuntu%20Feisty"
 			;;
-		     "gutsy")
+		     "xgutsy")
 			LORICA_DIST_RELEASE="Ubuntu%20Gutsy"
 			;;
-		     "hardy")
+		     "xhardy")
 			LORICA_DIST_RELEASE="Ubuntu%20Hardy"
 			;;
 	    	     *)
@@ -255,6 +280,10 @@ AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
      AX_LORICA_CHECK_PLATFORM()
   fi
   case "$lorica_target" in
+	CentOS)
+		RPM_SPEC_DEBUGINFO=''
+		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=centos --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
+		;;
 	RHEL)
 		RPM_SPEC_DEBUGINFO=''
 		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=rhel --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'

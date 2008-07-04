@@ -59,7 +59,7 @@ module Lorica
 		// enclave. The arguments are:
 		//
 		//   orig:          The original object reference
-		///
+		//
 		//   corbaloc_name: If not "", use this name to create a binding in
 		//                  the proxy's IOR table.
 		//
