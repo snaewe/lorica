@@ -16,7 +16,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-# serial 2
+# serial 3
 
 dnl AX_LORICA_CHECK_PLATFORM()
 dnl Tries to determine the platform and defines the pretty LORICA_DIST_RELEASE

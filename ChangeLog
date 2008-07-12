@@ -1,3 +1,7 @@
+2008-07-12  Jules Colding  <colding@42tools.com>
+
+	* Autotools: Updated for Autoconf 2.60
+
 2008-07-04  Jules Colding  <colding@42tools.com>
 
 	* m4/platform_adapt.m4: CentOS build support.

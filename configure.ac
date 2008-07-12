@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_PREREQ(2.59)
+AC_PREREQ(2.60)
 AC_INIT([lorica],[1.0.1],[bugs@42tools.com])
 
 AC_COPYRIGHT([Copyright (C) 2008 OMC Denmark ApS])
@@ -30,7 +30,8 @@ AM_INIT_AUTOMAKE(AC_PACKAGE_NAME, AC_PACKAGE_VERSION)
 dnl Required by autoconf 2.60
 AC_SUBST(datarootdir)
 
-AC_GNU_SOURCE
+dnl Introduced in autoconf 2.60
+AC_USE_SYSTEM_EXTENSIONS
 
 dnl Standard checks
 AC_LANG([C++])

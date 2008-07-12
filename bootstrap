@@ -88,7 +88,7 @@ else
 fi
 
 
-conf_flags="--enable-maintainer-mode --cache-file=/dev/null"
+conf_flags="--cache-file=/dev/null"
 
 if [ "$#" = 0 -a "x$NOCONFIGURE" = "x" ]; then
     printerr "**Warning**: I am going to run \`configure' with \"$conf_flags\"."
