@@ -45,11 +45,11 @@ AC_HEADER_MAJOR
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-#AC_PROG_MKDIR_P #- RHEL4 doesn't seem to support this macro
+#AC_PROG_MKDIR_P #- RHEL4 doesn't support this macro
 
 AC_TYPE_PID_T
 AC_TYPE_SIZE_T
-#AC_TYPE_SSIZE_T #- RHEL4 doesn't seem to support this macro
+#AC_TYPE_SSIZE_T #- RHEL4 doesn't support this macro
 
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([dup2 ftruncate memset mkdir strcasecmp strdup strtol])
