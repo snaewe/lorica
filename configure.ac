@@ -517,5 +517,4 @@ echo "\
 	Making static executables:                            $msg_static
 	Install development header and IDL files:             $msg_lorica_devel
 	Download and build ACE and TAO locally if necessary:  $msg_tao_build
-        ACETAO_CPPFLAGS:                                      $ACETAO_CPPFLAGS
 "

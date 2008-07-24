@@ -1,3 +1,8 @@
+2008-07-24  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Added option to enable IPv6 in ACE. Defaults
+	to off.
+
 2008-07-12  Jules Colding  <colding@42tools.com>
 
 	* Autotools: Updated for Autoconf 2.60
