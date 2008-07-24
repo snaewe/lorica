@@ -1,31 +1,36 @@
+Thu Jul 24 12:06:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * configure.ac:
+	  Bumped the version number.
+	
 Thu Jul 24 11:35:27 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ConfigBase.cpp:
           Swap the order of initialization for the endpoint arguments
-	  passed to the ORB. This is necessary to ensure the internal
-	  endpoint appears first on references created by the RootPOA.
-	  This specifically addresses a problem where the IFR, when 
-	  collocated, makes a RootPOA based IOR then internal clients 
-	  cannot reach it if the external endpoint is not reachable
-	  from inside the firewall. External clients have no business
-	  directly manipulating the IFR anyway, probably the internal
-	  POA needs to be supplied to the IFR for its IOR creation.
-	
+          passed to the ORB. This is necessary to ensure the internal
+          endpoint appears first on references created by the RootPOA.
+          This specifically addresses a problem where the IFR, when
+          collocated, makes a RootPOA based IOR then internal clients
+          cannot reach it if the external endpoint is not reachable
+          from inside the firewall. External clients have no business
+          directly manipulating the IFR anyway, probably the internal
+          POA needs to be supplied to the IFR for its IOR creation.
+
         * src/lorica/ProxyMapper.cpp:
-	  Add support for IPv6.
+          Add support for IPv6.
 
         * src/proxy/main.cpp:
         * src/proxy/proxy.h:
         * src/proxy/proxy.cpp:
           Introduced some ACE_OS:: wrappers for certain IO functions to
-	  reduce the need to pollute the code with excessive #ifdef
-	  ACE_WIN32 checks. There are still some of those checks remaining
-	  that should probably be addressed at some point.
+          reduce the need to pollute the code with excessive #ifdef
+          ACE_WIN32 checks. There are still some of those checks remaining
+          that should probably be addressed at some point.
 
 2008-07-24  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Added option to enable IPv6 in ACE. Defaults
-	to off.
+        * configure.ac: Added option to enable IPv6 in ACE. Defaults
+        to off.
 
 2008-07-12  Jules Colding  <colding@42tools.com>
 
