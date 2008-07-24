@@ -374,8 +374,8 @@ Lorica::Config::get_orb_options(void)
 
 	// Build & add endpoints
 	if (this->endpoints_.empty()
-	    && (!this->init_endpoints(true)
-		|| !this->init_endpoints(false))) {
+	    && (!this->init_endpoints(false)
+		|| !this->init_endpoints(true))) {
 		endpoints_.clear();
 		orb_args_.clear();
 		ACE_ERROR_RETURN((LM_ERROR,
@@ -521,8 +521,8 @@ Lorica::Config::get_endpoints(bool ext)
 	Endpoints eps;
 
 	if (this->endpoints_.empty()
-	    && (!this->init_endpoints(true)
-		|| !this->init_endpoints(false))) {
+	    && (!this->init_endpoints(false)
+		|| !this->init_endpoints(true))) {
 		this->endpoints_.clear();
 		return eps;
 	}

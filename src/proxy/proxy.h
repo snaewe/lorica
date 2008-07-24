@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica header file.
@@ -56,6 +56,11 @@ namespace Lorica
 
 		virtual ~Proxy(void);
 
+		// override the local pid/log files if the commandline 
+		// indicates use of alternate paths.
+		void local_pid_file (const std::string &lpf);
+		void local_ior_file (const std::string &lif);
+
 		// load configuration based on supplied config file
 		virtual void configure(Config & config)
 			throw (InitError);
@@ -94,6 +99,9 @@ namespace Lorica
 
 		std::string pid_file_;
 		std::string ior_file_;
+		std::string local_pid_file_;
+		std::string local_ior_file_;
+
 		bool must_shutdown_;
 		bool debug_;
 	};

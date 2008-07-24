@@ -1,3 +1,27 @@
+Thu Jul 24 11:35:27 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ConfigBase.cpp:
+          Swap the order of initialization for the endpoint arguments
+	  passed to the ORB. This is necessary to ensure the internal
+	  endpoint appears first on references created by the RootPOA.
+	  This specifically addresses a problem where the IFR, when 
+	  collocated, makes a RootPOA based IOR then internal clients 
+	  cannot reach it if the external endpoint is not reachable
+	  from inside the firewall. External clients have no business
+	  directly manipulating the IFR anyway, probably the internal
+	  POA needs to be supplied to the IFR for its IOR creation.
+	
+        * src/lorica/ProxyMapper.cpp:
+	  Add support for IPv6.
+
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+          Introduced some ACE_OS:: wrappers for certain IO functions to
+	  reduce the need to pollute the code with excessive #ifdef
+	  ACE_WIN32 checks. There are still some of those checks remaining
+	  that should probably be addressed at some point.
+
 2008-07-24  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Added option to enable IPv6 in ACE. Defaults
@@ -5,51 +29,51 @@
 
 2008-07-12  Jules Colding  <colding@42tools.com>
 
-	* Autotools: Updated for Autoconf 2.60
+        * Autotools: Updated for Autoconf 2.60
 
 2008-07-04  Jules Colding  <colding@42tools.com>
 
-	* m4/platform_adapt.m4: CentOS build support.
+        * m4/platform_adapt.m4: CentOS build support.
 
 2008-06-19  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):
-	Added configuration extension. It is now possible to use the
-	interface name instead of a hostname or an ip address when
-	specifying a Lorica endpoint.
+        * src/lorica/ConfigBase.cpp (Endpoint::parse_string):
+        Added configuration extension. It is now possible to use the
+        interface name instead of a hostname or an ip address when
+        specifying a Lorica endpoint.
 
-	Prefix, say, eth0 with '%' to use the IPv4 address on eth0
-	in the endpoint specification.
+        Prefix, say, eth0 with '%' to use the IPv4 address on eth0
+        in the endpoint specification.
 
-	Prefix, say, eth0 with '+' to use the IPv6 address on eth0
-	in the endpoint specification.
+        Prefix, say, eth0 with '+' to use the IPv6 address on eth0
+        in the endpoint specification.
 
-	This closes http://bugzilla.42tools.net/show_bug.cgi?id=14.
+        This closes http://bugzilla.42tools.net/show_bug.cgi?id=14.
 
 2008-05-20  Jules Colding  <colding@42tools.com>
 
-	* acetao/Makefile.am ($(ACE_ROOT)): Fix timestamp on untarred
-	files.
+        * acetao/Makefile.am ($(ACE_ROOT)): Fix timestamp on untarred
+        files.
 
 2008-05-15  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Tentatively up the version to 1.0.0
+        * configure.ac: Tentatively up the version to 1.0.0
 
-	* release.sh (product): Make RPMs on any Fedora platform.
+        * release.sh (product): Make RPMs on any Fedora platform.
 
-	* m4/platform_adapt.m4: Relax on the Fedora version when deciding
-	the build platform.
+        * m4/platform_adapt.m4: Relax on the Fedora version when deciding
+        the build platform.
 
 2008-04-30  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
-	Fix potential segv.
-	(ProxyMapper::already_mapped): Reverted the above nonsense and
-	corrected the input format of the ACE_DEBUG statement.
+        * src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
+        Fix potential segv.
+        (ProxyMapper::already_mapped): Reverted the above nonsense and
+        corrected the input format of the ACE_DEBUG statement.
 
-	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)
-	(OperationTable::add_non_existent): Removed the debug notices
-	mention in the entry of 2008-04-29.
+        * src/OCI/OperationTable.cpp (OperationTable::add_is_a)
+        (OperationTable::add_non_existent): Removed the debug notices
+        mention in the entry of 2008-04-29.
 
 Tue Apr 29 23:44:01 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -63,46 +87,46 @@ Tue Apr 29 23:44:01 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
 2008-04-29  Jules Colding  <colding@42tools.com>
 
-	* src/OCI/OperationTable.cpp (OperationTable::add_is_a)
-	(OperationTable::add_non_existent): Added temporary debug norice
-	to ensure that these operations really are used appropriately.
+        * src/OCI/OperationTable.cpp (OperationTable::add_is_a)
+        (OperationTable::add_non_existent): Added temporary debug norice
+        to ensure that these operations really are used appropriately.
 
 2008-04-22  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_server)
-	(ReferenceMapper_i::as_secure_server)
-	(ReferenceMapper_i::as_client, ReferenceMapper_i::remove_server)
-	(ReferenceMapper_i::remove_client):
-	Handle NIL input references early
+        * src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_server)
+        (ReferenceMapper_i::as_secure_server)
+        (ReferenceMapper_i::as_client, ReferenceMapper_i::remove_server)
+        (ReferenceMapper_i::remove_client):
+        Handle NIL input references early
 
-	* bootstrap (srcdir): Reversed order of autoconf and automake
-	when not using the reconf option.
+        * bootstrap (srcdir): Reversed order of autoconf and automake
+        when not using the reconf option.
 
-	* acetao/Makefile.am: Added TAO_Strategies library which is
-	needed for UIOP support.
+        * acetao/Makefile.am: Added TAO_Strategies library which is
+        needed for UIOP support.
 
 2008-04-21  Jules Colding  <colding@42tools.com>
 
-	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
-	Added UIOP support which is needed to support the way ORBit2
-	does local-only native references.
+        * configurations/evolution-brutus/lorica.conf.evolution-brutus:
+        Added UIOP support which is needed to support the way ORBit2
+        does local-only native references.
 
 2008-04-17  Jules Colding  <colding@42tools.com>
 
-	* Lorica: Improved logging output format
+        * Lorica: Improved logging output format
 
 2008-04-15  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/RMVByMapped.cpp (RMVByMapped::svc):
-	Experimenting with %n:%l in ACE_DEBUG to see if readability
-	is improved thereof.
+        * src/lorica/RMVByMapped.cpp (RMVByMapped::svc):
+        Experimenting with %n:%l in ACE_DEBUG to see if readability
+        is improved thereof.
 
 2008-04-14  Jules Colding  <colding@42tools.com>
 
-	* init.d: Added "sleep 3" between stop and start to fix restart
+        * init.d: Added "sleep 3" between stop and start to fix restart
 
-	* src/proxy/main.cpp (ACE_TMAIN):
-	Renamed log file to "lorica.log"
+        * src/proxy/main.cpp (ACE_TMAIN):
+        Renamed log file to "lorica.log"
 
 Fri Apr 11 17:59:41 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 

@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica source file.
@@ -39,12 +39,10 @@
 #include <ace/Signal.h>
 #include <ace/OS_NS_stdio.h>
 #include <ace/OS_NS_unistd.h>
+#include <ace/OS_NS_fcntl.h>
+
 #include <ace/Service_Gestalt.h>
 #include <ace/Time_Value.h>
-
-#ifdef ACE_WIN32
-#include <io.h>
-#endif
 
 Lorica::Proxy* Lorica::Proxy::this_ = 0;
 
@@ -131,6 +129,8 @@ Lorica::Proxy::Proxy(const bool Debug)
 	: lock_fd(-1),
 	  pid_file_(),
 	  ior_file_(),
+	  local_pid_file_(LORICA_PID_FILE),
+	  local_ior_file_(LORICA_IOR_FILE),
 	  must_shutdown_(false),
 	  debug_(Debug)
 {
@@ -230,17 +230,13 @@ get_file(const char *filename)
 	int file_fd = -1;
 	FILE *file = NULL;
 
-#ifdef ACE_WIN32
-	file_fd = _open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-#else
-	file_fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-#endif
+	file_fd = ACE_OS::open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	if (-1 == file_fd)
 		return NULL;
 
-	file = fdopen(file_fd, "w");
+	file = ACE_OS::fdopen(file_fd, "w");
 	if (!file)
-		close(file_fd);
+		ACE_OS::close(file_fd);
 
 	return file;
 }
@@ -258,16 +254,8 @@ Lorica::Proxy::configure(Config & config)
 		std::auto_ptr<ACE_ARGV> arguments(config.get_orb_options());
 
 		this->pid_file_ = config.get_value("PID_FILE");
-		if (!this->pid_file_.length()) {
-#ifdef ACE_WIN32
-			this->pid_file_ = LORICA_PID_FILE;
-#else
-			if (debug_)
-				this->pid_file_ = "lorica.pid";
-			else
-				this->pid_file_ = LORICA_PID_FILE;
-#endif
-		}
+		if (this->pid_file_.length() == 0)
+			this->pid_file_ = this->local_pid_file_;
 #ifndef ACE_WIN32
 		if (!this->get_lock(this->pid_file_.c_str()))
 			throw InitError();
@@ -361,7 +349,6 @@ Lorica::Proxy::configure(Config & config)
 		inside_pm_ = pmf_->create_POAManager("InsidePOAManager",
 						     policies);
 
-
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
 				   ACE_TEXT("(%P|%t) %N:%l - creating admin POA with internal POA manager\n")));
@@ -393,16 +380,9 @@ Lorica::Proxy::configure(Config & config)
 		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY, ior.c_str());
 
 		this->ior_file_ = config.get_value("IOR_FILE");
-		if (!this->ior_file_.length()) {
-#ifdef ACE_WIN32
-			this->ior_file_ = LORICA_IOR_FILE;
-#else
-			if (debug_)
-				this->ior_file_ = "lorica.ior";
-			else
-				this->ior_file_ = LORICA_IOR_FILE;
-#endif
-		}
+		if (this->ior_file_.length() == 0) 
+			this->ior_file_ = this->local_ior_file_;
+
 		FILE *output_file = get_file(this->ior_file_.c_str());
 		if (!output_file) {
 			ACE_ERROR((LM_ERROR,
@@ -421,15 +401,17 @@ Lorica::Proxy::configure(Config & config)
 
 
 		// Initialize the mapper registry
-		Lorica_MapperRegistry *mreg = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance
+		Lorica_MapperRegistry *mreg = 
+			ACE_Dynamic_Service<Lorica_MapperRegistry>::instance
 			(this->orb_->orb_core()->configuration(),"MapperRegistry");
 
 		std::string ne_ids = config.null_eval_type_ids();
 		if (!ne_ids.empty()) {
 			if (Lorica_debug_level > 2) {
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) %N:%l - adding type ids for null evaluator: %s\n"),
-					   ne_ids.c_str()));
+									 ACE_TEXT("(%P|%t) %N:%l - adding type ids for null ")
+									 ACE_TEXT("evaluator: %s\n"),
+									 ne_ids.c_str()));
 			}
 
 			size_t space = ne_ids.find(' ');
@@ -492,6 +474,18 @@ Lorica::Proxy::~Proxy(void)
 		this->lock_fd = -1;
 	}
 #endif
+}
+
+void
+Lorica::Proxy::local_pid_file (const std::string& lpf)
+{
+	this->local_pid_file_ = lpf;
+}
+
+void
+Lorica::Proxy::local_ior_file (const std::string& lif)
+{
+	this->local_ior_file_ = lif;
 }
 
 int

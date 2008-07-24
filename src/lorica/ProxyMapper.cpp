@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica source file.
@@ -67,18 +67,27 @@ Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
 	ACE_INET_Addr *host_addr_array = 0;
 	size_t count = 0;
 	Lorica::ProxyMapper::mapped_object_id_.hostid = 0;
-
+	bool islocal = true;
 	if (ACE::get_ip_interfaces(count, host_addr_array) == 0) {
-		for (size_t i = 0; i < count && Lorica::ProxyMapper::mapped_object_id_.hostid == 0; i++) {
-			if (host_addr_array[i].get_type() == PF_INET)
-				Lorica::ProxyMapper::mapped_object_id_.hostid = host_addr_array[i].get_ip_address();
+		for (size_t i = 0; i < count && islocal; i++) {
+			if (host_addr_array[i].get_type() == PF_INET
+#if ACE_HAS_IPV6
+					|| host_addr_array[i].get_type() == PF_INET6
+#endif
+					)
+				{
+					Lorica::ProxyMapper::mapped_object_id_.hostid =
+						static_cast<ACE_UINT32>(host_addr_array[i].hash());
+					islocal = host_addr_array[i].is_loopback();
+				}
 		}
-
+#if 0
 		if (Lorica::ProxyMapper::mapped_object_id_.hostid == 0) {
 			// get the last 32 bits from the first address in the list.
 			ACE_UINT32 *addr = reinterpret_cast<ACE_UINT32 *>(host_addr_array[0].get_addr());
 			Lorica::ProxyMapper::mapped_object_id_.hostid = addr[3];
 		}
+#endif
 	}
 	delete [] host_addr_array;
 
@@ -148,7 +157,7 @@ Lorica::ProxyMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
 	CORBA::Any arg;
 	arg <<= BiDirPolicy::BOTH;
 	policies[4] = orb->create_policy (BiDirPolicy::BIDIRECTIONAL_POLICY_TYPE,
-					  arg);
+																		arg);
 
 	poaname = this->id_ + "_o";
 	this->out_facing_poa_ = root->create_POA(poaname.c_str(), outward, policies);
@@ -498,7 +507,7 @@ Lorica::ProxyMapper::current_native(Lorica::ServerAgent_ptr & agent)
 
 		agent->error_occured(errno, error_msg);
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) %N:%l - failed with this exception: %s", 
+			   "(%P|%t) %N:%l - failed with this exception: %s",
 			   ex._name ()));
 	}
 
@@ -556,7 +565,7 @@ Lorica::ProxyMapper::native_for_mapped(CORBA::Object_ptr & ref,
 
 		agent->error_occured (errno, error_msg);
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) %N:%l - failed with this exception: %s", 
+			   "(%P|%t) %N:%l - failed with this exception: %s",
 			   ex._name()));
 	}
 

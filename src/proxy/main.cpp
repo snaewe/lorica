@@ -34,6 +34,10 @@
 #include <ace/OS_NS_errno.h>
 #include <ace/SString.h>
 #include <ace/ACE.h>
+#include <ace/OS_NS_unistd.h>
+#include <ace/OS_NS_sys_stat.h>
+#include <ace/OS_NS_sys_resource.h>
+#include <ace/OS_NS_fcntl.h>
 
 #include "proxy.h"
 #include "ntsvc.h"
@@ -42,11 +46,6 @@
 #include "lorica/debug.h"
 #include "lorica/MapperRegistry.h"
 
-#ifndef ACE_WIN32
-#include <unistd.h>
-#endif
-
-#ifndef ACE_WIN32
 typedef enum {
 	EXIT_DAEMON = 0, /* we are the daemon                  */
 	EXIT_OK = 1,	 /* caller must exit with EXIT_SUCCESS */
@@ -66,7 +65,7 @@ become_daemon(const bool NoFork,
 	int fd2;
 
 	/* reset the file mode mask */
-	umask(0);
+	ACE_OS::umask(0);
 
 	/*
 	 * A process that has terminated but has not yet been waited for is a zombie.
@@ -80,7 +79,7 @@ become_daemon(const bool NoFork,
 		goto fork_done;
 
 	/* fork off the parent process to create the session daemon */
-	pid = fork();
+	pid = ACE_OS::fork();
 	switch (pid) {
 	case -1 :
 		return EXIT_ERROR;
@@ -93,13 +92,13 @@ become_daemon(const bool NoFork,
 		 * this child exits. Knock on wood...
 		 */
 
-		if ((setsid()) < 0)
+		if ((ACE_OS::setsid()) < 0)
 			return EXIT_ERROR;
 
 		sig_act.sa_handler = SIG_IGN;
 		sigemptyset(&sig_act.sa_mask);
 		sig_act.sa_flags = 0;
-		if (sigaction(SIGHUP, &sig_act, NULL))
+		if (ACE_OS::sigaction(SIGHUP, &sig_act, NULL))
 			return EXIT_ERROR;
 
 		pid = fork();
@@ -134,12 +133,12 @@ become_daemon(const bool NoFork,
 	 */
 
 	if (!Debug) { // change the working directory
-		if ((chdir("/")) < 0)
+		if ((ACE_OS::chdir("/")) < 0)
 			return EXIT_ERROR;
 	}
 
 	// close any and all open file descriptors
-	if (getrlimit(RLIMIT_NOFILE, &rl))
+	if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rl))
 		return EXIT_ERROR;
 	if (RLIM_INFINITY == rl.rlim_max)
 		rl.rlim_max = 1024;
@@ -150,27 +149,26 @@ become_daemon(const bool NoFork,
 			if (STDERR_FILENO == n)
 				continue;
 		}
-		if (close(n) && (EBADF != errno))
+		if (ACE_OS::close(n) && (EBADF != errno))
 			return EXIT_ERROR;
 	}
 
 	if (!Debug) { // attach file descriptors STDIN_FILENO(0), STDOUT_FILENO(1) and STDERR_FILENO(2) to /dev/null
-		fd0 = open("/dev/null", O_RDWR);
-		fd1 = dup2(fd0, 1);
-		fd2 = dup2(fd0, 2);
+		fd0 = ACE_OS::open("/dev/null", O_RDWR);
+		fd1 = ACE_OS::dup2(fd0, 1);
+		fd2 = ACE_OS::dup2(fd0, 2);
 	} else
-		fd0 = open("/dev/null", O_RDWR);
+		fd0 = ACE_OS::open("/dev/null", O_RDWR);
 	if (0 != fd0)
 		return EXIT_ERROR;
 
 	if (!Debug
-	    && (mkdir(LORICA_CACHE_DIR, 0755))
+	    && (ACE_OS::mkdir(LORICA_CACHE_DIR, 0755))
 	    && (EEXIST != errno))
 		return EXIT_ERROR;
 
 	return EXIT_DAEMON;
 }
-#endif // !ACE_WIN32
 
 namespace Lorica
 {
@@ -416,6 +414,13 @@ Lorica::Service_Loader::init_proxy(void)
 	}
 
 	std::auto_ptr<Proxy> proxy(new Proxy(debug_));
+#if !defined (ACE_WIN32)
+	if (debug_) {
+		proxy->local_pid_file ("lorica.pid");
+		proxy->local_ior_file ("lorica.ior");
+	}
+#endif /* !ACE_WIN32 */
+	
 	try {
 		proxy->configure(*config);
 
