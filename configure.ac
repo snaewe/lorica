@@ -124,6 +124,17 @@ else
 	msg_tao_build=no
 fi
 
+dnl IPv6 support requested?
+AC_ARG_ENABLE(ipv6,
+	      [AS_HELP_STRING([--enable-ipv6[[[[=no/yes]]]]], [Enable IPv6 in local rebuild of ACE and TAO [default=no]])],
+ 	      [],						   
+ 	      enable_ipv6=no)
+if test "x$enable_ipv6" = "xyes"; then
+	msg_ipv6=yes
+else
+	msg_ipv6=no
+fi
+
 dnl Link binaries statically
 AC_ARG_ENABLE(static-lorica,
  	      [AS_HELP_STRING([--enable-static-lorica[[[[=no/yes]]]]], [Enable statically linked binaries if possible [default=no]])],
@@ -506,4 +517,5 @@ echo "\
 	Making static executables:                            $msg_static
 	Install development header and IDL files:             $msg_lorica_devel
 	Download and build ACE and TAO locally if necessary:  $msg_tao_build
+        ACETAO_CPPFLAGS:                                      $ACETAO_CPPFLAGS
 "

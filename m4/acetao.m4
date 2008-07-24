@@ -223,6 +223,11 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
   AC_SUBST(CONF_LD_PATH)
 
   dnl ACE+TAO flags
+  if test "x$ACETAO_CPPFLAGS" != "x"; then
+     if test "x$enable_ipv6" = "xyes"; then
+     	ACETAO_CPPFLAGS="-DACE_HAS_IPV6 $ACETAO_CPPFLAGS"
+     fi
+  fi
   AC_SUBST(ACETAO_CPPFLAGS)
   AC_SUBST(ACETAO_LDFLAGS)
 

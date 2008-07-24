@@ -279,16 +279,16 @@ AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
 [ if test "x$LORICA_DIST_RELEASE" = "xUNKNOWN"; then
      AX_LORICA_CHECK_PLATFORM()
   fi
-  case "$lorica_target" in
-	CentOS)
+  case "x$lorica_target" in
+	xCentOS)
 		RPM_SPEC_DEBUGINFO=''
 		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=centos --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
-	RHEL)
+	xRHEL)
 		RPM_SPEC_DEBUGINFO=''
 		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=rhel --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
-	Fedora)
+	xFedora)
 		RPM_SPEC_DEBUGINFO=''
 		RPM_SPEC_CONFIGURE='%configure --enable-lorica-target=fedora --enable-tao-build --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes'
 		;;
@@ -314,10 +314,10 @@ AC_DEFUN([AX_LORICA_PLATFORM_ADAPT],
   AC_SUBST(RFC_822_YEAR)
 
   dnl different pkgconfig configuration directory in OpenSUSE 10.2
-  if test "$lorica_target" = "OpenSUSE_10_2"; then
+  if test "x$lorica_target" = "xOpenSUSE_10_2"; then
 	  PKGCONFIG_DIR='/opt/gnome/lib/pkgconfig/'
   else
-	  if test "$lorica_target" = "OpenSUSE_10_3"; then
+	  if test "x$lorica_target" = "xOpenSUSE_10_3"; then
 		  PKGCONFIG_DIR='/opt/gnome/lib/pkgconfig/'
 	  else
 		  PKGCONFIG_DIR='/usr/lib*/pkgconfig/'
