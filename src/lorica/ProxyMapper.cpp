@@ -71,7 +71,7 @@ Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
 	if (ACE::get_ip_interfaces(count, host_addr_array) == 0) {
 		for (size_t i = 0; i < count && islocal; i++) {
 			if (host_addr_array[i].get_type() == PF_INET
-#if ACE_HAS_IPV6
+#ifdef ACE_HAS_IPV6
 					|| host_addr_array[i].get_type() == PF_INET6
 #endif
 					)

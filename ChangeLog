@@ -1,8 +1,16 @@
+2008-07-25  Jules Colding  <colding@42tools.com>
+
+	* deb/rules (config.status): Added --enable-tao-build to
+	fix deb creation.
+
+	* src/lorica/ProxyMapper.cpp (ProxyMapper::ProxyMapper):
+	Fix compiler error (ACE_HAS_IPV6 not definbed).
+
 Thu Jul 24 12:06:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
 	  Bumped the version number.
-	
+
 Thu Jul 24 11:35:27 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ConfigBase.cpp:

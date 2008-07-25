@@ -27,7 +27,7 @@ endif
 config.status: configure
 	dh_testdir
 	# Add here commands to configure the package.
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --sbindir=/usr/sbin --sysconfdir=/etc --enable-lorica-target=ubuntu --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes
+	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --sbindir=/usr/sbin --sysconfdir=/etc --enable-lorica-target=ubuntu --enable-lorica-dist=yes --enable-lorica-debug=yes --enable-lorica-devel=yes --enable-tao-build
 
 
 build: build-stamp
