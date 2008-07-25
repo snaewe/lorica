@@ -269,8 +269,8 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 
 			for (size_t x = offset; x < offset+6; x++)
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("'%c' "),
-					   buffer[x]));
+									 ACE_TEXT("'%02hhu' "),
+									 buffer[x]));
 
 			ACE_DEBUG((LM_DEBUG,
 				   ACE_TEXT("\n")));

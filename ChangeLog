@@ -1,5 +1,8 @@
 2008-07-25  Jules Colding  <colding@42tools.com>
 
+	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
+	Fix format specifier so that it doesn't mess up your terminal.
+
 	* deb/rules (config.status): Added --enable-tao-build to
 	fix deb creation.
 
