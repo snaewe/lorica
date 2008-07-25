@@ -51,6 +51,9 @@ case "$action" in
     Red%20Hat%20Enterprise%20Linux%204)
 	make dist-rpm || exit 1
 	;;
+    CentOS*)
+	make dist-rpm || exit 1
+	;;
     Fedora*)
 	make dist-rpm || exit 1
 	;;

@@ -1,5 +1,7 @@
 2008-07-25  Jules Colding  <colding@42tools.com>
 
+	* release.sh: Fix distfiles target on CentOS.
+
 	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
 	Fix format specifier so that it doesn't mess up your terminal.
 
