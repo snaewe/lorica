@@ -233,9 +233,11 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 			this->hostname_ = "";
 		else {
 			char *ip_addr = get_ip_from_ifname(AF_INET, ifname.c_str());
-			this->hostname_ = ip_addr ? "" : (const char*)ip_addr;
-			if (ip_addr)
+			this->hostname_ = ip_addr ? (const char*)ip_addr : "";
+			if (ip_addr) {
+				ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Autodetected hostname for IPv4 endpoint - %s\n"), this->hostname_.c_str()));
 				free(ip_addr);
+			}
 		}
 	}
 
@@ -249,9 +251,11 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 			this->hostname_ = "";
 		else {
 			char *ip_addr = get_ip_from_ifname(AF_INET6, ifname.c_str());
-			this->hostname_ = ip_addr ? "" : (const char*)ip_addr;
-			if (ip_addr)
+			this->hostname_ = ip_addr ? (const char*)ip_addr : "";
+			if (ip_addr) {
+				ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Autodetected hostname for IPv6 endpoint - %s\n"), this->hostname_.c_str()));
 				free(ip_addr);
+			}
 		}
 	}
 

@@ -1,3 +1,11 @@
+2008-07-29  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Version 1.0.3
+
+	* src/lorica/ConfigBase.cpp (Endpoint::parse_string): 
+	Fix stupid bug for assigning autodetected IP addresses
+	to IPv[4.6] endpoints.
+
 2008-07-25  Jules Colding  <colding@42tools.com>
 
 	* release.sh: Fix distfiles target on CentOS.
