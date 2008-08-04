@@ -1,8 +1,13 @@
+2008-08-04  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ReferenceMapper.idl: Added method to do as_client()
+	mappings for corbaloc originated objects.
+
 2008-07-29  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Version 1.0.3
 
-	* src/lorica/ConfigBase.cpp (Endpoint::parse_string): 
+	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):
 	Fix stupid bug for assigning autodetected IP addresses
 	to IPv[4.6] endpoints.
 

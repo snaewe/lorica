@@ -84,6 +84,18 @@ module Lorica
 		// references.
 		Object as_client(in Object orig);
 
+		// As as_client() but the Object ID is explicitly given. This is
+		// useful if the object is created from a corbaloc string using
+		// string_to_object(). The resulting object would not carry any 
+		// Object ID and would therefore not be mappable by Lorica.
+		//
+		// An example of a valid Object ID is:
+		//
+		//         IDL:test.lorica/Test/Hello:1.0
+		//
+		Object as_client_with_object_id(in Object orig,
+						in string object_id);
+
 		// Remove a previously mapped server reference. This will unbind the
 		// reference from the IOR table, if previously bound. This should
 		// probably generate an error if the mapped reference is not known.
