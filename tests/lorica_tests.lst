@@ -28,6 +28,7 @@
 
 ./exception/run_test.pl
 ./mapForClient/run_test.pl
+./mapForClientWithObjectID/run_test.pl
 ./mapForServer/run_test.pl
 ./genericEvaluator/basic/run_test.pl
 ./genericEvaluator/basic_collocate/run_test.pl

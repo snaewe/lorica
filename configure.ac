@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT([lorica],[1.0.3],[bugs@42tools.com])
+AC_INIT([lorica],[1.0.4],[bugs@42tools.com])
 
 AC_PREREQ(2.59)
 
@@ -495,6 +495,7 @@ tests/genericEvaluator/server_agent/Makefile
 tests/genericEvaluator/unbind/Makefile
 tests/genericEvaluator/union/Makefile
 tests/mapForClient/Makefile
+tests/mapForClientWithObjectID/Makefile
 tests/mapForServer/Makefile
 tests/secureBridge/Makefile
 tests/secureInvocation/Makefile

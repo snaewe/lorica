@@ -18,11 +18,12 @@
 #  MA 02111-1307 USA
 
 SUBDIRS = \
-        exception        \
-	fileConfig       \
-	garbageCollector \
-	genericEvaluator \
-	mapForClient     \
-	mapForServer     \
-	secureBridge     \
+        exception                \
+	fileConfig               \
+	garbageCollector         \
+	genericEvaluator         \
+	mapForClient             \
+	mapForClientWithObjectID \
+	mapForServer             \
+	secureBridge             \
 	secureInvocation

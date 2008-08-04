@@ -1,5 +1,22 @@
 2008-08-04  Jules Colding  <colding@42tools.com>
 
+	* configure.ac: Incremented the version and added the new test directory
+	to autogenerate the Makefile.
+
+	* tests/lorica_tests.lst: Added test directory
+
+	* tests/mapForClientWithObjectID: Test case for the new ReferenceMapper
+	method.
+
+	* src/lorica/MapperRegistry.h:
+	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_object_id):
+	Helper function with the same functionality as map_reference() but with an explicit
+	repository id argument.
+
+	* src/proxy/ReferenceMapper_i.h:
+	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_object_id):
+	Implementation of the new method mentioned below.
+
 	* src/lorica/ReferenceMapper.idl: Added method to do as_client()
 	mappings for corbaloc originated objects.
 

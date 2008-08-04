@@ -80,6 +80,11 @@ namespace Lorica
 		CORBA::Object_ptr as_client(CORBA::Object_ptr orig)
 			throw (CORBA::SystemException);
 
+		// As as_client() above but with an explicit Object ID.
+		::CORBA::Object_ptr as_client_with_object_id(::CORBA::Object_ptr orig,
+							     const char *object_id)
+			throw (CORBA::SystemException);
+  
 		// Remove a previously mapped server reference. This will unbind the
 		// reference from the IOR table, if previously bound. This should
 		// probably generate an error if the mapped reference is not known.

@@ -82,10 +82,15 @@ public:
 	// inside facing) the mapped reference will use. If the supplied ref
 	// is known, the previously created reference map value is returned,
 	// otherwise a new one is created.
-	Lorica::ReferenceMapValue *map_reference(CORBA::Object_ptr ref,
+	Lorica::ReferenceMapValue *map_reference(CORBA::Object_ptr native,
 						 bool out_facing,
 						 bool require_secure = false);
 
+	// As map_reference() above but supply an explicit Object ID
+	Lorica::ReferenceMapValue *map_reference_with_object_id(CORBA::Object_ptr native,
+								const char *object_id,
+								bool out_facing,
+								bool require_secure = false);
 
 	// Remove a previously mapped reference
 	Lorica::ReferenceMapValue *remove_reference(CORBA::Object_ptr mapped,
