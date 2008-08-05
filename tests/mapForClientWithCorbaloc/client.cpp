@@ -20,7 +20,6 @@
  */
 
 #include "TestC.h"
-#include <ace/Get_Opt.h>
 #include "lorica/ReferenceMapperC.h"
 
 const char *lorica_ior = "corbaloc::localhost:10951/LORICA_REFERENCE_MAPPER";

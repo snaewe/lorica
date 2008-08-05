@@ -40,7 +40,7 @@ unlink $iorfile;
 $pidfile = PerlACE::LocalFile ("lorica.pid");
 unlink $pidfile;
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -l10 -c10 -f test.conf");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -l10 -f test.conf");
 $SV = new PerlACE::Process ("server", "-ORBListenEndpoints iiop://localhost:20951 -ORBdebuglevel $debug_level");
 $CL = new PerlACE::Process ("client", "");
 

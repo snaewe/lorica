@@ -178,8 +178,16 @@ Lorica::ReferenceMapper_i::as_client_with_corbaloc(const char *corbaloc,
 	::CORBA::Object_var orig = CORBA::Object::_nil();
 
 	orig = orb_->string_to_object(corbaloc);
-	if (CORBA::is_nil(orig))
+	if (CORBA::is_nil(orig.in())) {
+			ACE_DEBUG((LM_DEBUG,
+				   ACE_TEXT("(%P|%t) %N:%l - will not map NIL reference\n")));
 		return CORBA::Object::_nil();
+	}
+	if (orig->_non_existent()) {
+			ACE_DEBUG((LM_DEBUG,
+				   ACE_TEXT("(%P|%t) %N:%l - will not map dead reference\n")));
+		return CORBA::Object::_nil();
+	}
 
 	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference_with_ifr_id(orig.in(), 
 										       interface_repository_id,

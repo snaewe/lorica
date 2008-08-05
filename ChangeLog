@@ -1,8 +1,16 @@
 2008-08-05  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
+	Added check for _non_existent().
+
+	* src/lorica/ProxyMapper.cpp: I really can't read with an indent level of 2.
+	Changed to 8.
+
 	* src/lorica/MapperRegistry.h:
 	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
 	This function was previously known as map_reference_with_object_id().
+	(Lorica_MapperRegistry::map_reference): Removed an invokation of _interface_id()
+	which is not expected to work in the general case.
 
 	* src/proxy/ReferenceMapper_i.h:
 	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):

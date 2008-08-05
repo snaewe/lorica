@@ -215,9 +215,6 @@ Lorica_MapperRegistry::map_reference(CORBA::Object_ptr native,
 	std::string typeId = native->_stubobj()->type_id.in();
 	//  std::string typeId(native->_interface_repository_id());
 
-	if (typeId.empty())
-		typeId = native->_repository_id();
-
 	if (this->mappers_ != 0) {
 		if (Lorica_debug_level > 2) {
 			ACE_DEBUG((LM_DEBUG,
