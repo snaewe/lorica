@@ -1,8 +1,15 @@
+2008-08-05  Jules Colding  <colding@42tools.com>
+
+	* tests/mapForClientWithCorbaloc/client.cpp (main): Cleanups
+
+	* src/lorica/MapperRegistry.h (Lorica_MapperRegistry): 
+	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
+	Removed this redundant function.
+
 Tue Aug  5 14:37:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/ReferenceMapper_i.cpp:
-
-	  Force the synthesized object reference to take on the supplied 
+	  Force the synthesized object reference to take on the supplied
 	  type identifier. This is necessary so that the "native" reference
 	  placed in the mapper's repository will have the correct type and
 	  thus be associated with the proper evaluator.

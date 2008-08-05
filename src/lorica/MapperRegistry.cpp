@@ -236,37 +236,6 @@ Lorica_MapperRegistry::map_reference(CORBA::Object_ptr native,
 }
 
 Lorica::ReferenceMapValue *
-Lorica_MapperRegistry::map_reference_with_ifr_id(CORBA::Object_ptr native,
-						 const char *ifr_id,
-						 bool out_facing,
-						 bool require_secure)
-{
-	// iterate over the mappers list until one is found that can
-	// handle this type. Return the newly created map entry or 0.
-	Lorica::ReferenceMapValue_var rmv;
-	std::string typeId(ifr_id);
-
-	if (this->mappers_ != 0) {
-		if (Lorica_debug_level > 2) {
-			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - adding %s\n"),
-				   typeId.c_str()));
-		}
-
-		rmv = this->mappers_->add_native(native,
-						 typeId,
-						 out_facing,
-						 require_secure);
-	} else {
-		if (Lorica_debug_level > 0)
-			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - no mappers registered\n")));
-	}
-
-	return rmv.release();
-}
-
-Lorica::ReferenceMapValue *
 Lorica_MapperRegistry::remove_reference(CORBA::Object_ptr mapped,
 					bool out_facing)
 {

@@ -28,6 +28,8 @@ const char *server_ior = "corbaloc::localhost:20951/TEST_HELLO";
 int
 main (int argc, char *argv[])
 {
+	int retv = 1;
+
 	try {
 		CORBA::ORB_var orb = CORBA::ORB_init(argc, argv, "");
 
@@ -40,9 +42,9 @@ main (int argc, char *argv[])
 
 		obj = orb->string_to_object(server_ior);
 		Test::Hello_var hello = Test::Hello::_narrow(obj.in());
-		CORBA::String_var the_string = hello->get_string();
+		CORBA::String_var unmapped_string = hello->get_string();
 		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from unmapped object <%s>\n",
-			    the_string.in ()));
+			    unmapped_string.in ()));
  
 		CORBA::Object_var tmp = mapper->as_client_with_corbaloc(server_ior,									
                                                                         "IDL:test.lorica/Test/Hello:1.0");
@@ -52,17 +54,20 @@ main (int argc, char *argv[])
 					   "Nil Test::Hello reference <corbaloc::localhost:20951/TEST_HELLO>\n"),
 					  1);
 		}
-		the_string = hello->get_string();
-		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from mapped object<%s>\n",
-			    the_string.in ()));
+		CORBA::String_var mapped_string = hello->get_string();
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from mapped object <%s>\n",
+			    mapped_string.in ()));
+
+		if (!strcmp(mapped_string.in(), unmapped_string.in()))
+			retv = 0;
 
 		hello->shutdown ();
 		orb->destroy ();
 	}
 	catch (const CORBA::Exception& ex) {
 		ex._tao_print_exception ("Exception caught:");
-		return 1;
+		retv = 1;
 	}
 
-	return 0;
+	return retv;
 }

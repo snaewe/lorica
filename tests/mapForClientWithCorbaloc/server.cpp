@@ -2,7 +2,7 @@
 
 /*
  *    Lorica source file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2008 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -55,7 +55,6 @@ main (int argc, char *argv[])
 
 		// Turn the object reference into an IOR string
 		CORBA::String_var ior_string = orb->object_to_string(hello.in());
-		ACE_DEBUG ((LM_DEBUG, "(%N|%l) server IOR: %s\n", ior_string.in()));
 
 		// Get a reference to the IOR Table and bind the hello object
 		CORBA::Object_var table_obj = orb->resolve_initial_references("IORTable");
