@@ -36,7 +36,7 @@ main (int argc, char *argv[])
 
 		if (CORBA::is_nil (root_poa.in ()))
 			ACE_ERROR_RETURN ((LM_ERROR,
-					   " (%P|%t) Panic: nil RootPOA\n"),
+					   " (%N|%l) Panic: nil RootPOA\n"),
 					  1);
 
 		PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
@@ -55,6 +55,7 @@ main (int argc, char *argv[])
 
 		// Turn the object reference into an IOR string
 		CORBA::String_var ior_string = orb->object_to_string(hello.in());
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) server IOR: %s\n", ior_string.in()));
 
 		// Get a reference to the IOR Table and bind the hello object
 		CORBA::Object_var table_obj = orb->resolve_initial_references("IORTable");
@@ -63,9 +64,11 @@ main (int argc, char *argv[])
 
 		poa_manager->activate ();
 
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) server - event loop beginning\n"));
+
 		orb->run ();
 
-		ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) server - event loop finished\n"));
 
 		root_poa->destroy (1, 1);
 

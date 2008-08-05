@@ -170,17 +170,20 @@ Lorica::ReferenceMapper_i::as_client(CORBA::Object_ptr orig)
 	return CORBA::Object::_duplicate(rmv->mapped_ref_);
 }
 
-::CORBA::Object_ptr 
-Lorica::ReferenceMapper_i::as_client_with_object_id(::CORBA::Object_ptr orig,
-						   const char *object_id)
+::CORBA::Object_ptr
+Lorica::ReferenceMapper_i::as_client_with_corbaloc(const char *corbaloc,
+						   const char *interface_repository_id)
 	throw (CORBA::SystemException)
 {
+	::CORBA::Object_var orig = CORBA::Object::_nil();
+
+	orig = orb_->string_to_object(corbaloc);
 	if (CORBA::is_nil(orig))
 		return CORBA::Object::_nil();
 
-	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference_with_object_id(orig, 
-											  object_id,
-											  false);
+	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference_with_ifr_id(orig.in(), 
+										       interface_repository_id,
+										       false);
 	if (rmv.get() == 0)
 		return CORBA::Object::_nil();
 

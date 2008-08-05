@@ -239,15 +239,15 @@ Lorica_MapperRegistry::map_reference(CORBA::Object_ptr native,
 }
 
 Lorica::ReferenceMapValue *
-Lorica_MapperRegistry::map_reference_with_object_id(CORBA::Object_ptr native,
-						    const char *object_id,
-						    bool out_facing,
-						    bool require_secure)
+Lorica_MapperRegistry::map_reference_with_ifr_id(CORBA::Object_ptr native,
+						 const char *ifr_id,
+						 bool out_facing,
+						 bool require_secure)
 {
 	// iterate over the mappers list until one is found that can
 	// handle this type. Return the newly created map entry or 0.
 	Lorica::ReferenceMapValue_var rmv;
-	std::string typeId(object_id);
+	std::string typeId(ifr_id);
 
 	if (this->mappers_ != 0) {
 		if (Lorica_debug_level > 2) {

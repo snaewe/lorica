@@ -1,6 +1,6 @@
 #
 #    Lorica test script. 
-#    Copyright (C) 2007 OMC Denmark ApS.
+#    Copyright (C) 2008 OMC Denmark ApS.
 #
 #    This program is free software; you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ unlink $iorfile;
 $pidfile = PerlACE::LocalFile ("lorica.pid");
 unlink $pidfile;
 
-$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -l10 -c10 -f test.conf");
 $SV = new PerlACE::Process ("server", "-ORBListenEndpoints iiop://localhost:20951 -ORBdebuglevel $debug_level");
 $CL = new PerlACE::Process ("client", "");
 

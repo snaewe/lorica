@@ -1,3 +1,17 @@
+2008-08-05  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/MapperRegistry.h:
+	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
+	This function was previously known as map_reference_with_object_id().
+
+	* src/proxy/ReferenceMapper_i.h:
+	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
+	Change to work directly on a corbaloc string and an IFR ID. This function was
+	previously as_client_with_object_id().
+
+	* src/lorica/ReferenceMapper.idl: Name change for corbaloc specific as_client()
+	method. It now takes a valid CORBALOC string and an IFR ID.
+
 2008-08-04  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Incremented the version and added the new test directory

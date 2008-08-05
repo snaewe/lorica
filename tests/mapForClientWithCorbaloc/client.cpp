@@ -39,28 +39,22 @@ main (int argc, char *argv[])
 					   "Cannot get reference to Lorica "
 					   "reference mapper\n"),1);
 
-		CORBA::Object_var tmp = orb->string_to_object(server_ior);
-
-		CORBA::String_var ior = orb->object_to_string(tmp.in ());
-		ACE_DEBUG((LM_DEBUG,
-			   "(%P|%t) - mapping corbaloc object <%s>\n",
-			   ior.in()));
-
-		tmp = mapper->as_client_with_object_id(tmp.in(),
-						       "IDL:test.lorica/Test/Hello:1.0");
-
-		Test::Hello_var hello = Test::Hello::_narrow(tmp.in ());
-
+		obj = orb->string_to_object(server_ior);
+		Test::Hello_var hello = Test::Hello::_narrow(obj.in());
+		CORBA::String_var the_string = hello->get_string();
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from unmapped object <%s>\n",
+			    the_string.in ()));
+ 
+		CORBA::Object_var tmp = mapper->as_client_with_corbaloc(server_ior,									
+                                                                        "IDL:test.lorica/Test/Hello:1.0");
+		hello = Test::Hello::_narrow(tmp.in());
 		if (CORBA::is_nil(hello.in())) {
 			ACE_ERROR_RETURN ((LM_DEBUG,
-					   "Nil Test::Hello reference <%s>\n",
-					   server_ior),
+					   "Nil Test::Hello reference <corbaloc::localhost:20951/TEST_HELLO>\n"),
 					  1);
 		}
-
-		CORBA::String_var the_string = hello->get_string ();
-
-		ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%s>\n",
+		the_string = hello->get_string();
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from mapped object<%s>\n",
 			    the_string.in ()));
 
 		hello->shutdown ();

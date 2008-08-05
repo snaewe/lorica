@@ -83,9 +83,9 @@ Test-stamp: $(srcdir)/Test.idl
 	@touch "$@"
 
 noinst_HEADERS = \
-	Test.idl         \
-	test.conf        \
-	mapForClient.mpc \
+	Test.idl                     \
+	test.conf                    \
+	mapForClientWithCorbaloc.mpc \
 	run_test.pl 
 
 #

@@ -86,11 +86,11 @@ public:
 						 bool out_facing,
 						 bool require_secure = false);
 
-	// As map_reference() above but supply an explicit Object ID
-	Lorica::ReferenceMapValue *map_reference_with_object_id(CORBA::Object_ptr native,
-								const char *object_id,
-								bool out_facing,
-								bool require_secure = false);
+	// As map_reference() above but supply an explicit IFR ID
+	Lorica::ReferenceMapValue *map_reference_with_ifr_id(CORBA::Object_ptr native,
+							     const char *ifr_id,
+							     bool out_facing,
+							     bool require_secure = false);
 
 	// Remove a previously mapped reference
 	Lorica::ReferenceMapValue *remove_reference(CORBA::Object_ptr mapped,
