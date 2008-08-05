@@ -23,6 +23,7 @@
 
 #include <ace/Dynamic_Service.h>
 #include <tao/ORB_Core.h>
+#include <tao/Stub.h>
 
 #include "lorica/MapperRegistry.h"
 #include "lorica/ReferenceMapValue.h"
@@ -163,7 +164,8 @@ Lorica::ReferenceMapper_i::as_client(CORBA::Object_ptr orig)
 	if (CORBA::is_nil(orig))
 		return CORBA::Object::_nil();
 
-	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference(orig, false);
+	Lorica::ReferenceMapValue_var rmv = 
+		this->registry_->map_reference(orig, false);
 	if (rmv.get() == 0)
 		return CORBA::Object::_nil();
 
@@ -189,9 +191,10 @@ Lorica::ReferenceMapper_i::as_client_with_corbaloc(const char *corbaloc,
 		return CORBA::Object::_nil();
 	}
 
-	Lorica::ReferenceMapValue_var rmv = this->registry_->map_reference_with_ifr_id(orig.in(), 
-										       interface_repository_id,
-										       false);
+	orig.in()->_stubobj()->type_id = interface_repository_id;
+
+	Lorica::ReferenceMapValue_var rmv = 
+		this->registry_->map_reference(orig.in(), false);
 	if (rmv.get() == 0)
 		return CORBA::Object::_nil();
 

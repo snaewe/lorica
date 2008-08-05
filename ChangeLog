@@ -1,72 +1,81 @@
+Tue Aug  5 14:37:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/ReferenceMapper_i.cpp:
+
+	  Force the synthesized object reference to take on the supplied 
+	  type identifier. This is necessary so that the "native" reference
+	  placed in the mapper's repository will have the correct type and
+	  thus be associated with the proper evaluator.
+
 2008-08-05  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
-	Added check for _non_existent().
+        * src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
+        Added check for _non_existent().
 
-	* src/lorica/ProxyMapper.cpp: I really can't read with an indent level of 2.
-	Changed to 8.
+        * src/lorica/ProxyMapper.cpp: I really can't read with an indent level of 2.
+        Changed to 8.
 
-	* src/lorica/MapperRegistry.h:
-	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
-	This function was previously known as map_reference_with_object_id().
-	(Lorica_MapperRegistry::map_reference): Removed an invokation of _interface_id()
-	which is not expected to work in the general case.
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
+        This function was previously known as map_reference_with_object_id().
+        (Lorica_MapperRegistry::map_reference): Removed an invokation of _interface_id()
+        which is not expected to work in the general case.
 
-	* src/proxy/ReferenceMapper_i.h:
-	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
-	Change to work directly on a corbaloc string and an IFR ID. This function was
-	previously as_client_with_object_id().
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
+        Change to work directly on a corbaloc string and an IFR ID. This function was
+        previously as_client_with_object_id().
 
-	* src/lorica/ReferenceMapper.idl: Name change for corbaloc specific as_client()
-	method. It now takes a valid CORBALOC string and an IFR ID.
+        * src/lorica/ReferenceMapper.idl: Name change for corbaloc specific as_client()
+        method. It now takes a valid CORBALOC string and an IFR ID.
 
 2008-08-04  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Incremented the version and added the new test directory
-	to autogenerate the Makefile.
+        * configure.ac: Incremented the version and added the new test directory
+        to autogenerate the Makefile.
 
-	* tests/lorica_tests.lst: Added test directory
+        * tests/lorica_tests.lst: Added test directory
 
-	* tests/mapForClientWithObjectID: Test case for the new ReferenceMapper
-	method.
+        * tests/mapForClientWithObjectID: Test case for the new ReferenceMapper
+        method.
 
-	* src/lorica/MapperRegistry.h:
-	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_object_id):
-	Helper function with the same functionality as map_reference() but with an explicit
-	repository id argument.
+        * src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_object_id):
+        Helper function with the same functionality as map_reference() but with an explicit
+        repository id argument.
 
-	* src/proxy/ReferenceMapper_i.h:
-	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_object_id):
-	Implementation of the new method mentioned below.
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_object_id):
+        Implementation of the new method mentioned below.
 
-	* src/lorica/ReferenceMapper.idl: Added method to do as_client()
-	mappings for corbaloc originated objects.
+        * src/lorica/ReferenceMapper.idl: Added method to do as_client()
+        mappings for corbaloc originated objects.
 
 2008-07-29  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Version 1.0.3
+        * configure.ac: Version 1.0.3
 
-	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):
-	Fix stupid bug for assigning autodetected IP addresses
-	to IPv[4.6] endpoints.
+        * src/lorica/ConfigBase.cpp (Endpoint::parse_string):
+        Fix stupid bug for assigning autodetected IP addresses
+        to IPv[4.6] endpoints.
 
 2008-07-25  Jules Colding  <colding@42tools.com>
 
-	* release.sh: Fix distfiles target on CentOS.
+        * release.sh: Fix distfiles target on CentOS.
 
-	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
-	Fix format specifier so that it doesn't mess up your terminal.
+        * src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
+        Fix format specifier so that it doesn't mess up your terminal.
 
-	* deb/rules (config.status): Added --enable-tao-build to
-	fix deb creation.
+        * deb/rules (config.status): Added --enable-tao-build to
+        fix deb creation.
 
-	* src/lorica/ProxyMapper.cpp (ProxyMapper::ProxyMapper):
-	Fix compiler error (ACE_HAS_IPV6 not definbed).
+        * src/lorica/ProxyMapper.cpp (ProxyMapper::ProxyMapper):
+        Fix compiler error (ACE_HAS_IPV6 not definbed).
 
 Thu Jul 24 12:06:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * configure.ac:
-	  Bumped the version number.
+          Bumped the version number.
 
 Thu Jul 24 11:35:27 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
