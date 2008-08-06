@@ -46,6 +46,7 @@
 #include "lorica/debug.h"
 #include "lorica/MapperRegistry.h"
 
+#if !defined (ACE_WIN32)
 typedef enum {
 	EXIT_DAEMON = 0, /* we are the daemon                  */
 	EXIT_OK = 1,	 /* caller must exit with EXIT_SUCCESS */
@@ -169,6 +170,7 @@ become_daemon(const bool NoFork,
 
 	return EXIT_DAEMON;
 }
+#endif // !ACE_WIN32
 
 namespace Lorica
 {
