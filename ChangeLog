@@ -1,5 +1,9 @@
 2008-08-06  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/proxy.cpp (get_file): Fix variable type
+
+	* src/proxy/main.cpp: Added ifdef to make it build on Windows
+
 	* tests/mapForClientWithCorbaloc/Makefile.am (TAO_IDLFLAGS): Remove
 	unneeded "-GI".
 
