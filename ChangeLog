@@ -1,3 +1,11 @@
+2008-08-06  Jules Colding  <colding@42tools.com>
+
+	* tests/mapForClientWithCorbaloc/Makefile.am (TAO_IDLFLAGS): Remove
+	unneeded "-GI".
+
+	* tests/mapForClientWithCorbaloc/client.cpp (main): Inserting space to align
+	output strings.
+
 2008-08-05  Jules Colding  <colding@42tools.com>
 
 	* tests/mapForClientWithCorbaloc/client.cpp (main): Cleanups

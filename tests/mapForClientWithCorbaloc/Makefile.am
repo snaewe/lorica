@@ -45,7 +45,7 @@ endif # HAVE_ACE_ROOT
 include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
 include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-TAO_IDLFLAGS = -GI -I$(TAO_ROOT) -g $(GPERF)
+TAO_IDLFLAGS = -I$(TAO_ROOT) -g $(GPERF)
 
 if LORICA_DARWIN
 TESTS_ENVIRONMENT = env DYLD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)

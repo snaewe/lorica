@@ -43,7 +43,7 @@ main (int argc, char *argv[])
 		obj = orb->string_to_object(server_ior);
 		Test::Hello_var hello = Test::Hello::_narrow(obj.in());
 		CORBA::String_var unmapped_string = hello->get_string();
-		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from unmapped object <%s>\n",
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from unmapped object: <%s>\n",
 			    unmapped_string.in ()));
  
 		CORBA::Object_var tmp = mapper->as_client_with_corbaloc(server_ior,									
@@ -55,7 +55,7 @@ main (int argc, char *argv[])
 					  1);
 		}
 		CORBA::String_var mapped_string = hello->get_string();
-		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from mapped object <%s>\n",
+		ACE_DEBUG ((LM_DEBUG, "(%N|%l) string returned from mapped object:   <%s>\n",
 			    mapped_string.in ()));
 
 		if (!strcmp(mapped_string.in(), unmapped_string.in()))
