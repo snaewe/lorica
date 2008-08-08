@@ -1,5 +1,15 @@
 2008-08-08  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
+	Temporarely out-commented _non_existent() check.
+
+	* src/lorica/GenericMapper.cpp (GenericMapper::evaluator_for):
+	Added debug printout of failing IFR ID.
+
+	* tests/mapForClientWithCorbaloc/Makefile.am (client_LDADD):
+	* tests/mapForClientWithCorbaloc/Makefile.am (server_LDADD):
+	Fix library list.
+
 	* src/proxy/proxy.cpp: Changed indentation level to 8.
 
 2008-08-06  Jules Colding  <colding@42tools.com>

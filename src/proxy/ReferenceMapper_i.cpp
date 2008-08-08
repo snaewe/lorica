@@ -185,11 +185,11 @@ Lorica::ReferenceMapper_i::as_client_with_corbaloc(const char *corbaloc,
 				   ACE_TEXT("(%P|%t) %N:%l - will not map NIL reference\n")));
 		return CORBA::Object::_nil();
 	}
-	if (orig->_non_existent()) {
-			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - will not map dead reference\n")));
-		return CORBA::Object::_nil();
-	}
+	// if (orig->_non_existent()) {
+	// 		ACE_DEBUG((LM_DEBUG,
+	// 			   ACE_TEXT("(%P|%t) %N:%l - will not map dead reference\n")));
+	// 	return CORBA::Object::_nil();
+	// }
 
 	orig.in()->_stubobj()->type_id = interface_repository_id;
 

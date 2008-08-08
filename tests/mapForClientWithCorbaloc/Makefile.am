@@ -105,7 +105,6 @@ client_SOURCES = \
 client_LDADD = \
 	$(LORICA_top_dir)/src/lorica/liblorica_Client.la     \
 	$(LORICA_top_dir)/src/OCI/libOCI_AsynchProxyTools.la \
-	-lTAO_IORTable                                       \
 	-lTAO                                                \
 	-lACE
 
@@ -129,6 +128,7 @@ server_SOURCES = \
 server_LDADD = \
 	-lTAO_PortableServer \
 	-lTAO_AnyTypeCode    \
+	-lTAO_IORTable       \
 	-lTAO                \
 	-lACE
 
