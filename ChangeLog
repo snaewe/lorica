@@ -1,5 +1,7 @@
 2008-08-08  Jules Colding  <colding@42tools.com>
 
+	* configure.ac: Added printout of used ACE+TAO version
+
 	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
 	Temporarely out-commented _non_existent() check.
 
