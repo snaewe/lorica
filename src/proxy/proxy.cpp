@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
+/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
  *    Lorica source file.
@@ -409,9 +409,9 @@ Lorica::Proxy::configure(Config & config)
 		if (!ne_ids.empty()) {
 			if (Lorica_debug_level > 2) {
 				ACE_DEBUG((LM_DEBUG,
-									 ACE_TEXT("(%P|%t) %N:%l - adding type ids for null ")
-									 ACE_TEXT("evaluator: %s\n"),
-									 ne_ids.c_str()));
+					   ACE_TEXT("(%P|%t) %N:%l - adding type ids for null ")
+					   ACE_TEXT("evaluator: %s\n"),
+					   ne_ids.c_str()));
 			}
 
 			size_t space = ne_ids.find(' ');

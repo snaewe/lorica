@@ -1,3 +1,7 @@
+2008-08-08  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp: Changed indentation level to 8.
+
 2008-08-06  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/proxy.cpp (get_file): Fix variable type
