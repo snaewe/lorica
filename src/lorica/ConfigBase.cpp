@@ -349,9 +349,9 @@ Lorica::Config::get_orb_options(void)
 	// app name required to ensure proper argument alignment
 	orb_args_.push_back(LORICA_EXE_NAME);
 
-	// use shared profiles by default
+	// do not use shared profiles by default
 	orb_args_.push_back("-ORBUseSharedProfile");
-	orb_args_.push_back("1");
+	orb_args_.push_back("0");
 
 	std::string opts = this->get_value("ORB_Option");
 	if (!opts.empty()) {

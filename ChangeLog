@@ -1,3 +1,9 @@
+2008-08-09  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
+	Disable shared profiles by default. It is still posible to enable
+	shared profiles in the configuration file.
+
 2008-08-08  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Added printout of used ACE+TAO version
