@@ -299,28 +299,33 @@ Lorica::Service_Loader::parse_args(int argc,
 #else /* !ACE_WIN32 */
 		case 'V':
 			ACE_DEBUG((LM_INFO,
-				   ACE_TEXT("Lorica version %s\n"),
+				   ACE_TEXT("%N:%l - Lorica version %s\n"),
 				   ACE_TEXT(VERSION),
 				   0));
 		case 'n':
 			no_fork_ = true;
+			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in standalone mode\n")));
 			break;
 #endif
 		case 'd':
 			debug_ = true;
+			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in debug mode\n")));
 			break;
 		case 'f':
 			config_file_ = get_opt.opt_arg();
+			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica configuration file = %s\n"), config_file_));
 			break;
 		case 'c':
 			tmp = get_opt.opt_arg();
 			if (tmp != 0)
 				corba_debug_level_ = ACE_OS::atoi(tmp);
+			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - CORBA debug level = %d\n"), corba_debug_level_));
 			break;
 		case 'l':
 			tmp = get_opt.opt_arg();
-			if (tmp != 0)
+			if (tmp != 0) 
 				Lorica_debug_level = ACE_OS::atoi(tmp);
+			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica debug level = %d\n"), Lorica_debug_level));
 			break;
 		default:
 			print_usage_and_die();
@@ -563,6 +568,7 @@ ACE_TMAIN(int argc,
 		SetCurrentDirectory(wdir);
 	}
 #endif
+	ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::SYSLOG);
 	result = lorica.parse_args(argc, argv);
 	if (result < 0)
 		exit(EXIT_FAILURE);  // Error
@@ -571,6 +577,8 @@ ACE_TMAIN(int argc,
 
 	// initialize ACE logging framework
 	if (!lorica.is_service()) { // ==> if (lorica.debug_) a.k.a. put all logging output in the log file
+		ACE_LOG_MSG->clr_flags(ACE_Log_Msg::SYSLOG);
+
 		size_t len = strlen("Lorica");
 		char *name = (char*)malloc(len + 4 + 1);
 #ifdef ACE_WIN32
@@ -586,9 +594,8 @@ ACE_TMAIN(int argc,
 		if (output_file && (output_file->rdstate() == ios::goodbit))
 			ACE_LOG_MSG->msg_ostream(output_file, 1);
 
-		ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
-	} else
-		ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::SYSLOG);
+		ACE_LOG_MSG->set_flags(ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
+	}
 
 	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica initializing\n")));
 

@@ -1,3 +1,16 @@
+2008-08-11  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp (get_file): Fix file creation on Windows.
+	Print errors when opening and creating the file (if any).
+
+	* src/proxy/main.cpp (Service_Loader::parse_args):
+	Print command line options to the log.
+	(ACE_TMAIN): Initialize the logging framework earlier.
+
+	* configurations/evolution-brutus/lorica.conf.evolution-brutus: 
+	* configurations/brutus_server/lorica.conf: 
+	Simplified configuration templates.
+
 2008-08-09  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ConfigBase.cpp (Config::get_orb_options):

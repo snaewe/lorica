@@ -230,14 +230,24 @@ get_file(const char *filename)
 	ACE_HANDLE file_fd = NULL;
 	FILE *file = NULL;
 
-	file_fd = ACE_OS::open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (!file_fd)
+	file_fd = ACE_OS::open(filename, O_CREAT | O_WRONLY | O_TRUNC);
+	if (!file_fd) {
+		ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not ACE_OS::open %s\n", filename));
 		return NULL;
+	}
+	if (ACE_INVALID_HANDLE == file_fd) {
+		ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not ACE_OS::open %s\n", filename));
+		return NULL;
+	}
 
 	file = ACE_OS::fdopen(file_fd, "w");
-	if (!file)
-		ACE_OS::close(file_fd);
+	if (!file) {
+		int err = 0;
+		_get_errno(&err); 
 
+		ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not ACE_OS::fdopen %s - error = %s\n", filename, strerror(err)));
+		ACE_OS::close(file_fd);
+	}
 	return file;
 }
 
