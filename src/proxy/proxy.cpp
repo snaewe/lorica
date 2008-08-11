@@ -244,7 +244,7 @@ get_file(const char *filename)
 	if (!file) {
 		int err = 0;
 #ifdef ACE_WIN32
-		std::_get_errno(&err); 
+		_get_errno(&err); 
 #else
 		err = errno;
 #endif
