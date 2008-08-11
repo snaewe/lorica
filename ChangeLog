@@ -1,7 +1,11 @@
 2008-08-11  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/main.cpp (Service_Loader::parse_args): Fix
+	non-Windows build.
+
 	* src/proxy/proxy.cpp (get_file): Fix file creation on Windows.
 	Print errors when opening and creating the file (if any).
+	(get_file): Fix non-Windows build.
 
 	* src/proxy/main.cpp (Service_Loader::parse_args):
 	Print command line options to the log.

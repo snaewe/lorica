@@ -313,7 +313,7 @@ Lorica::Service_Loader::parse_args(int argc,
 			break;
 		case 'f':
 			config_file_ = get_opt.opt_arg();
-			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica configuration file = %s\n"), config_file_));
+			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica configuration file = %s\n"), ACE_TEXT(config_file_.c_str())));
 			break;
 		case 'c':
 			tmp = get_opt.opt_arg();

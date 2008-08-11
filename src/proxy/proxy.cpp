@@ -243,8 +243,11 @@ get_file(const char *filename)
 	file = ACE_OS::fdopen(file_fd, "w");
 	if (!file) {
 		int err = 0;
-		_get_errno(&err); 
-
+#ifdef ACE_WIN32
+		std::_get_errno(&err); 
+#else
+		err = errno;
+#endif
 		ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not ACE_OS::fdopen %s - error = %s\n", filename, strerror(err)));
 		ACE_OS::close(file_fd);
 	}
