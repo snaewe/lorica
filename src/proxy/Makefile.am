@@ -25,15 +25,20 @@
 CWD = $(CURDIR)
 
 if HAVE_ACE_ROOT
-LORICA_ROOT = $(LORICA_top_dir)
 ACE_ROOT = $(CONF_ACE_ROOT)
 TAO_ROOT = $(ACE_ROOT)/TAO
-PATH = $(LORICA_ROOT)/bin:$(ACE_ROOT)/bin:$(ENV_PATH)
+PATH = $(ACE_ROOT)/bin:$(ENV_PATH)
+
+if LORICA_SHARED_LIBS
+LORICA_SHARED_LIBS_PATH = $(LORICA_top_dir)/src/OCI/.libs:$(LORICA_top_dir)/src/lorica/.libs
+else
+LORICA_SHARED_LIBS_PATH = 
+endif
 
 if LORICA_DARWIN
-export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH)
+export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
 else
-export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
+export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
 endif
 endif # HAVE_ACE_ROOT
 
@@ -64,32 +69,44 @@ endif
 
 lorica_LDFLAGS = $(STATIC_FLAGS)
 
-lorica_LDADD = \
+if LORICA_SHARED_LIBS
+LORICA_LIBS = \
+	-llorica_EvaluatorBase    \
+	-llorica_GenericEvaluator \
+	-llorica_Client           \
+	-lOCI_AsynchProxyTools
+lorica_LDFLAGS += -L$(LORICA_top_dir)/src/OCI/.libs -L$(LORICA_top_dir)/src/lorica/.libs
+else
+LORICA_LIBS = \
 	$(LORICA_top_dir)/src/lorica/liblorica_EvaluatorBase.la    \
 	$(LORICA_top_dir)/src/lorica/liblorica_GenericEvaluator.la \
 	$(LORICA_top_dir)/src/lorica/liblorica_Client.la           \
-	$(LORICA_top_dir)/src/OCI/libOCI_AsynchProxyTools.la       \
-	-lTAO_BiDirGIOP                                            \
-	-lTAO_IFRService                                           \
-	-lTAO_Svc_Utils                                            \
-	-lTAO_DynamicInterface                                     \
-	-lTAO_EndpointPolicy                                       \
-	-lTAO_Messaging                                            \
-	-lTAO_IORTable                                             \
-	-lTAO_SSLIOP                                               \
-	-lTAO_PI_Server                                            \
-	-lACE_SSL                                                  \
-	-lTAO_Security                                             \
-	-lTAO_PI                                                   \
-	-lTAO_CodecFactory                                         \
-	-lTAO_PortableServer                                       \
-	-lTAO_TypeCodeFactory                                      \
-	-lTAO_IFR_Client                                           \
-	-lTAO_DynamicAny                                           \
-	-lTAO_Valuetype                                            \
-	-lTAO_AnyTypeCode                                          \
-	-lTAO_Codeset                                              \
-	-lTAO                                                      \
+	$(LORICA_top_dir)/src/OCI/libOCI_AsynchProxyTools.la
+endif
+
+lorica_LDADD = \
+	$(LORICA_LIBS)         \
+	-lTAO_BiDirGIOP        \
+	-lTAO_IFRService       \
+	-lTAO_Svc_Utils        \
+	-lTAO_DynamicInterface \
+	-lTAO_EndpointPolicy   \
+	-lTAO_Messaging        \
+	-lTAO_IORTable         \
+	-lTAO_SSLIOP           \
+	-lTAO_PI_Server        \
+	-lACE_SSL              \
+	-lTAO_Security         \
+	-lTAO_PI               \
+	-lTAO_CodecFactory     \
+	-lTAO_PortableServer   \
+	-lTAO_TypeCodeFactory  \
+	-lTAO_IFR_Client       \
+	-lTAO_DynamicAny       \
+	-lTAO_Valuetype        \
+	-lTAO_AnyTypeCode      \
+	-lTAO_Codeset          \
+	-lTAO                  \
 	-lACE
 
 # Only ever entered if we need to install ACE+TAO
@@ -201,14 +218,14 @@ endif # HAVE_ACE_ROOT
 endif # LORICA_MUST_INSTALL_ACETAO
 
 
-$(LORICA_ROOT)/configurations/evolution-brutus/lorica.conf.evolution-brutus:
+$(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf.evolution-brutus:
 
 lorica.conf:
 
 lorica.ssliop:
 
 sysconf_DATA = \
-	$(LORICA_ROOT)/configurations/evolution-brutus/lorica.conf.evolution-brutus \
+	$(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf.evolution-brutus \
 	lorica.conf                                                                 \
 	lorica.ssliop
 

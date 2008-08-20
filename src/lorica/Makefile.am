@@ -100,7 +100,11 @@ else
     STATIC_FLAGS =
 endif
 
+if LORICA_SHARED_LIBS
+lib_LTLIBRARIES = liblorica_Client.la
+else
 noinst_LTLIBRARIES = liblorica_Client.la
+endif
 
 liblorica_Client_la_CPPFLAGS = \
 	$(LORICA_CXXFLAGS)        \
@@ -131,7 +135,11 @@ noinst_HEADERS = \
 	ServerAgent_impl.h   \
 	debug.h
 
+if LORICA_SHARED_LIBS
+lib_LTLIBRARIES += liblorica_EvaluatorBase.la
+else
 noinst_LTLIBRARIES += liblorica_EvaluatorBase.la
+endif
 
 liblorica_EvaluatorBase_la_CPPFLAGS = \
 	$(LORICA_CXXFLAGS)               \
@@ -167,8 +175,11 @@ noinst_HEADERS += \
 	RMVByMapped.h       \
 	ReferenceMapValue.h
 
+if LORICA_SHARED_LIBS
+lib_LTLIBRARIES += liblorica_GenericEvaluator.la
+else
 noinst_LTLIBRARIES += liblorica_GenericEvaluator.la
-#lib_LTLIBRARIES = liblorica_GenericEvaluator.la
+endif
 
 liblorica_GenericEvaluator_la_CPPFLAGS = \
 	$(LORICA_CXXFLAGS)                  \

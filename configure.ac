@@ -175,6 +175,19 @@ else
 fi
 AM_CONDITIONAL(LORICA_DEBUG, test x$enable_lorica_debug = xyes)
 
+dnl Do various things that helps debugging problems
+AC_ARG_ENABLE(lorica-shared-libs,
+	      [AS_HELP_STRING([--enable-lorica-shared-libs[[[[=no/yes]]]]], [Enable building of shared libraries [default=no]])],
+	      [],
+	      enable_lorica_shared_libs=no)
+if test "x$enable_lorica_shared_libs" = "xyes"; then
+	AC_DEFINE([LORICA_SHARED_LIBS], [1], [Define if you want to enable building of shared libraries])
+	msg_lorica_shared_libs=yes
+else
+	msg_lorica_shared_libs=no
+fi
+AM_CONDITIONAL(LORICA_SHARED_LIBS, test x$enable_lorica_shared_libs = xyes)
+
 dnl For the maintainer...
 AC_ARG_ENABLE(lorica-dist,
 	      [AS_HELP_STRING([--enable-lorica-dist[[[[=no/yes]]]]], [Is this a "make dist-<PACKAGE MANAGER>" attempt? [default=no]])],
@@ -520,4 +533,5 @@ echo "\
 	Install development header and IDL files:             $msg_lorica_devel
 	Download and build ACE and TAO locally if necessary:  $msg_tao_build
 	ACE+TAO version:                                      $LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE
+	Building shared libraries:                            $msg_lorica_shared_libs
 "

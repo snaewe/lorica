@@ -52,7 +52,11 @@ else
     STATIC_FLAGS =
 endif
 
+if LORICA_SHARED_LIBS
+lib_LTLIBRARIES = libOCI_AsynchProxyTools.la
+else
 noinst_LTLIBRARIES = libOCI_AsynchProxyTools.la
+endif
 
 libOCI_AsynchProxyTools_la_CPPFLAGS = \
 	$(LORICA_CXXFLAGS)               \
