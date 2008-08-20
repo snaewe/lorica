@@ -1,5 +1,6 @@
 2008-08-20  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/Makefile.am (LORICA_LIBS): 
 	* src/OCI/Makefile.am (lib_LTLIBRARIES):
 	* src/lorica/Makefile.am (lib_LTLIBRARIES):
 	* configure.ac: Added option (--enable-lorica-shared-libs)
