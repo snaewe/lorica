@@ -103,6 +103,10 @@
 #    cache directory. On Darwin this is "/var/db/lorica/"       #
 #    while on Linux it is "/var/cache/lorica/".                 #
 #                                                               #
+#    Please check that the NIC name used in the                 #
+#    "External_Address" specification is correct. On, say,      #
+#    Mac OS X, it is usually something else, e.g. en0.          # 
+#                                                               #
 #    Remember to restart Lorica after modifying the             #
 #    configuration file and copying the IFR cache file.         #
 #                                                               #
