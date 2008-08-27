@@ -1,5 +1,8 @@
 2008-08-27  Jules Colding  <colding@42tools.com>
 
+	* configurations/brutus_server/lorica.conf:
+	Improve documentation
+
 	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
 	Fix typo.
 
