@@ -89,6 +89,7 @@ rm -rf %{buildroot}
 %config(noreplace) %{_sysconfdir}/lorica.conf
 %config(noreplace) %{_sysconfdir}/lorica.ssliop
 %config(noreplace) %{_sysconfdir}/sysconfig/lorica
+%{_sysconfdir}/ifr.cache
 %{_sysconfdir}/lorica.conf.evolution-brutus
 %{_sysconfdir}/init.d/lorica
 %{_bindir}/*

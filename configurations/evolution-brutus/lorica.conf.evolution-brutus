@@ -97,15 +97,20 @@
 #    Please see the generic configuration file for other        #
 #    potentially useful options                                 #
 #                                                               #
+#                         ! NOTE !                              #
+#                                                               #
+#    You must move or copy /etc/ifr.cache to the system         #
+#    cache directory. On Darwin this is "/var/db/lorica/"       #
+#    while on Linux it is "/var/cache/lorica/".                 #
+#                                                               #
+#    Remember to restart Lorica after modifying the             #
+#    configuration file and copying the IFR cache file.         #
+#                                                               #
 #################################################################
 
 Internal_Address localhost:4080
 External_Address %eth0:4082
 Generic_Evaluator yes
-Collocate_IFR no
+Collocate_IFR yes
 
-# 
-# You MUST replace <lorica.domain.test> below with the IP address
-# or hostname of your remote Lorica server.
-#
-ORB_Option -ORBInitRef InterfaceRepository=corbaloc:iiop:lorica.domain.test:4082/InterfaceRepository
+

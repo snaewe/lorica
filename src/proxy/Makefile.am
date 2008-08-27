@@ -37,8 +37,10 @@ endif
 
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
+IFR_BRUTUS_CACHE_FILE = ifr-darwin-brutus.cache
 else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
+IFR_BRUTUS_CACHE_FILE = ifr-darwin-linux.cache
 endif
 endif # HAVE_ACE_ROOT
 
@@ -218,6 +220,9 @@ endif # HAVE_ACE_ROOT
 endif # LORICA_MUST_INSTALL_ACETAO
 
 
+$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache:
+	cp $(LORICA_top_dir)/configurations/evolution-brutus/$(IFR_BRUTUS_CACHE_FILE) $@ 
+
 $(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf.evolution-brutus:
 
 lorica.conf:
@@ -225,8 +230,9 @@ lorica.conf:
 lorica.ssliop:
 
 sysconf_DATA = \
+	$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache                    \
 	$(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf.evolution-brutus \
-	lorica.conf                                                                 \
+	lorica.conf                                                                    \
 	lorica.ssliop
 
 if THIS_IS_NOT_A_DISTRIBUTION
