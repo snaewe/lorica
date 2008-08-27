@@ -40,7 +40,7 @@ export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH):$(LORICA_SHA
 IFR_BRUTUS_CACHE_FILE = ifr-darwin-brutus.cache
 else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
-IFR_BRUTUS_CACHE_FILE = ifr-darwin-linux.cache
+IFR_BRUTUS_CACHE_FILE = ifr-linux-brutus.cache
 endif
 endif # HAVE_ACE_ROOT
 

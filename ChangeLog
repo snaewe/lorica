@@ -1,5 +1,8 @@
 2008-08-27  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+	Fix typo.
+
 	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
 	Improve comment explaining what to modify in the configuration.
 
