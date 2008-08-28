@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT([lorica],[1.0.5],[bugs@42tools.com])
+AC_INIT([lorica],[1.0.6],[bugs@42tools.com])
 
 AC_PREREQ(2.59)
 
@@ -532,6 +532,7 @@ echo "\
 	Making static executables:                            $msg_static
 	Install development header and IDL files:             $msg_lorica_devel
 	Download and build ACE and TAO locally if necessary:  $msg_tao_build
+	Building shared Lorica libraries:                     $msg_lorica_shared_libs
 	ACE+TAO version:                                      $LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE
-	Building shared libraries:                            $msg_lorica_shared_libs
+        Lorica version:                                       $PACKAGE_VERSION
 "

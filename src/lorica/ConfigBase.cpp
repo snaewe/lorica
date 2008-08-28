@@ -103,6 +103,12 @@ get_ip_from_ifname(const int inet_family,
 		}
 	}
 	freeifaddrs(myaddrs);
+
+	// paranoia check...
+	if (!strlen(retv)) {
+		free(retv);
+		retv = NULL;
+	}
 	
 	return retv;
 } 
@@ -233,13 +239,16 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 		
 		if (ifname.empty())
 			this->hostname_ = "";
-		else {
+		else while (true) {
 			char *ip_addr = get_ip_from_ifname(AF_INET, ifname.c_str());
 			this->hostname_ = ip_addr ? (const char*)ip_addr : "";
 			if (ip_addr) {
-				ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Autodetected hostname for IPv4 endpoint - %s\n"), this->hostname_.c_str()));
+				ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Autodetected address for IPv4 endpoint on %s - %s\n"), ifname.c_str(), this->hostname_.c_str()));
 				free(ip_addr);
-			}
+				break;
+			} 
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - Could not determine auto address for this IPv4 NIC - %s. Retrying in 10 seconds...\n"), ifname.c_str()));
+			sleep(10);
 		}
 	}
 
@@ -251,13 +260,16 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 		
 		if (ifname.empty())
 			this->hostname_ = "";
-		else {
+		else while (true) {
 			char *ip_addr = get_ip_from_ifname(AF_INET6, ifname.c_str());
 			this->hostname_ = ip_addr ? (const char*)ip_addr : "";
 			if (ip_addr) {
-				ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Autodetected hostname for IPv6 endpoint - %s\n"), this->hostname_.c_str()));
+				ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Autodetected address for IPv6 endpoint on %s - %s\n"), ifname.c_str(), this->hostname_.c_str()));
 				free(ip_addr);
-			}
+				break;
+			} 
+			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - Could not determine auto address for this IPv6 NIC - %s. Retrying in 10 seconds...\n"), ifname.c_str()));
+			sleep(10);
 		}
 	}
 

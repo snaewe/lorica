@@ -1,7 +1,16 @@
 2008-08-28  Jules Colding  <colding@42tools.com>
 
+	* configure.ac: Lorica 1.0.6
+
+	* defines/hardcoded-defs.h (VERSION): Incremented VERSION.
+
 	* src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
 	Print the TAO endpoint specification.
+	(Endpoint::parse_string): Print an warning message if the
+	NIC address couldn't be autodetected. Pause 10 seconds and
+	try again.
+	(get_ip_from_ifname): Added paranoia check on the address
+	string.
 
 2008-08-27  Jules Colding  <colding@42tools.com>
 

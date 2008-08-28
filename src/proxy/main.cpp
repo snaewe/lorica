@@ -597,7 +597,7 @@ ACE_TMAIN(int argc,
 		ACE_LOG_MSG->set_flags(ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica initializing\n")));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica %s initializing\n"), VERSION));
 
 	result = lorica.run_service_command();
 	if (result < 0)
