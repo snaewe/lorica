@@ -248,7 +248,7 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 				break;
 			} 
 			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - Could not determine auto address for this IPv4 NIC - %s. Retrying in 10 seconds...\n"), ifname.c_str()));
-			sleep(10);
+			ACE_OS::sleep(10); 
 		}
 	}
 
@@ -269,7 +269,7 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 				break;
 			} 
 			ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - Could not determine auto address for this IPv6 NIC - %s. Retrying in 10 seconds...\n"), ifname.c_str()));
-			sleep(10);
+			ACE_OS::sleep(10);
 		}
 	}
 
