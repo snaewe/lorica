@@ -178,6 +178,8 @@ Lorica::Config::Endpoint::as_tao_endpoint(std::string &arg)
 	}
 
 	arg += options;
+
+	ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - TAO EndPoint - %s\n"), arg.c_str()));
 }
 
 bool
