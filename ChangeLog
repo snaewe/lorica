@@ -1,3 +1,10 @@
+2008-09-03  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
+	Made the LM_WARNING depend upon the Lorica debug level. The
+	"got a reference mapped by another Lorica" was filling up
+	the logs.
+
 2008-08-28  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Lorica 1.0.6
