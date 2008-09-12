@@ -23,7 +23,9 @@ SUBDIRS = \
 	garbageCollector         \
 	genericEvaluator         \
 	mapForClient             \
-	mapForClientWithCorbaloc \
 	mapForServer             \
 	secureBridge             \
 	secureInvocation
+
+#	mapForClientWithCorbaloc 
+

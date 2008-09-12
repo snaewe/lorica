@@ -21,24 +21,29 @@
 
 #ifndef HELLO_H
 #define HELLO_H
-#include /**/ "ace/pre.h"
 
 #include "TestS.h"
 
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
 /// Implement the Test::Hello interface
-class Hello
-	: public virtual POA_Test::Hello
+class  Hello : public virtual POA_Test::Hello
 {
 public:
-	/// Constructor
-	Hello (CORBA::ORB_ptr orb);
+	// Constructor
+	Hello(CORBA::ORB_ptr orb);
 
-	// = The skeleton methods
-	virtual char * get_string (void)
-		ACE_THROW_SPEC ((CORBA::SystemException));
-
-	virtual void shutdown (void)
-		ACE_THROW_SPEC ((CORBA::SystemException));
+	// Destructor 
+	virtual ~Hello(void);
+  
+	virtual	char *get_string(void);
+  
+	virtual void shutdown(void);
+  
+	virtual void invoke_callback(::Test::CallBack_ptr cb,
+				     const char *message_to_callback);
 
 private:
 	/// Use an ORB reference to conver strings to objects and shutdown
@@ -46,5 +51,4 @@ private:
 	CORBA::ORB_var orb_;
 };
 
-#include /**/ "ace/post.h"
 #endif /* HELLO_H */

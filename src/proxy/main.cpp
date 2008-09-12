@@ -238,7 +238,8 @@ Lorica::Service_Loader::print_usage_and_die(void)
 #if defined (ACE_WIN32)
 	ACE_DEBUG((LM_INFO,
 		   ACE_TEXT("Usage: %s")
-		   ACE_TEXT(" -i -r -t -k -d -f -c -l\n")
+		   ACE_TEXT(" -V -i -r -t -k -d -f -c -l\n")
+		   ACE_TEXT(" -V: Print the version\n")
 		   ACE_TEXT(" -i: Install this program as an NT service\n")
 		   ACE_TEXT(" -r: Remove this program from the Service Manager\n")
 		   ACE_TEXT(" -s: Start the service\n")
@@ -250,17 +251,14 @@ Lorica::Service_Loader::print_usage_and_die(void)
 		   program_name.c_str(),
 		   0));
 #else
-	ACE_DEBUG((LM_INFO,
-		   ACE_TEXT("Usage: %s")
-		   ACE_TEXT(" -V -n -d -f <file> -c <level> -l <level> -n\n")
-		   ACE_TEXT(" -V: Print the version\n")
-		   ACE_TEXT(" -n: No fork - Run as a regular application\n")
-		   ACE_TEXT(" -d: Debug - Use current directory as working directory\n")
-		   ACE_TEXT(" -f: <file> Configuration file, default is \"/etc/lorica.conf\"\n")
-		   ACE_TEXT(" -c: <level; default:0> Turn on CORBA debugging\n")
-		   ACE_TEXT(" -l: <level; default:0> Turn on Lorica debugging\n"),
-		   program_name.c_str(),
-		   0));
+	ACE_OS::printf("Usage: %s -V -n -d -f <file> -c <level> -l <level> -n\n"
+		       " -V: Print the version\n"
+		       " -n: No fork - Run as a regular application\n"
+		       " -d: Debug - Use current directory as working directory\n"
+		       " -f: <file> Configuration file, default is \"/etc/lorica.conf\"\n"
+		       " -c: <level; default:0> Turn on CORBA debugging\n"
+		       " -l: <level; default:0> Turn on Lorica debugging\n",
+		       program_name.c_str());
 #endif /* ACE_WIN32 */
 	ACE_OS::exit(1);
 }
@@ -273,7 +271,7 @@ Lorica::Service_Loader::parse_args(int argc,
 		return 0;
 
 #if defined (ACE_WIN32)
-	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("irtkdf:c:l:"));
+	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("Virtkdf:c:l:"));
 #else
 	ACE_Get_Opt get_opt(argc, argv, ACE_TEXT("Vndf:c:l:"));
 #endif
@@ -297,17 +295,14 @@ Lorica::Service_Loader::parse_args(int argc,
 			service_command_ = SC_STOP;
 			break;
 #else /* !ACE_WIN32 */
-		case 'V':
-			ACE_DEBUG((LM_INFO,
-				   ACE_TEXT("%N:%l - Lorica version %s\n"),
-				   ACE_TEXT(VERSION),
-				   0));
-			return 1;
 		case 'n':
 			no_fork_ = true;
 			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in standalone mode\n")));
 			break;
 #endif
+		case 'V':
+			ACE_OS::printf("Lorica version %s\n", VERSION);
+			return 1;
 		case 'd':
 			debug_ = true;
 			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in debug mode\n")));

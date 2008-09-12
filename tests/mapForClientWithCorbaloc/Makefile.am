@@ -98,8 +98,10 @@ client_CPPFLAGS = \
 	$(LORICA_CPPFLAGS)
 
 client_SOURCES = \
-	TestC.cpp  \
-	client.cpp \
+	Callback.cpp \
+	Callback.h   \
+	TestC.cpp    \
+	client.cpp   \
 	Hello.h
 
 client_LDADD = \
@@ -119,6 +121,7 @@ server_CPPFLAGS = \
 
 
 server_SOURCES = \
+	Callback.h \
 	Hello.cpp  \
 	TestC.cpp  \
 	TestS.cpp  \

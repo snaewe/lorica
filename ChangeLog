@@ -1,5 +1,11 @@
 2008-09-12  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/main.cpp (Service_Loader::print_usage_and_die):
+	Make the output using ACE_OS::printf() on non-Windows as nothing
+	went to the terminal.
+	(Service_Loader::parse_args): Make the version string use
+	ACE_OS::printf() too.
+
 	* src/proxy/proxy.cpp:
 	The indentation was screwed up, fixed.
 
