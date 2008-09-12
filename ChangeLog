@@ -1,5 +1,15 @@
 2008-09-12  Jules Colding  <colding@42tools.com>
 
+	* src/lorica/ConfigBase.cpp (get_ip_from_ifname): Fix
+	possible SEGV.
+
+	* configure.ac: Increment version - now 1.0.7
+
+	* configurations/README: Small file explaining the contents
+	of /etc/lorica/.
+
+	* src/proxy/Makefile.am: Put sample configurations into /etc/lorica/.
+
 	* src/proxy/main.cpp (Service_Loader::print_usage_and_die):
 	Make the output using ACE_OS::printf() on non-Windows as nothing
 	went to the terminal.

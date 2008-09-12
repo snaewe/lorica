@@ -105,7 +105,7 @@ get_ip_from_ifname(const int inet_family,
 	freeifaddrs(myaddrs);
 
 	// paranoia check...
-	if (!strlen(retv)) {
+	if (retv && !strlen(retv)) {
 		free(retv);
 		retv = NULL;
 	}
