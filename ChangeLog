@@ -1,9 +1,18 @@
 2008-09-12  Jules Colding  <colding@42tools.com>
 
+	* configure.ac: Increment version - now 1.0.7
+
+	* src/proxy/lorica.conf: Documented the new '?' NIC identifier.
+
+	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
+	Change External_Address to use the new '?' NIC identifier.
+
 	* src/lorica/ConfigBase.cpp (get_ip_from_ifname): Fix
 	possible SEGV.
-
-	* configure.ac: Increment version - now 1.0.7
+	(get_first_external_ip): New function. It will attempt
+	with best effort to deduce the first non-localhost IPv4 or
+	IPv6 address. Use '?' for NIC name in a '%' or '+' endpoint
+	specification.
 
 	* configurations/README: Small file explaining the contents
 	of /etc/lorica/.
