@@ -302,6 +302,7 @@ Lorica::Service_Loader::parse_args(int argc,
 				   ACE_TEXT("%N:%l - Lorica version %s\n"),
 				   ACE_TEXT(VERSION),
 				   0));
+			return 1;
 		case 'n':
 			no_fork_ = true;
 			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in standalone mode\n")));

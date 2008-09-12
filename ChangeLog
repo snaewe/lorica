@@ -1,3 +1,11 @@
+2008-09-12  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp:
+	The indentation was screwed up, fixed.
+
+	* src/proxy/main.cpp (Service_Loader::parse_args):
+	Do not run if asked for the version.
+
 2008-09-03  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
