@@ -508,12 +508,13 @@ tests/genericEvaluator/server_agent/Makefile
 tests/genericEvaluator/unbind/Makefile
 tests/genericEvaluator/union/Makefile
 tests/mapForClient/Makefile
-tests/mapForClientWithCorbaloc/Makefile
 tests/mapForServer/Makefile
 tests/secureBridge/Makefile
 tests/secureInvocation/Makefile
 ])
 AC_OUTPUT
+
+dnl tests/mapForClientWithCorbaloc/Makefile
 
 case "$lorica_target" in
 	UNKNOWN)
