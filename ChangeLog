@@ -1,155 +1,161 @@
+Sat Sep 27 14:06:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * tests/genericEvaluator/logging/Makefile.am:
+
+	Pull the redundant lorica_Client from library list.
+
 2008-09-12  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Increment version - now 1.0.7
+        * configure.ac: Increment version - now 1.0.7
 
-	* src/proxy/lorica.conf: Documented the new '?' NIC identifier.
+        * src/proxy/lorica.conf: Documented the new '?' NIC identifier.
 
-	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
-	Change External_Address to use the new '?' NIC identifier.
+        * configurations/evolution-brutus/lorica.conf.evolution-brutus:
+        Change External_Address to use the new '?' NIC identifier.
 
-	* src/lorica/ConfigBase.cpp (get_ip_from_ifname): Fix
-	possible SEGV.
-	(get_first_external_ip): New function. It will attempt
-	with best effort to deduce the first non-localhost IPv4 or
-	IPv6 address. Use '?' for NIC name in a '%' or '+' endpoint
-	specification.
+        * src/lorica/ConfigBase.cpp (get_ip_from_ifname): Fix
+        possible SEGV.
+        (get_first_external_ip): New function. It will attempt
+        with best effort to deduce the first non-localhost IPv4 or
+        IPv6 address. Use '?' for NIC name in a '%' or '+' endpoint
+        specification.
 
-	* configurations/README: Small file explaining the contents
-	of /etc/lorica/.
+        * configurations/README: Small file explaining the contents
+        of /etc/lorica/.
 
-	* src/proxy/Makefile.am: Put sample configurations into /etc/lorica/.
+        * src/proxy/Makefile.am: Put sample configurations into /etc/lorica/.
 
-	* src/proxy/main.cpp (Service_Loader::print_usage_and_die):
-	Make the output using ACE_OS::printf() on non-Windows as nothing
-	went to the terminal.
-	(Service_Loader::parse_args): Make the version string use
-	ACE_OS::printf() too.
+        * src/proxy/main.cpp (Service_Loader::print_usage_and_die):
+        Make the output using ACE_OS::printf() on non-Windows as nothing
+        went to the terminal.
+        (Service_Loader::parse_args): Make the version string use
+        ACE_OS::printf() too.
 
-	* src/proxy/proxy.cpp:
-	The indentation was screwed up, fixed.
+        * src/proxy/proxy.cpp:
+        The indentation was screwed up, fixed.
 
-	* src/proxy/main.cpp (Service_Loader::parse_args):
-	Do not run if asked for the version.
+        * src/proxy/main.cpp (Service_Loader::parse_args):
+        Do not run if asked for the version.
 
 2008-09-03  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
-	Made the LM_WARNING depend upon the Lorica debug level. The
-	"got a reference mapped by another Lorica" was filling up
-	the logs.
+        * src/lorica/ProxyMapper.cpp (ProxyMapper::already_mapped):
+        Made the LM_WARNING depend upon the Lorica debug level. The
+        "got a reference mapped by another Lorica" was filling up
+        the logs.
 
 2008-08-28  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Lorica 1.0.6
+        * configure.ac: Lorica 1.0.6
 
-	* defines/hardcoded-defs.h (VERSION): Incremented VERSION.
+        * defines/hardcoded-defs.h (VERSION): Incremented VERSION.
 
-	* src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
-	Print the TAO endpoint specification.
-	(Endpoint::parse_string): Print an warning message if the
-	NIC address couldn't be autodetected. Pause 10 seconds and
-	try again.
-	(get_ip_from_ifname): Added paranoia check on the address
-	string.
+        * src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
+        Print the TAO endpoint specification.
+        (Endpoint::parse_string): Print an warning message if the
+        NIC address couldn't be autodetected. Pause 10 seconds and
+        try again.
+        (get_ip_from_ifname): Added paranoia check on the address
+        string.
 
 2008-08-27  Jules Colding  <colding@42tools.com>
 
-	* configurations/brutus_server/lorica.conf:
-	Improve documentation
+        * configurations/brutus_server/lorica.conf:
+        Improve documentation
 
-	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
-	Fix typo.
+        * src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+        Fix typo.
 
-	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
-	Improve comment explaining what to modify in the configuration.
+        * configurations/evolution-brutus/lorica.conf.evolution-brutus:
+        Improve comment explaining what to modify in the configuration.
 
-	* src/proxy/Makefile.am ($(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache):
-	Install the Brutus IFR cache file too, but let it go to "/etc/".
+        * src/proxy/Makefile.am ($(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache):
+        Install the Brutus IFR cache file too, but let it go to "/etc/".
 
-	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
-	Updated to reflect that the Brutus IFR cache file is present
-	in the distribution.
+        * configurations/evolution-brutus/lorica.conf.evolution-brutus:
+        Updated to reflect that the Brutus IFR cache file is present
+        in the distribution.
 
-	* lorica.spec.in (%files):
-	Added the IFR cache file
+        * lorica.spec.in (%files):
+        Added the IFR cache file
 
-	* defines/hardcoded-defs.h (VERSION):
-	Updated to "1.0.4"
+        * defines/hardcoded-defs.h (VERSION):
+        Updated to "1.0.4"
 
 2008-08-20  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/Makefile.am (LORICA_LIBS):
-	* src/OCI/Makefile.am (lib_LTLIBRARIES):
-	* src/lorica/Makefile.am (lib_LTLIBRARIES):
-	* configure.ac: Added option (--enable-lorica-shared-libs)
-	to force building of shared libraries.
+        * src/proxy/Makefile.am (LORICA_LIBS):
+        * src/OCI/Makefile.am (lib_LTLIBRARIES):
+        * src/lorica/Makefile.am (lib_LTLIBRARIES):
+        * configure.ac: Added option (--enable-lorica-shared-libs)
+        to force building of shared libraries.
 
 2008-08-11  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp (Service_Loader::parse_args): Fix
-	non-Windows build.
+        * src/proxy/main.cpp (Service_Loader::parse_args): Fix
+        non-Windows build.
 
-	* src/proxy/proxy.cpp (get_file): Fix file creation on Windows.
-	Print errors when opening and creating the file (if any).
-	(get_file): Fix non-Windows build.
+        * src/proxy/proxy.cpp (get_file): Fix file creation on Windows.
+        Print errors when opening and creating the file (if any).
+        (get_file): Fix non-Windows build.
 
-	* src/proxy/main.cpp (Service_Loader::parse_args):
-	Print command line options to the log.
-	(ACE_TMAIN): Initialize the logging framework earlier.
+        * src/proxy/main.cpp (Service_Loader::parse_args):
+        Print command line options to the log.
+        (ACE_TMAIN): Initialize the logging framework earlier.
 
-	* configurations/evolution-brutus/lorica.conf.evolution-brutus:
-	* configurations/brutus_server/lorica.conf:
-	Simplified configuration templates.
+        * configurations/evolution-brutus/lorica.conf.evolution-brutus:
+        * configurations/brutus_server/lorica.conf:
+        Simplified configuration templates.
 
 2008-08-09  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ConfigBase.cpp (Config::get_orb_options):
-	Disable shared profiles by default. It is still posible to enable
-	shared profiles in the configuration file.
+        * src/lorica/ConfigBase.cpp (Config::get_orb_options):
+        Disable shared profiles by default. It is still posible to enable
+        shared profiles in the configuration file.
 
 2008-08-08  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Added printout of used ACE+TAO version
+        * configure.ac: Added printout of used ACE+TAO version
 
-	* src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
-	Temporarely out-commented _non_existent() check.
+        * src/proxy/ReferenceMapper_i.cpp (ReferenceMapper_i::as_client_with_corbaloc):
+        Temporarely out-commented _non_existent() check.
 
-	* src/lorica/GenericMapper.cpp (GenericMapper::evaluator_for):
-	Added debug printout of failing IFR ID.
+        * src/lorica/GenericMapper.cpp (GenericMapper::evaluator_for):
+        Added debug printout of failing IFR ID.
 
-	* tests/mapForClientWithCorbaloc/Makefile.am (client_LDADD):
-	* tests/mapForClientWithCorbaloc/Makefile.am (server_LDADD):
-	Fix library list.
+        * tests/mapForClientWithCorbaloc/Makefile.am (client_LDADD):
+        * tests/mapForClientWithCorbaloc/Makefile.am (server_LDADD):
+        Fix library list.
 
-	* src/proxy/proxy.cpp: Changed indentation level to 8.
+        * src/proxy/proxy.cpp: Changed indentation level to 8.
 
 2008-08-06  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/proxy.cpp (get_file): Fix variable type
+        * src/proxy/proxy.cpp (get_file): Fix variable type
 
-	* src/proxy/main.cpp: Added ifdef to make it build on Windows
+        * src/proxy/main.cpp: Added ifdef to make it build on Windows
 
-	* tests/mapForClientWithCorbaloc/Makefile.am (TAO_IDLFLAGS): Remove
-	unneeded "-GI".
+        * tests/mapForClientWithCorbaloc/Makefile.am (TAO_IDLFLAGS): Remove
+        unneeded "-GI".
 
-	* tests/mapForClientWithCorbaloc/client.cpp (main): Inserting space to align
-	output strings.
+        * tests/mapForClientWithCorbaloc/client.cpp (main): Inserting space to align
+        output strings.
 
 2008-08-05  Jules Colding  <colding@42tools.com>
 
-	* tests/mapForClientWithCorbaloc/client.cpp (main): Cleanups
+        * tests/mapForClientWithCorbaloc/client.cpp (main): Cleanups
 
-	* src/lorica/MapperRegistry.h (Lorica_MapperRegistry): 
-	* src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
-	Removed this redundant function.
+        * src/lorica/MapperRegistry.h (Lorica_MapperRegistry):
+        * src/lorica/MapperRegistry.cpp (Lorica_MapperRegistry::map_reference_with_ifr_id):
+        Removed this redundant function.
 
 Tue Aug  5 14:37:42 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/ReferenceMapper_i.cpp:
-	  Force the synthesized object reference to take on the supplied
-	  type identifier. This is necessary so that the "native" reference
-	  placed in the mapper's repository will have the correct type and
-	  thus be associated with the proper evaluator.
+          Force the synthesized object reference to take on the supplied
+          type identifier. This is necessary so that the "native" reference
+          placed in the mapper's repository will have the correct type and
+          thus be associated with the proper evaluator.
 
 2008-08-05  Jules Colding  <colding@42tools.com>
 

@@ -141,7 +141,6 @@ server_SOURCES = \
 
 server_LDADD = \
 	$(LORICA_top_dir)/src/lorica/liblorica_Client.la \
-	-llorica_Client                                  \
 	-lTAO_DynamicInterface                           \
 	-lTAO_Messaging                                  \
 	-lTAO_PI                                         \
