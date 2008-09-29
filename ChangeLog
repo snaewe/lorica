@@ -1,5 +1,10 @@
 2008-09-29  Jules Colding  <colding@42tools.com>
 
+	* m4/acetao.m4: Check for ACETAO epoch and decide to test for gperf
+	or ace_gperf.
+
+	* configure.ac (ACETAO_EPOCH): Enables numerical version comparisons.
+
 	* src/lorica/ProxyReplyHandler.cpp (ProxyReplyHandler::handle_location_forward_i):
 	Remove debug message which is printed "a lot".
 

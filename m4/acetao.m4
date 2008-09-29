@@ -27,6 +27,9 @@ AC_DEFUN([AX_LORICA_CHECK_ACETAO],
   EXTRA_PATH="$1"
   LORICA_ACETAO_CHECKS_OUT="yes"
 
+  dnl This is the version where the ACE supplied gperf was renamed to ace_gperf
+  ACE_GPERF_EPOCH=566
+
   dnl State all used ACE and TAO headers
   ACE_HEADERS="ace/ACE.h ace/Auto_Ptr.h ace/Dynamic_Service.h ace/Get_Opt.h ace/INET_Addr.h ace/Log_Msg.h ace/Min_Max.h ace/Mutex.h ace/OS_NS_errno.h ace/OS_NS_stdio.h ace/OS_NS_stdlib.h ace/OS_NS_string.h ace/OS_NS_strings.h ace/OS_NS_unistd.h ace/Service_Config.h ace/Service_Gestalt.h ace/Signal.h ace/SString.h ace/streams.h ace/Task.h ace/Thread.h ace/Time_Value.h TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h TAO/orbsvcs/orbsvcs/IFRService/IFR_ComponentsS.h TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h TAO/orbsvcs/orbsvcs/IFRService/Options.h TAO/orbsvcs/orbsvcs/IOR_Multicast.h TAO/orbsvcs/orbsvcs/SecurityC.h TAO/orbsvcs/orbsvcs/SSLIOPC.h TAO/tao/AnyTypeCode/Any_Impl.h TAO/tao/AnyTypeCode/Any_Unknown_IDL_Type.h TAO/tao/AnyTypeCode/NVList.h TAO/tao/corbafwd.h TAO/tao/CORBA_String.h TAO/tao/debug.h TAO/tao/DynamicAny/DynamicAny.h TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.h TAO/tao/DynamicInterface/Request.h TAO/tao/DynamicInterface/Server_Request.h TAO/tao/EndpointPolicy/EndpointPolicy.h TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h TAO/tao/Exception.h TAO/tao/IFR_Client/IFR_BasicC.h TAO/tao/IORTable/IORTable.h TAO/tao/Messaging/AMH_Response_Handler.h TAO/tao/MProfile.h TAO/tao/Object.h TAO/tao/OctetSeqC.h TAO/tao/ORB_Constants.h TAO/tao/ORB_Core.h TAO/tao/ORBInitializer_Registry.h TAO/tao/PI/PI.h TAO/tao/PortableServer/POAManagerFactory.h TAO/tao/PortableServer/PortableServer.h TAO/tao/PortableServer/Servant_Base.h TAO/tao/Profile.h TAO/tao/Stub.h TAO/tao/SystemException.h TAO/tao/Tagged_Components.h TAO/tao/TAO_Server_Request.h TAO/tao/Thread_Lane_Resources.h TAO/tao/BiDir_GIOP/BiDirGIOP.h"
 
@@ -34,7 +37,11 @@ AC_DEFUN([AX_LORICA_CHECK_ACETAO],
   ACE_LIBS="ACE ACE_SSL TAO TAO_Codeset TAO_AnyTypeCode TAO_CodecFactory TAO_Valuetype TAO_DynamicAny TAO_PI TAO_PortableServer TAO_Messaging TAO_DynamicInterface TAO_EndpointPolicy TAO_IFR_Client TAO_IORTable TAO_BiDirGIOP TAO_Svc_Utils TAO_TypeCodeFactory TAO_IFRService TAO_PI_Server TAO_Security TAO_SSLIOP"
 
   dnl State all needed TAO programs
-  TAO_EXECUTABLES="gperf tao_idl tao_ifr"
+  if test "$ACETAO_EPOCH" -lt "$ACE_GPERF_EPOCH"; then 
+     TAO_EXECUTABLES="gperf tao_idl tao_ifr"
+  else  
+     TAO_EXECUTABLES="ace_gperf tao_idl tao_ifr"
+  fi
 
   dnl Check for needed TAO programs
   for exefile in $TAO_EXECUTABLES

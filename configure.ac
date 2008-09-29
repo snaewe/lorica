@@ -85,6 +85,19 @@ AC_ARG_WITH(acetao-age, AS_HELP_STRING([--with-acetao-age], [ACE+TAO least signi
  			[LIBACETAO_AGE=6])
 AC_SUBST(LIBACETAO_AGE)
 
+dnl
+dnl Deduce the ACETAO epoch number
+dnl
+HH=$LIBACE_CURRENT
+TT=$LIBACETAO_REVISION
+OO=$LIBACETAO_AGE
+let "HH *= 100"
+let "TT *= 10"
+let "HH += $OO"
+let "ACETAO_EPOCH = $HH + $TT"
+AC_SUBST(ACETAO_EPOCH)
+AC_DEFINE_UNQUOTED([ACETAO_EPOCH], [$ACETAO_EPOCH], [Enables numerical ACETAO version comparisons])
+
 ACETAO="http://download.dre.vanderbilt.edu/previous_versions/ACE+TAO-$LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE.tar.bz2"
 AC_SUBST(ACETAO)
 
