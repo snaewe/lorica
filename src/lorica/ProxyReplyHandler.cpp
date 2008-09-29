@@ -178,7 +178,6 @@ Lorica::ProxyReplyHandler::handle_location_forward_i(TAO_InputCDR & incoming,
 
 	CORBA::ORB_var orb = mapper_.orb();
 	CORBA::String_var ior = orb->object_to_string (fwd.in());
-	ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - forwarding IOR: %s\n"), ior.in()));
 
 	bool is_perm = reply_status == TAO_AMI_REPLY_LOCATION_FORWARD_PERM;
 	response_handler_->invoke_location_forward(fwd, is_perm);

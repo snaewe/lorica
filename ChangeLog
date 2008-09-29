@@ -1,3 +1,8 @@
+2008-09-29  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ProxyReplyHandler.cpp (ProxyReplyHandler::handle_location_forward_i):
+	Remove debug message which is printed "a lot".
+
 Sat Sep 27 14:06:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/genericEvaluator/logging/Makefile.am:
