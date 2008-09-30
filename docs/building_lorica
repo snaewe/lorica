@@ -93,7 +93,7 @@ that the Lorica executable may find its shared library dependencies.
 Visual Studio Build Guide 
 =========================
 
-This short guide will describe how to use Microsoft Visual Studio 2005 C++ for 
+This short guide will describe how to use Microsoft Visual Studio 2008 C++ for 
 building Lorica. It assumes you have read the section "Building ACE and TAO" in
 the setup_visual_studio.txt file as distributed with the brutus-server source.
 
@@ -136,9 +136,9 @@ Lorica project files
 To create the Microsoft Visual Studio project files, open a console, make
 %LORICA_ROOT% the current directory and execute the following command:
 
-   %ACE_ROOT%\bin\mwc.pl -type vc8 lorica.mwc
+   %ACE_ROOT%\bin\mwc.pl -type vc9 lorica.mwc
 
-You are now almost ready to build Lorica. Restart Visual C++ 2005 (if 
+You are now almost ready to build Lorica. Restart Visual C++ 2008 (if 
 it was already up and running) and open the Lorica Solution file:
 
    %LORICA_ROOT%\lorica.sln
@@ -152,11 +152,11 @@ and add the following paths:
    Include files:
       C:\work\src\42tools\lorica\src
       C:\ACE_wrappers\TAO
-      C:\work\src\openssl-0.9.8g\inc32
+      C:\work\src\openssl-0.9.8i\inc32
 
    Library files:
       C:\ACE_wrappers\lib
-      C:\work\src\openssl-0.9.8g\out32dll
+      C:\work\src\openssl-0.9.8i\out32dll
 
 
 Starting Lorica 

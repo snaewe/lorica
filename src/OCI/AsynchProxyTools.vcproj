@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="AsynchProxyTools"
 	ProjectGUID="{17B7D8D6-FECA-1BAD-C4C1-6159001841FD}"
 	RootNamespace="AsynchProxyTools"
@@ -51,7 +51,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,..\..\src,..\.."
-				PreprocessorDefinitions="OCI_ASYNCHPROXYTOOLS_BUILD_DLL;_DEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;LORICA_HAVE_DOC_MPC"
+				PreprocessorDefinitions="OCI_ASYNCHPROXYTOOLS_BUILD_DLL;_DEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;LORICA_HAVE_DOC_MPC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -133,7 +133,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,..\..\src,..\.."
-				PreprocessorDefinitions="OCI_ASYNCHPROXYTOOLS_BUILD_DLL;NDEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;LORICA_HAVE_DOC_MPC"
+				PreprocessorDefinitions="OCI_ASYNCHPROXYTOOLS_BUILD_DLL;NDEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;LORICA_HAVE_DOC_MPC"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				WarningLevel="3"

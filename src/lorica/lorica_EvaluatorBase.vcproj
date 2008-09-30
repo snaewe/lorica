@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
+	Version="9.00"
 	Name="lorica_EvaluatorBase"
 	ProjectGUID="{BA675A00-FECA-1BAD-E9AB-BC5186000F50}"
 	RootNamespace="lorica_EvaluatorBase"
@@ -51,7 +51,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
-				PreprocessorDefinitions="LORICA_EVALUATORBASE_BUILD_DLL;_DEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				PreprocessorDefinitions="LORICA_EVALUATORBASE_BUILD_DLL;_DEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -133,7 +133,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
-				PreprocessorDefinitions="LORICA_EVALUATORBASE_BUILD_DLL;NDEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_M_IX86;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				PreprocessorDefinitions="LORICA_EVALUATORBASE_BUILD_DLL;NDEBUG;WIN32;_WINDOWS;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				WarningLevel="3"
@@ -395,13 +395,13 @@
 				RelativePath="ConfigBase.h">
 			</File>
 			<File
-				RelativePath="EvaluatorBase.h">
-			</File>
-			<File
 				RelativePath="EvaluatorLoader.h">
 			</File>
 			<File
 				RelativePath="FileConfig.h">
+			</File>
+			<File
+				RelativePath="Lorica_EvaluatorBase_Export.h">
 			</File>
 			<File
 				RelativePath="MapperRegistry.h">
@@ -539,6 +539,22 @@
 						CommandLine="generate_export_file.pl  &quot;Lorica_EvaluatorBase&quot; > &quot;Lorica_EvaluatorBase_Export.h&quot;"
 						Outputs="Lorica_EvaluatorBase_Export.h"/>
 				</FileConfiguration>
+			</File>
+		</Filter>
+		<Filter
+			Name="Inline Files"
+			Filter="i;inl">
+			<File
+				RelativePath="ReferenceMapperC.inl">
+			</File>
+			<File
+				RelativePath="ReferenceMapperS.inl">
+			</File>
+			<File
+				RelativePath="ServerAgentC.inl">
+			</File>
+			<File
+				RelativePath="ServerAgentS.inl">
 			</File>
 		</Filter>
 	</Files>
