@@ -227,14 +227,10 @@ Lorica::Proxy::open(void *args)
 static inline FILE*
 get_file(const char *filename)
 {
-        ACE_HANDLE file_fd = NULL;
+        ACE_HANDLE file_fd = ACE_INVALID_HANDLE;
         FILE *file = NULL;
 
         file_fd = ACE_OS::open(filename, O_CREAT | O_WRONLY | O_TRUNC);
-        if (!file_fd) {
-                ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not ACE_OS::open %s\n", filename));
-                return NULL;
-        }
         if (ACE_INVALID_HANDLE == file_fd) {
                 ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not ACE_OS::open %s\n", filename));
                 return NULL;

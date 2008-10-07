@@ -1,6 +1,9 @@
 2008-10-07  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Release 1.0.9
+	* configure.ac: Released 1.0.9
+
+	* src/proxy/proxy.cpp (get_file): Fix initialization
+	of an ACE_HANDLE local variable
 
 	* src/lorica/ConfigBase.cpp (get_first_external_ip):
 	Remove really, really stupid brown paper bag kind of bug....
