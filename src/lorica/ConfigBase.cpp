@@ -141,9 +141,6 @@ get_first_external_ip(const int inet_family)
                 retv = NULL;
         }
 
-        if (retv)
-                printf("%s\n", retv);
-        exit(1);
         return retv;
 }
 

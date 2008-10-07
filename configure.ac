@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT([lorica],[1.0.8],[bugs@42tools.com])
+AC_INIT([lorica],[1.0.9],[bugs@42tools.com])
 
 AC_PREREQ(2.59)
 
