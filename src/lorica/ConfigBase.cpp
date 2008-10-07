@@ -252,10 +252,11 @@ Lorica::Config::Endpoint::operator!=(const Lorica::Config::Endpoint& a)
                 || (is_ipv6_ != is_ipv6_)
                 || (ssl_port_ != a.ssl_port_));
 }
+
 void
 Lorica::Config::Endpoint::as_tao_endpoint(std::string &arg)
 {
-        arg += "iiop://";
+        arg += "iiop://1.2@";
         std::string options;
 
         if (this->is_ipv6_)
