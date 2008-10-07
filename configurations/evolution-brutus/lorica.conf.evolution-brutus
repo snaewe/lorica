@@ -31,64 +31,6 @@
 # documentation on how to do that.
 #
 #                       *  ***  * 
-#
-# Syntax is: 
-#          <> ==> Required, [] ==> Optional 
-#
-#    token/values:
-#
-#          "<TOKEN><WHITESPACE><VALUE(S)>[WHITESPACE]"
-#
-#    comment:
-#
-#          "#[ANY COMBINATION OF COMMENT TEXT AND WHITESPACE]"
-#
-# The tokens and values in this configuration file are case
-# sensitive.
-#
-# Every option is clearly marked MANDATORY it is otherwise
-# optional.
-# 
-# It is not allowed to start a line with a whitespace
-# character unless that line is composed of whitespace 
-# characters only. A whitespace character is defined as
-# ' ', '\t' or '\r'.
-# 
-# The order of normal configuration tokens does not matter. Any
-# trailing whitespace is ignored.
-#
-# The keyword token "IFR_CmdOption" and "ORB_Option" is 
-# recognized by the parser to the effect that on WIndows you can 
-# do things like:
-#
-# ORB_Option -ORBDebug
-# ORB_Option -ORBLogFile
-# ORB_Option C:\orb.log
-#
-# While on e.g. Linux you can do:
-#
-# ORB_Option -ORBDebug
-# ORB_Option -ORBLogFile
-# ORB_Option /home/some_user/tmp/orb.log
-#
-# The ORB in question will then be given the following 
-# command-line options:
-#
-# "-ORBDebug -ORBLogFile C:\orb.log"
-#
-# The order is obviously important when specifying ORB options.
-# The placement of the ORB options in the configuration file
-# does not matter as long as their internal ordering are 
-# kept. ORB options can thus be interplaced in between normal
-# options if so desired.
-#
-# IFR_CmdOption is parsed to construct command line options for
-# any collated IFR service.
-#
-# ORB_Option is parsed to construct command line options 
-# for any ORB which is used by Lorica. 
-#
-
 
 #################################################################
 #                                                               #
@@ -105,7 +47,8 @@
 #                                                               #
 #    Please check that the NIC name used in the                 #
 #    "External_Address" specification is correct. On, say,      #
-#    Mac OS X, it is usually something else, e.g. en0.          # 
+#    Mac OS X, it is usually something like en0, while on       # 
+#    Linux eth0 is more usual.                                  #
 #                                                               #
 #    Remember to restart Lorica after modifying the             #
 #    configuration file and copying the IFR cache file.         #
