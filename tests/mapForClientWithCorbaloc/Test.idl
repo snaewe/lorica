@@ -24,12 +24,9 @@
 /// Put the interfaces in a module, to avoid global namespace pollution
 module Test
 {
-	interface CallBack {
-		void send_message(in string message);
-	};
-
 	/// A very simple interface
-	interface Hello {
+	interface Hello
+	{
 		// Registered name in the IOR table
 		const string IOR_TABLE_KEY = "TEST_HELLO";
 
@@ -41,8 +38,5 @@ module Test
 		 * This method is used to simplify the test shutdown process
 		 */
 		oneway void shutdown ();
-
-		oneway void invoke_callback(in CallBack cb,
-					    in string message_to_callback);
 	};
 };

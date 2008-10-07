@@ -28,19 +28,16 @@ Hello::Hello (CORBA::ORB_ptr orb)
 {
 }
 
-char *Hello::get_string(void)
+char *
+Hello::get_string (void)
+	ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	return CORBA::string_dup ("Hello there!");
 }
 
-void Hello::shutdown(void)
+void
+Hello::shutdown (void)
+	ACE_THROW_SPEC ((CORBA::SystemException))
 {
 	this->orb_->shutdown (0);
-}
-
-
-void Hello_i::invoke_callback(::Test::CallBack_ptr cb,
-			      const char *message_to_callback)
-{
-	cb->send_message(message_to_callback);
 }

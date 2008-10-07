@@ -25,7 +25,6 @@ SUBDIRS = \
 	mapForClient             \
 	mapForServer             \
 	secureBridge             \
-	secureInvocation
-
-#	mapForClientWithCorbaloc 
+	secureInvocation         \
+	mapForClientWithCorbaloc 
 
