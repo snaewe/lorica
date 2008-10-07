@@ -16,7 +16,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-# serial 3
+# serial 4
 
 dnl AX_LORICA_CHECK_ACETAO()
 dnl Checks for all programs, libraries and header files that are 
