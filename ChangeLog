@@ -1,5 +1,8 @@
 2008-10-10  Jules Colding  <colding@42tools.com>
 
+	* release.sh (product): Do not redistribute the Windows
+	debug build.
+
 	* Lorica: Updated a few files related to the Windows
 	installer.
 
