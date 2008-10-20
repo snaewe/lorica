@@ -58,18 +58,19 @@ become_daemon(const bool NoFork,
 	      const bool Debug)
 {
 	struct sigaction sig_act;
+	pid_t pid = -1;
+#ifndef LORICA_DARWIN
 	struct rlimit rl;
 	unsigned int n;
-	pid_t pid = -1;
 	int fd0;
 	int fd1;
 	int fd2;
-
+#endif
 	/* reset the file mode mask */
 	ACE_OS::umask(0);
 
 	/*
-	 * A process that has terminated but has not yet been waited for is a zombie.
+	 * A process that has terminated, but has not yet been waited for, is a zombie.
 	 * On the other hand, if the parent dies first, init (process 1) inherits the
 	 * child and becomes its parent.
 	 *
@@ -133,6 +134,11 @@ become_daemon(const bool NoFork,
 	 * to prep the daemon process for operation
 	 */
 
+/* 
+ * We should not do any of the good things below when running
+ * on darwin. See launchd.plist(5).
+ */
+#ifndef LORICA_DARWIN
 	if (!Debug) { // change the working directory
 		if ((ACE_OS::chdir("/")) < 0)
 			return EXIT_ERROR;
@@ -162,7 +168,7 @@ become_daemon(const bool NoFork,
 		fd0 = ACE_OS::open("/dev/null", O_RDWR);
 	if (0 != fd0)
 		return EXIT_ERROR;
-
+#endif
 	if (!Debug
 	    && (ACE_OS::mkdir(LORICA_CACHE_DIR, 0755))
 	    && (EEXIST != errno))

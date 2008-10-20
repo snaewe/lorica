@@ -1,3 +1,8 @@
+2008-10-20  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/main.cpp (become_daemon): Follow launchd.plist(5)
+	closely when running on Darwin.
+
 2008-10-10  Jules Colding  <colding@42tools.com>
 
 	* release.sh (product): Do not redistribute the Windows
