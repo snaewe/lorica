@@ -150,6 +150,7 @@ and add the following paths:
       C:\ACE_wrappers\bin
 
    Include files:
+      C:\work\src\42tools\lorica
       C:\work\src\42tools\lorica\src
       C:\ACE_wrappers\TAO
       C:\work\src\openssl-0.9.8i\inc32
