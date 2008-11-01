@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica header file.
@@ -104,7 +104,7 @@ namespace Lorica
 		// returns true, and replaces the supplied mapped ref with a native
 		// ref if the mapped ref is known. Otherwise it returns false.
 		bool native_for_mapped(CORBA::Object_ptr &ref,
-				       PortableServer::POA_ptr poa);
+													 PortableServer::POA_ptr poa);
 
 		CORBA::Object_ptr native_for_mapped_i(const CORBA::OctetSeq &idstr,
 						      Lorica::ServerAgent_ptr &sa);
@@ -181,12 +181,12 @@ namespace Lorica
 		CORBA::ORB_var orb_;
 		PortableServer::Current_var poa_current_;
 
-	private:
 		// The POA used to map outward facing object references
 		PortableServer::POA_var out_facing_poa_;
 		// The POA used to map inward facing object references
 		PortableServer::POA_var in_facing_poa_;
 
+	private:
 		// a collection of ReferenceMapValues keyed by the mapped obj's ID.
 		RMVByMapped *mapped_values_;
 

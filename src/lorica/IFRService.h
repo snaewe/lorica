@@ -36,7 +36,8 @@ namespace Lorica
 	public:
 		/// Initialize the IFR service.
 		int init(const bool Debug,
-			 CORBA::ORB_ptr orb);
+			 CORBA::ORB_ptr orb,
+			 PortableServer::POA_ptr poa);
 
 		/// Shut down the IFR Service.
 		int fini(void);

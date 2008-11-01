@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica source file.
@@ -37,7 +37,8 @@
 
 int
 Lorica::IFRService::init(const bool Debug,
-			 CORBA::ORB_ptr orb)
+												 CORBA::ORB_ptr orb,
+                         PortableServer::POA_ptr poa)
 {
 	Lorica::Config *config = Lorica::FileConfig::instance();
 
@@ -65,9 +66,8 @@ Lorica::IFRService::init(const bool Debug,
 			       TAO_IFR_Server,
 			       -1);
 
-		result = this->my_ifr_server_->init_with_orb(argc,
-							     arguments->argv(),
-							     orb);
+		result = this->my_ifr_server_->init_with_poa(argc, arguments->argv(),
+																								 orb, poa);
 		if (result != 0)
 			return result;
 	}

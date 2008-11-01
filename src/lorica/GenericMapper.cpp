@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+/* -*- Mode: C++; tab-width: 2; indent-tabs-mode: t; c-basic-offset: 2 -*- */
 
 /*
  *    Lorica source file.
@@ -63,15 +63,17 @@ Lorica::GenericMapper::proxy_mapper_init(PortableServer::POAManager_ptr outward,
 
 	this->optable_ = new OCI_APT::OperationTable();
 
+	int result = this->Lorica::ProxyMapper::proxy_mapper_init(outward, inward, orb);
+
 	// Collocate the IFR Service.
-	ifr_.init(debug_, orb);
+	ifr_.init(debug_, orb, this->in_facing_poa_);
 
 	ifr_client_ = ACE_Dynamic_Service<TAO_IFR_Client_Adapter>::instance(TAO_ORB_Core::ifr_client_adapter_name());
 
 	if (ifr_client_ == 0)
 		throw ::CORBA::INTF_REPOS();
 
-	return this->Lorica::ProxyMapper::proxy_mapper_init(outward, inward, orb);
+	return result;
 }
 
 OCI_APT::ArgList*

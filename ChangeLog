@@ -1,56 +1,66 @@
+Sat Nov  1 14:14:25 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericMapper.cpp:
+        * src/lorica/IFRService.h:
+        * src/lorica/IFRService.cpp:
+        * src/lorica/ProxyMapper.h:
+
+	  Use the new interface in the TAO_IFRService to supply a POA
+	  as well as an ORB to the IFRService initializer.
+
 2008-10-20  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp (become_daemon): Follow launchd.plist(5)
-	closely when running on Darwin.
+        * src/proxy/main.cpp (become_daemon): Follow launchd.plist(5)
+        closely when running on Darwin.
 
 2008-10-10  Jules Colding  <colding@42tools.com>
 
-	* release.sh (product): Do not redistribute the Windows
-	debug build.
+        * release.sh (product): Do not redistribute the Windows
+        debug build.
 
-	* Lorica: Updated a few files related to the Windows
-	installer.
+        * Lorica: Updated a few files related to the Windows
+        installer.
 
 2008-10-07  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Released 1.0.9
+        * configure.ac: Released 1.0.9
 
-	* src/proxy/proxy.cpp (get_file): Fix initialization
-	of an ACE_HANDLE local variable
+        * src/proxy/proxy.cpp (get_file): Fix initialization
+        of an ACE_HANDLE local variable
 
-	* src/lorica/ConfigBase.cpp (get_first_external_ip):
-	Remove really, really stupid brown paper bag kind of bug....
+        * src/lorica/ConfigBase.cpp (get_first_external_ip):
+        Remove really, really stupid brown paper bag kind of bug....
 
-	* configure.ac:
-	* tests/Makefile.am:
-	* tests/mapForClientWithCorbaloc/Makefile.am:
-	* tests/mapForClientWithCorbaloc/Hello.h:
-	* tests/mapForClientWithCorbaloc/Test.idl:
-	* tests/mapForClientWithCorbaloc/Hello.cpp:
-	Reverted accidental commit of broken code.
+        * configure.ac:
+        * tests/Makefile.am:
+        * tests/mapForClientWithCorbaloc/Makefile.am:
+        * tests/mapForClientWithCorbaloc/Hello.h:
+        * tests/mapForClientWithCorbaloc/Test.idl:
+        * tests/mapForClientWithCorbaloc/Hello.cpp:
+        Reverted accidental commit of broken code.
 
 2008-10-06  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
-	Explicitly create endpoints with GIOP 1.2
+        * src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
+        Explicitly create endpoints with GIOP 1.2
 
-	* m4/acetao.m4: Bump serial number
+        * m4/acetao.m4: Bump serial number
 
 2008-09-29  Jules Colding  <colding@42tools.com>
 
-	* m4/acetao.m4: Check for ACETAO epoch and decide to test for gperf
-	or ace_gperf.
+        * m4/acetao.m4: Check for ACETAO epoch and decide to test for gperf
+        or ace_gperf.
 
-	* configure.ac (ACETAO_EPOCH): Enables numerical version comparisons.
+        * configure.ac (ACETAO_EPOCH): Enables numerical version comparisons.
 
-	* src/lorica/ProxyReplyHandler.cpp (ProxyReplyHandler::handle_location_forward_i):
-	Remove debug message which is printed "a lot".
+        * src/lorica/ProxyReplyHandler.cpp (ProxyReplyHandler::handle_location_forward_i):
+        Remove debug message which is printed "a lot".
 
 Sat Sep 27 14:06:14 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * tests/genericEvaluator/logging/Makefile.am:
 
-	Pull the redundant lorica_Client from library list.
+        Pull the redundant lorica_Client from library list.
 
 2008-09-12  Jules Colding  <colding@42tools.com>
 
