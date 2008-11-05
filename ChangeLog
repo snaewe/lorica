@@ -1,28 +1,41 @@
+Wed Nov  5 18:27:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ConfigBase.cpp:
+
+	  Revert the change from Jul 24 11:35:27 to restore the order of
+	  evaluation on the endpoints. The IFR issue was resolved by adding
+	  a new interface to the IFR_Service to allow the loader to supply
+	  a POA to become the new root, thus allowing the IFR to explicitly
+	  use only the inside endpoint. 
+
+	  The external endpoint must be evaluated first to work around an
+	  issue with the evaluation of bidirectional GIOP listen points.
+	
 2008-11-05  Jules Colding  <colding@42tools.com>
 
-	* configure.ac:
-	* m4/acetao.m4:
-	* acetao/Makefile.am:
-	Updated to support building ACE and TAO from svn instead of a
-	distribution tarball. Just use --enable-tao-svn-build to use
-	this feature.
+        * configure.ac:
+        * m4/acetao.m4:
+        * acetao/Makefile.am:
+        Updated to support building ACE and TAO from svn instead of a
+        distribution tarball. Just use --enable-tao-svn-build to use
+        this feature.
 
-	* apple/installer/resources/ReadMe.rtf: Updated with information
-	about the Mac OS X Application Firewall.
+        * apple/installer/resources/ReadMe.rtf: Updated with information
+        about the Mac OS X Application Firewall.
 
-	* acetao/acetao_svn_update.sh: New file to help fix horrible
-	performance/functional issues with "make" logic.
+        * acetao/acetao_svn_update.sh: New file to help fix horrible
+        performance/functional issues with "make" logic.
 
-	* tests/genericEvaluator/bidir/client.conf: (On  behalf of Phil)
-	New file to prevent creation of additional connections
+        * tests/genericEvaluator/bidir/client.conf: (On  behalf of Phil)
+        New file to prevent creation of additional connections
 
-	* tests/genericEvaluator/bidir/run_test.pl:
-	Avoid timeout error by increasing wait time.
-	Prevent creation of addition connection that
-	would spoil the test.
+        * tests/genericEvaluator/bidir/run_test.pl:
+        Avoid timeout error by increasing wait time.
+        Prevent creation of addition connection that
+        would spoil the test.
 
-	* tests/genericEvaluator/callback/run_test.pl:
-	Avoid timeout error by increasing wait time.
+        * tests/genericEvaluator/callback/run_test.pl:
+        Avoid timeout error by increasing wait time.
 
 Sat Nov  1 14:14:25 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -31,8 +44,8 @@ Sat Nov  1 14:14:25 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/lorica/IFRService.cpp:
         * src/lorica/ProxyMapper.h:
 
-	  Use the new interface in the TAO_IFRService to supply a POA
-	  as well as an ORB to the IFRService initializer.
+          Use the new interface in the TAO_IFRService to supply a POA
+          as well as an ORB to the IFRService initializer.
 
 2008-10-20  Jules Colding  <colding@42tools.com>
 
