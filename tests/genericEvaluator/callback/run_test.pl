@@ -93,7 +93,7 @@ if (PerlACE::waitforfile_timed ($mappedfile,
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (15);
+$client = $CL->SpawnWaitKill (20);
 
 $server = $SV->Kill ();
 

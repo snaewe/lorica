@@ -1,3 +1,29 @@
+2008-11-05  Jules Colding  <colding@42tools.com>
+
+	* configure.ac:
+	* m4/acetao.m4:
+	* acetao/Makefile.am:
+	Updated to support building ACE and TAO from svn instead of a
+	distribution tarball. Just use --enable-tao-svn-build to use
+	this feature.
+
+	* apple/installer/resources/ReadMe.rtf: Updated with information
+	about the Mac OS X Application Firewall.
+
+	* acetao/acetao_svn_update.sh: New file to help fix horrible
+	performance/functional issues with "make" logic.
+
+	* tests/genericEvaluator/bidir/client.conf: (On  behalf of Phil)
+	New file to prevent creation of additional connections
+
+	* tests/genericEvaluator/bidir/run_test.pl:
+	Avoid timeout error by increasing wait time.
+	Prevent creation of addition connection that
+	would spoil the test.
+
+	* tests/genericEvaluator/callback/run_test.pl:
+	Avoid timeout error by increasing wait time.
+
 Sat Nov  1 14:14:25 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/GenericMapper.cpp:

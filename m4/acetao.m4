@@ -16,7 +16,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-# serial 4
+# serial 5
 
 dnl AX_LORICA_CHECK_ACETAO()
 dnl Checks for all programs, libraries and header files that are 
@@ -72,8 +72,8 @@ AC_DEFUN([AX_LORICA_CHECK_ACETAO],
 dnl AX_LORICA_ACETAO_ADAPT()
 dnl Tries to adapt the ACE+TAO variables to the platform at hand.
 dnl
-dnl CONF_ACE_ROOT, ACETAO_CPPFLAGS and ACETAO_LDFLAGS will have
-dnl been set upon exit. The flags must be prefixed to CPPFLAGS 
+dnl ACETAO_SVN_ROOT, CONF_ACE_ROOT, ACETAO_CPPFLAGS and ACETAO_LDFLAGS
+dnl will have been set upon exit. The flags must be prefixed to CPPFLAGS 
 dnl and LDFLAGS respectively.
 dnl
 dnl AM_CONDITIONAL(HAVE_ACE_ROOT) will be set to true if the
@@ -108,7 +108,8 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
   dnl ACE and TAO specific flags
   ACETAO_CPPFLAGS=""
   ACETAO_LDFLAGS=""
- 
+
+  ACETAO_SVN_ROOT=""
   CONF_ACE_ROOT=""
   CONF_TAO_ROOT=""
   CONF_LD_PATH=""
@@ -222,8 +223,10 @@ AC_DEFUN([AX_LORICA_ACETAO_ADAPT],
      CONF_LD_PATH="$CONF_ACE_ROOT/lib"
   fi
   CONF_TAO_ROOT="$CONF_ACE_ROOT/TAO"
+  ACETAO_SVN_ROOT=`AS_DIRNAME(["$CONF_ACE_ROOT"])`
 
   # Effective ACE_ROOT
+  AC_SUBST(ACETAO_SVN_ROOT)
   AC_SUBST(CONF_PATH)
   AC_SUBST(CONF_ACE_ROOT)
   AC_SUBST(CONF_TAO_ROOT)

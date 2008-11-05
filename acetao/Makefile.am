@@ -20,6 +20,7 @@
 CWD = $(CURDIR)
 MKDIR = $(MKDIR_P)
 TAR = tar
+SVN = svn
 
 if LORICA_WGET
 WGET = wget -nc
@@ -121,35 +122,7 @@ if LORICA_MUST_BUILD_ACETAO
 
 all-local: $(TAO_FILES)
 
-#
-#	@echo 'static_link=1'      >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-#
-$(TAO_FILES): $(ACE_ROOT)
-	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-	@echo 'ssl=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
-	@echo 'ipv6=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
-if LORICA_STATIC
-	@echo 'static_libs_only=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-	@echo 'optimize=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-	@echo 'inline=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-	@echo 'DEPGEN=$$(ACE_ROOT)/bin/depgen.pl' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-endif
-if LORICA_DARWIN_LEOPARD
-	@echo '#include "ace/config-macosx-leopard.h"' > $(ACE_ROOT)/ace/config.h
-	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_leopard.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-endif
-if LORICA_DARWIN_TIGER
-	@echo '#include "ace/config-macosx-tiger.h"' > $(ACE_ROOT)/ace/config.h
-	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-endif
-if !LORICA_DARWIN
-	@echo '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
-	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
-endif
-if !LORICA_HAVE_STREAMS
-	@echo '#undef ACE_HAS_STRBUF_T' >> $(ACE_ROOT)/ace/config.h
-	@echo '#define ACE_LACKS_STRRECVFD' >> $(ACE_ROOT)/ace/config.h
-endif
+$(TAO_FILES): $(ACE_ROOT) UPDATE_FROM_SVN
 	cd $(ACE_ROOT)/ace                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/apps/gperf/src      && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
 	cd $(ACE_ROOT)/ace/SSL             && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile
@@ -178,15 +151,59 @@ endif
 	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.BiDir_GIOP
 	cd $(TAO_ROOT)/tao                 && CXX="$(CXX) $(LORICA_FIX_GXX_BUG_FLAG)" $(MAKE) -f GNUmakefile.Strategies
 
+if ACETAO_FROM_SVN
+.PHONY: UPDATE_FROM_SVN
+
+UPDATE_FROM_SVN:
+	$(CWD)/acetao_svn_update.sh "$(SVN)" "$(ACE_ROOT)"
+endif
+
 $(ACE_ROOT):
+if ACETAO_FROM_SVN
+	cd $(ACETAO_SVN_ROOT) && $(SVN) co svn://svn.dre.vanderbilt.edu/DOC/Middleware/sets-anon/ACE+TAO .
+else
 if LORICA_WGET
 	$(WGET) $(ACETAO)
 endif
 if LORICA_CURL
 	$(CURL) $(ACETAO) > $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 endif
-	$(TAR) --overwrite -mxjf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
+	$(TAR) --overwrite -xjmf $(CWD)/ACE+TAO-$(LIBACE_CURRENT).$(LIBACETAO_REVISION).$(LIBACETAO_AGE).tar.bz2
 	-mv -f ACE_wrappers $(CONF_ACE_ROOT)
+endif # ACETAO_FROM_SVN
+	@echo 'ssl=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'ssl=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+if ACETAO_ENABLE_IPV6
+	@echo 'ipv6=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+endif
+if LORICA_STATIC
+	@echo 'static_libs_only=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'optimize=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'inline=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+	@echo 'DEPGEN=$$(ACE_ROOT)/bin/depgen.pl' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif
+	@echo 'debug=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+if LORICA_DEBUG
+	@echo 'optimize=0' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+else
+	@echo 'optimize=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif
+if LORICA_DARWIN_LEOPARD
+	@echo '#include "ace/config-macosx-leopard.h"' > $(ACE_ROOT)/ace/config.h
+	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_leopard.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif
+if LORICA_DARWIN_TIGER
+	@echo '#include "ace/config-macosx-tiger.h"' > $(ACE_ROOT)/ace/config.h
+	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_macosx_tiger.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif
+if !LORICA_DARWIN
+	@echo '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
+	@echo 'include $$(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+endif
+if !LORICA_HAVE_STREAMS
+	@echo '#undef ACE_HAS_STRBUF_T' >> $(ACE_ROOT)/ace/config.h
+	@echo '#define ACE_LACKS_STRRECVFD' >> $(ACE_ROOT)/ace/config.h
+endif
 
 endif # LORICA_MUST_BUILD_ACETAO
 

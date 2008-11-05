@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT([lorica],[1.0.9],[bugs@42tools.com])
+AC_INIT([lorica],[1.0.10],[bugs@42tools.com])
 
 AC_PREREQ(2.59)
 
@@ -138,6 +138,20 @@ else
 	msg_tao_build=no
 fi
 
+AC_ARG_ENABLE(tao-svn-build,
+	      [AS_HELP_STRING([--enable-tao-svn-build[[[[=no/yes]]]]], [Enable download and local rebuild of ACE and TAO from svn[default=no]])],
+ 	      [],						   
+ 	      enable_tao_svn_build=no)
+if test "x$enable_tao_svn_build" = "xyes"; then
+   	enable_tao_build=yes
+	msg_tao_build=yes
+	msg_tao_svn_build=yes
+	AM_CONDITIONAL(ACETAO_FROM_SVN, true)
+else
+	msg_tao_svn_build=no
+	AM_CONDITIONAL(ACETAO_FROM_SVN, false)
+fi
+
 dnl IPv6 support requested?
 AC_ARG_ENABLE(ipv6,
 	      [AS_HELP_STRING([--enable-ipv6[[[[=no/yes]]]]], [Enable IPv6 in local rebuild of ACE and TAO [default=no]])],
@@ -145,8 +159,10 @@ AC_ARG_ENABLE(ipv6,
  	      enable_ipv6=no)
 if test "x$enable_ipv6" = "xyes"; then
 	msg_ipv6=yes
+	AM_CONDITIONAL(ACETAO_ENABLE_IPV6, true)
 else
 	msg_ipv6=no
+	AM_CONDITIONAL(ACETAO_ENABLE_IPV6, false)
 fi
 
 dnl Link binaries statically
@@ -173,7 +189,7 @@ if test "x$enable_lorica_devel" = "xyes"; then
 else
 	msg_lorica_devel=no
 fi
-AM_CONDITIONAL(LORICA_DEVEL, test x$enable_lorica_devel = xyes)
+AM_CONDITIONAL(LORICA_DEVEL, test "x$enable_lorica_devel" = "xyes")
 
 dnl Do various things that helps debugging problems
 AC_ARG_ENABLE(lorica-debug,
@@ -186,7 +202,7 @@ if test "x$enable_lorica_debug" = "xyes"; then
 else
 	msg_lorica_debug=no
 fi
-AM_CONDITIONAL(LORICA_DEBUG, test x$enable_lorica_debug = xyes)
+AM_CONDITIONAL(LORICA_DEBUG, test "x$enable_lorica_debug" = "xyes")
 
 dnl Do various things that helps debugging problems
 AC_ARG_ENABLE(lorica-shared-libs,
@@ -199,7 +215,7 @@ if test "x$enable_lorica_shared_libs" = "xyes"; then
 else
 	msg_lorica_shared_libs=no
 fi
-AM_CONDITIONAL(LORICA_SHARED_LIBS, test x$enable_lorica_shared_libs = xyes)
+AM_CONDITIONAL(LORICA_SHARED_LIBS, test "x$enable_lorica_shared_libs" = "xyes")
 
 dnl For the maintainer...
 AC_ARG_ENABLE(lorica-dist,
@@ -210,6 +226,13 @@ AC_ARG_ENABLE(lorica-dist,
 dnl
 dnl Program availability checks
 dnl
+if test "x$enable_tao_svn_build" = "xyes"; then
+   AC_CHECK_PROG(HAVE_SVN, [svn], yes, no)
+   if test "x$HAVE_SVN" = "xno"; then
+      AC_MSG_ERROR([[You need the svn(1) program to build Lorica with ACE+TAO from Subversion]])
+   fi
+fi
+
 AC_CHECK_PROG(HAVE_WGET, [wget], yes, no)
 if test "x$HAVE_WGET" = "xno"; then
    AC_CHECK_PROG(HAVE_CURL, [curl], yes, no)
@@ -327,6 +350,9 @@ dnl
 dnl Adapt to the ACE+TAO configuration
 dnl
 AX_LORICA_ACETAO_ADAPT()
+if test "x$enable_tao_svn_build" = "xyes"; then
+   	AM_CONDITIONAL(LORICA_MUST_BUILD_ACETAO, true)
+fi
 
 dnl
 dnl CPPFLAGS, CXXFLAGS, LIBS and stuff
@@ -411,6 +437,9 @@ else
 		AX_CXXFLAGS_GCC_OPTION(-Wmissing-declarations, LORICA_CXXFLAGS)
 		AX_CXXFLAGS_GCC_OPTION(-ggdb , LORICA_CXXFLAGS)
 		AX_CXXFLAGS_GCC_OPTION(-O1, LORICA_CXXFLAGS)
+	else
+		AX_CXXFLAGS_GCC_OPTION(-g , LORICA_CXXFLAGS)
+		AX_CXXFLAGS_GCC_OPTION(-O2, LORICA_CXXFLAGS)
 	fi
 fi
 if test "$lorica_target" = "OpenSUSE_10_2"; then
@@ -545,8 +574,9 @@ echo "\
 	Making a debug build:                                 $msg_lorica_debug
 	Making static executables:                            $msg_static
 	Install development header and IDL files:             $msg_lorica_devel
-	Download and build ACE and TAO locally if necessary:  $msg_tao_build
 	Building shared Lorica libraries:                     $msg_lorica_shared_libs
-	ACE+TAO version:                                      $LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE
+	Download and build ACE and TAO locally if necessary:  $msg_tao_build
+	Disregard ACE+TAO version and build from svn:         $msg_tao_svn_build
+	Preferred ACE+TAO version:                            $LIBACE_CURRENT.$LIBACETAO_REVISION.$LIBACETAO_AGE
         Lorica version:                                       $PACKAGE_VERSION
 "
