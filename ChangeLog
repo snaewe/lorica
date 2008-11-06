@@ -1,13 +1,28 @@
-
 ======================= 1.0.10 ============================
 
 2008-11-06  Jules Colding  <colding@42tools.com>
 
+	* defines/Makefile.am:
+	* defines/hardcoded-defs.h:
+	Removed unneeded defines
+
+	* m4/platform_adapt.m4:
+	The cache directory was needed in src/proxy/Makefile.am
+
+	* src/proxy/lorica.conf:
+	Configured as a client Lorica. Cleaned up and better
+	organized.
+
+	* src/proxy/Makefile.am:
+	The installation is now by default configured as a Brutus
+	client Lorica
+
+	* src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
+	Make the endpoints explicitly GIOP v1.2
+
 	* defines/build-system-defs.h:
 	Put the inclusion of hard coded defines entirely within
 	an if-else block.
-
-2008-11-06  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Added check for "ifaddrs.h". Defines
 	LORICA_LACKS_IFADDRS if missing.

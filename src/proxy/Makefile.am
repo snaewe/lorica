@@ -220,17 +220,14 @@ endif # HAVE_ACE_ROOT
 endif # LORICA_MUST_INSTALL_ACETAO
 
 
-$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache-brutus:
+$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache:
 	cp $(LORICA_top_dir)/configurations/evolution-brutus/$(IFR_BRUTUS_CACHE_FILE) $@ 
 
-$(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf.evolution-brutus:
+BRUTUS_IFR_CACHEdir = $(LORICA_CACHE_DIR)
 
-SAMPLE_CONFIGURATIONSdir = ${sysconfdir}/$(LORICA_NAME)
+BRUTUS_IFR_CACHE_DATA = \
+	$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache
 
-SAMPLE_CONFIGURATIONS_DATA = \
-	$(LORICA_top_dir)/configurations/README                                        \
-	$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache-brutus             \
-	$(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf.evolution-brutus 
 
 lorica.conf:
 
@@ -239,6 +236,7 @@ lorica.ssliop:
 sysconf_DATA = \
 	lorica.conf \
 	lorica.ssliop
+
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in

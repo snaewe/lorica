@@ -60,13 +60,19 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
         xDarwin)
 		AM_CONDITIONAL(LORICA_DARWIN, true)
 		AC_DEFINE([LORICA_DARWIN], [1], [Define if this is some kind of Darwin (MacOS)])
+		LORICA_CACHE_DIR="/var/db/"$LORICA_NAME
+		AC_SUBST(LORICA_CACHE_DIR)
 		enable_lorica_target=darwin
        		;;
 	xLinux)
 		AM_CONDITIONAL(LORICA_LINUX, true)
 		AC_DEFINE([LORICA_LINUX], [1], [Define if this is some kind of Linux])
+		LORICA_CACHE_DIR="/var/cache/"$LORICA_NAME
+		AC_SUBST(LORICA_CACHE_DIR)
 		;;
  	*)
+		LORICA_CACHE_DIR="/var/cache/"$LORICA_NAME
+		AC_SUBST(LORICA_CACHE_DIR)
 		;;
   esac	
 
