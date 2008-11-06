@@ -31,9 +31,8 @@
 // Using DOC MPC build system
 #ifdef LORICA_HAVE_DOC_MPC
 #include "defines/hardcoded-defs.h"
-#endif
-
-// Hardcoded fallback values
+#else
 #include "defines/hardcoded-defs.h"
+#endif
 
 #endif // _BUILD_SYSTEM_DEFS_H_

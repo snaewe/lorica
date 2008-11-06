@@ -1,3 +1,23 @@
+
+======================= 1.0.10 ============================
+
+2008-11-06  Jules Colding  <colding@42tools.com>
+
+	* defines/build-system-defs.h:
+	Put the inclusion of hard coded defines entirely within
+	an if-else block.
+
+2008-11-06  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Added check for "ifaddrs.h". Defines
+	LORICA_LACKS_IFADDRS if missing.
+
+	* defines/hardcoded-defs.h (LORICA_LACKS_IFADDRS):
+	Must be unconditionally defined on Windows.
+
+	* src/lorica/ConfigBase.cpp (get_first_external_ip):
+	Remove old exit() debug code - see comment for svn revision 401.
+
 Wed Nov  5 18:27:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ConfigBase.cpp:
@@ -6,11 +26,11 @@ Wed Nov  5 18:27:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 	  evaluation on the endpoints. The IFR issue was resolved by adding
 	  a new interface to the IFR_Service to allow the loader to supply
 	  a POA to become the new root, thus allowing the IFR to explicitly
-	  use only the inside endpoint. 
+	  use only the inside endpoint.
 
 	  The external endpoint must be evaluated first to work around an
 	  issue with the evaluation of bidirectional GIOP listen points.
-	
+
 2008-11-05  Jules Colding  <colding@42tools.com>
 
         * configure.ac:

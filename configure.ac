@@ -336,6 +336,14 @@ AC_CHECK_HEADERS([openssl/ssl.h], [], [AC_MSG_ERROR([ development header not ins
 #endif
 ]])
 
+dnl ifaddrs.h - Missing on some platforms
+AC_CHECK_HEADERS([ifaddrs.h], [], [AC_DEFINE([LORICA_LACKS_IFADDRS], [1], [Defined if ifaddrs.h is missing])],
+[[#ifdef HAVE_IFADDRS_H
+#include <ifaddrs.h>
+#endif
+]])
+
+
 dnl
 dnl Which Linux distribution or UNIX platform?
 dnl
