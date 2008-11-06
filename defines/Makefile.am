@@ -24,15 +24,15 @@ noinst_HEADERS = \
 all-local: pathdefs.h
 
 pathdefs.h: Makefile
-	echo '#define LORICA_EXE_NAME        "$(LORICA_NAME)"' >$@
-	echo '#define LORICA_EXE_PATH        "$(sbindir)/$(LORICA_NAME)"' >>$@
-	echo '#define LORICA_CACHE_DIR       "$(LORICA_CACHE_DIR)"' >>$@
-	echo '#define LORICA_IOR_FILE        "$(LORICA_CACHE_DIR)/$(LORICA_NAME).ior"' >>$@
 	echo '#define LORICA_PID_FILE        "/var/run/$(LORICA_NAME).pid"' >>$@
 	echo '#define LORICA_CONF_FILE       "$(sysconfdir)/$(LORICA_NAME).conf"' >>$@
-	echo '#define IFR_SERVICE_IOR_FILE   "$(CACHE_DIR)/$(LORICA_NAME)/ifr.ior"' >>$@
-	echo '#define IFR_SERVICE_CACHE_FILE "$(CACHE_DIR)/$(LORICA_NAME)/ifr.cache"' >>$@
-	echo '#define IFR_SERVICE_EXE_NAME   "ifr_service"' >>$@
+	echo '#define LORICA_EXE_PATH        "$(sbindir)/$(LORICA_NAME)"' >>$@
+	echo '#define LORICA_EXE_NAME        "$(LORICA_NAME)"' >$@
+	echo '#define LORICA_CACHE_DIR       "$(LORICA_CACHE_DIR)"' >>$@
+	echo '#define LORICA_IOR_FILE        "$(LORICA_CACHE_DIR)/$(LORICA_NAME).ior"' >>$@
+	echo '#define IFR_SERVICE_IOR_FILE   "$(LORICA_CACHE_DIR)/ifr.ior"' >>$@
+	echo '#define IFR_SERVICE_CACHE_FILE "$(LORICA_CACHE_DIR)/ifr.cache"' >>$@
+	echo '#define IFR_SERVICE_EXE_NAME   "IFR_Service"' >>$@
 
 if THIS_IS_NOT_A_DISTRIBUTION
 CLEAN_IN_FILES = Makefile.in

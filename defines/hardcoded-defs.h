@@ -86,6 +86,10 @@
 #define IFR_SERVICE_CACHE_FILE "ifr.cache"
 #endif
 
+#ifndef IFR_SERVICE_EXE_NAME // Full path of IFR_Service executable
+#define IFR_SERVICE_EXE_NAME "IFR_Service.exe"
+#endif
+
 #ifndef VERSION
 #define VERSION "1.0.10"
 #endif
