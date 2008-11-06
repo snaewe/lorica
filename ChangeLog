@@ -2,6 +2,9 @@
 
 2008-11-06  Jules Colding  <colding@42tools.com>
 
+	* .am:
+	gperf ==> ace_gperf for all automake files
+
 	* defines/Makefile.am:
 	* defines/hardcoded-defs.h:
 	Removed unneeded defines

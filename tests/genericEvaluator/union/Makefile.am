@@ -33,12 +33,12 @@ export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH)
 endif
 
 TAO_IDL = $(ACE_ROOT)/TAO/TAO_IDL/tao_idl
-GPERF = $(ACE_ROOT)/apps/gperf/src/gperf
+GPERF = $(ACE_ROOT)/apps/gperf/src/ace_gperf
 
 else # !HAVE_ACE_ROOT
 
 TAO_IDL = tao_idl
-GPERF = gperf
+GPERF = ace_gperf
 
 endif # HAVE_ACE_ROOT
 
