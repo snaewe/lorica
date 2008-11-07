@@ -1,5 +1,11 @@
 ======================= 1.0.10 ============================
 
+2008-11-07  Jules Colding  <colding@42tools.com>
+
+	* defines/hardcoded-defs.h: 
+	* src/lorica/ConfigBase.cpp:
+	Build fox for WIndows
+
 2008-11-06  Jules Colding  <colding@42tools.com>
 
 	* .am:

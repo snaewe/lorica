@@ -26,6 +26,12 @@
 #include <ace/OS_NS_stdlib.h>
 #include <ace/OS_NS_unistd.h>
 
+#ifdef ACE_WIN32
+#ifndef LORICA_LACKS_IFADDRS
+#define LORICA_LACKS_IFADDRS (1)
+#endif
+#endif
+
 #ifndef LORICA_LACKS_IFADDRS
 #include <string.h>
 #include <arpa/inet.h>

@@ -53,8 +53,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,0,9,1
- PRODUCTVERSION 1,0,9,1
+ FILEVERSION 1,0,10,0
+ PRODUCTVERSION 1,0,10,0
  FILEFLAGSMASK 0x17L
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -72,12 +72,12 @@ BEGIN
             VALUE "Comments", "Lorica CORBA Firewall Conduite"
             VALUE "CompanyName", "OMC Denmark ApS"
             VALUE "FileDescription", "Lorica Windows Service Application"
-            VALUE "FileVersion", "1, 0, 9, 1"
+            VALUE "FileVersion", "1, 0, 10, 0"
             VALUE "InternalName", "proxy"
             VALUE "LegalCopyright", "Copyright (C) 2008 OMC Denmark ApS"
             VALUE "OriginalFilename", "proxy.exe"
             VALUE "ProductName", "Lorica"
-            VALUE "ProductVersion", "1, 0, 9, 1"
+            VALUE "ProductVersion", "1, 0, 10, 0"
         END
     END
     BLOCK "VarFileInfo"

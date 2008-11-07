@@ -22,10 +22,6 @@
 #ifndef _HARD_CODED_DEFS_H_
 #define _HARD_CODED_DEFS_H_
 
-#ifdef ACE_WIN32
-#define LORICA_LACKS_IFADDRS (1)
-#endif
-
 #ifndef LORICA_DEFAULT_INSIDE_FACING_PORT // Default Lorica inside facing port
 #define LORICA_DEFAULT_INSIDE_FACING_PORT (4080) 
 #endif
