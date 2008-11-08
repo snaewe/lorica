@@ -1,4 +1,5 @@
 @DH_INSTALL_default_etcdir@/*
+@DH_INSTALL_default_cachedir@/*
 @DH_INSTALL_default_bindir@/tao_ifr
 @DH_INSTALL_default_sbindir@/lorica
 @DH_INSTALL_default_libdir@/lib*.so*

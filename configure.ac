@@ -494,6 +494,9 @@ AC_DEFUN([LORICA_GET_DH_INSTALL_PATH], [
 LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_etcdir, /etc)
 AC_SUBST(DH_INSTALL_default_etcdir)
 
+LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_cachedir, /var/cache/$PACKAGE_NAME)
+AC_SUBST(DH_INSTALL_default_cachedir)
+
 LORICA_GET_DH_INSTALL_PATH(DH_INSTALL, default_includedir, /usr/include)
 AC_SUBST(DH_INSTALL_default_includedir)
 
