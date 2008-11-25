@@ -1,3 +1,9 @@
+2008-11-25  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/main.cpp (ACE_TMAIN):
+	Fix posssible segv when setting current working
+	directory on Windows.
+
 2008-11-08  Jules Colding  <colding@42tools.com>
 
 	* Lorica:
@@ -7,7 +13,7 @@
 
 2008-11-07  Jules Colding  <colding@42tools.com>
 
-	* defines/hardcoded-defs.h: 
+	* defines/hardcoded-defs.h:
 	* src/lorica/ConfigBase.cpp:
 	Build fox for WIndows
 
@@ -60,6 +66,7 @@ Wed Nov  5 18:27:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 	  The external endpoint must be evaluated first to work around an
 	  issue with the evaluation of bidirectional GIOP listen points.
 
+>>>>>>> .r430
 2008-11-05  Jules Colding  <colding@42tools.com>
 
         * configure.ac:

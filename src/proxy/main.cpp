@@ -558,16 +558,21 @@ ACE_TMAIN(int argc,
 	int result = 0;
 
 #ifdef ACE_WIN32
-	{ // Change current working directory
+	{ // set current working directory
 		char *c = NULL;
-		char wdir[_MAX_PATH] = { '\0' };
+		char cwd[_MAX_PATH] = { '\0' };
 
-		memcpy(wdir, argv[0], strlen(argv[0]));
-		c = &wdir[strlen(argv[0])-1];
+		if (!GetFullPathName(argv[0],
+				     _MAX_PATH,
+				     cwd,
+				     NULL))
+			goto error;
+
+		c = &cwd[strlen(cwd)-1];
 		while ('\\' != *c)
 			*(c--) = '\0';
 		*c = '\0';
-		SetCurrentDirectory(wdir);
+		SetCurrentDirectory(cwd);
 	}
 #endif
 	ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::SYSLOG);
