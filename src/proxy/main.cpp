@@ -388,7 +388,7 @@ Lorica::Service_Loader::run_service_command(void)
 		result = -1;
 	}
 
-	return result;;
+	return result;
 #else /* !ACE_WIN32 */
 	return 0;
 #endif /* ACE_WIN32 */
@@ -503,7 +503,7 @@ Lorica::Service_Loader::run_service(void)
 			}
 
 			try {
-				proxy->wait();;
+				proxy->wait();
 			}
 			catch (CORBA::Exception & ex) {
 				ex._tao_print_exception("(%P|%t) Lorica::Service_Loader::run_service Caught a CORBA exception while waiting for proxy\n");

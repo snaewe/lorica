@@ -83,7 +83,6 @@ Lorica::NT_Service::handle_timeout(const ACE_Time_Value & tv,
 				   const void *)
 {
 	ACE_UNUSED_ARG(tv);
-	MessageBeep(MB_OK);
 
 	return 0;
 }
