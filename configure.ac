@@ -82,7 +82,7 @@ AC_SUBST(LIBACETAO_REVISION)
 
 AC_ARG_WITH(acetao-age, AS_HELP_STRING([--with-acetao-age], [ACE+TAO least significant version number]), 
  			[LIBACETAO_AGE=$withval],
- 			[LIBACETAO_AGE=6])
+ 			[LIBACETAO_AGE=7])
 AC_SUBST(LIBACETAO_AGE)
 
 dnl

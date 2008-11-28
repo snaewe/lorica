@@ -156,6 +156,9 @@ if ACETAO_FROM_SVN
 
 UPDATE_FROM_SVN:
 	$(CWD)/acetao_svn_update.sh "$(SVN)" "$(ACE_ROOT)"
+else
+UPDATE_FROM_SVN:
+
 endif
 
 $(ACE_ROOT):

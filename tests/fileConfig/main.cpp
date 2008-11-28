@@ -54,10 +54,10 @@ int main (int, char *[])
 	test_eps.push_back (ep2);
 
 	ACE_ARGV test_args ("lorica "
-			    "-ORBDottedDecimalAddresses 1 -ORBObjRefStyle IOR "
-			    "-ORBEndpoint iiop://proxyhost:951/ssl_port=952,"
+			    "-ORBUseSharedProfile 0 -ORBDottedDecimalAddresses 1 -ORBObjRefStyle IOR "
+			    "-ORBListenEndpoints iiop://1.2@proxyhost:951/ssl_port=952,"
 			    "hostname_in_ior=ociweb.com "
-			    "-ORBEndpoint iiop://proxyhost:1951/ssl_port=1952");
+			    "-ORBListenEndpoints iiop://1.2@proxyhost:1951/ssl_port=1952");
 	bool test_generic_eval (false);
 	bool test_null_eval_unknown (false);
 	std::string test_null_ids ("IDL:someID:1.0 IDL:someOtherID:1.0");

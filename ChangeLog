@@ -1,3 +1,18 @@
+2008-11-28  Jules Colding  <colding@42tools.com>
+
+	* tests/fileConfig/main.cpp (main):
+	Update the ORB options to reflect what is currently used
+	by Lorica.
+
+	* tests/fileConfig/Makefile.am (TESTS):
+	Activate the fileConfig test.
+
+	* configure.ac: Upgrade ACETAO to x.6.7
+
+	* acetao/Makefile.am (UPDATE_FROM_SVN):
+	Make this target not do anything if not using
+	ACETAO from svn.
+
 2008-11-26  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/ntsvc.cpp (handle_timeout):

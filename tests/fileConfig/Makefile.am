@@ -52,7 +52,7 @@ TAO_IDLFLAGS = -I$(TAO_ROOT) -g $(GPERF)
 #else
 #TESTS_ENVIRONMENT = env LD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
 #endif
-#TESTS = run_test.pl
+TESTS = test
 
 ##################################################################
 
