@@ -573,6 +573,11 @@ ACE_TMAIN(int argc,
 			*(c--) = '\0';
 		*c = '\0';
 		SetCurrentDirectory(cwd);
+		
+		// use this when Windows 2000 has become irrelevant
+#if _WIN32_WINNT > 0x0501
+		SetDllDirectory(cwd); 
+#endif
 	}
 #endif
 	ACE_LOG_MSG->open("Lorica", ACE_Log_Msg::SYSLOG);

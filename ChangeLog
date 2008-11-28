@@ -1,5 +1,9 @@
 2008-11-28  Jules Colding  <colding@42tools.com>
 
+	* src/proxy/main.cpp (ACE_TMAIN):
+	Use SetDllDirectory() on Windows when Windows 2000
+	has become irrelevant.
+
 	* tests/fileConfig/main.cpp (main):
 	Update the ORB options to reflect what is currently used
 	by Lorica.
