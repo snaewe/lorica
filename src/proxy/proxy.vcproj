@@ -3,7 +3,7 @@
 	ProjectType="Visual C++"
 	Version="9.00"
 	Name="proxy"
-	ProjectGUID="{B9030015-FECA-1BAD-48FB-8A14187FCCF9}"
+	ProjectGUID="{B9030015-FECA-1BAD-48FB-8A14187DCCF9}"
 	RootNamespace="proxy"
 	Keyword="Win32Proj"
 	SignManifests="true"
@@ -21,7 +21,7 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(LORICA_ROOT)\bin"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="Debug\proxy\I386"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -51,8 +51,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
-				PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
+                                PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC;MPC_LIB_MODIFIER=\&quot;d\&quot;"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -69,7 +69,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -80,7 +80,7 @@
 				OutputFile="$(OutDir)\lorica.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;$(LORICA_ROOT)\lib"
+				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -103,7 +103,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(LORICA_ROOT)\bin"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="Release\proxy\I386"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -133,8 +133,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
-				PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
+                                PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				WarningLevel="3"
@@ -148,7 +148,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -159,7 +159,7 @@
 				OutputFile="$(OutDir)\lorica.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;$(LORICA_ROOT)\lib"
+				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -184,7 +184,7 @@
 		</Configuration>
 		<Configuration
 			Name="Debug|x64"
-			OutputDirectory="$(LORICA_ROOT)\bin"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="Debug\proxy\AMD64"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -214,8 +214,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
-				PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_AMD64_;_WIN64;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
+                                PreprocessorDefinitions="_DEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_AMD64_;_WIN64;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC;MPC_LIB_MODIFIER=\&quot;d\&quot;"
 				MinimalRebuild="false"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -232,7 +232,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC;_WIN64"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -244,7 +244,7 @@
 				OutputFile="$(OutDir)\lorica.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;$(LORICA_ROOT)\lib"
+				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="17"
@@ -267,7 +267,7 @@
 		</Configuration>
 		<Configuration
 			Name="Release|x64"
-			OutputDirectory="$(LORICA_ROOT)\bin"
+			OutputDirectory="..\..\bin"
 			IntermediateDirectory="Release\proxy\AMD64"
 			ConfigurationType="1"
 			CharacterSet="0"
@@ -297,8 +297,8 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
-				PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_AMD64_;_WIN64;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
+                                PreprocessorDefinitions="NDEBUG;WIN32;_CONSOLE;_CRT_NONSTDC_NO_WARNINGS;_AMD64_;_WIN64;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC"
 				RuntimeLibrary="2"
 				RuntimeTypeInfo="true"
 				WarningLevel="3"
@@ -312,7 +312,7 @@
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;ACE_HAS_SSL=1;LORICA_HAVE_DOC_MPC;_WIN64"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,$(LORICA_ROOT)\src,$(LORICA_ROOT)"
+				AdditionalIncludeDirectories="$(ACE_ROOT),$(TAO_ROOT),$(TAO_ROOT)\orbsvcs,$(SSL_ROOT)\include,$(SSL_ROOT)\inc32,..\..\src,..\.."
 			/>
 			<Tool
 				Name="VCPreLinkEventTool"
@@ -324,7 +324,7 @@
 				OutputFile="$(OutDir)\lorica.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;$(LORICA_ROOT)\lib"
+				AdditionalLibraryDirectories=".;$(ACE_ROOT)\lib;$(SSL_ROOT)\lib;$(SSL_ROOT)\out32dll;$(SSL_ROOT)\out32;$(SSL_ROOT)\lib\VC;..\..\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"

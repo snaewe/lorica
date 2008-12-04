@@ -566,7 +566,7 @@ ACE_TMAIN(int argc,
 				     _MAX_PATH,
 				     cwd,
 				     NULL))
-			goto error;
+			exit(EXIT_FAILURE);
 
 		c = &cwd[strlen(cwd)-1];
 		while ('\\' != *c)
