@@ -1,3 +1,7 @@
+2008-12-10  Jules Colding  <colding@42tools.com>
+
+	* Remove Brutus IFR cache files from the repository
+
 2008-11-28  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/main.cpp (ACE_TMAIN):
