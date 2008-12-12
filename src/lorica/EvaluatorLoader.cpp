@@ -1,4 +1,4 @@
-/* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
+/* -*-  Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
  *    Lorica source file.
@@ -39,8 +39,15 @@ Lorica_EvaluatorLoader::init(int,
 			     ACE_TCHAR *[])
 {
 
-	this->mapperRegistry_ = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
-
+	this->mapperRegistry_ = 
+		ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
+	if (this->mapperRegistry_ == 0)
+		{
+			ACE_DEBUG ((LM_DEBUG,
+				    ACE_TEXT("Lorica_EvaluatorLoader::init unable to find ")
+				    ACE_TEXT("MapperRegistry instance\n")));
+			return 0;
+		}
 	return 1;
 }
 

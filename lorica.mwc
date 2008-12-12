@@ -7,9 +7,12 @@ workspace(lorica) {
   src/lorica/lorica_GenericEvaluator.mpc
   src/proxy/proxy.mpc
 
+  utils/ior_mapper
+
   // Users should not try to use the automake or gnuace project types
-  exclude(automake, gnuace) {
+  exclude(automake) {
     src
+    utils
   }
 
   exclude {

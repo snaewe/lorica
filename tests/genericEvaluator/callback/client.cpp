@@ -114,6 +114,8 @@ main (int argc, char *argv[])
 		Server_Task server_task (orb.in (),
 					 ACE_Thread_Manager::instance ());
 
+		sender->_non_existent();
+
 		// Before creating threads we will let the sender know that we
 		// will have two threads that would make invocations..
 		sender->active_objects ((CORBA::Short) 2);

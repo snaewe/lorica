@@ -1,102 +1,137 @@
+Fri Dec 12 22:37:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * lorica.mwc:
+
+	  Add the util directory, comment out the exclusion for gnuace.
+	
+        * src/lorica/EvaluatorLoader.cpp:
+
+	  Report an error and fail if mapper registry cannot load.
+	
+        * src/lorica/ProxyMapper.cpp:
+
+	  Fix for evaluating already mapped references. The existing method
+	  can cause bus errors due to byte alignment. Also make dependency 
+	  on ssliop conditional at compile time.
+
+        * src/loricacommon.mpb:
+
+	  Add explicit path to generate_export_file.pl so that ACE_ROOT/bin
+	  need not be in the path.
+
+        * src/proxy/proxy.cpp:
+
+	  Fix Lorica::GenericMapper::GenericMapper.
+
+        * tests/genericEvaluator/callback/client.cpp:
+
+	  Add a call to sender->_non_existent() to set up the connection
+	  before activating the test.
+
+        * utils/ior_mapper:
+
+	  Added this handy little utility for loading server-side 
+	  object references into lorica.
+
 2008-12-10  Jules Colding  <colding@42tools.com>
 
-	* Remove Brutus IFR cache files from the repository
+        * Remove Brutus IFR cache files from the repository
 
 2008-11-28  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp (ACE_TMAIN):
-	Use SetDllDirectory() on Windows when Windows 2000
-	has become irrelevant.
+        * src/proxy/main.cpp (ACE_TMAIN):
+        Use SetDllDirectory() on Windows when Windows 2000
+        has become irrelevant.
 
-	* tests/fileConfig/main.cpp (main):
-	Update the ORB options to reflect what is currently used
-	by Lorica.
+        * tests/fileConfig/main.cpp (main):
+        Update the ORB options to reflect what is currently used
+        by Lorica.
 
-	* tests/fileConfig/Makefile.am (TESTS):
-	Activate the fileConfig test.
+        * tests/fileConfig/Makefile.am (TESTS):
+        Activate the fileConfig test.
 
-	* configure.ac: Upgrade ACETAO to x.6.7
+        * configure.ac: Upgrade ACETAO to x.6.7
 
-	* acetao/Makefile.am (UPDATE_FROM_SVN):
-	Make this target not do anything if not using
-	ACETAO from svn.
+        * acetao/Makefile.am (UPDATE_FROM_SVN):
+        Make this target not do anything if not using
+        ACETAO from svn.
 
 2008-11-26  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/ntsvc.cpp (handle_timeout):
-	Remove useless beep from timeout handler
+        * src/proxy/ntsvc.cpp (handle_timeout):
+        Remove useless beep from timeout handler
 
 2008-11-25  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp: Fix a few ';;'
+        * src/proxy/main.cpp: Fix a few ';;'
 
 2008-11-25  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp (ACE_TMAIN):
-	Fix posssible segv when setting current working
-	directory on Windows.
+        * src/proxy/main.cpp (ACE_TMAIN):
+        Fix posssible segv when setting current working
+        directory on Windows.
 
 2008-11-08  Jules Colding  <colding@42tools.com>
 
-	* Lorica:
-	Released on Ubuntu Hardy
+        * Lorica:
+        Released on Ubuntu Hardy
 
 ======================= 1.0.10 ============================
 
 2008-11-07  Jules Colding  <colding@42tools.com>
 
-	* defines/hardcoded-defs.h:
-	* src/lorica/ConfigBase.cpp:
-	Build fox for WIndows
+        * defines/hardcoded-defs.h:
+        * src/lorica/ConfigBase.cpp:
+        Build fox for WIndows
 
 2008-11-06  Jules Colding  <colding@42tools.com>
 
-	* .am:
-	gperf ==> ace_gperf for all automake files
+        * .am:
+        gperf ==> ace_gperf for all automake files
 
-	* defines/Makefile.am:
-	* defines/hardcoded-defs.h:
-	Removed unneeded defines
+        * defines/Makefile.am:
+        * defines/hardcoded-defs.h:
+        Removed unneeded defines
 
-	* m4/platform_adapt.m4:
-	The cache directory was needed in src/proxy/Makefile.am
+        * m4/platform_adapt.m4:
+        The cache directory was needed in src/proxy/Makefile.am
 
-	* src/proxy/lorica.conf:
-	Configured as a client Lorica. Cleaned up and better
-	organized.
+        * src/proxy/lorica.conf:
+        Configured as a client Lorica. Cleaned up and better
+        organized.
 
-	* src/proxy/Makefile.am:
-	The installation is now by default configured as a Brutus
-	client Lorica
+        * src/proxy/Makefile.am:
+        The installation is now by default configured as a Brutus
+        client Lorica
 
-	* src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
-	Make the endpoints explicitly GIOP v1.2
+        * src/lorica/ConfigBase.cpp (Endpoint::as_tao_endpoint):
+        Make the endpoints explicitly GIOP v1.2
 
-	* defines/build-system-defs.h:
-	Put the inclusion of hard coded defines entirely within
-	an if-else block.
+        * defines/build-system-defs.h:
+        Put the inclusion of hard coded defines entirely within
+        an if-else block.
 
-	* configure.ac: Added check for "ifaddrs.h". Defines
-	LORICA_LACKS_IFADDRS if missing.
+        * configure.ac: Added check for "ifaddrs.h". Defines
+        LORICA_LACKS_IFADDRS if missing.
 
-	* defines/hardcoded-defs.h (LORICA_LACKS_IFADDRS):
-	Must be unconditionally defined on Windows.
+        * defines/hardcoded-defs.h (LORICA_LACKS_IFADDRS):
+        Must be unconditionally defined on Windows.
 
-	* src/lorica/ConfigBase.cpp (get_first_external_ip):
-	Remove old exit() debug code - see comment for svn revision 401.
+        * src/lorica/ConfigBase.cpp (get_first_external_ip):
+        Remove old exit() debug code - see comment for svn revision 401.
 
 Wed Nov  5 18:27:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ConfigBase.cpp:
 
-	  Revert the change from Jul 24 11:35:27 to restore the order of
-	  evaluation on the endpoints. The IFR issue was resolved by adding
-	  a new interface to the IFR_Service to allow the loader to supply
-	  a POA to become the new root, thus allowing the IFR to explicitly
-	  use only the inside endpoint.
+          Revert the change from Jul 24 11:35:27 to restore the order of
+          evaluation on the endpoints. The IFR issue was resolved by adding
+          a new interface to the IFR_Service to allow the loader to supply
+          a POA to become the new root, thus allowing the IFR to explicitly
+          use only the inside endpoint.
 
-	  The external endpoint must be evaluated first to work around an
-	  issue with the evaluation of bidirectional GIOP listen points.
+          The external endpoint must be evaluated first to work around an
+          issue with the evaluation of bidirectional GIOP listen points.
 
 >>>>>>> .r430
 2008-11-05  Jules Colding  <colding@42tools.com>

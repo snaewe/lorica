@@ -1,6 +1,6 @@
 //
 //    Lorica project file.
-//    Copyright (C) 2007 OMC Denmark ApS.
+//    Copyright (C) 2007-2008 OMC Denmark ApS.
 //
 //    This program is free software; you can redistribute it and/or modify
 //    it under the terms of the GNU General Public License as published by
@@ -17,17 +17,16 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-project {
-  libout = $(LORICA_ROOT)/lib
-  libpaths += $(LORICA_ROOT)/lib
-  includes += $(LORICA_ROOT)/src
-  includes += $(LORICA_ROOT)
+project : taoexe, loricacommon {
+  avoids += wince
+  exename = ior_mapper
+  install = $(LORICA_ROOT)/bin
 
-  Define_Custom(DLL_EXPORT) {
-    automatic             = 0
-    command               = $(ACE_ROOT)/bin/generate_export_file.pl
-    output_option         = >
-    header_pre_extension  = _Export
-    header_outputext      = .h
+  macros += LORICA_HAVE_DOC_MPC
+
+  libs += lorica_Client
+
+  source_files {
+    ior_mapper.cpp
   }
 }
