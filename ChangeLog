@@ -1,37 +1,44 @@
+Sat Dec 13 22:53:49 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * utils/ior_mapper/ior_mapper.cpp:
+
+	  Fixed the default Lorica IOR and added a commandline option
+	  to permit supplying an alternate Lorica IOR.
+
 Fri Dec 12 22:37:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * lorica.mwc:
 
-	  Add the util directory, comment out the exclusion for gnuace.
-	
+          Add the util directory, comment out the exclusion for gnuace.
+
         * src/lorica/EvaluatorLoader.cpp:
 
-	  Report an error and fail if mapper registry cannot load.
-	
+          Report an error and fail if mapper registry cannot load.
+
         * src/lorica/ProxyMapper.cpp:
 
-	  Fix for evaluating already mapped references. The existing method
-	  can cause bus errors due to byte alignment. Also make dependency 
-	  on ssliop conditional at compile time.
+          Fix for evaluating already mapped references. The existing method
+          can cause bus errors due to byte alignment. Also make dependency
+          on ssliop conditional at compile time.
 
         * src/loricacommon.mpb:
 
-	  Add explicit path to generate_export_file.pl so that ACE_ROOT/bin
-	  need not be in the path.
+          Add explicit path to generate_export_file.pl so that ACE_ROOT/bin
+          need not be in the path.
 
         * src/proxy/proxy.cpp:
 
-	  Fix Lorica::GenericMapper::GenericMapper.
+          Fix Lorica::GenericMapper::GenericMapper.
 
         * tests/genericEvaluator/callback/client.cpp:
 
-	  Add a call to sender->_non_existent() to set up the connection
-	  before activating the test.
+          Add a call to sender->_non_existent() to set up the connection
+          before activating the test.
 
         * utils/ior_mapper:
 
-	  Added this handy little utility for loading server-side 
-	  object references into lorica.
+          Added this handy little utility for loading server-side
+          object references into lorica.
 
 2008-12-10  Jules Colding  <colding@42tools.com>
 

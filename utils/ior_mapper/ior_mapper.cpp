@@ -27,12 +27,12 @@ const char *target_ior = "file://target.ior";
 const char *ior_table_key = "IORTableKey";
 const char *mapped_file = "mapped.ior";
 
-const char *lorica_ior = "corbaloc::phil:4080/LORICA_REFERENCE_MAPPER";
+const char *lorica_ior = "corbaloc::localhost:4080/LORICA_REFERENCE_MAPPER";
 
 int
 parse_args (int argc, char *argv[])
 {
-	ACE_Get_Opt get_opts (argc, argv, "i:m:n:");
+	ACE_Get_Opt get_opts (argc, argv, "i:l:m:n:");
 	int c;
 
 	while ((c = get_opts ()) != -1)
@@ -40,6 +40,10 @@ parse_args (int argc, char *argv[])
 		{
 		case 'i':
 			target_ior = get_opts.opt_arg ();
+			break;
+
+		case 'l':
+			lorica_ior = get_opts.opt_arg ();
 			break;
 
 		case'm':
@@ -53,11 +57,14 @@ parse_args (int argc, char *argv[])
 		case '?':
 		default:
 			ACE_ERROR_RETURN ((LM_ERROR,
-					   "usage:  %s "
-					   "-o <iorfile>"
-					   "\n",
-					   argv [0]),
-					  -1);
+												 "usage:  %s "
+												 "-i <original ior> "
+												 "-l <lorica ior> "
+												 "-m <mapped ior file> "
+												 "-n <iortable key name> "
+												 "\n",
+												 argv [0]),
+												-1);
 		}
 	// Indicates sucessful parsing of the command line
 	return 0;
