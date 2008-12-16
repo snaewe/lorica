@@ -1,5 +1,5 @@
 workspace(lorica) {
-  cmdline += -include src
+  cmdline += -include MPC/config
 
   src/OCI/AsynchProxyTools.mpc
   src/lorica/lorica_Client.mpc

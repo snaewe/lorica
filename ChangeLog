@@ -1,9 +1,34 @@
+Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * MPC/config/lorica_ssliop.mpb:
+        * MPC/config/loricacommon.mpb:
+        * lorica.mwc:
+
+	  Created MPC/config directory to provide a directory structure
+	  consistent with other MPC related projects. More project base 
+	  files are anticipated and will be added here.
+
+        * src/lorica/ConfigBase.cpp:
+        * src/lorica/ProxyMapper.cpp:
+
+	  Minor syntax cleanup.
+
+        * src/lorica/MapperRegistry.cpp:
+        * src/proxy/ReferenceMapper_i.h:
+        * src/proxy/ReferenceMapper_i.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+
+	  Added the rest of the changes to support optional ssliop 
+	  dependency. Requires LORICA_LACKS_SSLIOP be defined to disable
+	  ssliop use. This will be added to the MPC framework later.
+
 Sat Dec 13 22:53:49 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * utils/ior_mapper/ior_mapper.cpp:
 
-	  Fixed the default Lorica IOR and added a commandline option
-	  to permit supplying an alternate Lorica IOR.
+          Fixed the default Lorica IOR and added a commandline option
+          to permit supplying an alternate Lorica IOR.
 
 Fri Dec 12 22:37:21 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 

@@ -31,6 +31,10 @@
 #include "lorica/GenericMapper.h"
 #endif
 
+#if defined (LORICA_STATIC) && !defined (LORICA_LACKS_SSLIOP)
+#include <orbsvcs/SSLIOP/SSLIOP_Factory.h>
+#endif
+
 #include <tao/EndpointPolicy/IIOPEndpointValue_i.h>
 #include <tao/EndpointPolicy/EndpointPolicy.h>
 #include <tao/PortableServer/Servant_Base.h>

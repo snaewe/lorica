@@ -247,14 +247,13 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 {
 	if (this->mapped_values_ != 0) {
 		TAO::ObjectKey *key = native->_key();
-		if (key == 0 || key->length() < sizeof (mapped_object_id_))
-			{
-				if (Lorica_debug_level > 4) {
-					ACE_DEBUG((LM_DEBUG,
-						   ACE_TEXT("(%P|%t) %N:%l - key is null\n")));
-				}
-				return NOT_MAPPED;
+		if (key == 0 || key->length() < sizeof (mapped_object_id_)) {
+			if (Lorica_debug_level > 4) {
+				ACE_DEBUG((LM_DEBUG,
+					   ACE_TEXT("(%P|%t) %N:%l - key is null\n")));
 			}
+			return NOT_MAPPED;
+		}
 		if (Lorica_debug_level > 4) {
 			ACE_DEBUG((LM_DEBUG,
 				   ACE_TEXT("(%P|%t) %N:%l - key len = %d, mapped id len = %d\n"),

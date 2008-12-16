@@ -23,7 +23,10 @@
 
 #include <tao/PortableServer/POAManagerFactory.h>
 #include <tao/Stub.h>
-#include <orbsvcs/SecurityC.h>
+
+#if !defined (LORICA_LACKS_SSLIOP)
+# include <orbsvcs/SecurityC.h>
+#endif // LORICA_LACKS_SSLIOP
 
 #include "MapperRegistry.h"
 #include "ReferenceMapValue.h"
@@ -175,6 +178,7 @@ Lorica_MapperRegistry::init_mappers(PortableServer::POAManager_ptr outward,
 	}
 
 	this->has_security_ = has_security;
+#if !defined (LORICA_LACKS_SSLIOP)
 	if (has_security) {
 		this->sec_policies_.length(1);
 
@@ -185,6 +189,7 @@ Lorica_MapperRegistry::init_mappers(PortableServer::POAManager_ptr outward,
 		// Create the Security::QOPPolicy.
 		sec_policies_[0] = orb->create_policy(Security::SecQOPPolicy, i_and_c);
 	} else
+#endif // LORICA_LACKS_SSLIOP 
 		this->sec_policies_.length(0);
 
 	this->mappers_ready_ = true;

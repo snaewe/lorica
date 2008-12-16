@@ -23,8 +23,9 @@
 #define REFERENCE_MAPPER_I_H
 
 #include <tao/IORTable/IORTable.h>
+#if !defined (LORICA_LACKS_SSLIOP)
 #include <orbsvcs/SecurityLevel2C.h>
-
+#endif
 #include "lorica/ReferenceMapperS.h"
 
 class Lorica_MapperRegistry;
@@ -125,7 +126,9 @@ namespace Lorica
 		IORTable::Table_var ior_table_;
 
 		bool has_security_;
+#if !defined (LORICA_LACKS_SSLIOP)
 		TAO::SL2::AccessDecision_var access_decision_;
+#endif //LORICA_LACKS_SSLIOP
 	};
 }
 

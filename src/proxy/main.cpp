@@ -50,7 +50,7 @@
 typedef enum {
 	EXIT_DAEMON = 0, /* we are the daemon                  */
 	EXIT_OK = 1,	 /* caller must exit with EXIT_SUCCESS */
-	EXIT_ERROR = 2,	 /* caller must exit with EXIT_FAILURE */
+	EXIT_ERROR = 2	 /* caller must exit with EXIT_FAILURE */
 } daemon_exit_t;
 
 static daemon_exit_t

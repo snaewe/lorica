@@ -34,22 +34,28 @@
 Lorica::ReferenceMapper_i::ReferenceMapper_i(CORBA::ORB_ptr orb,
 					     IORTable::Table_ptr iort,
 					     bool has_sec)
-	: orb_(CORBA::ORB::_duplicate(orb)),
-	  ior_table_(IORTable::Table::_duplicate(iort)),
-	  has_security_(has_sec),
-	  access_decision_(TAO::SL2::AccessDecision::_nil())
+	: orb_(CORBA::ORB::_duplicate(orb))
+	,ior_table_(IORTable::Table::_duplicate(iort))
+	,has_security_(has_sec)
+#if !defined (LORICA_LACKS_SSLIOP)
+	,access_decision_(TAO::SL2::AccessDecision::_nil())
+#endif // LORICA_LACKS_SSLIOP
+
 {
 	this->registry_ = ACE_Dynamic_Service<Lorica_MapperRegistry>::instance("MapperRegistry");
 	if (this->registry_ == 0 && Lorica_debug_level > 0)
 		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - no registry\n")));
 
 	try {
+#if !defined (LORICA_LACKS_SSLIOP)
 		if (this->has_security_) {
 			CORBA::Object_var obj =	orb_->resolve_initial_references("SecurityLevel2:SecurityManager");
 			SecurityLevel2::SecurityManager_var sl2sm = SecurityLevel2::SecurityManager::_narrow(obj.in());
 			SecurityLevel2::AccessDecision_var sl2ad = sl2sm->access_decision();
 			this->access_decision_ = TAO::SL2::AccessDecision::_narrow(sl2ad.in());
-		} else {
+		} else
+#endif //LORICA_LACKS_SSLIOP
+		{
 			if (Lorica_debug_level > 0)
 				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t) %N:%l - SSLIOP not available\n")));
 		}
@@ -66,6 +72,9 @@ Lorica::ReferenceMapper_i::~ReferenceMapper_i(void)
 void
 Lorica::ReferenceMapper_i::allow_insecure_access(CORBA::Object_ptr self)
 {
+#if defined (LORICA_LACKS_SSLIOP)
+	ACE_UNUSED_ARG (self);
+#else
 	if (this->has_security_ && !CORBA::is_nil(this->access_decision_))
 	{
 		CORBA::String_var orbid = this->orb_->id();
@@ -76,6 +85,7 @@ Lorica::ReferenceMapper_i::allow_insecure_access(CORBA::Object_ptr self)
 			this->access_decision_->add_object(orbid.in(), poaid.in(), oid.in(),
 							   true);
 	}
+#endif // LORICA_LACKS_SSLIOP
 }
 
 CORBA::Object_ptr
@@ -87,11 +97,18 @@ Lorica::ReferenceMapper_i::as_secure_server(CORBA::Object_ptr orig,
 {
 	if (!this->has_security_)
 		throw Lorica::ReferenceMapper::SecurityNotAvailable();
-
+#if defined (LORICA_LACKS_SSLIOP)
+	ACE_UNUSED_ARG (orig);
+	ACE_UNUSED_ARG (corbaloc_name);
+	ACE_UNUSED_ARG (agent);
+	throw Lorica::ReferenceMapper::SecurityNotAvailable();
+	ACE_NOTREACHED (return CORBA::Object::_nil());
+#else
 	if (CORBA::is_nil(orig))
 		return CORBA::Object::_nil();
 
 	return this->as_server_i(true, orig, corbaloc_name, agent);
+#endif // LORICA_LACKS_SSLIOP
 }
 
 

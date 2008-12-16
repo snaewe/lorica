@@ -27,16 +27,16 @@
 #include <ace/OS_NS_unistd.h>
 
 #ifdef ACE_WIN32
-#ifndef LORICA_LACKS_IFADDRS
-#define LORICA_LACKS_IFADDRS (1)
-#endif
+# ifndef LORICA_LACKS_IFADDRS
+#  define LORICA_LACKS_IFADDRS (1)
+# endif
 #endif
 
 #ifndef LORICA_LACKS_IFADDRS
-#include <string.h>
-#include <arpa/inet.h>
-#include <net/if.h>
-#include <ifaddrs.h>
+# include <string.h>
+# include <arpa/inet.h>
+# include <net/if.h>
+# include <ifaddrs.h>
 #endif // LORICA_LACKS_IFADDRS
 
 #include "ConfigBase.h"
