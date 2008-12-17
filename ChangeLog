@@ -1,3 +1,7 @@
+2008-12-17  Jules Colding  <colding@42tools.com>
+
+	* Lorica: Removed Visual Studio project files from repo
+
 Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * MPC/config/lorica_ssliop.mpb:
