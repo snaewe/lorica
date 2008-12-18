@@ -20,4 +20,4 @@
 #  MA 02111-1307 USA
 
 # Create application
-xcodebuild install SYMROOT=$BUILD DSTROOT=$DIST INSTALL_PATH=/
+xcodebuild install -target "Uninstall Lorica" -configuration "Release" SYMROOT=$BUILD DSTROOT=$DIST INSTALL_PATH=/

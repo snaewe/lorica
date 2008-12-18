@@ -1,7 +1,5 @@
 #!/bin/bash -p
 
-SUDO_USER=$USER
-
 #echo "EUID=$EUID" 			>  /debug.lorica
 #echo "UID=$UID" 			>> /debug.lorica
 #echo "USER=$USER" 			>> /debug.lorica
@@ -24,7 +22,7 @@ fi
 # Stop auto launching af daemon
 daemon="/Library/LaunchDaemons/com.42tools.lorica.plist"
 if [ -e $daemon ]; then
-    sudo launchctl unload $daemon
+    launchctl unload $daemon
 fi
 
 # The unloading above doesn't work! As a work around we have modified the
