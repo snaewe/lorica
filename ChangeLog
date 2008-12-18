@@ -1,3 +1,12 @@
+2008-12-18  Jules Colding  <colding@42tools.com>
+
+	* configurations/evolution-brutus/lorica.conf:
+	Updated to support SSL by default.
+
+	* src/proxy/Makefile.am: We are no longer shipping the
+	Brutus IFR cache with the repository so this files needed
+	to be updated.
+
 2008-12-17  Jules Colding  <colding@42tools.com>
 
 	* Lorica: Removed Visual Studio project files from repo
@@ -9,7 +18,7 @@ Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * lorica.mwc:
 
 	  Created MPC/config directory to provide a directory structure
-	  consistent with other MPC related projects. More project base 
+	  consistent with other MPC related projects. More project base
 	  files are anticipated and will be added here.
 
         * src/lorica/ConfigBase.cpp:
@@ -23,7 +32,7 @@ Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/main.cpp:
         * src/proxy/proxy.cpp:
 
-	  Added the rest of the changes to support optional ssliop 
+	  Added the rest of the changes to support optional ssliop
 	  dependency. Requires LORICA_LACKS_SSLIOP be defined to disable
 	  ssliop use. This will be added to the MPC framework later.
 
