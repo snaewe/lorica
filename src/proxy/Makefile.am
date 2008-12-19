@@ -37,12 +37,12 @@ endif
 
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
+IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache.darwin
 else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
+IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
 endif
 endif # HAVE_ACE_ROOT
-
-IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache
 
 include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
 include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU

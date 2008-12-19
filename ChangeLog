@@ -1,3 +1,11 @@
+2008-12-19  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+	Use system specific IFR cache file
+
+	* configurations/evolution-brutus/lorica.conf:
+	Use BiDir by default
+
 2008-12-18  Jules Colding  <colding@42tools.com>
 
 	* configurations/evolution-brutus/lorica.conf:
