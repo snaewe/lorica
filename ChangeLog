@@ -1,3 +1,8 @@
+2008-12-21  Jules Colding  <colding@42tools.com>
+
+	* configurations/evolution-brutus/lorica.conf:
+	Remove ssl_port from default configuration
+
 2008-12-19  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
