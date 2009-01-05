@@ -37,12 +37,17 @@ endif
 
 if LORICA_DARWIN
 export DYLD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
-IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache.darwin
 else
 export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH):$(LORICA_SHARED_LIBS_PATH)
-IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
 endif
 endif # HAVE_ACE_ROOT
+
+if LORICA_DARWIN
+IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache.darwin
+else
+IFR_BRUTUS_CACHE_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
+endif
+CLIENT_CONF_FILE = $(LORICA_top_dir)/../brutus-server/brutus_loader/support_files/lorica.conf.client
 
 include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
 include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -219,20 +224,20 @@ endif # HAVE_ACE_ROOT
 
 endif # LORICA_MUST_INSTALL_ACETAO
 
-$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache:
+$(LORICA_top_dir)/lorica.conf:
+	cp $(CLIENT_CONF_FILE) $@
+
+$(LORICA_top_dir)/ifr.cache:
 	cp $(IFR_BRUTUS_CACHE_FILE) $@ 
 
 BRUTUS_IFR_CACHEdir = $(LORICA_CACHE_DIR)
 
-BRUTUS_IFR_CACHE_DATA = \
-	$(LORICA_top_dir)/configurations/evolution-brutus/ifr.cache
-
-lorica.conf:
+BRUTUS_IFR_CACHE_DATA = $(LORICA_top_dir)/ifr.cache
 
 lorica.ssliop:
 
 sysconf_DATA = \
-	$(LORICA_top_dir)/configurations/evolution-brutus/lorica.conf \
+	$(LORICA_top_dir)/lorica.conf \
 	lorica.ssliop
 
 
@@ -242,5 +247,5 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = $(CWD)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid
+DISTCLEANFILES = $(CWD)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid $(LORICA_top_dir)/lorica.conf $(LORICA_top_dir)/ifr.cache
 CLEANFILES = $(CWD)/*.o 

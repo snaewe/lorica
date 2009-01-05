@@ -1,8 +1,0 @@
-This directory contain sample configurations.
-
-Use this IFR cache and configuration file if you want to 
-connect to a Brutus server:
-
-    ifr.cache-brutus
-    lorica.conf.evolution-brutus
-

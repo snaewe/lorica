@@ -1,7 +1,13 @@
+2009-01-05  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/Makefile.am:
+	Update to the fact that the Brutu s specific files have
+	all gone from the repository.
+
 2008-12-21  Jules Colding  <colding@42tools.com>
 
 	* configurations/evolution-brutus/lorica.conf:
-	Remove ssl_port from default configuration
+	Remove ssl_port from default configuration.
 
 2008-12-19  Jules Colding  <colding@42tools.com>
 
