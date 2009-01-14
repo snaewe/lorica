@@ -22,6 +22,7 @@ SUBDIRS = \
 	basic_collocate \
 	bidir           \
 	callback        \
+	3-way-callback  \
 	forward         \
 	logging         \
 	persistence_ifr \
