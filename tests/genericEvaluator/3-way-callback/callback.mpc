@@ -28,7 +28,7 @@ project (GenericEvaluator Callback Client): dynamicinterface, portableserver, or
     client.cpp
     Server_Task.cpp
     Client_Task.cpp
-    Receiver_i.cpp
+    Server_i.cpp
   }
 }
 
@@ -43,6 +43,6 @@ project (GenericEvaluator Callback Server): dynamicinterface, portableserver, or
     TestS.cpp
     server.cpp
     Server_Task.cpp
-    Sender_i.cpp
+    Callback_i.cpp
   }
 }
