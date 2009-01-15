@@ -389,7 +389,15 @@ Lorica::ProxyMapper::add_native_unchecked(CORBA::Object_ptr native,
 
 	// put new value in maps
 	if (this->mapped_values_ != 0) {
+		if (Lorica_debug_level > 2) {
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - adding \"%C\" to map\n"), typeId.c_str()));
+		}
+
 		this->mapped_values_->bind(index, rmv.get());
+	} else {
+		if (Lorica_debug_level > 2) {
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - can not map \"%C\" - no map\n"), typeId.c_str()));
+		}
 	}
 
 	return rmv.release();

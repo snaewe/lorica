@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica source file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica header file.
+ *    Copyright (C) 2009 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -19,49 +19,25 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "Sender_i.h"
+#ifndef SERVER_I_H 
+#define SERVER_I_H 
 
-ACE_RCSID(Oneways_Invoking_Twoways, Sender_i, "Sender_i.cpp,v 1.3 2001/06/26 14:56:10 bala Exp")
+#include "TestS.h"
 
-Sender_i::Sender_i (CORBA::ORB_ptr orb,
-		    CORBA::ULong no)
-: orb_ (CORBA::ORB::_duplicate (orb)),
-	number_ (no),
-	active_objects_ (0)
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
+
+class  Test_Server_i : public virtual POA_Test::Server
 {
-}
+public:
+        // Constructor 
+        Test_Server_i (void);
+  
+        // Destructor 
+        virtual ~Test_Server_i (void);
+  
+        virtual ::CORBA::Boolean receive_call(::Test::CallBack_ptr cb);
+};
 
-Sender_i::~Sender_i (void)
-{
-}
-
-void
-Sender_i::active_objects (CORBA::Short no_threads)
-{
-	this->active_objects_ = no_threads;
-}
-
-
-void
-Sender_i::send_ready_message (Test::Receiver_ptr receiver)
-{
-	ACE_DEBUG ((LM_DEBUG,
-		    "Received a call ...\n"));
-
-	ACE_DEBUG ((LM_DEBUG,
-		    "Calling the Receiver ..\n"));
-
-	for (CORBA::ULong i = 0;
-	     i < this->number_;
-	     ++i)
-	{
-		receiver->receive_call ();
-	}
-
-}
-
-void
-Sender_i::ping ()
-{
-	return;
-}
+#endif /* SERVER_I_H */

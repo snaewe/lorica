@@ -1,8 +1,8 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: t; c-basic-offset: 8 -*- */
 
 /*
- *    Lorica header file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Lorica source file.
+ *    Copyright (C) 2009 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -19,37 +19,35 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifndef ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H
-#define ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H
-#include <ace/pre.h>
+#include "Server_i.h"
 
-#include "TestC.h"
-#include <ace/Task.h>
-
-#if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
-#endif /* ACE_LACKS_PRAGMA_ONCE */
-
-/// Implement a Task to run the experiments using multiple threads.
-class Client_Task : public ACE_Task_Base
+// Implementation skeleton constructor
+Test_Server_i::Test_Server_i(void)
 {
-public:
-	/// Constructor
-	Client_Task (Test::Sender_ptr sender,
-		     Test::Receiver_ptr us,
-		     ACE_Thread_Manager *thr_mgr);
+}
 
-	/// Thread entry point
-	int svc (void);
+// Implementation skeleton destructor
+Test_Server_i::~Test_Server_i(void)
+{
+}
 
-private:
+::CORBA::Boolean
+Test_Server_i::receive_call(::Test::CallBack_ptr cb)
+{
+	::Test::CallBack_var call_back = cb;
 
-	/// Reference to the test interface
-	Test::Sender_var sender_;
+	try {
+		call_back->ping();
+	}
+        catch (const CORBA::Exception &e) {
+                ACE_DEBUG((LM_CRITICAL, ACE_TEXT("%N:%l - %s\n"), e._info().c_str()));
+                return (::CORBA::Boolean)0;
+        }
+        catch (...) {
+                ACE_DEBUG((LM_CRITICAL, ACE_TEXT("%N:%l - Unknown C++ exception\n")));
+                return (::CORBA::Boolean)0;
+        }
+	
+	return (::CORBA::Boolean)1;
+}
 
-	/// Reference to the test interface
-	Test::Receiver_var us_;
-};
-
-#include <ace/post.h>
-#endif /* ONEWAYS_INVOKING_TWOWAYS_CLIENT_TASK_H */

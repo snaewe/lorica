@@ -19,16 +19,18 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA
  */
 
+#pragma prefix "test.lorica"
+
 module Test
 {
 	interface CallBack {
 		/// Ping message..
-		void ping ();
+		void ping();
 	};
 
 	interface Server {
 		/// Receive a call and ping the callback
-		long receive_call (in CallBack cb);
+		boolean receive_call(in CallBack cb);
 	};
 
 };

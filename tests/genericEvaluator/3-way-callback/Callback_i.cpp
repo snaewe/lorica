@@ -2,7 +2,7 @@
 
 /*
  *    Lorica source file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2009 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -19,39 +19,20 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#include "Receiver_i.h"
+#include "Callback_i.h"
 
-ACE_RCSID(Oneways_Invoking_Twoways, Receiver_i, "Receiver_i.cpp,v 1.3 2001/08/10 13:08:56 bala Exp")
 
-Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
-			Test::Sender_ptr sender,
-			CORBA::ULong iter)
-: orb_ (CORBA::ORB::_duplicate (orb)),
-	sender_ (Test::Sender::_duplicate (sender)),
-	iteration_ (iter),
-	no_calls_ (0)
+// Implementation skeleton constructor
+Test_CallBack_i::Test_CallBack_i(void)
 {
 }
 
-Receiver_i::~Receiver_i (void)
+// Implementation skeleton destructor
+Test_CallBack_i::~Test_CallBack_i(void)
 {
 }
 
-
-
-CORBA::Long
-Receiver_i::receive_call ()
+void Test_CallBack_i::ping(void)
 {
-	ACE_DEBUG ((LM_DEBUG,
-		    "(%P|%t)  Doing a ping... \n"));
-
-	this->sender_->ping ();
-
-	return this->no_calls_++;
-}
-
-CORBA::Long
-Receiver_i::get_call_count ()
-{
-	return this->iteration_;
+	ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Got PING!\n")));
 }

@@ -30,20 +30,32 @@ use PerlACE::Run_Test;
 
 $status = 0;
 $debug_level = '0';
+$server_ip_addr = "localhost";
+$lorica_conf = "lorica-server.conf";
+$run_as_client = "NO";
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {
         $debug_level = '10';
     }
+    if ($i eq '-server') {
+	$i = shift;
+	$i = shift;
+        $server_ip_addr = $i;
+	$lorica_conf = "lorica-client.conf";
+	$run_as_client = "YES";
+    }
+}
+
+$new_str = "corbaloc:$server_ip_addr\n";
+print STDERR $new_str;
+if ($run_as_client eq "YES") {
+    print STDERR "Running as client\n"
+} else {
+    print STDERR "Running as server\n"
 }
 
 unlink  ("ifr.cache");
-
-$mappedfile = PerlACE::LocalFile ("mapped.ior");
-unlink $mappedfile;
-
-$origfile = PerlACE::LocalFile ("orig.ior");
-unlink $origfile;
 
 $pidfile = PerlACE::LocalFile ("lorica.pid");
 unlink $pidfile;
@@ -52,15 +64,19 @@ $ifrfile = PerlACE::LocalFile ("ifr.ior");
 unlink $ifrfile;
 
 $IFR = new PerlACE::Process("$TAO_ROOT/orbsvcs/IFR_Service/IFR_Service", " -o $ifrfile");
-$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f test.conf");
+$PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f $lorica_conf");
 
 $IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", "-ORBInitRef InterfaceRepository=file://$ifrfile  Test.idl");
 
-$SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level -o $origfile -m $mappedfile");
+if ($run_as_client eq "YES") {
+    print "Running as client\n";
+    $CL = new PerlACE::Process ("client", " -k $server_ip_addr");
+} else {
+    print "Running as server\n";
+    $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level");
+}
 
-$CL = new PerlACE::Process ("client", " -k file://$mappedfile");
-
-print "Callback generic evaluator test is started\n";
+print "3-way callback generic evaluator test is started\n";
 
 $IFR->Spawn ();
 if (PerlACE::waitforfile_timed ($ifrfile, 10) == -1) {
@@ -93,9 +109,12 @@ if (PerlACE::waitforfile_timed ($mappedfile,
     exit 1;
 }
 
-$client = $CL->SpawnWaitKill (20);
 
-$server = $SV->Kill ();
+if ($run_as_client eq "YES") {
+    $client = $CL->SpawnWaitKill (20);
+} else {
+    $server = $SV->Kill ();
+}
 
 $proxy = $PR->Kill ();
 
@@ -106,8 +125,6 @@ if ($proxy != 0) {
 
 $IFR->Kill ();
 
-unlink $mappedfile;
-unlink $origfile;
 unlink $pidfile;
 unlink $ifrfile;
 

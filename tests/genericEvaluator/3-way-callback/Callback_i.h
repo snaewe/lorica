@@ -2,7 +2,7 @@
 
 /*
  *    Lorica header file.
- *    Copyright (C) 2007 OMC Denmark ApS.
+ *    Copyright (C) 2009 OMC Denmark ApS.
  *
  *    This program is free software; you can redistribute it and/or modify
  *    it under the terms of the GNU General Public License as published by
@@ -19,32 +19,25 @@
  *    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  */
 
-#ifndef ONEWAYS_INVOKING_TWOWAYS_SERVER_TASK_H
-#define ONEWAYS_INVOKING_TWOWAYS_SERVER_TASK_H
-#include <ace/pre.h>
+#ifndef CALLBACK_I_H
+#define CALLBACK_I_H
 
-#include <tao/corba.h>
-#include <ace/Task.h>
+#include "TestS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
-# pragma once
+#pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/// Implement a Task to run the experiments using multiple threads.
-class Server_Task : public ACE_Task_Base
+class Test_CallBack_i : public virtual POA_Test::CallBack
 {
 public:
-	/// Constructor
-	Server_Task (CORBA::ORB_ptr orb,
-		     ACE_Thread_Manager *thr_mgr);
-
-	/// Thread entry point
-	int svc (void);
-
-private:
-	/// Reference to the ORB
-	CORBA::ORB_var orb_;
+        // Constructor 
+        Test_CallBack_i(void);
+  
+        // Destructor 
+        virtual ~Test_CallBack_i(void);
+  
+        virtual void ping(void);
 };
 
-#include <ace/post.h>
-#endif /* ONEWAYS_INVOKING_TWOWAYS_SERVER_TASK_H*/
+#endif /* CALLBACK_I_H */

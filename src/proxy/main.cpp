@@ -257,7 +257,7 @@ Lorica::Service_Loader::print_usage_and_die(void)
 		   program_name.c_str(),
 		   0));
 #else
-	ACE_OS::printf("Usage: %s -V -n -d -f <file> -c <level> -l <level> -n\n"
+	ACE_OS::printf("Usage: %s -V -n -d -f <file> -c <level> -l <level>\n"
 		       " -V: Print the version\n"
 		       " -n: No fork - Run as a regular application\n"
 		       " -d: Debug - Use current directory as working directory\n"

@@ -1,3 +1,18 @@
+2009-01-15  Jules Colding  <colding@42tools.com>
+
+	* configure.ac:
+	Added the new test to the configure script.
+
+	* src/lorica/ProxyMapper.cpp (add_native_unchecked):
+	Added debug print when adding new mappings.
+
+	* tests: Added 3-way callback test.
+
+2009-01-09  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/main.cpp (print_usage_and_die):
+	Remove one to many -n's.
+
 2009-01-07  Jules Colding  <colding@42tools.com>
 
 	* apple/installer/com.42tools.lorica.plist:

@@ -45,14 +45,14 @@ endif # HAVE_ACE_ROOT
 include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
 include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
-TAO_IDLFLAGS = -I$(TAO_ROOT) -g $(GPERF) -GI
+TAO_IDLFLAGS = -I$(TAO_ROOT) -g $(GPERF)
 
 if LORICA_DARWIN
 TESTS_ENVIRONMENT = env DYLD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
 else
 TESTS_ENVIRONMENT = env LD_LIBRARY_PATH=$(ACE_ROOT)/lib:$(ENV_DYLD_LIBRARY_PATH) LORICA_ROOT=$(LORICA_top_dir) TAO_ROOT=$(TAO_ROOT)
 endif
-TESTS = run_test.pl
+#TESTS = run_test.pl
 
 ##################################################################
 
@@ -85,9 +85,10 @@ Test-stamp: $(srcdir)/Test.idl
 	@touch "$@"
 
 noinst_HEADERS = \
-	Test.idl     \
-	test.conf    \
-	callback.mpc \
+	Test.idl              \
+	lorica-server.conf    \
+	lorica-client.conf    \
+	3-way-callback.mpc    \
 	run_test.pl 
 
 #
@@ -100,21 +101,18 @@ client_CPPFLAGS = \
 	$(LORICA_CPPFLAGS)
 
 client_SOURCES = \
-	Client_Task.cpp \
-	Receiver_i.cpp  \
-	Server_Task.cpp \
 	TestC.cpp       \
 	TestS.cpp       \
 	client.cpp      \
-	Client_Task.h   \
-	Receiver_i.h    \
-	Server_Task.h   \
+	Callback_i.cpp  \
+	Callback_i.h    \
 	TestC.h         \
 	TestC.inl       \
 	TestS.h         \
 	TestS.inl
 
 client_LDADD = \
+	$(LORICA_top_dir)/src/lorica/liblorica_Client.la \
 	-lTAO_DynamicInterface \
 	-lTAO_Messaging        \
 	-lTAO_PI               \
@@ -152,13 +150,11 @@ server_CPPFLAGS = \
 	$(LORICA_CPPFLAGS)
 
 server_SOURCES = \
-	Sender_i.cpp    \
-	Server_Task.cpp \
 	TestC.cpp       \
 	TestS.cpp       \
 	server.cpp      \
-	Sender_i.h      \
-	Server_Task.h   \
+	Server_i.cpp    \
+	Server_i.h      \
 	TestC.h         \
 	TestC.inl       \
 	TestS.h         \
