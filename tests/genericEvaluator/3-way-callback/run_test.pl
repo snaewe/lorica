@@ -22,11 +22,17 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      if 0;
 
 use Env (ACE_ROOT);
-use Env (TAO_ROOT);
 use Env (LORICA_ROOT);
-
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
+
+if ($TAO_ROOT eq "") {
+    $TAO_ROOT = "$ACE_ROOT/TAO";
+}
+if ($LORICA_ROOT eq "") {
+    print STDERR "ERROR: Please set the LORICA_ROOT environment variable before running this test\n";
+    exit 1;
+}
 
 $status = 0;
 $debug_level = '0';
@@ -47,15 +53,7 @@ foreach $i (@ARGV) {
     }
 }
 
-$new_str = "corbaloc:$server_ip_addr\n";
-print STDERR $new_str;
-if ($run_as_client eq "YES") {
-    print STDERR "Running as client\n"
-} else {
-    print STDERR "Running as server\n"
-}
-
-unlink  ("ifr.cache");
+unlink ("ifr.cache");
 
 $pidfile = PerlACE::LocalFile ("lorica.pid");
 unlink $pidfile;
@@ -66,7 +64,7 @@ unlink $ifrfile;
 $IFR = new PerlACE::Process("$TAO_ROOT/orbsvcs/IFR_Service/IFR_Service", " -o $ifrfile");
 $PR = new PerlACE::Process ("$LORICA_ROOT/src/proxy/lorica", "-n -d -f $lorica_conf");
 
-$IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", "-ORBInitRef InterfaceRepository=file://$ifrfile  Test.idl");
+$IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", "-ORBInitRef InterfaceRepository=file://$ifrfile Test.idl");
 
 if ($run_as_client eq "YES") {
     print "Running as client\n";
@@ -100,18 +98,14 @@ if (($idlc_ret != 0) || ($? != 0)) {
   $status = 1;
 }
 
-$server = $SV->Spawn ();
-if (PerlACE::waitforfile_timed ($mappedfile,
-             $PerlACE::wait_interval_for_process_creation) == -1) {
-    print STDERR "ERROR: cannot find file <$pidfile>\n";
-    $SV->Kill (); $SV->TimedWait (1);
-    $PR->Kill (); $PR->TimedWait (1);
-    exit 1;
+if ($run_as_client eq "YES") {
+    $client = $CL->Spawn ();
+} else {
+    $server = $SV->Spawn ();
 }
 
-
 if ($run_as_client eq "YES") {
-    $client = $CL->SpawnWaitKill (20);
+    $client = $CL->Kill ();
 } else {
     $server = $SV->Kill ();
 }
