@@ -22,7 +22,8 @@
 #include "Server_i.h"
 
 // Implementation skeleton constructor
-Test_Server_i::Test_Server_i(void)
+Test_Server_i::Test_Server_i(CORBA::ORB_ptr orb)
+  : orb_(CORBA::ORB::_duplicate (orb))
 {
 }
 
@@ -34,8 +35,14 @@ Test_Server_i::~Test_Server_i(void)
 ::CORBA::Boolean
 Test_Server_i::receive_call(::Test::CallBack_ptr cb)
 {
+	static int ping_count = 0;
 	::Test::CallBack_var call_back = cb;
 
+	ping_count++;
+	if (2 < ping_count) {
+		orb_->shutdown();
+                return (::CORBA::Boolean)1;
+	}
 	try {
 		call_back->ping();
 	}

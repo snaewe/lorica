@@ -41,7 +41,7 @@ main (int argc, char *argv[])
 		PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
 		Test_Server_i *server_impl;
-		ACE_NEW_RETURN(server_impl, Test_Server_i(), 1);
+		ACE_NEW_RETURN(server_impl, Test_Server_i(orb.in()), 1);
 		PortableServer::ServantBase_var receiver_owner_transfer(server_impl);
 
 		// getting the original object

@@ -1,3 +1,8 @@
+2009-01-15  Jules Colding  <colding@42tools.com>
+
+	* tests/genericEvaluator/3-way-callback/Server_i.cpp (Test_Server_i::receive_call):
+	Make the server shutdown after the third call.
+
 Thu Jan 15 17:12:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/RMVByMapped.cpp:
