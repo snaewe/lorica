@@ -1,54 +1,59 @@
+Thu Jan 15 17:12:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/RMVByMapped.cpp:
+          Added debugging output for tracking map access.
+
 2009-01-15  Jules Colding  <colding@42tools.com>
 
-	* configure.ac:
-	Added the new test to the configure script.
+        * configure.ac:
+        Added the new test to the configure script.
 
-	* src/lorica/ProxyMapper.cpp (add_native_unchecked):
-	Added debug print when adding new mappings.
+        * src/lorica/ProxyMapper.cpp (add_native_unchecked):
+        Added debug print when adding new mappings.
 
-	* tests: Added 3-way callback test.
+        * tests: Added 3-way callback test.
 
 2009-01-09  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/main.cpp (print_usage_and_die):
-	Remove one to many -n's.
+        * src/proxy/main.cpp (print_usage_and_die):
+        Remove one to many -n's.
 
 2009-01-07  Jules Colding  <colding@42tools.com>
 
-	* apple/installer/com.42tools.lorica.plist:
-	Making launchd keep Lorica alive on Darwin.
+        * apple/installer/com.42tools.lorica.plist:
+        Making launchd keep Lorica alive on Darwin.
 
 2009-01-05  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/Makefile.am:
-	Update to the fact that the Brutus specific files have
-	all gone from the repository.
+        * src/proxy/Makefile.am:
+        Update to the fact that the Brutus specific files have
+        all gone from the repository.
 
 2008-12-21  Jules Colding  <colding@42tools.com>
 
-	* configurations/evolution-brutus/lorica.conf:
-	Remove ssl_port from default configuration.
+        * configurations/evolution-brutus/lorica.conf:
+        Remove ssl_port from default configuration.
 
 2008-12-19  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
-	Use system specific IFR cache file
+        * src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+        Use system specific IFR cache file
 
-	* configurations/evolution-brutus/lorica.conf:
-	Use BiDir by default
+        * configurations/evolution-brutus/lorica.conf:
+        Use BiDir by default
 
 2008-12-18  Jules Colding  <colding@42tools.com>
 
-	* configurations/evolution-brutus/lorica.conf:
-	Updated to support SSL by default.
+        * configurations/evolution-brutus/lorica.conf:
+        Updated to support SSL by default.
 
-	* src/proxy/Makefile.am: We are no longer shipping the
-	Brutus IFR cache with the repository so this files needed
-	to be updated.
+        * src/proxy/Makefile.am: We are no longer shipping the
+        Brutus IFR cache with the repository so this files needed
+        to be updated.
 
 2008-12-17  Jules Colding  <colding@42tools.com>
 
-	* Lorica: Removed Visual Studio project files from repo
+        * Lorica: Removed Visual Studio project files from repo
 
 Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -56,14 +61,14 @@ Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * MPC/config/loricacommon.mpb:
         * lorica.mwc:
 
-	  Created MPC/config directory to provide a directory structure
-	  consistent with other MPC related projects. More project base
-	  files are anticipated and will be added here.
+          Created MPC/config directory to provide a directory structure
+          consistent with other MPC related projects. More project base
+          files are anticipated and will be added here.
 
         * src/lorica/ConfigBase.cpp:
         * src/lorica/ProxyMapper.cpp:
 
-	  Minor syntax cleanup.
+          Minor syntax cleanup.
 
         * src/lorica/MapperRegistry.cpp:
         * src/proxy/ReferenceMapper_i.h:
@@ -71,9 +76,9 @@ Tue Dec 16 20:17:56 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/main.cpp:
         * src/proxy/proxy.cpp:
 
-	  Added the rest of the changes to support optional ssliop
-	  dependency. Requires LORICA_LACKS_SSLIOP be defined to disable
-	  ssliop use. This will be added to the MPC framework later.
+          Added the rest of the changes to support optional ssliop
+          dependency. Requires LORICA_LACKS_SSLIOP be defined to disable
+          ssliop use. This will be added to the MPC framework later.
 
 Sat Dec 13 22:53:49 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
 

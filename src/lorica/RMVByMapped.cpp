@@ -68,6 +68,11 @@ Lorica::RMVByMapped::next_index(void)
 		pages_->add_page(page_size_);
 	}
 
+	if (Lorica_debug_level > 2) {
+		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - next_index returning %d, high = %d\n",
+			    rtn, high_index_));
+	}
+
 	return rtn;
 }
 
@@ -76,19 +81,25 @@ Lorica::RMVByMapped::bind(ACE_UINT32 index,
 			  ReferenceMapValue *value)
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
+	if (Lorica_debug_level > 2) {
+		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - bind(%d) limit = %d, adding RMV = %x\n",
+			    index, num_pages_ * page_size_, value));
+	}
 	if (index >= num_pages_ * page_size_)
 		return false;
 
 	ACE_UINT32 ndx = index % page_size_;
 	ReferenceMapValue **page = pages_->find_page(index / page_size_);
-	if (page[ndx] != 0)
+	if (page[ndx] != 0) {
+		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - error, element %d not null!\n",
+			    ndx));
 		return false;
+	}
 
 	value->incr_refcount();
 	page[ndx] = value;
 
 	return true;
-
 }
 
 bool
@@ -96,6 +107,10 @@ Lorica::RMVByMapped::rebind(ACE_UINT32 index,
 			    ReferenceMapValue *value)
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
+	if (Lorica_debug_level > 2) {
+		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - rebind(%d) limit = %d, new RMV = %x\n",
+			    index, num_pages_ * page_size_, value));
+	}
 	if (index >= num_pages_ * page_size_)
 		return false;
 
@@ -126,6 +141,10 @@ Lorica::RMVByMapped::find(ACE_UINT32 index,
 	page[ndx]->incr_refcount();
 	value = page[ndx];
 
+	if (Lorica_debug_level > 2) {
+		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - find(%d) returning RMV = %x\n",
+			    index, value));
+	}
 	return true;
 }
 
@@ -145,6 +164,10 @@ Lorica::RMVByMapped::unbind(ACE_UINT32 index,
 	value = page[ndx];
 	page[ndx] = 0;
 	this->free_stack_ = new free_stack_node(index, this->free_stack_);
+	if (Lorica_debug_level > 2) {
+		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - unbind(%d) returning RMV = %x\n",
+			    index, value));
+	}
 
 	return true;
 }
