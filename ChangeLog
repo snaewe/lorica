@@ -1,5 +1,8 @@
 2009-01-16  Jules Colding  <colding@42tools.com>
 
+	* tests/genericEvaluator/3-way-callback/run_test.pl:
+	Added ORB debug option to client spawn
+
 	* tests/genericEvaluator/3-way-callback:
 	A few small fixes all over the place.
 

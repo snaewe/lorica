@@ -68,7 +68,7 @@ $IDLC = new PerlACE::Process ("$TAO_ROOT/orbsvcs/IFR_Service/tao_ifr", "-ORBInit
 
 if ($run_as_client eq "YES") {
     print "Running as client\n";
-    $CL = new PerlACE::Process ("client", " -k $server_ip_addr");
+    $CL = new PerlACE::Process ("client", " -ORBdebuglevel $debug_level -k $server_ip_addr");
 } else {
     print "Running as server\n";
     $SV = new PerlACE::Process ("server", " -ORBdebuglevel $debug_level");
