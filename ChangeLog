@@ -2,6 +2,7 @@
 
 	* tests/genericEvaluator/3-way-callback/run_test.pl:
 	Added ORB debug option to client spawn
+	Added warning about non-existing ACE_ROOT environment variable
 
 	* tests/genericEvaluator/3-way-callback:
 	A few small fixes all over the place.
