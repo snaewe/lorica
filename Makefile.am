@@ -86,6 +86,10 @@ EXTRA_DIST = \
 	src/OCI/AsynchProxyTools.mpc            \
 	src/proxy/proxy.mpc
 
+LIBTOOL_DEPS = @LIBTOOL_DEPS@
+libtool: $(LIBTOOL_DEPS)
+	$(SHELL) ./config.status --recheck
+
 dist-hook:
 	-rm -f $(distdir)/defines/pathdefs.h
 	-rm -f $(distdir)/init_rc/gentoo.confd

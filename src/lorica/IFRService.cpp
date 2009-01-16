@@ -52,7 +52,7 @@ Lorica::IFRService::init(const bool Debug,
 
 	if (Lorica_debug_level > 0) {
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) %N:%l - passing %d args to ifr_server's orb_init:\n"),
+			   ACE_TEXT("(%T) %N:%l - passing %d args to ifr_server's orb_init:\n"),
 			   argc));
 		for (int i = 0; i < argc; i++)
 			ACE_DEBUG((LM_DEBUG,

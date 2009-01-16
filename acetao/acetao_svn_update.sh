@@ -22,9 +22,12 @@
 SVN="$1"
 DIR_ROOT="$2"
 
-cd "$DIR_ROOT" && "$SVN" up
+#cd "$DIR_ROOT"     && "$SVN" diff >/Users/colding/ifname.patch
+cd "$DIR_ROOT"     && "$SVN" revert -R .
+cd "$DIR_ROOT"     && "$SVN" up
 cd "$DIR_ROOT"/TAO && "$SVN" up
 cd "$DIR_ROOT"/MPC && "$SVN" up
+#cd "$DIR_ROOT"     && patch -p0 </Users/colding/ifname.patch
 cd "$DIR_ROOT"/TAO && "$DIR_ROOT/bin/mwc.pl" TAO_ACE.mwc -type gnuace
 
 exit $?

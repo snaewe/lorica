@@ -250,13 +250,13 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 		if (key == 0 || key->length() < sizeof (mapped_object_id_)) {
 			if (Lorica_debug_level > 4) {
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) %N:%l - key is null\n")));
+					   ACE_TEXT("(%T) %N:%l - key is null\n")));
 			}
 			return NOT_MAPPED;
 		}
 		if (Lorica_debug_level > 4) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - key len = %d, mapped id len = %d\n"),
+				   ACE_TEXT("(%T) %N:%l - key len = %d, mapped id len = %d\n"),
 				   key->length(),
 				   sizeof(mapped_object_id_)));
 		}
@@ -268,7 +268,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 		
 		if (Lorica_debug_level > 4) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - Key at offset = ")));
+				   ACE_TEXT("(%T) %N:%l - Key at offset = ")));
 			
 			for (size_t x = offset; x < offset+6; x++)
 				ACE_DEBUG((LM_DEBUG,
@@ -284,7 +284,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 			ACE_OS::memcpy (&temp, buffer+offset, sizeof (temp));
 			if (Lorica_debug_level > 4) {
 				ACE_DEBUG((LM_DEBUG,
-					   ACE_TEXT("(%P|%t) %N:%l - got a potential match\n")));
+					   ACE_TEXT("(%T) %N:%l - got a potential match\n")));
 			}
 		}
 		
@@ -296,7 +296,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 				
 				if (Lorica_debug_level > 4) {
 					ACE_DEBUG((LM_DEBUG,
-						   ACE_TEXT("(%P|%t) %N:%l - got a match, index = %d, io = %c, in_out = %c\n"),
+						   ACE_TEXT("(%T) %N:%l - got a match, index = %d, io = %c, in_out = %c\n"),
 						   index,
 						   io,
 						   temp.in_out));
@@ -306,7 +306,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 			}
 			if (Lorica_debug_level > 2) {
 				ACE_DEBUG((LM_WARNING, 
-					   ACE_TEXT("(%P|%t) %N:%l - got a reference mapped by another Lorica - pid = %d and hostid = %d\n"),
+					   ACE_TEXT("(%T) %N:%l - got a reference mapped by another Lorica - pid = %d and hostid = %d\n"),
 					   temp.pid,
 					   temp.hostid));
 			}
@@ -314,7 +314,7 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 	}
 	if (Lorica_debug_level > 4) {
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) %N:%l - failed to match\n")));
+			   ACE_TEXT("(%T) %N:%l - failed to match\n")));
 	}
 	
 	return NOT_MAPPED;
@@ -390,13 +390,13 @@ Lorica::ProxyMapper::add_native_unchecked(CORBA::Object_ptr native,
 	// put new value in maps
 	if (this->mapped_values_ != 0) {
 		if (Lorica_debug_level > 2) {
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - adding \"%C\" to map\n"), typeId.c_str()));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - adding \"%C\" to map\n"), typeId.c_str()));
 		}
 
 		this->mapped_values_->bind(index, rmv.get());
 	} else {
 		if (Lorica_debug_level > 2) {
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - can not map \"%C\" - no map\n"), typeId.c_str()));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - can not map \"%C\" - no map\n"), typeId.c_str()));
 		}
 	}
 
@@ -419,13 +419,13 @@ Lorica::ProxyMapper::add_native(CORBA::Object_ptr native,
 				{
 					if (Lorica_debug_level > 2) {
 						ACE_DEBUG((LM_DEBUG,
-							   ACE_TEXT("(%P|%t) %N:%l - native is already mapped\n")));
+							   ACE_TEXT("(%T) %N:%l - native is already mapped\n")));
 					}
 
 					Lorica::ReferenceMapValue_var rmv;
 					if (!mapped_values_->find(index,rmv.out())) {
 						ACE_ERROR((LM_ERROR,
-							   ACE_TEXT("(%P|%t) %N:%l - error, an already mapped value could not be found\n")));
+							   ACE_TEXT("(%T) %N:%l - error, an already mapped value could not be found\n")));
 					}
 					
 					return rmv.release();
@@ -434,13 +434,13 @@ Lorica::ProxyMapper::add_native(CORBA::Object_ptr native,
 				{
 					if (Lorica_debug_level > 2) {
 						ACE_DEBUG((LM_DEBUG,
-							   ACE_TEXT("(%P|%t) %N:%l - a reverse mapped reference is to be mapped\n")));
+							   ACE_TEXT("(%T) %N:%l - a reverse mapped reference is to be mapped\n")));
 					}
 
 					Lorica::ReferenceMapValue_var rmv;
 					if (!mapped_values_->find(index,rmv.out())) {
 						ACE_ERROR((LM_ERROR,
-							   ACE_TEXT("(%P|%t) %N:%l - error, an already mapped value could not be found\n")));
+							   ACE_TEXT("(%T) %N:%l - error, an already mapped value could not be found\n")));
 					}
 
 					return rmv->reverse();
@@ -449,7 +449,7 @@ Lorica::ProxyMapper::add_native(CORBA::Object_ptr native,
 				{
 					if (Lorica_debug_level > 2) {
 						ACE_DEBUG((LM_DEBUG,
-							   ACE_TEXT("(%P|%t) %N:%l - native is not mapped\n")));
+							   ACE_TEXT("(%T) %N:%l - native is not mapped\n")));
 					}
 
 					return this->add_native_unchecked(native,
@@ -524,7 +524,7 @@ Lorica::ProxyMapper::current_native(Lorica::ServerAgent_ptr & agent)
 
 		agent->error_occured(errno, error_msg);
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) %N:%l - failed with this exception: %s",
+			   "(%T) %N:%l - failed with this exception: %s",
 			   ex._name ()));
 	}
 
@@ -582,7 +582,7 @@ Lorica::ProxyMapper::native_for_mapped(CORBA::Object_ptr & ref,
 
 		agent->error_occured (errno, error_msg);
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) %N:%l - failed with this exception: %s",
+			   "(%T) %N:%l - failed with this exception: %s",
 			   ex._name()));
 	}
 
@@ -610,7 +610,7 @@ Lorica::ProxyMapper::poa_and_object_id(CORBA::Object_ptr mapped_ref,
 	}
 	catch (CORBA::Exception & ex) {
 		ACE_ERROR((LM_ERROR,
-			   "(%P|%t) %N:%l - caught %s\n",
+			   "(%T) %N:%l - caught %s\n",
 			   ex._name()));
 
 		objid = new PortableServer::ObjectId;
@@ -642,7 +642,7 @@ Lorica::ProxyMapper::mapped_for_native(CORBA::Object_ptr & ref,
 	} else {
 		if (Lorica_debug_level > 0)
 			ACE_ERROR((LM_ERROR,
-				   "(%P|%t) %N:%l - must add native reference\n"));
+				   "(%T) %N:%l - must add native reference\n"));
 	}
 
 	return false;

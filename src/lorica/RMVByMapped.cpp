@@ -69,7 +69,7 @@ Lorica::RMVByMapped::next_index(void)
 	}
 
 	if (Lorica_debug_level > 2) {
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - next_index returning %d, high = %d\n",
+		ACE_DEBUG ((LM_DEBUG,"(%T) %N:%l - next_index returning %d, high = %d\n",
 			    rtn, high_index_));
 	}
 
@@ -82,7 +82,7 @@ Lorica::RMVByMapped::bind(ACE_UINT32 index,
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (Lorica_debug_level > 2) {
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - bind(%d) limit = %d, adding RMV = %x\n",
+		ACE_DEBUG ((LM_DEBUG,"(%T) %N:%l - bind(%d) limit = %d, adding RMV = %x\n",
 			    index, num_pages_ * page_size_, value));
 	}
 	if (index >= num_pages_ * page_size_)
@@ -91,7 +91,7 @@ Lorica::RMVByMapped::bind(ACE_UINT32 index,
 	ACE_UINT32 ndx = index % page_size_;
 	ReferenceMapValue **page = pages_->find_page(index / page_size_);
 	if (page[ndx] != 0) {
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - error, element %d not null!\n",
+		ACE_DEBUG ((LM_DEBUG,"(%T) %N:%l - error, element %d not null!\n",
 			    ndx));
 		return false;
 	}
@@ -108,7 +108,7 @@ Lorica::RMVByMapped::rebind(ACE_UINT32 index,
 {
 	ACE_Guard<ACE_Thread_Mutex> guard (this->gc_control_lock_);
 	if (Lorica_debug_level > 2) {
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - rebind(%d) limit = %d, new RMV = %x\n",
+		ACE_DEBUG ((LM_DEBUG,"(%T) %N:%l - rebind(%d) limit = %d, new RMV = %x\n",
 			    index, num_pages_ * page_size_, value));
 	}
 	if (index >= num_pages_ * page_size_)
@@ -142,7 +142,7 @@ Lorica::RMVByMapped::find(ACE_UINT32 index,
 	value = page[ndx];
 
 	if (Lorica_debug_level > 2) {
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - find(%d) returning RMV = %x\n",
+		ACE_DEBUG ((LM_DEBUG,"(%T) %N:%l - find(%d) returning RMV = %x\n",
 			    index, value));
 	}
 	return true;
@@ -165,7 +165,7 @@ Lorica::RMVByMapped::unbind(ACE_UINT32 index,
 	page[ndx] = 0;
 	this->free_stack_ = new free_stack_node(index, this->free_stack_);
 	if (Lorica_debug_level > 2) {
-		ACE_DEBUG ((LM_DEBUG,"(%P|%t) %N:%l - unbind(%d) returning RMV = %x\n",
+		ACE_DEBUG ((LM_DEBUG,"(%T) %N:%l - unbind(%d) returning RMV = %x\n",
 			    index, value));
 	}
 
@@ -177,7 +177,7 @@ Lorica::RMVByMapped::svc(void)
 {
 	if (Lorica_debug_level > 0)
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) %N:%l - garbage collection loop commensing, wait_period set to %d\n"),
+			   ACE_TEXT("(%T) %N:%l - garbage collection loop commensing, wait_period set to %d\n"),
 			   this->gc_period_secs_));
 
 	while (!this->gc_terminated_) {
@@ -190,7 +190,7 @@ Lorica::RMVByMapped::svc(void)
 
 		if (Lorica_debug_level > 4)
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - invoking collection, result = %d %p\n"),
+				   ACE_TEXT("(%T) %N:%l - invoking collection, result = %d %p\n"),
 				   result,
 				   "wait" ));
 		size_t page_offset = 0;
@@ -213,7 +213,7 @@ Lorica::RMVByMapped::svc(void)
 					catch (CORBA::BAD_OPERATION &) {
 						if (Lorica_debug_level > 6)
 							ACE_DEBUG((LM_DEBUG,
-								   ACE_TEXT("(%P|%t) %N:%l - peer does not implement _non_existent, assuming not expired\n")));
+								   ACE_TEXT("(%T) %N:%l - peer does not implement _non_existent, assuming not expired\n")));
 					}
 					catch (CORBA::Exception &) {
 						expired = true;
@@ -225,7 +225,7 @@ Lorica::RMVByMapped::svc(void)
 					if (expired && rmv[index] == value) {
 						if (Lorica_debug_level > 6)
 							ACE_DEBUG((LM_DEBUG,
-								   ACE_TEXT("(%P|%t) %N:%l - reaping dead mapping\n")));
+								   ACE_TEXT("(%T) %N:%l - reaping dead mapping\n")));
 						reap_count++;
 						rmv[index]->decr_refcount();
 						rmv[index] = 0;
@@ -238,13 +238,13 @@ Lorica::RMVByMapped::svc(void)
 		}
 		if (!this->gc_terminated_ && reap_count > 0 && Lorica_debug_level > 0)
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("(%P|%t) %N:%l - garbage collector reaped %d out of %d references\n"),
+				   ACE_TEXT("(%T) %N:%l - garbage collector reaped %d out of %d references\n"),
 				   reap_count,
 				   test_count));
 
 	}
 	if (Lorica_debug_level > 0)
 		ACE_DEBUG((LM_DEBUG,
-			   ACE_TEXT("(%P|%t) %N:%l - garbage collection loop terminating\n")));
+			   ACE_TEXT("(%T) %N:%l - garbage collection loop terminating\n")));
 	return 0;
 }

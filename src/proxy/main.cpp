@@ -303,7 +303,7 @@ Lorica::Service_Loader::parse_args(int argc,
 #else /* !ACE_WIN32 */
 		case 'n':
 			no_fork_ = true;
-			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in standalone mode\n")));
+			ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - Lorica is in standalone mode\n")));
 			break;
 #endif
 		case 'V':
@@ -311,23 +311,23 @@ Lorica::Service_Loader::parse_args(int argc,
 			return 1;
 		case 'd':
 			debug_ = true;
-			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica is in debug mode\n")));
+			ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - Lorica is in debug mode\n")));
 			break;
 		case 'f':
 			config_file_ = get_opt.opt_arg();
-			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica configuration file = %s\n"), ACE_TEXT(config_file_.c_str())));
+			ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - Lorica configuration file = %s\n"), ACE_TEXT(config_file_.c_str())));
 			break;
 		case 'c':
 			tmp = get_opt.opt_arg();
 			if (tmp != 0)
 				corba_debug_level_ = ACE_OS::atoi(tmp);
-			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - CORBA debug level = %d\n"), corba_debug_level_));
+			ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - CORBA debug level = %d\n"), corba_debug_level_));
 			break;
 		case 'l':
 			tmp = get_opt.opt_arg();
 			if (tmp != 0) 
 				Lorica_debug_level = ACE_OS::atoi(tmp);
-			ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Lorica debug level = %d\n"), Lorica_debug_level));
+			ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - Lorica debug level = %d\n"), Lorica_debug_level));
 			break;
 		default:
 			print_usage_and_die();
@@ -455,7 +455,7 @@ Lorica::Service_Loader::run_service(void)
 		return -1;
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("Starting Lorica service\n")));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Starting Lorica service\n")));
 	ACE_NT_SERVICE_RUN(Lorica,
 			   Lorica::SERVICE::instance(),
 			   ret);
@@ -481,12 +481,12 @@ Lorica::Service_Loader::run_service(void)
 	}
 
 	{
-		ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica is starting up\n")));
+		ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica is starting up\n")));
 
 		try {
 			std::auto_ptr<Proxy>proxy (this->init_proxy());
 			if (!proxy.get()) {
-				ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - could not initialize proxy\n"));
+				ACE_ERROR((LM_ERROR, "(%T) %N:%l - could not initialize proxy\n"));
 				return -1;
 			}
 
@@ -494,11 +494,11 @@ Lorica::Service_Loader::run_service(void)
 				proxy->activate();
 			}
 			catch (CORBA::Exception & ex) {
-				ex._tao_print_exception("(%P|%t) %N:%l - caught a CORBA exception while activating proxy\n");
+				ex._tao_print_exception("(%T) %N:%l - caught a CORBA exception while activating proxy\n");
 				return -1;
 			}
 			catch (...) {
-				ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - caught an otherwise unknown exception while activating proxy\n"));
+				ACE_ERROR((LM_ERROR, "(%T) %N:%l - caught an otherwise unknown exception while activating proxy\n"));
 				return -1;
 			}
 
@@ -506,20 +506,20 @@ Lorica::Service_Loader::run_service(void)
 				proxy->wait();
 			}
 			catch (CORBA::Exception & ex) {
-				ex._tao_print_exception("(%P|%t) Lorica::Service_Loader::run_service Caught a CORBA exception while waiting for proxy\n");
+				ex._tao_print_exception("(%T) Lorica::Service_Loader::run_service Caught a CORBA exception while waiting for proxy\n");
 				return -1;
 			}
 			catch (...) {
-				ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - caught an otherwise unknown exception while waiting for proxy\n"));
+				ACE_ERROR((LM_ERROR, "(%T) %N:%l - caught an otherwise unknown exception while waiting for proxy\n"));
 				return -1;
 			}
 		}
 		catch (CORBA::Exception & ex) {
-			ex._tao_print_exception("(%P|%t) %N:%l - caught a CORBA exception while initializing proxy\n");
+			ex._tao_print_exception("(%T) %N:%l - caught a CORBA exception while initializing proxy\n");
 			return -1;
 		}
 		catch (...) {
-			ACE_ERROR((LM_ERROR, "(%P|%t) %N:%l - caught an otherwise unknown exception while initializing proxy\n"));
+			ACE_ERROR((LM_ERROR, "(%T) %N:%l - caught an otherwise unknown exception while initializing proxy\n"));
 			return -1;
 		}
 	}
@@ -533,7 +533,7 @@ Lorica::Service_Loader::run_standalone(void)
 {
 	std::auto_ptr<Proxy>proxy (this->init_proxy());
 
-	ACE_DEBUG((LM_DEBUG, ACE_TEXT("Lorica [%P] running as a standalone application \n")));
+	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) Lorica [%P] running as a standalone application \n")));
 
 #ifdef ACE_WIN32
 	SetConsoleCtrlHandler(&ConsoleHandler, true);
@@ -609,7 +609,7 @@ ACE_TMAIN(int argc,
 		ACE_LOG_MSG->set_flags(ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
 	}
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica %s initializing\n"), VERSION));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica %s initializing\n"), VERSION));
 
 	result = lorica.run_service_command();
 	if (result < 0)
@@ -626,6 +626,6 @@ ACE_TMAIN(int argc,
 	result = lorica.run_service();
 #endif
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("Lorica is shutting down\n")));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica is shutting down\n")));
 	exit(result);
 }

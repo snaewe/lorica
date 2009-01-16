@@ -65,7 +65,7 @@ Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR & incoming)
 
 		if ((this->out_args_.ptr() == 0)
 		    && (Lorica_debug_level > 0))
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - out args is null!\n")));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - out args is null!\n")));
 		else
 			this->out_args_->_tao_incoming_cdr(incoming,
 							   CORBA::ARG_OUT | CORBA::ARG_INOUT,
@@ -107,7 +107,7 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 	}
 
 	if (Lorica_debug_level > 0)
-		ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - id = %s\n"), id.in()));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - id = %s\n"), id.in()));
 
 	if (reply_status == TAO_AMI_REPLY_USER_EXCEPTION) {
 		TAO_OutputCDR encap;
@@ -134,7 +134,7 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 
 		if (Lorica_debug_level > 0) {
 			ACE_DEBUG((LM_DEBUG,
-				   ACE_TEXT("%N:%l - Got system exception: %s, minor = %d, completed = %d\n"),
+				   ACE_TEXT("(%T) %N:%l - Got system exception: %s, minor = %d, completed = %d\n"),
 				   id.in(),
 				   minor,
 				   completion));
@@ -149,7 +149,7 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 		response_handler_->invoke_excep(&h);
 	} else {
 		if (Lorica_debug_level > 0)
-			ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - ignoring reply_status %ul\n"), reply_status));
+			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - ignoring reply_status %ul\n"), reply_status));
 	}
 }
 

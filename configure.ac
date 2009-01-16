@@ -23,6 +23,7 @@ AC_PREREQ(2.59)
 
 AC_COPYRIGHT([Copyright (C) 2008 OMC Denmark ApS])
 
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([lorica.spec.in])
 AC_CONFIG_HEADERS([config.h])
 
@@ -33,7 +34,9 @@ AC_SUBST(datarootdir)
 
 dnl Introduced in autoconf 2.60
 dnl AC_USE_SYSTEM_EXTENSIONS
-AC_GNU_SOURCE
+
+dnl obsolete
+dnl AC_GNU_SOURCE
 
 dnl Standard checks
 AC_LANG([C++])
@@ -56,8 +59,11 @@ AC_FUNC_MALLOC
 AC_CHECK_FUNCS([dup2 ftruncate memset mkdir strcasecmp strdup strtol])
 
 dnl Initialize libtool
-AC_LIBTOOL_DLOPEN
-AC_PROG_LIBTOOL
+dnl AC_LIBTOOL_DLOPEN
+dnl AC_PROG_LIBTOOL
+LT_INIT([dlopen])
+LT_LANG([C++])
+AC_SUBST([LIBTOOL_DEPS])
 
 dnl
 dnl ACE and TAO versions
