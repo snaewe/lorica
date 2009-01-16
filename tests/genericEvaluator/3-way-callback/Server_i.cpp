@@ -39,6 +39,8 @@ Test_Server_i::~Test_Server_i(void)
 ::CORBA::Boolean
 Test_Server_i::receive_call(::Test::CallBack_ptr cb)
 {
+	ACE_DEBUG((LM_DEBUG, "Remote invocation recieved\n"));
+
 	static int ping_count = 0;
 	::Test::CallBack_var call_back = cb;
 

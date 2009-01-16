@@ -101,20 +101,14 @@ if (($idlc_ret != 0) || ($? != 0)) {
 }
 
 if ($run_as_client eq "YES") {
-    $client = $CL->Spawn ();
-    $client = $CL->Wait ();
+    $CL->Spawn ();
+    $CL->Wait ();
 } else {
-    $server = $SV->Spawn ();
-    $server = $SV->Wait ();
+    $SV->Spawn ();
+    $status = $SV->Wait ();
 }
 
 $proxy = $PR->Kill ();
-
-if ($proxy != 0) {
-    print STDERR "ERROR: server returned $server\n";
-    $status = 1;
-}
-
 $IFR->Kill ();
 
 unlink $pidfile;

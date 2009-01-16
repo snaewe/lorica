@@ -70,7 +70,7 @@ main (int argc, char *argv[])
 
 		ACE_DEBUG ((LM_DEBUG, "The server ORB run loop is now in progress - Please start two remote clients to test (and a third client to shut it down) \n"));
 		orb->run ();
-		ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
+		ACE_DEBUG((LM_DEBUG, ACE_TEXT("event loop finished - Error count = %d\n"), failure_count));
 
 		root_poa->destroy(1, 1);
 		orb->destroy();
