@@ -32,7 +32,9 @@ class  Test_Server_i : public virtual POA_Test::Server
 {
 public:
         // Constructor 
-        Test_Server_i(CORBA::ORB_ptr orb);
+        Test_Server_i(CORBA::ORB_ptr orb,
+                      int *success_count,
+                      int *failure_count);
   
         // Destructor 
         virtual ~Test_Server_i(void);
@@ -40,8 +42,10 @@ public:
         virtual ::CORBA::Boolean receive_call(::Test::CallBack_ptr cb);
 
 private:
-	// Our Orb...
-	CORBA::ORB_var orb_;
+        // Our Orb...
+        CORBA::ORB_var orb_;
+        int *success_count_;
+        int *failure_count_;
 };
 
 #endif /* SERVER_I_H */

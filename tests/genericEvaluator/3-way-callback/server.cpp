@@ -25,23 +25,26 @@
 
 const char *lorica_ior = "corbaloc::localhost:10951/LORICA_REFERENCE_MAPPER";
 
+#define d(__str__) printf("%d - %s\n", __LINE__, __str__)
+
 int
 main (int argc, char *argv[])
 {
+	int success_count = 0;
+	int failure_count = 0;
+
 	try {
 		CORBA::ORB_var orb = CORBA::ORB_init (argc, argv, "");
-
 		CORBA::Object_var poa_object = orb->resolve_initial_references("RootPOA");
 
 		if (CORBA::is_nil (poa_object.in ()))
 			ACE_ERROR_RETURN((LM_ERROR, " (%P|%t) Unable to initialize the POA.\n"), 1);
 
 		PortableServer::POA_var root_poa = PortableServer::POA::_narrow (poa_object.in ());
-
 		PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
 		Test_Server_i *server_impl;
-		ACE_NEW_RETURN(server_impl, Test_Server_i(orb.in()), 1);
+		ACE_NEW_RETURN(server_impl, Test_Server_i(orb.in(), &success_count, &failure_count), 1);
 		PortableServer::ServantBase_var receiver_owner_transfer(server_impl);
 
 		// getting the original object
@@ -65,6 +68,7 @@ main (int argc, char *argv[])
 
 		poa_manager->activate();
 
+		ACE_DEBUG ((LM_DEBUG, "The server ORB run loop is now in progress - Please start two remote clients to test (and a third client to shut it down) \n"));
 		orb->run ();
 		ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
@@ -76,5 +80,5 @@ main (int argc, char *argv[])
 		return 1;
 	}
 
-	return 0;
+	return failure_count;
 }

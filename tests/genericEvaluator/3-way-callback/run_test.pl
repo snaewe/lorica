@@ -18,8 +18,8 @@
 #
 
 eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
-     & eval 'exec perl -S $0 $argv:q'
-     if 0;
+    & eval 'exec perl -S $0 $argv:q'
+    if 0;
 
 use Env (ACE_ROOT);
 use Env (LORICA_ROOT);
@@ -45,11 +45,11 @@ foreach $i (@ARGV) {
         $debug_level = '10';
     }
     if ($i eq '-server') {
-	$i = shift;
-	$i = shift;
+        $i = shift;
+        $i = shift;
         $server_ip_addr = $i;
-	$lorica_conf = "lorica-client.conf";
-	$run_as_client = "YES";
+        $lorica_conf = "lorica-client.conf";
+        $run_as_client = "YES";
     }
 }
 
@@ -71,7 +71,7 @@ if ($run_as_client eq "YES") {
     $CL = new PerlACE::Process ("client", " -k $server_ip_addr");
 } else {
     print "Running as server\n";
-    $SV = new PerlACE::Process ("server", " -ORBUseSharedProfile 1 -ORBdebuglevel $debug_level");
+    $SV = new PerlACE::Process ("server", " -ORBdebuglevel $debug_level");
 }
 
 print "3-way callback generic evaluator test is started\n";
@@ -85,7 +85,7 @@ if (PerlACE::waitforfile_timed ($ifrfile, 10) == -1) {
 
 $proxy = $PR->Spawn ();
 if (PerlACE::waitforfile_timed ($pidfile,
-                        $PerlACE::wait_interval_for_process_creation) == -1) {
+                                $PerlACE::wait_interval_for_process_creation) == -1) {
     print STDERR "ERROR: cannot find file <$pidfile>\n";
     $PR->Kill (); $PR->TimedWait (1);
     exit 1;
@@ -93,21 +93,19 @@ if (PerlACE::waitforfile_timed ($pidfile,
 
 $idlc_ret = $IDLC->SpawnWaitKill (50);
 if (($idlc_ret != 0) || ($? != 0)) {
-  if ($idlc_ret == 0) { $idlc_ret = $?; }
-  print STDERR "Error: IDL Compiler returned $idlc_ret\n";
-  $status = 1;
+    if ($idlc_ret == 0) {
+	$idlc_ret = $?;
+    }
+    print STDERR "Error: IDL Compiler returned $idlc_ret\n";
+    $status = 1;
 }
 
 if ($run_as_client eq "YES") {
     $client = $CL->Spawn ();
+    $client = $CL->Wait ();
 } else {
     $server = $SV->Spawn ();
-}
-
-if ($run_as_client eq "YES") {
-    $client = $CL->Kill ();
-} else {
-    $server = $SV->Kill ();
+    $server = $SV->Wait ();
 }
 
 $proxy = $PR->Kill ();

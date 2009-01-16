@@ -1,3 +1,8 @@
+2009-01-16  Jules Colding  <colding@42tools.com>
+
+	* tests/genericEvaluator/3-way-callback:
+	A few small fixes all over the place.
+
 2009-01-15  Jules Colding  <colding@42tools.com>
 
 	* tests/genericEvaluator/3-way-callback/Server_i.cpp (Test_Server_i::receive_call):

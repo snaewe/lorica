@@ -22,8 +22,12 @@
 #include "Server_i.h"
 
 // Implementation skeleton constructor
-Test_Server_i::Test_Server_i(CORBA::ORB_ptr orb)
-  : orb_(CORBA::ORB::_duplicate (orb))
+Test_Server_i::Test_Server_i(CORBA::ORB_ptr orb,
+			     int *success_count,
+			     int *failure_count)
+	: orb_(CORBA::ORB::_duplicate (orb)),
+	  success_count_(success_count),
+	  failure_count_(failure_count)
 {
 }
 
@@ -45,13 +49,16 @@ Test_Server_i::receive_call(::Test::CallBack_ptr cb)
 	}
 	try {
 		call_back->ping();
+		(*success_count_)++;
 	}
         catch (const CORBA::Exception &e) {
                 ACE_DEBUG((LM_CRITICAL, ACE_TEXT("%N:%l - %s\n"), e._info().c_str()));
+		(*failure_count_)++;
                 return (::CORBA::Boolean)0;
         }
         catch (...) {
                 ACE_DEBUG((LM_CRITICAL, ACE_TEXT("%N:%l - Unknown C++ exception\n")));
+		(*failure_count_)++;
                 return (::CORBA::Boolean)0;
         }
 	
