@@ -17,8 +17,9 @@
 //    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 
-project (GenericEvaluator Callback Client): dynamicinterface, portableserver, orbsvcsexe, loricacommon {
+project (3 Way Callback Client): dynamicinterface, portableserver, orbsvcsexe, loricacommon {
   exename = client
+  libs += lorica_Client
   IDL_Files {
     Test.idl
   }
@@ -26,13 +27,11 @@ project (GenericEvaluator Callback Client): dynamicinterface, portableserver, or
     TestC.cpp
     TestS.cpp
     client.cpp
-    Server_Task.cpp
-    Client_Task.cpp
-    Server_i.cpp
+    Callback_i.cpp
   }
 }
 
-project (GenericEvaluator Callback Server): dynamicinterface, portableserver, orbsvcsexe, loricacommon {
+project (3 way Callback Server): dynamicinterface, portableserver, orbsvcsexe, loricacommon {
   exename = server
   libs += lorica_Client
   IDL_Files {
@@ -42,7 +41,6 @@ project (GenericEvaluator Callback Server): dynamicinterface, portableserver, or
     TestC.cpp
     TestS.cpp
     server.cpp
-    Server_Task.cpp
-    Callback_i.cpp
+    Server_i.cpp
   }
 }
