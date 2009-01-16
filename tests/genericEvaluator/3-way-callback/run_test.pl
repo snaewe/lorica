@@ -26,9 +26,14 @@ use Env (LORICA_ROOT);
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::Run_Test;
 
+if ($ACE_ROOT eq "") {
+    print STDERR "ERROR: Please set the ACE_ROOT environment variable before running this test\n";
+    exit 1;
+}
 if ($TAO_ROOT eq "") {
     $TAO_ROOT = "$ACE_ROOT/TAO";
 }
+
 if ($LORICA_ROOT eq "") {
     print STDERR "ERROR: Please set the LORICA_ROOT environment variable before running this test\n";
     exit 1;
