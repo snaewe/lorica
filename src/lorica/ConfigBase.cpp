@@ -25,6 +25,7 @@
 #include <ace/os_include/os_limits.h>
 #include <ace/OS_NS_stdlib.h>
 #include <ace/OS_NS_unistd.h>
+#include <ace/UUID.h>
 
 #ifdef ACE_WIN32
 # ifndef LORICA_LACKS_IFADDRS
@@ -428,7 +429,23 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
                         size_t begin = opt + test.length();
 
                         this->alias_ = (comma == std::string::npos) ? ep_str.substr(begin) : ep_str.substr(begin, comma - begin);
-                }
+                } 
+
+		test = "random_alias";
+		opt = ep_str.find (test, option_pos);
+		if (opt != std::string::npos) {
+			test = "alias=";
+			opt = ep_str.find (test, option_pos);
+			if (opt != std::string::npos) {
+                                ACE_DEBUG((LM_ERROR,
+                                           ACE_TEXT("%N:%l - Both random_alias and alias, which are mutually exclusive, are used\n")));
+				return false;
+			}
+			ACE_Utils::UUID uuid(*ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID());
+			const ACE_CString *uuid_str(uuid.to_string());
+			this->alias_ = uuid_str->c_str();
+		}
+		
 
                 test = "ssl_port=";
                 opt = ep_str.find (test, option_pos);

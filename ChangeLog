@@ -1,7 +1,19 @@
+
+======================= 1.0.11 ============================
+
 2009-01-17  Jules Colding  <colding@42tools.com>
+
+	* m4/acetao.m4: Check for ace/UUID.h
+
+2009-01-17  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Bump version to 1.0.11
 
 	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):
 	Coding style cleanups
+	(Endpoint::parse_string):
+	Added new endpoint option, "random_alias". This will ensure that a server side
+	Lorica isn't confused by several references from localhost.
 
 2009-01-17  Jules Colding  <colding@42tools.com>
 
