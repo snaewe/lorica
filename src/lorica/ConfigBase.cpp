@@ -338,9 +338,9 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
         if (!this->hostname_.empty() && '%' == this->hostname_[0]) {
                 std::string ifname = this->hostname_.substr(1);
                 
-                if (ifname.empty())
+                if (ifname.empty()) {
                         this->hostname_ = "";
-                else 
+                } else {
                         while (true) {
                                 char *ip_addr = NULL;
                                 if ('?' == this->hostname_[1])
@@ -364,6 +364,7 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
                                            ACE_TEXT_CHAR_TO_TCHAR(ifname.c_str())));
                                 ACE_OS::sleep(10); 
                         }
+		}
         }
 
         // IPv6 - check for the interface name extension
@@ -372,9 +373,10 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
 
                 this->is_ipv6_ = true;
                 
-                if (ifname.empty())
+                if (ifname.empty()) {
                         this->hostname_ = "";
-                else while (true) {
+		} else {
+			while (true) {
                                 char *ip_addr = NULL;
                                 if ('?' == this->hostname_[1])
                                         ip_addr = get_first_external_ip(AF_INET6);
@@ -397,6 +399,7 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
                                            ACE_TEXT_CHAR_TO_TCHAR(ifname.c_str())));
                                 ACE_OS::sleep(10);
                         }
+		}
         }
 
         // check for empty hostname and fix it up so that
@@ -417,18 +420,18 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
         if (option_pos != std::string::npos) {
                 // The rest are optional modifiers, ssl port, hostname alias
                 ++option_pos;
+
                 std::string test("alias=");
                 size_t opt = ep_str.find (test, option_pos);
-
                 if (opt != std::string::npos) {
                         size_t comma = ep_str.find (',',opt);
                         size_t begin = opt + test.length();
 
                         this->alias_ = (comma == std::string::npos) ? ep_str.substr(begin) : ep_str.substr(begin, comma - begin);
                 }
+
                 test = "ssl_port=";
                 opt = ep_str.find (test, option_pos);
-
                 if (opt != std::string::npos) {
                         size_t comma = ep_str.find (',',opt);
                         size_t begin = opt + test.length();
