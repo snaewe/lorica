@@ -1,3 +1,13 @@
+2009-01-19  Jules Colding  <colding@42tools.com>
+
+	* tests/genericEvaluator/3-way-callback/lorica-client.conf:
+	Use the new random_alias option on the external endpoint.
+
+	* src/lorica/ConfigBase.cpp (random_ip_address):
+	New function to calculate random IPv4 IP address
+	(parse_string):
+	Use randoma IPv4 address instead of UUID which was not
+	approved by ACE_INET_Addr on the server side.
 
 ======================= 1.0.11 ============================
 
