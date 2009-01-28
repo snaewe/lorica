@@ -301,7 +301,7 @@ Lorica::Proxy::configure(Config & config)
 				ACE_OS::sleep(10);
 				goto resolve_again;
 			}
-			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %C\n"), ex._info()));
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 			throw InitError();
 		}
 
