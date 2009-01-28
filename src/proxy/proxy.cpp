@@ -289,14 +289,19 @@ Lorica::Proxy::configure(Config & config)
 		ACE_Service_Repository * repo = orb_->orb_core()->configuration()->current_service_repository();
 		config.secure_available(repo->find("SSLIOP_Factory") == 0);
 
+		int attempts = 3;
 		CORBA::Object_var obj = CORBA::Object::_nil();
+		resolve_again:
 		try {
 			obj = orb_->resolve_initial_references("RootPOA");
 		}
 		catch (CORBA::Exception & ex) {
-			ACE_ERROR((LM_ERROR, "%N:%l - MARK\n"));
-			ex._tao_print_exception("resolve_initial_references()");
-			ACE_ERROR((LM_ERROR, "%N:%l - MARK\n"));
+			if (attempts--) {
+				ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - Exception trying to resolve initial references\n")));
+				ACE_OS::sleep(10);
+				goto resolve_again;
+			}
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %C\n"), ex._info()));
 			throw InitError();
 		}
 

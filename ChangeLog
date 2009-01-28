@@ -1,3 +1,12 @@
+2009-01-28  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp (configure): We need to call resolve_initial_references()
+	several times if, say, a network interface is slow to start or we will get an
+	exception trying to create one or more of the endpoints. This is now "solved"
+	by sleeping for 10 seconds at most 3 times if an exception is caught and then
+	retry the operation. This solution was motivated by observing a wireless
+	interface to be really slow to initiate on Windows XP.
+
 2009-01-19  Jules Colding  <colding@42tools.com>
 
 	* tests/genericEvaluator/3-way-callback/lorica-client.conf:
