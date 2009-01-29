@@ -1,57 +1,65 @@
+Thu Jan 29 20:14:29 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/GenericEvaluator.cpp:
+        * src/lorica/ProxyMapper.cpp:
+        * src/lorica/ProxyReplyHandler.cpp:
+
+	  First round of fixing up memory leaks.
+
 2009-01-28  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/proxy.cpp (configure): We need to call resolve_initial_references()
-	several times if, say, a network interface is slow to start or we will get an
-	exception trying to create one or more of the endpoints. This is now "solved"
-	by sleeping for 10 seconds at most 3 times if an exception is caught and then
-	retry the operation. This solution was motivated by observing a wireless
-	interface to be really slow to initiate on Windows XP.
+        * src/proxy/proxy.cpp (configure): We need to call resolve_initial_references()
+        several times if, say, a network interface is slow to start or we will get an
+        exception trying to create one or more of the endpoints. This is now "solved"
+        by sleeping for 10 seconds at most 3 times if an exception is caught and then
+        retry the operation. This solution was motivated by observing a wireless
+        interface to be really slow to initiate on Windows XP.
 
 2009-01-19  Jules Colding  <colding@42tools.com>
 
-	* tests/genericEvaluator/3-way-callback/lorica-client.conf:
-	Use the new random_alias option on the external endpoint.
+        * tests/genericEvaluator/3-way-callback/lorica-client.conf:
+        Use the new random_alias option on the external endpoint.
 
-	* src/lorica/ConfigBase.cpp (random_ip_address):
-	New function to calculate random IPv4 IP address
-	(parse_string):
-	Use randoma IPv4 address instead of UUID which was not
-	approved by ACE_INET_Addr on the server side.
+        * src/lorica/ConfigBase.cpp (random_ip_address):
+        New function to calculate random IPv4 IP address
+        (parse_string):
+        Use randoma IPv4 address instead of UUID which was not
+        approved by ACE_INET_Addr on the server side.
 
 ======================= 1.0.11 ============================
 
 2009-01-17  Jules Colding  <colding@42tools.com>
 
-	* m4/acetao.m4: Check for ace/UUID.h
+        * m4/acetao.m4: Check for ace/UUID.h
 
 2009-01-17  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Bump version to 1.0.11
+        * configure.ac: Bump version to 1.0.11
 
-	* src/lorica/ConfigBase.cpp (Endpoint::parse_string):
-	Coding style cleanups
-	(Endpoint::parse_string):
-	Added new endpoint option, "random_alias". This will ensure that a server side
-	Lorica isn't confused by several references from localhost.
+        * src/lorica/ConfigBase.cpp (Endpoint::parse_string):
+        Coding style cleanups
+        (Endpoint::parse_string):
+        Added new endpoint option, "random_alias". This will ensure that a server side
+        Lorica isn't confused by several references from localhost.
 
 2009-01-17  Jules Colding  <colding@42tools.com>
 
-	* Logging: %P:%t => %T. A timestamp seems more usable than
-	thread or process id.
+        * Logging: %P:%t => %T. A timestamp seems more usable than
+        thread or process id.
 
 2009-01-16  Jules Colding  <colding@42tools.com>
 
-	* tests/genericEvaluator/3-way-callback/run_test.pl:
-	Added ORB debug option to client spawn
-	Added warning about non-existing ACE_ROOT environment variable
+        * tests/genericEvaluator/3-way-callback/run_test.pl:
+        Added ORB debug option to client spawn
+        Added warning about non-existing ACE_ROOT environment variable
 
-	* tests/genericEvaluator/3-way-callback:
-	A few small fixes all over the place.
+        * tests/genericEvaluator/3-way-callback:
+        A few small fixes all over the place.
 
 2009-01-15  Jules Colding  <colding@42tools.com>
 
-	* tests/genericEvaluator/3-way-callback/Server_i.cpp (Test_Server_i::receive_call):
-	Make the server shutdown after the third call.
+        * tests/genericEvaluator/3-way-callback/Server_i.cpp (Test_Server_i::receive_call):
+        Make the server shutdown after the third call.
 
 Thu Jan 15 17:12:01 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 

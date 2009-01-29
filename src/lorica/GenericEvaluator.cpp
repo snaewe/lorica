@@ -99,7 +99,6 @@ Lorica::GenericEvaluator::evaluate_request(const char *operation,
 		// the response to the client after hearing back from the delegate.
 		// Since we are using AMI/AMH model, the reply processing will happen
 		// in possibly a different thread, but certainly a different stack.
-		orb->create_list(0, out_args);
 		for (CORBA::ULong i = 0; i < args->count(); i++) {
 			CORBA::NamedValue_ptr item = args->item(i);
 

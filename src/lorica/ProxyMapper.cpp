@@ -246,8 +246,8 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
                                     ACE_UINT32 & index)
 {
 	if (this->mapped_values_ != 0) {
-		TAO::ObjectKey *key = native->_key();
-		if (key == 0 || key->length() < sizeof (mapped_object_id_)) {
+		TAO::ObjectKey_var key = native->_key();
+		if (key.ptr() == 0 || key->length() < sizeof (mapped_object_id_)) {
 			if (Lorica_debug_level > 4) {
 				ACE_DEBUG((LM_DEBUG,
 					   ACE_TEXT("(%T) %N:%l - key is null\n")));
@@ -279,7 +279,9 @@ Lorica::ProxyMapper::already_mapped(CORBA::Object_ptr native,
 				   ACE_TEXT("\n")));
 		}
 		
-		if (ACE_OS::memcmp(buffer+offset,&mapped_object_id_, sizeof(mapped_object_id_.magic)) == 0) {
+		if (ACE_OS::memcmp(buffer+offset,
+				   &mapped_object_id_, 
+				   sizeof(mapped_object_id_.magic)) == 0) {
 			has_potential = true;
 			ACE_OS::memcpy (&temp, buffer+offset, sizeof (temp));
 			if (Lorica_debug_level > 4) {

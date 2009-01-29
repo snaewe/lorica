@@ -77,13 +77,14 @@ Lorica::ProxyReplyHandler::handle_response_i(TAO_InputCDR & incoming)
 						 this->result_.in());
 	}
 	catch (CORBA::SystemException & ex) {
-		TAO_AMH_DSI_Exception_Holder h(ex._tao_duplicate());
+		TAO_AMH_DSI_Exception_Holder h(&ex);
 		response_handler_->invoke_excep(&h);
 	}
 	catch (...) {
 		ACE_ERROR((LM_ERROR,
 			   "%N:%l - unknown exception\n"));
-		TAO_AMH_DSI_Exception_Holder h(new CORBA::UNKNOWN());
+		CORBA::UNKNOWN ex;
+		TAO_AMH_DSI_Exception_Holder h(&ex);
 		response_handler_->invoke_excep(&h);
 	}
 
@@ -100,7 +101,8 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 	TAO_InputCDR for_reading (incoming);
 	CORBA::String_var id;
 	if ((for_reading >> id.inout()) == 0) {
-		TAO_AMH_DSI_Exception_Holder h(new CORBA::MARSHAL(0, CORBA::COMPLETED_MAYBE));
+		CORBA::MARSHAL ex(0,CORBA::COMPLETED_MAYBE);
+		TAO_AMH_DSI_Exception_Holder h(&ex);
 		response_handler_->invoke_excep(&h);
 
 		return;
@@ -126,9 +128,9 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 
 		if (((for_reading >> minor) == 0)
 		    || ((for_reading >> completion) == 0)) {
-			TAO_AMH_DSI_Exception_Holder h(new CORBA::MARSHAL(0,CORBA::COMPLETED_MAYBE));
+			CORBA::MARSHAL ex(0,CORBA::COMPLETED_MAYBE);
+			TAO_AMH_DSI_Exception_Holder h(&ex);
 			response_handler_->invoke_excep(&h);
-
 			return;
 		}
 
@@ -140,13 +142,14 @@ Lorica::ProxyReplyHandler::handle_excep_i(TAO_InputCDR & incoming,
 				   completion));
 		}
 
-		CORBA::SystemException *ex = TAO::create_system_exception(id.in());
+		CORBA::SystemException * ex = TAO::create_system_exception(id.in());
 
 		ex->minor(minor);
 		ex->completed (CORBA::CompletionStatus(completion));
 
 		TAO_AMH_DSI_Exception_Holder h(ex);
 		response_handler_->invoke_excep(&h);
+		delete ex;
 	} else {
 		if (Lorica_debug_level > 0)
 			ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - ignoring reply_status %ul\n"), reply_status));
