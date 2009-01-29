@@ -503,6 +503,8 @@ Lorica::Proxy::~Proxy(void)
 		this->lock_fd = -1;
 	}
 #endif
+	if (!CORBA::is_nil(this->orb_))
+		this->destroy();
 }
 
 void
@@ -543,4 +545,11 @@ Lorica::Proxy::svc(void)
 	ACE_OS::unlink (this->pid_file_.c_str());
 
 	return 0;
+}
+
+void
+Lorica::Proxy::destroy (void)
+{
+	this->orb_->destroy();
+	this->orb_ = CORBA::ORB::_nil();
 }

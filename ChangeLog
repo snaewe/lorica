@@ -1,10 +1,20 @@
+Thu Jan 29 20:39:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+
+	  Add a destroy method to the proxy to clean up the ORB resources
+	  at shutdown time. This is to assist in the filtering of "still
+	  reachable" memory shown by valgrind.
+	
 Thu Jan 29 20:14:29 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/GenericEvaluator.cpp:
         * src/lorica/ProxyMapper.cpp:
         * src/lorica/ProxyReplyHandler.cpp:
 
-	  First round of fixing up memory leaks.
+          First round of fixing up memory leaks.
 
 2009-01-28  Jules Colding  <colding@42tools.com>
 

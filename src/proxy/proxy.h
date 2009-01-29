@@ -71,7 +71,11 @@ namespace Lorica
 		// ACE Task base executable method.
 		virtual int svc(void);
 
+		// this only shuts down the proxy's svc loop.
 		void shutdown(void);
+		
+		// this causes the ORB to destroy its resources and clean up.
+    void destroy(void);
 
 	private:
 		// Will ensure that only one instance of Lorica 

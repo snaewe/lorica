@@ -540,7 +540,7 @@ Lorica::Service_Loader::run_standalone(void)
 #endif
 	proxy->activate();
 	proxy->wait();
-
+	proxy->destroy();
 	return 0;
 }
 
