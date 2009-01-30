@@ -366,6 +366,16 @@ dnl
 dnl CPPFLAGS, CXXFLAGS, LIBS and stuff
 dnl
 
+dnl Is LORICA_ROOT set in the environment?
+if test "x$LORICA_ROOT" = "x"; then
+	msg_lorica_root=no
+   	AM_CONDITIONAL(LORICA_ROOT_NOT_SET, true)
+else
+	msg_lorica_root=yes
+   	AM_CONDITIONAL(LORICA_ROOT_NOT_SET, false)
+fi
+
+
 dnl Lorica install directories
 LORICA_idl_install_subdir="idl/lorica"
 AC_SUBST(LORICA_idl_install_subdir)

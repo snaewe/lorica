@@ -22,7 +22,7 @@
 prepare ()
 {
     make distclean
-    ./bootstrap reconf --enable-tao-build
+    ./bootstrap reconf --enable-tao-build --enable-lorica-debug
 }
 
 if [ $# -eq 0 ]; then

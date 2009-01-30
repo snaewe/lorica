@@ -1,3 +1,22 @@
+2009-01-30  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Added test for the LORICA_ROOT
+	environment variable.
+
+	* Makefile.am (EXTRA_DIST): Remove non-existing
+	directory from the target.
+	(distfiles): Make sure that $LORICA_ROOT is set when invoking
+	the distfiles target.
+
+	* deb/rules: Do not strip binaries when making debs.
+
+	* release.sh: Make the release script configure lorica
+	with debugging enabled.
+
+	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+	An absolute path is needed when the distribution
+	specific tool builds binary packages.
+
 Thu Jan 29 20:39:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/main.cpp:
@@ -7,7 +26,7 @@ Thu Jan 29 20:39:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 	  Add a destroy method to the proxy to clean up the ORB resources
 	  at shutdown time. This is to assist in the filtering of "still
 	  reachable" memory shown by valgrind.
-	
+
 Thu Jan 29 20:14:29 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/GenericEvaluator.cpp:
