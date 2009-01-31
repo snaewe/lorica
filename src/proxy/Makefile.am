@@ -29,6 +29,12 @@ ACE_ROOT = $(CONF_ACE_ROOT)
 TAO_ROOT = $(ACE_ROOT)/TAO
 PATH = $(ACE_ROOT)/bin:$(ENV_PATH)
 
+if LORICA_ROOT_NOT_SET
+ABSOLUTE_TOP_DIR = $(LORICA_top_dir)
+else
+ABSOLUTE_TOP_DIR = $(LORICA_ROOT)
+endif
+
 if LORICA_SHARED_LIBS
 LORICA_SHARED_LIBS_PATH = $(LORICA_top_dir)/src/OCI/.libs:$(LORICA_top_dir)/src/lorica/.libs
 else
@@ -43,11 +49,11 @@ endif
 endif # HAVE_ACE_ROOT
 
 if LORICA_DARWIN
-IFR_BRUTUS_CACHE_FILE = $(LORICA_ROOT)/../brutus-server/brutus_loader/support_files/ifr.cache.darwin
+IFR_BRUTUS_CACHE_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/ifr.cache.darwin
 else
-IFR_BRUTUS_CACHE_FILE = $(LORICA_ROOT)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
+IFR_BRUTUS_CACHE_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
 endif
-CLIENT_CONF_FILE = $(LORICA_ROOT)/../brutus-server/brutus_loader/support_files/lorica.conf.client
+CLIENT_CONF_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/lorica.conf.client
 
 include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
 include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU

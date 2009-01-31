@@ -404,8 +404,8 @@ Lorica::Proxy::configure(Config & config)
 
 		ReferenceMapper_var refMapper_obj = ReferenceMapper::_narrow(obj.in());
 
-		std::string ior = orb_->object_to_string(refMapper_obj.in());
-		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY, ior.c_str());
+		char *ior = orb_->object_to_string(refMapper_obj.in());
+		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY, (const char*)ior);
 
 		this->ior_file_ = config.get_value("IOR_FILE");
 		if (this->ior_file_.length() == 0) 
@@ -416,10 +416,13 @@ Lorica::Proxy::configure(Config & config)
 			ACE_ERROR((LM_ERROR,
 				   "(%T) %N:%l - cannot open output file for writing IOR: %s\n",
 				   this->ior_file_.c_str()));
+			throw InitError();
 		} else {
-			ACE_OS::fprintf(output_file, "%s", ior.c_str());
+			ACE_OS::fprintf(output_file, "%s", (const char*)ior);
 			ACE_OS::fclose(output_file);
 		}
+		CORBA::string_free(ior);
+		ior = NULL;
 
 		if (!setup_shutdown_handler()) {
 			ACE_ERROR ((LM_ERROR,

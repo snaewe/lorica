@@ -1,3 +1,12 @@
+2009-01-31  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/proxy.cpp (configure): Fix memory
+	leak #284 in the GC'ed Valgrind report.
+
+	* src/proxy/Makefile.am (ABSOLUTE_TOP_DIR):
+	Added this variable to fix build when LORICA_ROOT is
+	undefined.
+
 2009-01-30  Jules Colding  <colding@42tools.com>
 
 	* configure.ac: Added test for the LORICA_ROOT
