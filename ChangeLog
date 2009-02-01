@@ -1,3 +1,13 @@
+2009-02-01  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ProxyMapper.cpp (add_native_unchecked):
+	* src/proxy/ReferenceMapper_i.cpp (as_server_i):
+	Correctness fix - Use CORBA::string_free() and char* instead
+	of a String_var to hold string returned from object_as_string().
+
+	* src/lorica/ProxyReplyHandler.cpp (handle_location_forward_i):
+	Remove 2 unused variables.
+
 2009-01-31  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/proxy.cpp (configure): Fix memory

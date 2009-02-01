@@ -379,8 +379,9 @@ Lorica::ProxyMapper::add_native_unchecked(CORBA::Object_ptr native,
 	ACE_UINT32 index = 0;
 	PortableServer::ObjectId_var oid;
 	if (this->mapped_values_ == 0) {
-		CORBA::String_var nior = orb_->object_to_string(native);
+		char *nior = orb_->object_to_string(native);
 		oid = PortableServer::string_to_ObjectId(nior);
+		CORBA::string_free(nior);
 	} else
 		oid = this->get_mapped_objectId(out_facing,index);
 

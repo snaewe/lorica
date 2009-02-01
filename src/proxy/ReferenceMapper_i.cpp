@@ -144,15 +144,15 @@ Lorica::ReferenceMapper_i::as_server_i(bool require_secure,
 		ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - registry returned a non-null rmv\n")));
 
 	if (corbaloc_name[0] != 0 && !CORBA::is_nil(this->ior_table_.in())) {
-		CORBA::String_var mapped = this->orb_->object_to_string(rmv->mapped_ref_.in());
+		char *mapped = this->orb_->object_to_string(rmv->mapped_ref_.in());
 		if(Lorica_debug_level > 5) {
 			ACE_DEBUG((LM_DEBUG,
 				   ACE_TEXT("(%T) %N:%l - adding mapped value to IORTable, %s, %s\n"),
-				   corbaloc_name,mapped.in()));
+				   corbaloc_name, (const char*)mapped));
 		}
 
 		try {
-			ior_table_->bind (corbaloc_name,mapped.in());
+			ior_table_->bind (corbaloc_name, (const char*)mapped);
 			if (Lorica_debug_level > 5)
 				ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) %N:%l - bound to ior table\n")));
 			rmv->ior_table_name_ = corbaloc_name;
@@ -162,6 +162,7 @@ Lorica::ReferenceMapper_i::as_server_i(bool require_secure,
 				   "(%T) %N:%l - ior_table cannot bind to %s\n",
 				   corbaloc_name));
 		}
+		CORBA::string_free(mapped);
 	}
 
 	rmv->require_secure_ = require_secure;
