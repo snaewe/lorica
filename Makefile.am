@@ -95,6 +95,9 @@ dist-hook:
 	-rm -rf $(distdir)/apple/Lorica.build
 
 release:
+if LORICA_ROOT_NOT_SET
+	$(error You must set the environment variable LORICA_ROOT to $(CURDIR))
+endif
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
 
 distfiles:
