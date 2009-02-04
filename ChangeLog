@@ -1,3 +1,7 @@
+2009-02-04  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/lorica.conf: Corrected documentation
+
 2009-02-03  Jules Colding  <colding@42tools.com>
 
 	* Makefile.am (release): Fix build.
