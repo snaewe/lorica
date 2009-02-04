@@ -398,7 +398,7 @@ Lorica::Proxy::configure(Config & config)
 			// refMapper->allow_insecure_access (obj.in());
 		}
 		catch (CORBA::Exception & ex) {
-			ex._tao_print_exception("activating mapper object");
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 			throw InitError();
 		}
 
@@ -486,8 +486,7 @@ Lorica::Proxy::configure(Config & config)
 				   config.secure_available());
 	}
 	catch (CORBA::Exception & ex) {
-		ACE_ERROR((LM_ERROR, "%N:%l - Caught an otherwise unknown exception\n"));
-		ex._tao_print_exception("Lorica::Proxy::configure caught a CORBA exception\n");
+		ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 		throw InitError();
 	}
 	catch (...) {

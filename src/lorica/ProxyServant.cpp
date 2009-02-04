@@ -85,7 +85,7 @@ Lorica::ProxyServant::invoke_i(CORBA::ServerRequest_ptr request,
 	}
 	catch (CORBA::UserException & ex) {
 		if (Lorica_debug_level > 0)
-			ex._tao_print_exception("evaluate_request");
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 
 		if (!CORBA::is_nil(agent)) {
 			agent->error_occured(errno,

@@ -105,7 +105,7 @@ Lorica::NT_Service::svc(void)
 		this->proxy_->svc();
 	}
 	catch (const CORBA::Exception & ex) {
-		ex._tao_print_exception ("TAO NT Naming Service");
+		ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 		return -1;
 	}
 

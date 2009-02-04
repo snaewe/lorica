@@ -73,7 +73,7 @@ Lorica::IFRService::init(const bool Debug,
 	}
 	catch (const CORBA::Exception & ex) {
 		if (Lorica_debug_level > 0)
-			ex._tao_print_exception("Lorica::IFRService::init");
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 		throw;
 	}
 
@@ -89,7 +89,7 @@ Lorica::IFRService::fini(void)
 	}
 	catch (const CORBA::Exception& ex) {
 		if (Lorica_debug_level > 0)
-			ex._tao_print_exception("Lorica::IFR_Service::fini");
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 		throw;
 	}
 

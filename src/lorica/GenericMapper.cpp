@@ -115,8 +115,7 @@ Lorica::GenericMapper::evaluator_for(const std::string & typeId)
 			}
 		}
 		catch (CORBA::Exception &ex) {
-			ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l - get_interface exception for %s\n"), typeId.c_str()));
-			ex._tao_print_exception ("get_interface exception:");
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 		}
 	}
 

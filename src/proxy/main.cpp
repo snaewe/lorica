@@ -494,7 +494,7 @@ Lorica::Service_Loader::run_service(void)
 				proxy->activate();
 			}
 			catch (CORBA::Exception & ex) {
-				ex._tao_print_exception("(%T) %N:%l - caught a CORBA exception while activating proxy\n");
+				ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 				return -1;
 			}
 			catch (...) {
@@ -506,7 +506,7 @@ Lorica::Service_Loader::run_service(void)
 				proxy->wait();
 			}
 			catch (CORBA::Exception & ex) {
-				ex._tao_print_exception("(%T) Lorica::Service_Loader::run_service Caught a CORBA exception while waiting for proxy\n");
+				ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 				return -1;
 			}
 			catch (...) {
@@ -515,7 +515,7 @@ Lorica::Service_Loader::run_service(void)
 			}
 		}
 		catch (CORBA::Exception & ex) {
-			ex._tao_print_exception("(%T) %N:%l - caught a CORBA exception while initializing proxy\n");
+			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
 			return -1;
 		}
 		catch (...) {
