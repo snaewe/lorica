@@ -1,6 +1,16 @@
+2009-02-05  Jules Colding  <colding@42tools.com>
+
+	* Makefile.am (release):
+	* Makefile.am (distfiles):
+	Improve warning text.
+
+	* src/proxy/Makefile.am (CLIENT_SVC_FILE):
+	Service configuration file to make UTF-8 and UTF-16
+	the default character sets.
+
 2009-02-04  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/lorica.conf: Corrected documentation
+	* src/proxy/lorica.conf: Corrected documentation.
 
 2009-02-03  Jules Colding  <colding@42tools.com>
 

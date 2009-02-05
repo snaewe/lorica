@@ -54,6 +54,7 @@ else
 IFR_BRUTUS_CACHE_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
 endif
 CLIENT_CONF_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/lorica.conf.client
+CLIENT_SVC_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/lorica_codeset.conf
 
 include $(CONF_ACE_ROOT)/include/makeinclude/macros.GNU
 include $(CONF_ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
@@ -233,6 +234,9 @@ endif # LORICA_MUST_INSTALL_ACETAO
 $(LORICA_top_dir)/lorica.conf:
 	cp $(CLIENT_CONF_FILE) $@
 
+$(LORICA_top_dir)/lorica_codeset.conf:
+	cp $(CLIENT_SVC_FILE) $@
+
 $(LORICA_top_dir)/ifr.cache:
 	cp $(IFR_BRUTUS_CACHE_FILE) $@ 
 
@@ -244,6 +248,7 @@ lorica.ssliop:
 
 sysconf_DATA = \
 	$(LORICA_top_dir)/lorica.conf \
+	$(LORICA_top_dir)/lorica_codeset.conf \
 	lorica.ssliop
 
 
@@ -253,5 +258,5 @@ else
 CLEAN_IN_FILES =
 endif
 
-DISTCLEANFILES = $(CWD)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid $(LORICA_top_dir)/lorica.conf $(LORICA_top_dir)/ifr.cache
+DISTCLEANFILES = $(CWD)/*.o $(CLEAN_IN_FILES) Makefile .deps .libs .obj lorica lorica.ior lorica.pid $(LORICA_top_dir)/lorica.conf $(LORICA_top_dir)/lorica_codeset.conf $(LORICA_top_dir)/ifr.cache
 CLEANFILES = $(CWD)/*.o 
