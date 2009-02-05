@@ -351,7 +351,6 @@ Wed Nov  5 18:27:45 UTC 2008  Phil Mesnier  <mesnier_p@ociweb.com>
           The external endpoint must be evaluated first to work around an
           issue with the evaluation of bidirectional GIOP listen points.
 
->>>>>>> .r430
 2008-11-05  Jules Colding  <colding@42tools.com>
 
         * configure.ac:
