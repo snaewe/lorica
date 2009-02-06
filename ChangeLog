@@ -1,3 +1,7 @@
+2009-02-06  Jules Colding  <colding@42tools.com>
+
+	* release.sh : Corrected scp commando
+
 2009-02-05  Jules Colding  <colding@42tools.com>
 
 	* Makefile.am (release):
