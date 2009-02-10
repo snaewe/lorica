@@ -125,7 +125,8 @@ Microsoft Visual Studio load the TAO_ACE solution and open the
     * IFR_Service
     * DynamicAny
     * DynamicInterface
-    * tao_ifr_exe 
+    * TAO_IFR_BE 
+    * TAO_IFR_EXE 
 
 Close the window and force a rebuild by clicking the Rebuild button.
 
