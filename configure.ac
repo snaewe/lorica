@@ -17,7 +17,7 @@
 #  Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 #  MA 02111-1307 USA
 
-AC_INIT([lorica],[1.0.11],[bugs@42tools.com])
+AC_INIT([lorica],[1.0.12],[bugs@42tools.com])
 
 AC_PREREQ(2.59)
 
@@ -82,7 +82,7 @@ AC_SUBST(LIBACETAO_REVISION)
 
 AC_ARG_WITH(acetao-age, AS_HELP_STRING([--with-acetao-age], [ACE+TAO least significant version number]), 
  			[LIBACETAO_AGE=$withval],
- 			[LIBACETAO_AGE=7])
+ 			[LIBACETAO_AGE=8])
 AC_SUBST(LIBACETAO_AGE)
 
 dnl

@@ -1,3 +1,20 @@
+
+======================= 1.0.12 ============================
+
+2009-02-10  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Bumped version.
+
+	* src/lorica/ConfigBase.cpp (random_ip_address):
+	Remove this (now) dead function.
+
+	* configure.ac (LIBACETAO_AGE):
+	Update to ACE+TAO x.6.8.
+
+	* src/lorica/ConfigBase.cpp (parse_string):
+	Revert to using a GUID, instead of a random IPv4 address,
+	when setting a random alias on an endpoint.
+
 2009-02-06  Jules Colding  <colding@42tools.com>
 
 	* release.sh : Corrected scp commando

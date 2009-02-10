@@ -216,25 +216,6 @@ get_ip_from_ifname(const int inet_family,
 
 #endif // LORICA_LACKS_IFADDRS
 
-static char*
-random_ip_address(void)
-{
-	char *retv = NULL;
-	unsigned char ip[4];
-
-	ACE_OS::srand((unsigned int)time(0)); 
-	for (int i = 0; i < 4; i++)
-		ip[i] = (unsigned char) (ACE_OS::rand()%256);
-	
-        ACE_DEBUG((LM_INFO, ACE_TEXT("%N:%l - Random IPv4 address calculated  %u.%u.%u.%u\n"), ip[0], ip[1], ip[2], ip[3]));
-
-	retv = (char*)ACE_OS::malloc(16);
-	ACE_OS::snprintf(retv, 16, "%u.%u.%u.%u", ip[0], ip[1], ip[2], ip[3]);
-	
-	return retv;
-}
-
-
 Lorica::Config::Endpoint::Endpoint ()
         : external_(false),
           port_(0),
@@ -460,11 +441,10 @@ Lorica::Config::Endpoint::parse_string(const std::string &ep_str,
                                            ACE_TEXT("%N:%l - Both random_alias and alias, which are mutually exclusive, are used\n")));
 				return false;
 			}
-			char *ip = random_ip_address();
-			this->alias_ = (const char*)ip;
-			ACE_OS::free(ip);
-		}
-		
+			ACE_Utils::UUID uuid(*ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID());
+			const ACE_CString *uuid_str(uuid.to_string());
+			this->alias_ = uuid_str->c_str();
+		}		
 
                 test = "ssl_port=";
                 opt = ep_str.find (test, option_pos);
