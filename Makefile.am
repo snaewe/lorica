@@ -40,13 +40,14 @@ CLEAN_IN_FILES =
 endif
 
 DISTCLEANFILES = \
-	aclocal.m4        \
-	intltool-extract  \
-	intltool-merge    \
-	intltool-update   \
-	iconv-detect.c    \
-	Makefile          \
-	*.tar*            \
+	lorica_codeset.conf \
+	aclocal.m4         \
+	intltool-extract   \
+	intltool-merge     \
+	intltool-update    \
+	iconv-detect.c     \
+	Makefile           \
+	*.tar*             \
 	$(CLEAN_IN_FILES)
 
 EXTRA_DIST = \
