@@ -1,4 +1,12 @@
+
+======================= 1.0.13 ============================
+
 2009-02-12  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Bumped version.
+
+	* Lorica (License): Changed to the GNU
+	Affero General Public License version 3.
 
 	* Makefile.am (release):
 	* Makefile.am (distfiles):
