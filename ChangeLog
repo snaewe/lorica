@@ -1,3 +1,9 @@
+2009-02-12  Jules Colding  <colding@42tools.com>
+
+	* Makefile.am (release):
+	* Makefile.am (distfiles):
+	Fix quoting of error text
+
 2009-02-11  Jules Colding  <colding@42tools.com>
 
 	* Makefile.am (DISTCLEANFILES):
