@@ -1,3 +1,7 @@
+2009-02-17  Jules Colding  <colding@42tools.com>
+
+	* tests/genericEvaluator/3-way-callback/README:
+	Documents the 3-way test.
 
 ======================= 1.0.13 ============================
 

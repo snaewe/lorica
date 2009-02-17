@@ -1,0 +1,37 @@
+
+                    Lorica README
+          Copyright (C) 2009 OMC Denmark ApS.
+
+Your rights
+===========
+
+Copying and distribution of this file, with or without 
+modification, are permitted in any medium without royalty 
+provided the copyright notice and this notice are preserved.
+
+Test
+====
+This tests if it is possibly for two individual clients to 
+connect to a single server instance using as_client_with_corbaloc()
+to obtain a mapped server reference. The server and the two clients
+must execute on separate hosts. 
+
+Both clients pass the server a callback reference which is used by
+the server. The test succeeds if both clients are able to pass the
+callback reference to the server and have the server invoke a method
+on it.
+
+This test is hard to automate so it is not run as part of the Lorica 
+test suite.
+
+This is how the 3-way test must be manually run:
+
+1) Start as server by simply: ./run_test.pl
+
+2) Start the first client (when the server tells you it is ready) 
+   on another machine by: "./run_test.pl -server <SERVER_IP_ADDRESS>"
+
+3) Start a second client on a third machine in the same way
+
+4) Close the server by C-c or by executing one of the clients a second
+   time
