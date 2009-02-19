@@ -86,7 +86,7 @@
 #endif
 
 #ifndef VERSION
-#define VERSION "1.0.12"
+#define VERSION "1.0.13"
 #endif
 
 #endif // _HARD_CODED_DEFS_H_
