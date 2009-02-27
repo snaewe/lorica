@@ -46,11 +46,8 @@ export LD_LIBRARY_PATH = $(ACE_ROOT)/lib:$(ENV_LD_LIBRARY_PATH):$(LORICA_SHARED_
 endif
 endif # HAVE_ACE_ROOT
 
-if LORICA_DARWIN
-IFR_BRUTUS_CACHE_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/ifr.cache.darwin
-else
-IFR_BRUTUS_CACHE_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/ifr.cache.linux
-endif
+# From the Brutus Server repository
+IFR_BRUTUS_CACHE_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/ifr.cache
 CLIENT_CONF_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/lorica.conf.client
 CLIENT_SVC_FILE = $(ABSOLUTE_TOP_DIR)/../brutus-server/brutus_loader/support_files/lorica_codeset.conf
 

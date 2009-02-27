@@ -39,13 +39,14 @@ endif
 
 DISTCLEANFILES = \
 	lorica_codeset.conf \
-	aclocal.m4         \
-	intltool-extract   \
-	intltool-merge     \
-	intltool-update    \
-	iconv-detect.c     \
-	Makefile           \
-	*.tar*             \
+	aclocal.m4          \
+	intltool-extract    \
+	intltool-merge      \
+	intltool-update     \
+	iconv-detect.c      \
+	Makefile            \
+	*.tar*              \
+	ifr.cache           \
 	$(CLEAN_IN_FILES)
 
 EXTRA_DIST = \
@@ -95,13 +96,13 @@ dist-hook:
 
 release:
 if LORICA_ROOT_NOT_SET
-	$(error You must set the environment variable LORICA_ROOT to $(CURDIR) and re-run bootstrap)
+	$(error You must set the environment variable LORICA_ROOT and re-run bootstrap)
 endif
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
 
 distfiles:
 if LORICA_ROOT_NOT_SET
-	$(error You must set the environment variable LORICA_ROOT to $(CURDIR) and re-run bootstrap)
+	$(error You must set the environment variable LORICA_ROOT and re-run bootstrap)
 endif
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE) no_push
 
