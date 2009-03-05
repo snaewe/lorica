@@ -1,3 +1,12 @@
+2009-03-05  Jules Colding  <colding@42tools.com>
+
+	* Lorica: I've added an externals in support_files.
+	This external will fetch items from the Brutus Server
+	repository which is needed when building our Brutus
+	adapted Lorica distribution files. Please checkout
+	Lorica with '--ignore-externals' if you are building
+	a generic Lorica.
+
 2009-02-27  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):

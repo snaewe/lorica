@@ -95,15 +95,9 @@ dist-hook:
 	-rm -rf $(distdir)/apple/Lorica.build
 
 release:
-if LORICA_ROOT_NOT_SET
-	$(error You must set the environment variable LORICA_ROOT and re-run bootstrap)
-endif
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE)
 
 distfiles:
-if LORICA_ROOT_NOT_SET
-	$(error You must set the environment variable LORICA_ROOT and re-run bootstrap)
-endif
 	$(CWD)/release.sh $(LORICA_DIST_RELEASE) no_push
 
 tarball:
