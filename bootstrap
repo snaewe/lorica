@@ -62,6 +62,7 @@ if test "x$1" = "xreconf"; then
     shift
     printbold "Running autoreconf..."
     autoreconf --warnings=all --force --verbose --install
+    autoreconf --warnings=all --force --verbose --install
 else
     printbold "Running aclocal..."
     aclocal --force -I m4
