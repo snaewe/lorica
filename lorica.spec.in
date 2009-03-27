@@ -85,12 +85,15 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
+%dir %{_localstatedir}/cache/@LORICA_NAME@
 %dir %{_docdir}/@LORICA_NAME@-@LORICA_VERSION@
 %config(noreplace) %{_sysconfdir}/lorica.conf
 %config(noreplace) %{_sysconfdir}/lorica.ssliop
 %config(noreplace) %{_sysconfdir}/sysconfig/lorica
-%{_sysconfdir}/ifr.cache
-%{_sysconfdir}/lorica.conf.evolution-brutus
+%{_localstatedir}/cache/@LORICA_NAME@/ifr.cache
+%{_sysconfdir}/lorica.conf
+%{_sysconfdir}/lorica.ssliop
+%{_sysconfdir}/lorica_codeset.conf
 %{_sysconfdir}/init.d/lorica
 %{_bindir}/*
 %{_sbindir}/*

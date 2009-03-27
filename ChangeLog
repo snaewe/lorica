@@ -1,3 +1,7 @@
+2009-03-27  Jules Colding  <colding@42tools.com>
+
+	* lorica.spec.in: Fix RPM build
+
 2009-03-05  Jules Colding  <colding@42tools.com>
 
 	* Lorica: I've added an externals in support_files.
