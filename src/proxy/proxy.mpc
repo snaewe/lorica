@@ -27,6 +27,9 @@ project : ssliop, taoexe, iortable, messaging, endpointpolicy, dynamicinterface,
 
   source_files {
     main.cpp
+    Win32_svc_loader.cpp
+    UNIX_svc_loader.cpp
+    svc_loader_base.cpp
     ntsvc.cpp
     proxy.cpp
     ReferenceMapper_i.cpp

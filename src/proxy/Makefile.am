@@ -58,9 +58,15 @@ lorica_CPPFLAGS = \
 lorica_SOURCES =  \
 	ReferenceMapper_i.cpp \
 	main.cpp              \
+	Win32_svc_loader.cpp  \
+	UNIX_svc_loader.cpp   \
+	svc_loader_base.cpp   \
 	ntsvc.cpp             \
 	proxy.cpp             \
 	ReferenceMapper_i.h   \
+	Win32_svc_loader.h    \
+	UNIX_svc_loader.h     \
+	svc_loader_base.h     \
 	ntsvc.h               \
 	proxy.h
 

@@ -504,8 +504,7 @@ Lorica::Proxy::~Proxy(void)
 		this->lock_fd = -1;
 	}
 #endif
-	if (!CORBA::is_nil(this->orb_))
-		this->destroy();
+	this->destroy();
 }
 
 void
@@ -538,7 +537,6 @@ Lorica::Proxy::svc(void)
 	ACE_OS::fprintf(output_file, "%d\n", ACE_OS::getpid());
 	ACE_OS::fclose(output_file);
 #endif
-
 	while (!this->must_shutdown_) {
 		ACE_Time_Value timeout(1,0);
 		this->orb_->run(timeout);
@@ -551,6 +549,19 @@ Lorica::Proxy::svc(void)
 void
 Lorica::Proxy::destroy (void)
 {
+#if 0 
+// @@ Phil - this is still experimental. I would like to keep it
+// around for more testing, but not in production code.
+	if (this->orb_.ptr() == 0)
+		return;
+
+	Lorica_MapperRegistry *mreg = 
+		ACE_Dynamic_Service<Lorica_MapperRegistry>::instance
+		(this->orb_->orb_core()->configuration(),"MapperRegistry");
+	if (mreg != 0)
+		mreg->destroy();
+
 	this->orb_->destroy();
 	this->orb_ = CORBA::ORB::_nil();
+#endif
 }

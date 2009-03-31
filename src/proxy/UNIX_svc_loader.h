@@ -18,45 +18,49 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-//**************************************************************
+//**************************************************************************
 //
 // BASED ON ACE SAMPLE CODE BY:
 //    ACE_wrappers/examples/NT_Service and
 //    ACE_wrappers/TAO/orbsvcs/ImplRepo_Service
 //
-//**************************************************************
+//**************************************************************************
 
-#include <ace/Log_Msg.h>
-#include "Win32_svc_loader.h"
-#include "UNIX_svc_loader.h"
+#ifndef UNIX_SVC_LOADER_H
+#define UNIX_SVC_LOADER_H
 
-int
-ACE_TMAIN(int argc,
-	  ACE_TCHAR *argv[])
+#include "svc_loader_base.h"
+
+#if !defined (ACE_WIN32)
+# define LORICA_SERVICE_LOADER Lorica::UNIX_Service_Loader
+
+namespace Lorica
 {
-	LORICA_SERVICE_LOADER lorica;
-	int result = 0;
-	lorica.set_working_directory();
+	class UNIX_Service_Loader : public Service_Loader_Base {
+	public:
 
-	ACE_LOG_MSG->open(argv[0], ACE_Log_Msg::SYSLOG);
-	result = lorica.parse_args(argc, argv);
-	if (result < 0)
-		exit(EXIT_FAILURE);  // Error
-	else if (result > 0)
-		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
+		UNIX_Service_Loader(void);
 
+		~UNIX_Service_Loader(void);
 
-	ACE_DEBUG((LM_INFO, 
-		   ACE_TEXT("(%T) Lorica %s initializing\n"), VERSION));
+		int parse_args(int argc,
+			       ACE_TCHAR *argv[]);
 
-	result = lorica.run_service_command();
-	if (result < 0)
-		exit(EXIT_FAILURE);  // Error
-	else if (result > 0)
-		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
+		int run_service(void);
 
-	result = lorica.execute ();
+		int run_standalone(void);
 
-	ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica is shutting down\n")));
-	return result;
+		void print_usage_and_die(const ACE_TCHAR *prog);
+
+		Proxy *init_proxy(void);
+		
+		virtual int execute (void);
+
+	private:
+		bool no_fork_;
+	};
 }
+
+#endif // ACE_WIN32
+
+#endif // UNIX_SVC_LOADER_H

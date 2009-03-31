@@ -1,129 +1,146 @@
+Tue Mar 31 14:49:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+	* src/proxy/Makefile.am:
+        * src/proxy/UNIX_svc_loader.h:
+        * src/proxy/UNIX_svc_loader.cpp:
+        * src/proxy/Win32_svc_loader.h:
+        * src/proxy/Win32_svc_loader.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/proxy.cpp:
+        * src/proxy/proxy.mpc:
+        * src/proxy/svc_loader_base.h:
+        * src/proxy/svc_loader_base.cpp:
+
+	  Refactoring the service loader behavior to get rid of the
+	  excessive use of #ifdef ACE_WIN32 which made the code very
+	  confusing and error prone. 
+	
 2009-03-27  Jules Colding  <colding@42tools.com>
 
-	* lorica.spec.in: Fix RPM build
+        * lorica.spec.in: Fix RPM build
 
 2009-03-05  Jules Colding  <colding@42tools.com>
 
-	* Lorica: I've added an externals in support_files.
-	This external will fetch items from the Brutus Server
-	repository which is needed when building our Brutus
-	adapted Lorica distribution files. Please checkout
-	Lorica with '--ignore-externals' if you are building
-	a generic Lorica.
+        * Lorica: I've added an externals in support_files.
+        This external will fetch items from the Brutus Server
+        repository which is needed when building our Brutus
+        adapted Lorica distribution files. Please checkout
+        Lorica with '--ignore-externals' if you are building
+        a generic Lorica.
 
 2009-02-27  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
-	The Windows generated IFR cache  seems to work all
-	over the line so no need to distinguish by platform.
+        * src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+        The Windows generated IFR cache  seems to work all
+        over the line so no need to distinguish by platform.
 
-	* Makefile.am (release):
-	* Makefile.am (release):
-	Cleanup error string
+        * Makefile.am (release):
+        * Makefile.am (release):
+        Cleanup error string
 
 2009-02-19  Jules Colding  <colding@42tools.com>
 
-	* defines/hardcoded-defs.h (VERSION):
-	Updated the version string.
+        * defines/hardcoded-defs.h (VERSION):
+        Updated the version string.
 
 2009-02-17  Jules Colding  <colding@42tools.com>
 
-	* tests/genericEvaluator/3-way-callback/README:
-	Documents the 3-way test.
+        * tests/genericEvaluator/3-way-callback/README:
+        Documents the 3-way test.
 
 ======================= 1.0.13 ============================
 
 2009-02-12  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Bumped version.
+        * configure.ac: Bumped version.
 
-	* Lorica (License): Changed to the GNU
-	Affero General Public License version 3.
+        * Lorica (License): Changed to the GNU
+        Affero General Public License version 3.
 
-	* Makefile.am (release):
-	* Makefile.am (distfiles):
-	Fix quoting of error text
+        * Makefile.am (release):
+        * Makefile.am (distfiles):
+        Fix quoting of error text
 
 2009-02-11  Jules Colding  <colding@42tools.com>
 
-	* Makefile.am (DISTCLEANFILES):
-	Added file to target.
+        * Makefile.am (DISTCLEANFILES):
+        Added file to target.
 
 ======================= 1.0.12 ============================
 
 2009-02-10  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Bumped version.
+        * configure.ac: Bumped version.
 
-	* src/lorica/ConfigBase.cpp (random_ip_address):
-	Remove this (now) dead function.
+        * src/lorica/ConfigBase.cpp (random_ip_address):
+        Remove this (now) dead function.
 
-	* configure.ac (LIBACETAO_AGE):
-	Update to ACE+TAO x.6.8.
+        * configure.ac (LIBACETAO_AGE):
+        Update to ACE+TAO x.6.8.
 
-	* src/lorica/ConfigBase.cpp (parse_string):
-	Revert to using a GUID, instead of a random IPv4 address,
-	when setting a random alias on an endpoint.
+        * src/lorica/ConfigBase.cpp (parse_string):
+        Revert to using a GUID, instead of a random IPv4 address,
+        when setting a random alias on an endpoint.
 
 2009-02-06  Jules Colding  <colding@42tools.com>
 
-	* release.sh : Corrected scp commando
+        * release.sh : Corrected scp commando
 
 2009-02-05  Jules Colding  <colding@42tools.com>
 
-	* Makefile.am (release):
-	* Makefile.am (distfiles):
-	Improve warning text.
+        * Makefile.am (release):
+        * Makefile.am (distfiles):
+        Improve warning text.
 
-	* src/proxy/Makefile.am (CLIENT_SVC_FILE):
-	Service configuration file to make UTF-8 and UTF-16
-	the default character sets.
+        * src/proxy/Makefile.am (CLIENT_SVC_FILE):
+        Service configuration file to make UTF-8 and UTF-16
+        the default character sets.
 
 2009-02-04  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/lorica.conf: Corrected documentation.
+        * src/proxy/lorica.conf: Corrected documentation.
 
 2009-02-03  Jules Colding  <colding@42tools.com>
 
-	* Makefile.am (release): Fix build.
+        * Makefile.am (release): Fix build.
 
 2009-02-01  Jules Colding  <colding@42tools.com>
 
-	* src/lorica/ProxyMapper.cpp (add_native_unchecked):
-	* src/proxy/ReferenceMapper_i.cpp (as_server_i):
-	Correctness fix - Use CORBA::string_free() and char* instead
-	of a String_var to hold string returned from object_as_string().
+        * src/lorica/ProxyMapper.cpp (add_native_unchecked):
+        * src/proxy/ReferenceMapper_i.cpp (as_server_i):
+        Correctness fix - Use CORBA::string_free() and char* instead
+        of a String_var to hold string returned from object_as_string().
 
-	* src/lorica/ProxyReplyHandler.cpp (handle_location_forward_i):
-	Remove 2 unused variables.
+        * src/lorica/ProxyReplyHandler.cpp (handle_location_forward_i):
+        Remove 2 unused variables.
 
 2009-01-31  Jules Colding  <colding@42tools.com>
 
-	* src/proxy/proxy.cpp (configure): Fix memory
-	leak #284 in the GC'ed Valgrind report.
+        * src/proxy/proxy.cpp (configure): Fix memory
+        leak #284 in the GC'ed Valgrind report.
 
-	* src/proxy/Makefile.am (ABSOLUTE_TOP_DIR):
-	Added this variable to fix build when LORICA_ROOT is
-	undefined.
+        * src/proxy/Makefile.am (ABSOLUTE_TOP_DIR):
+        Added this variable to fix build when LORICA_ROOT is
+        undefined.
 
 2009-01-30  Jules Colding  <colding@42tools.com>
 
-	* configure.ac: Added test for the LORICA_ROOT
-	environment variable.
+        * configure.ac: Added test for the LORICA_ROOT
+        environment variable.
 
-	* Makefile.am (EXTRA_DIST): Remove non-existing
-	directory from the target.
-	(distfiles): Make sure that $LORICA_ROOT is set when invoking
-	the distfiles target.
+        * Makefile.am (EXTRA_DIST): Remove non-existing
+        directory from the target.
+        (distfiles): Make sure that $LORICA_ROOT is set when invoking
+        the distfiles target.
 
-	* deb/rules: Do not strip binaries when making debs.
+        * deb/rules: Do not strip binaries when making debs.
 
-	* release.sh: Make the release script configure lorica
-	with debugging enabled.
+        * release.sh: Make the release script configure lorica
+        with debugging enabled.
 
-	* src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
-	An absolute path is needed when the distribution
-	specific tool builds binary packages.
+        * src/proxy/Makefile.am (IFR_BRUTUS_CACHE_FILE):
+        An absolute path is needed when the distribution
+        specific tool builds binary packages.
 
 Thu Jan 29 20:39:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -131,9 +148,9 @@ Thu Jan 29 20:39:30 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/proxy.h:
         * src/proxy/proxy.cpp:
 
-	  Add a destroy method to the proxy to clean up the ORB resources
-	  at shutdown time. This is to assist in the filtering of "still
-	  reachable" memory shown by valgrind.
+          Add a destroy method to the proxy to clean up the ORB resources
+          at shutdown time. This is to assist in the filtering of "still
+          reachable" memory shown by valgrind.
 
 Thu Jan 29 20:14:29 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 

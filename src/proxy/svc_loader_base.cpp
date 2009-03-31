@@ -18,45 +18,56 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-//**************************************************************
+//**************************************************************************
 //
 // BASED ON ACE SAMPLE CODE BY:
 //    ACE_wrappers/examples/NT_Service and
 //    ACE_wrappers/TAO/orbsvcs/ImplRepo_Service
 //
-//**************************************************************
+//**************************************************************************
 
+#include "svc_loader_base.h"
 #include <ace/Log_Msg.h>
-#include "Win32_svc_loader.h"
-#include "UNIX_svc_loader.h"
+#include <ace/streams.h>
+
+Lorica::Service_Loader_Base::Service_Loader_Base(void)
+	: config_file_(LORICA_CONF_FILE),
+	  corba_debug_level_(0),
+	  debug_(false)
+{
+}
+
+Lorica::Service_Loader_Base::~Service_Loader_Base(void)
+{
+}
 
 int
-ACE_TMAIN(int argc,
-	  ACE_TCHAR *argv[])
+Lorica::Service_Loader_Base::run_service_command(void)
 {
-	LORICA_SERVICE_LOADER lorica;
-	int result = 0;
-	lorica.set_working_directory();
+	return 0;
+}
 
-	ACE_LOG_MSG->open(argv[0], ACE_Log_Msg::SYSLOG);
-	result = lorica.parse_args(argc, argv);
-	if (result < 0)
-		exit(EXIT_FAILURE);  // Error
-	else if (result > 0)
-		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
+bool
+Lorica::Service_Loader_Base::is_service(void)
+{
+	return !debug_;
+}
 
+void
+Lorica::Service_Loader_Base::set_working_directory(void)
+{
+}
 
-	ACE_DEBUG((LM_INFO, 
-		   ACE_TEXT("(%T) Lorica %s initializing\n"), VERSION));
+void
+Lorica::Service_Loader_Base::reset_log(void)
+{
+	ACE_LOG_MSG->clr_flags(ACE_Log_Msg::SYSLOG);
 
-	result = lorica.run_service_command();
-	if (result < 0)
-		exit(EXIT_FAILURE);  // Error
-	else if (result > 0)
-		exit(EXIT_SUCCESS);  // No error, but we should exit anyway.
+	ofstream *output_file = 
+		new ofstream(ACE_TEXT("lorica.log"), ios::out);
 
-	result = lorica.execute ();
-
-	ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica is shutting down\n")));
-	return result;
+	if (output_file && (output_file->rdstate() == ios::goodbit))
+		ACE_LOG_MSG->msg_ostream(output_file, 1);
+	
+	ACE_LOG_MSG->set_flags(ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
 }
