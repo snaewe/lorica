@@ -264,12 +264,14 @@ int
 Lorica::Win32_Service_Loader::run_standalone(void)
 {
 	std::auto_ptr<Proxy>proxy (this->init_proxy());
-
+	Lorica::SERVICE::instance()->proxy(proxy.get());
+	
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) Lorica [%P] running as a standalone application \n")));
 
 	SetConsoleCtrlHandler(&ConsoleHandler, true);
 	proxy->activate();
 	proxy->wait();
+	Lorica::SERVICE::instance()->proxy(0);
 	proxy->destroy();
 	return 0;
 }

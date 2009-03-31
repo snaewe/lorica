@@ -63,7 +63,8 @@ Lorica::NT_Service::handle_control(DWORD control_code)
 		report_status(SERVICE_STOP_PENDING);
 
 		ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) %N:%l - service control stop requested\n")));
-		this->proxy_->shutdown ();
+		if (this->proxy_)
+			this->proxy_->shutdown ();
 	} else
 		inherited::handle_control (control_code);
 }
