@@ -52,7 +52,7 @@ Lorica::Win32_Service_Loader::Win32_Service_Loader(void)
 {
 }
 
-Lorica::Win32_Service_Loader::~Service_Loader(void)
+Lorica::Win32_Service_Loader::~Win32_Service_Loader(void)
 {
 }
 
@@ -275,12 +275,12 @@ Lorica::Win32_Service_Loader::run_standalone(void)
 }
 
 void
-Lorica::Win32_Service_Loader::set_working_directory(void)
+Lorica::Win32_Service_Loader::set_working_directory(const ACE_TCHAR *progname)
 {
 	char *c = NULL;
 	char cwd[_MAX_PATH] = { '\0' };
 
-	if (!GetFullPathName(argv[0],
+	if (!GetFullPathName(progname,
 			     _MAX_PATH,
 			     cwd,
 			     NULL))

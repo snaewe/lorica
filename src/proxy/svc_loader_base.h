@@ -56,7 +56,7 @@ namespace Lorica
 
 		virtual Proxy *init_proxy(void) = 0;
 
-		virtual void set_working_directory (void);
+		virtual void set_working_directory (const ACE_TCHAR *prog);
 
 		void reset_log (void);
 

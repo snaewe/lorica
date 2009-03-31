@@ -1,6 +1,16 @@
+Tue Mar 31 19:26:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/Win32_svc_loader.h:
+        * src/proxy/Win32_svc_loader.cpp:
+        * src/proxy/main.cpp:
+        * src/proxy/svc_loader_base.h:
+        * src/proxy/svc_loader_base.cpp:
+        
+          fix for build on win32 platform. 
+          
 Tue Mar 31 14:49:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	* src/proxy/Makefile.am:
+	    * src/proxy/Makefile.am:
         * src/proxy/UNIX_svc_loader.h:
         * src/proxy/UNIX_svc_loader.cpp:
         * src/proxy/Win32_svc_loader.h:

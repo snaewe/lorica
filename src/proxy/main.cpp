@@ -31,12 +31,11 @@
 #include "UNIX_svc_loader.h"
 
 int
-ACE_TMAIN(int argc,
-	  ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
 	LORICA_SERVICE_LOADER lorica;
 	int result = 0;
-	lorica.set_working_directory();
+	lorica.set_working_directory(argv[0]);
 
 	ACE_LOG_MSG->open(argv[0], ACE_Log_Msg::SYSLOG);
 	result = lorica.parse_args(argc, argv);

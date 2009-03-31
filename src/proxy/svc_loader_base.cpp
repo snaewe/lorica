@@ -54,7 +54,7 @@ Lorica::Service_Loader_Base::is_service(void)
 }
 
 void
-Lorica::Service_Loader_Base::set_working_directory(void)
+Lorica::Service_Loader_Base::set_working_directory(const ACE_TCHAR *)
 {
 }
 

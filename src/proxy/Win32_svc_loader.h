@@ -36,7 +36,7 @@
 
 namespace Lorica
 {
-	class Win32_Service_Loader : public Service_Loader {
+	class Win32_Service_Loader : public Service_Loader_Base {
 	public:
 		enum SERVICE_COMMAND {
 			SC_NONE,
@@ -61,9 +61,9 @@ namespace Lorica
 
 		void print_usage_and_die(const ACE_TCHAR *prog);
 
-		bool is_service(void);
+		void set_working_directory(const ACE_TCHAR *prog);
 
-		void set_working_directory(void);
+		int execute (void);
 
 		Proxy *init_proxy(void);
 
