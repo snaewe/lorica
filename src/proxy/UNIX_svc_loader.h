@@ -41,7 +41,7 @@ namespace Lorica
 
 		UNIX_Service_Loader(void);
 
-		~UNIX_Service_Loader(void);
+		virtual ~UNIX_Service_Loader(void);
 
 		int parse_args(int argc,
 			       ACE_TCHAR *argv[]);

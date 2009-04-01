@@ -39,7 +39,7 @@ namespace Lorica
 	public:
 		Service_Loader_Base(void);
 
-		~Service_Loader_Base(void);
+		virtual ~Service_Loader_Base(void);
 
 		virtual int parse_args(int argc,
 			       ACE_TCHAR *argv[]) = 0;

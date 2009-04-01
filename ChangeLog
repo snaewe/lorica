@@ -1,9 +1,18 @@
+2009-04-01  Jules Colding  <colding@42tools.com>
+
+	* src/proxy/Win32_svc_loader.h (~Win32_Service_Loader):
+	Make the destructor virtual to maintain symmetry with the
+	two classes below.
+
+	* src/proxy/UNIX_svc_loader.h (~UNIX_Service_Loader):
+	* src/proxy/svc_loader_base.h (~Service_Loader_Base):
+	Make the destructor virtual to kill gcc warning.
+
 Tue Mar 31 19:58:35 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/Win32_svc_loader.cpp:
         * src/proxy/ntsvc.cpp:
-        
-          fix for crash when run in debug mode and ctrl-C is pressed.
+        fix for crash when run in debug mode and ctrl-C is pressed.
 
 Tue Mar 31 19:26:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -12,9 +21,8 @@ Tue Mar 31 19:26:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/main.cpp:
         * src/proxy/svc_loader_base.h:
         * src/proxy/svc_loader_base.cpp:
-        
-          fix for build on win32 platform. 
-          
+        fix for build on win32
+
 Tue Mar 31 14:49:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
 	    * src/proxy/Makefile.am:
@@ -27,11 +35,10 @@ Tue Mar 31 14:49:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/proxy.mpc:
         * src/proxy/svc_loader_base.h:
         * src/proxy/svc_loader_base.cpp:
-
 	  Refactoring the service loader behavior to get rid of the
 	  excessive use of #ifdef ACE_WIN32 which made the code very
-	  confusing and error prone. 
-	
+	  confusing and error prone.
+
 2009-03-27  Jules Colding  <colding@42tools.com>
 
         * lorica.spec.in: Fix RPM build

@@ -48,7 +48,7 @@ namespace Lorica
 
 		Win32_Service_Loader(void);
 
-		~Win32_Service_Loader(void);
+		virtual ~Win32_Service_Loader(void);
 
 		int parse_args(int argc,
 			       ACE_TCHAR *argv[]);
