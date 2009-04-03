@@ -34,4 +34,12 @@
 #include "defines/hardcoded-defs.h"
 #endif
 
+
+#ifdef ACE_WIN32
+# ifndef LORICA_LACKS_IFADDRS
+#  define LORICA_LACKS_IFADDRS (1)
+# endif
+#endif
+
+
 #endif // _BUILD_SYSTEM_DEFS_H_
