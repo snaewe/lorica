@@ -49,111 +49,13 @@
 
 Lorica::Proxy* Lorica::Proxy::this_ = 0;
 
-#ifndef ACE_WIN32
-
-static int
-lock_fd(const int fd)
-{
-	struct flock lock;
-
-	lock.l_type = F_WRLCK;
-	lock.l_start = 0;
-	lock.l_whence = SEEK_SET;
-	lock.l_len = 0;
-
-	if (-1 == fd)
-		return -1;
-
-	return fcntl(fd, F_SETLK, &lock);
-}
-
-static int
-unlock_fd(const int fd)
-{
-	struct flock lock;
-
-	lock.l_type = F_UNLCK;
-	lock.l_start = 0;
-	lock.l_whence = SEEK_SET;
-	lock.l_len = 0;
-
-	if (-1 == fd)
-		return -1;
-
-	return fcntl(fd, F_SETLK, &lock);
-}
-
-/*
- * Will attempt to lock the PID file and write the
- * pid into it. This function will return false for
- * all errors. Callee is responsible for closing *fd
- * if (*fd != -1).
- */
-static bool
-get_process_lock(int & fd,
-                 const char *path)
-{
-	std::string pid_file;
-	char buf[32] = { '\0' };
-	int p = 0;
-	ssize_t w = 0;
-
-	fd = -1;
-	if (!path || !strlen(path))
-		return false;
-
-	fd = open(path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	if (-1 == fd)
-		return false;
-
-	// lock it
-	if (lock_fd(fd))
-		return false;
-
-	// we have the lock
-	if (ftruncate(fd, 0))
-		return false;
-
-	/* write pid */
-	p = snprintf(buf, sizeof(buf), "%d", getpid());
-	w = write(fd, buf, strlen(buf) + sizeof(char));
-	p += sizeof(char);
-	if (p != (int)w)
-		return false;
-
-	if (fsync(fd))
-		return false;
-
-	return true;
-}
-#endif // !ACE_WIN32
 
 Lorica::Proxy::Proxy(const bool Debug)
-	: lock_fd(-1),
-	  pid_file_(),
-	  ior_file_(),
-	  local_pid_file_(LORICA_PID_FILE),
-	  local_ior_file_(LORICA_IOR_FILE),
+	: ior_file_(),
 	  must_shutdown_(false),
 	  debug_(Debug)
 {
 }
-
-#ifndef ACE_WIN32
-bool
-Lorica::Proxy::get_lock(const char *lock_file_path)
-{
-	// take the lock and write the pid
-	if (get_process_lock(this->lock_fd, lock_file_path))
-		return true;
-
-	if (-1 != this->lock_fd) {
-		close(this->lock_fd);
-		this->lock_fd = -1;
-	}
-	return false;
-}
-#endif
 
 void
 Lorica::Proxy::shutdown(void)
@@ -227,34 +129,9 @@ Lorica::Proxy::open(void *args)
 	return 1;
 }
 
-static inline FILE*
-get_file(const char *filename)
-{
-	ACE_HANDLE file_fd = ACE_INVALID_HANDLE;
-	FILE *file = NULL;
-
-	file_fd = ACE_OS::open(filename, O_CREAT | O_WRONLY | O_TRUNC);
-	if (ACE_INVALID_HANDLE == file_fd) {
-		ACE_ERROR((LM_ERROR, "(%T) %N:%l - could not ACE_OS::open %s\n", filename));
-		return NULL;
-	}
-
-	file = ACE_OS::fdopen(file_fd, "w");
-	if (!file) {
-		int err = 0;
-#ifdef ACE_WIN32
-		_get_errno(&err); 
-#else
-		err = errno;
-#endif
-		ACE_ERROR((LM_ERROR, "(%T) %N:%l - could not ACE_OS::fdopen %s - error = %s\n", filename, strerror(err)));
-		ACE_OS::close(file_fd);
-	}
-	return file;
-}
-
 void
-Lorica::Proxy::configure(Config & config)
+Lorica::Proxy::configure(Config & config, 
+			 const std::string &def_ior_file )
 	throw (InitError)
 {
 	try {
@@ -265,13 +142,6 @@ Lorica::Proxy::configure(Config & config)
 
 		std::auto_ptr<ACE_ARGV> arguments(config.get_orb_options());
 
-		this->pid_file_ = config.get_value("PID_FILE");
-		if (this->pid_file_.length() == 0)
-			this->pid_file_ = this->local_pid_file_;
-#ifndef ACE_WIN32
-		if (!this->get_lock(this->pid_file_.c_str()))
-			throw InitError();
-#endif
 		// Create proxy ORB.
 		int argc = arguments->argc();
 		if (Lorica_debug_level > 2) {
@@ -285,7 +155,9 @@ Lorica::Proxy::configure(Config & config)
 		orb_ = CORBA::ORB_init(argc, arguments->argv());
 
 		// test if we have any security functionality
-		ACE_Service_Repository * repo = orb_->orb_core()->configuration()->current_service_repository();
+		ACE_Service_Repository * repo = 
+			orb_->orb_core()->configuration()->
+			current_service_repository();
 		config.secure_available(repo->find("SSLIOP_Factory") == 0);
 
 		int attempts = 3;
@@ -403,25 +275,23 @@ Lorica::Proxy::configure(Config & config)
 
 		ReferenceMapper_var refMapper_obj = ReferenceMapper::_narrow(obj.in());
 
-		char *ior = orb_->object_to_string(refMapper_obj.in());
-		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY, (const char*)ior);
+		CORBA::String_var ior = 
+			orb_->object_to_string(refMapper_obj.in());
+		iorTable_->bind(Lorica::ReferenceMapper::IOR_TABLE_KEY,
+				ior.in());
 
-		this->ior_file_ = config.get_value("IOR_FILE");
-		if (this->ior_file_.length() == 0) 
-			this->ior_file_ = this->local_ior_file_;
+		this->ior_file_ = config.get_value("IOR_FILE", def_ior_file);
 
-		FILE *output_file = get_file(this->ior_file_.c_str());
+		FILE *output_file =
+			ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (this->ior_file_.c_str()), ACE_TEXT("w"));
 		if (!output_file) {
 			ACE_ERROR((LM_ERROR,
 				   "(%T) %N:%l - cannot open output file for writing IOR: %s\n",
 				   this->ior_file_.c_str()));
 			throw InitError();
-		} else {
-			ACE_OS::fprintf(output_file, "%s", (const char*)ior);
-			ACE_OS::fclose(output_file);
 		}
-		CORBA::string_free(ior);
-		ior = NULL;
+		ACE_OS::fprintf(output_file, "%s", ior.in());
+		ACE_OS::fclose(output_file);
 
 		if (!setup_shutdown_handler()) {
 			ACE_ERROR ((LM_ERROR,
@@ -496,27 +366,7 @@ Lorica::Proxy::configure(Config & config)
 
 Lorica::Proxy::~Proxy(void)
 {
-#ifndef ACE_WIN32
-	// release the lock
-	if (-1 != this->lock_fd) {
-		unlock_fd(this->lock_fd);
-		close(this->lock_fd);
-		this->lock_fd = -1;
-	}
-#endif
 	this->destroy();
-}
-
-void
-Lorica::Proxy::local_pid_file (const std::string& lpf)
-{
-	this->local_pid_file_ = lpf;
-}
-
-void
-Lorica::Proxy::local_ior_file (const std::string& lif)
-{
-	this->local_ior_file_ = lif;
 }
 
 int
@@ -525,23 +375,10 @@ Lorica::Proxy::svc(void)
 	outside_pm_->activate();
 	inside_pm_->activate();
 
-#ifdef ACE_WIN32
-	// Output the pid file indicating we are running
-	FILE *output_file= ACE_OS::fopen(this->pid_file_.c_str(), "w");
-	if (output_file == 0) {
-		ACE_ERROR_RETURN((LM_ERROR,
-				  "%N:%l - cannot open output file for writing PID: %s\n",
-				  this->pid_file_.c_str()),
-				 1);
-	}
-	ACE_OS::fprintf(output_file, "%d\n", ACE_OS::getpid());
-	ACE_OS::fclose(output_file);
-#endif
 	while (!this->must_shutdown_) {
 		ACE_Time_Value timeout(1,0);
 		this->orb_->run(timeout);
 	}
-	ACE_OS::unlink (this->pid_file_.c_str());
 
 	return 0;
 }

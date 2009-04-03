@@ -49,9 +49,13 @@ namespace Lorica
 			throw(InitError);
 
 		/// Get associated configuration option.
-		virtual std::string get_value(const std::string & token) const;
-		virtual bool getBooleanValue(const std::string & token,
-					     bool default_flag);
+		virtual std::string get_value(const std::string & token,
+					      const std::string & def = "") const;
+		virtual long get_long_value(const std::string & token,
+					    long def = 0L) const;
+
+		virtual bool get_bool_value(const std::string & token,
+					    bool def = false) const;
 
 		virtual int debug_level(void);
 
@@ -67,7 +71,8 @@ namespace Lorica
 		inline bool insert(const std::string & token,
 				   const std::string & value);
 
-		inline std::string extract(const std::string & token) const;
+		inline std::string extract(const std::string & token,
+					   const std::string & def) const;
 
 		/// Parse the given file
 		bool load(void);

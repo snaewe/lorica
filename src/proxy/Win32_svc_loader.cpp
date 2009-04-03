@@ -215,6 +215,8 @@ Lorica::Win32_Service_Loader::init_proxy(void)
 	Lorica::FileConfig *config = Lorica::FileConfig::instance();
 	try {
 		config->init(config_file_, corba_debug_level_);
+		this->num_threads_ = 
+			(int)config->get_long_value ("Proxy_Threads",1);
 	}
 	catch (const Lorica::FileConfig::InitError &) {
 		ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l - proxy could not read %s.\n"),
@@ -225,7 +227,7 @@ Lorica::Win32_Service_Loader::init_proxy(void)
 	std::auto_ptr<Proxy> proxy(new Proxy(debug_));
 	
 	try {
-		proxy->configure(*config);
+		proxy->configure(*config, LORICA_IOR_FILE);
 
 		return proxy.release();
 	}
@@ -269,7 +271,8 @@ Lorica::Win32_Service_Loader::run_standalone(void)
 	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) Lorica [%P] running as a standalone application \n")));
 
 	SetConsoleCtrlHandler(&ConsoleHandler, true);
-	proxy->activate();
+	proxy->activate(this->proxy_thr_flags_,
+			this->num_threads_);
 	proxy->wait();
 	Lorica::SERVICE::instance()->proxy(0);
 	proxy->destroy();

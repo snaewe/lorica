@@ -33,7 +33,9 @@
 Lorica::Service_Loader_Base::Service_Loader_Base(void)
 	: config_file_(LORICA_CONF_FILE),
 	  corba_debug_level_(0),
-	  debug_(false)
+	  debug_(false),
+	  proxy_thr_flags_ (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED),
+	  num_threads_ (1)
 {
 }
 
@@ -48,7 +50,7 @@ Lorica::Service_Loader_Base::run_service_command(void)
 }
 
 bool
-Lorica::Service_Loader_Base::is_service(void)
+Lorica::Service_Loader_Base::is_service (void)
 {
 	return !debug_;
 }
@@ -70,4 +72,10 @@ Lorica::Service_Loader_Base::reset_log(void)
 		ACE_LOG_MSG->msg_ostream(output_file, 1);
 	
 	ACE_LOG_MSG->set_flags(ACE_Log_Msg::STDERR | ACE_Log_Msg::OSTREAM);
+}
+
+bool
+Lorica::Service_Loader_Base::get_lock (const char *)
+{
+	return false;
 }

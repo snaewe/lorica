@@ -182,6 +182,96 @@ become_daemon(const bool NoFork,
 	return EXIT_DAEMON;
 }
 
+static int
+lock_fd(const int fd)
+{
+	struct flock lock;
+
+	lock.l_type = F_WRLCK;
+	lock.l_start = 0;
+	lock.l_whence = SEEK_SET;
+	lock.l_len = 0;
+
+	if (-1 == fd)
+		return -1;
+
+	return fcntl(fd, F_SETLK, &lock);
+}
+
+static int
+unlock_fd(const int fd)
+{
+	struct flock lock;
+
+	lock.l_type = F_UNLCK;
+	lock.l_start = 0;
+	lock.l_whence = SEEK_SET;
+	lock.l_len = 0;
+
+	if (-1 == fd)
+		return -1;
+
+	return fcntl(fd, F_SETLK, &lock);
+}
+
+/*
+ * Will attempt to lock the PID file and write the
+ * pid into it. This function will return false for
+ * all errors. Callee is responsible for closing *fd
+ * if (*fd != -1).
+ */
+static bool
+get_process_lock(int & fd,
+                 const char *path)
+{
+	std::string pid_file;
+	char buf[32] = { '\0' };
+	int p = 0;
+	ssize_t w = 0;
+
+	fd = -1;
+	if (!path || !strlen(path))
+		return false;
+
+	fd = open(path, O_CREAT | O_RDWR, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+	if (-1 == fd)
+		return false;
+
+	// lock it
+	if (lock_fd(fd))
+		return false;
+
+	// we have the lock
+	if (ftruncate(fd, 0))
+		return false;
+
+	/* write pid */
+	p = snprintf(buf, sizeof(buf), "%d", getpid());
+	w = write(fd, buf, strlen(buf) + sizeof(char));
+	p += sizeof(char);
+	if (p != (int)w)
+		return false;
+
+	if (fsync(fd))
+		return false;
+
+	return true;
+}
+
+bool
+Lorica::UNIX_Service_Loader::get_lock(const char *lock_file_path)
+{
+	// take the lock and write the pid
+	if (get_process_lock(this->lock_fd_, lock_file_path))
+		return true;
+
+	if (-1 != this->lock_fd_) {
+		close(this->lock_fd_);
+		this->lock_fd_ = -1;
+	}
+	return false;
+}
+
 Lorica::UNIX_Service_Loader::UNIX_Service_Loader()
 	: no_fork_(false)
 {
@@ -260,24 +350,32 @@ Lorica::UNIX_Service_Loader::parse_args(int argc,
 Lorica::Proxy *
 Lorica::UNIX_Service_Loader::init_proxy(void)
 {
+	std::string def_pid(LORICA_PID_FILE);
+	if (this->debug_)
+		def_pid = "lorica.pid";
+
 	Lorica::FileConfig *config = Lorica::FileConfig::instance();
 	try {
 		config->init(config_file_, corba_debug_level_);
+		this->pid_file_ = config->get_value("PID_FILE", def_pid);
+		this->num_threads_ = 
+			(int)config->get_long_value ("Proxy_Threads",1);
+	
 	}
 	catch (const Lorica::FileConfig::InitError &) {
-		ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l - proxy could not read %s.\n"),
+		ACE_ERROR((LM_ERROR, 
+			   ACE_TEXT("%N:%l - proxy could not read %s.\n"),
 			   this->config_file_.c_str()));
 		return 0;
 	}
 
 	std::auto_ptr<Proxy> proxy(new Proxy(debug_));
-	if (debug_) {
-		proxy->local_pid_file ("lorica.pid");
-		proxy->local_ior_file ("lorica.ior");
-	}
+	std::string def_ior(LORICA_IOR_FILE);
+	if (debug_)
+		def_ior = "lorica.ior";
 	
 	try {
-		proxy->configure(*config);
+		proxy->configure(*config, def_ior);
 
 		return proxy.release();
 	}
@@ -289,11 +387,75 @@ Lorica::UNIX_Service_Loader::init_proxy(void)
 }
 
 int
+Lorica::UNIX_Service_Loader::run_i (void)
+{
+	if (!this->is_service())
+		this->reset_log();
+	std::auto_ptr<Proxy>proxy (this->init_proxy());
+
+	if (!this->get_lock(this->pid_file_.c_str())) {
+		ACE_ERROR ((LM_ERROR,
+			    ACE_TEXT ("(%T) %N:%l - ")
+			    ACE_TEXT ("Could not lock pidfile\n")));
+		return EXIT_FAILURE;
+	}
+
+	// Output the pid file indicating we are running
+	FILE *output_file= ACE_OS::fopen(this->pid_file_.c_str(), "w");
+	if (output_file == 0) {
+		ACE_ERROR_RETURN((LM_ERROR,
+				  "%N:%l - cannot open output file for writing PID: %s\n",
+				  this->pid_file_.c_str()),
+				 1);
+	}
+	ACE_OS::fprintf(output_file, "%d\n", ACE_OS::getpid());
+	ACE_OS::fclose(output_file);
+
+	try {
+		if (!proxy.get()) {
+			ACE_ERROR((LM_ERROR, 
+				   ACE_TEXT ("(%T) %N:%l - ")
+				   ACE_TEXT ("could not initialize proxy\n")));
+			return EXIT_FAILURE;
+		}
+
+		proxy->activate(this->proxy_thr_flags_,
+				this->num_threads_);
+		proxy->wait();
+		proxy->destroy();
+
+	}
+	catch (CORBA::Exception & ex) {
+		ACE_DEBUG((LM_ERROR, 
+			   ACE_TEXT("(%T) %N:%l - %C\n"), 
+			   ex._info().c_str()));
+		return EXIT_FAILURE;
+	}
+	catch (...) {
+		ACE_ERROR((LM_ERROR, 
+			   ACE_TEXT("(%T) %N:%l - caught an otherwise unknown")
+			   ACE_TEXT(" exception while initializing proxy\n")));
+		return EXIT_FAILURE;
+	}
+
+	// release the lock
+	if (-1 != this->lock_fd_) {
+		unlock_fd(this->lock_fd_);
+		close(this->lock_fd_);
+		this->lock_fd_ = -1;
+	}
+	ACE_OS::unlink (this->pid_file_.c_str());
+
+	return EXIT_SUCCESS;
+}
+
+
+int
 Lorica::UNIX_Service_Loader::run_service(void)
 {
 
 	daemon_exit_t dstat = 
-		become_daemon(no_fork_, debug_);
+		become_daemon(this->no_fork_, this->debug_);
 	switch (dstat) {
 	case EXIT_DAEMON :
 		break;
@@ -303,67 +465,19 @@ Lorica::UNIX_Service_Loader::run_service(void)
 	default :
 		exit(EXIT_FAILURE);
 	}
-	{
-		if (!this->is_service())
-			this->reset_log();
 
- 		ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica is starting up\n")));
+	ACE_DEBUG((LM_INFO, ACE_TEXT("(%T) Lorica is starting up\n")));
 
-		try {
-			std::auto_ptr<Proxy>proxy (this->init_proxy());
-			if (!proxy.get()) {
-				ACE_ERROR((LM_ERROR, "(%T) %N:%l - could not initialize proxy\n"));
-				return -1;
-			}
-
-			try {
-				proxy->activate();
-			}
-			catch (CORBA::Exception & ex) {
-				ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
-				return -1;
-			}
-			catch (...) {
-				ACE_ERROR((LM_ERROR, "(%T) %N:%l - caught an otherwise unknown exception while activating proxy\n"));
-				return -1;
-			}
-
-			try {
-				proxy->wait();
-			}
-			catch (CORBA::Exception & ex) {
-				ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
-				return -1;
-			}
-			catch (...) {
-				ACE_ERROR((LM_ERROR, "(%T) %N:%l - caught an otherwise unknown exception while waiting for proxy\n"));
-				return -1;
-			}
-		}
-		catch (CORBA::Exception & ex) {
-			ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
-			return -1;
-		}
-		catch (...) {
-			ACE_ERROR((LM_ERROR, "(%T) %N:%l - caught an otherwise unknown exception while initializing proxy\n"));
-			return -1;
-		}
-	}
-
-	return EXIT_SUCCESS;
+	return this->run_i();
 }
 
 int
 Lorica::UNIX_Service_Loader::run_standalone(void)
 {
-	std::auto_ptr<Proxy>proxy (this->init_proxy());
-
-	ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%T) Lorica [%P] running as a standalone application \n")));
-
-	proxy->activate();
-	proxy->wait();
-	proxy->destroy();
-	return 0;
+	ACE_DEBUG((LM_DEBUG,
+		   ACE_TEXT("(%T) Lorica [%P] ")
+		   ACE_TEXT("running as a standalone application \n")));
+	return this->run_i ();
 }
 
 int

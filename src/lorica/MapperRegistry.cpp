@@ -55,16 +55,25 @@ Lorica_MapperRegistry::init(int,
 int
 Lorica_MapperRegistry::fini(void)
 {
+	this->destroy();
+	return 1;
+}
+
+void
+Lorica_MapperRegistry::destroy (void)
+{
+	ACE_DEBUG ((LM_DEBUG, "In Lorica_MapperRegistry::destroy\n"));
 	if (this->null_mapper_ != 0)
 		this->null_mapper_->decr_refcount();
+	this->null_mapper_ = 0;
 
 	if (this->generic_mapper_ != 0)
 		this->generic_mapper_->decr_refcount();
+	this->generic_mapper_ = 0;
 
 	if (this->mappers_ != 0)
 		this->mappers_->destroy_chain();
-
-	return 1;
+	this->mappers_ = 0;
 }
 
 void

@@ -26,12 +26,6 @@
 #include <ace/OS_NS_unistd.h>
 #include <ace/UUID.h>
 
-#ifdef ACE_WIN32
-# ifndef LORICA_LACKS_IFADDRS
-#  define LORICA_LACKS_IFADDRS (1)
-# endif
-#endif
-
 #ifndef LORICA_LACKS_IFADDRS
 # include <string.h>
 # include <arpa/inet.h>
@@ -575,34 +569,17 @@ Lorica::Config::get_ifr_options(const bool Debug)
         ifr_args_.push_back(IFR_SERVICE_EXE_NAME);
 
         this->ifr_args_.push_back("-o");
-        std::string opt = this->get_value("IFR_IOR_FILE");
-        if (!opt.length()) {
-#ifdef ACE_WIN32
-                opt = IFR_SERVICE_IOR_FILE;
-#else
-                if (Debug)
-                        opt = "ifr.ior";
-                else
-                        opt = IFR_SERVICE_IOR_FILE;
-#endif
-        }
+        std::string opt = this->get_value("IFR_IOR_FILE",
+					  IFR_SERVICE_IOR_FILE);
         this->ifr_args_.push_back(opt.c_str());
 
-        opt = this->get_value("IFR_PERSISTENT");
-        if ("no" != opt) {
+        if (this->get_bool_value("IFR_PERSISTENT")) {
                 this->ifr_args_.push_back("-p");
 
                 this->ifr_args_.push_back("-b");
                 opt = this->get_value("IFR_CACHE");
                 if (!opt.length()) {
-#ifdef ACE_WIN32
                         opt = IFR_SERVICE_CACHE_FILE;
-#else
-                        if (Debug)
-                                opt = "ifr.cache";
-                        else
-                                opt = IFR_SERVICE_CACHE_FILE;
-#endif
                 }
                 this->ifr_args_.push_back(opt.c_str());
         }
@@ -638,7 +615,9 @@ Lorica::Config::get_ifr_options(const bool Debug)
 bool
 Lorica::Config::init_endpoints(bool do_extern)
 {
-        std::string eps_str = do_extern ? this->get_value("External_Address") : this->get_value("Internal_Address");
+        std::string eps_str = do_extern ? 
+		this->get_value("External_Address") : 
+		this->get_value("Internal_Address");
         size_t pos = 0;
         size_t tpos = 0;
 
@@ -649,10 +628,14 @@ Lorica::Config::init_endpoints(bool do_extern)
 
                         eps_str = (const char*)host_name;
                         eps_str += ":"LORICA_DEFAULT_OUTSIDE_FACING_PORT_STR;
-                        ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - DEPRECATED: Using default endpoint value (%s) for outside facing endpoint\n"), eps_str.c_str()));
+                        ACE_DEBUG((LM_WARNING, 
+				   ACE_TEXT("%N:%l - DEPRECATED: Using default endpoint value (%s) for outside facing endpoint\n"),
+				   eps_str.c_str()));
                 } else {
                         eps_str = "localhost:"LORICA_DEFAULT_INSIDE_FACING_PORT_STR;
-                        ACE_DEBUG((LM_WARNING, ACE_TEXT("%N:%l - DEPRECATED: Using default endpoint value (%s) for inside facing endpoint\n"), eps_str.c_str()));
+                        ACE_DEBUG((LM_WARNING,
+				   ACE_TEXT("%N:%l - DEPRECATED: Using default endpoint value (%s) for inside facing endpoint\n"),
+				   eps_str.c_str()));
                 }
         }
 
@@ -662,10 +645,10 @@ Lorica::Config::init_endpoints(bool do_extern)
                 if (ep_str.empty())
                         break;
 
-                if (do_extern)
-                        ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - External Endpoint String - %s\n"), ep_str.c_str()));
-                else
-                        ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l - Internal Endpoint String - %s\n"), ep_str.c_str()));
+		ACE_DEBUG((LM_DEBUG, 
+			   ACE_TEXT("%N:%l - %C Endpoint String - %C\n"),
+			   (do_extern ? "External" : "Internal"),
+			   ep_str.c_str()));
 
                 Endpoint ep;
                 ep.external_ = do_extern;
@@ -690,7 +673,9 @@ Lorica::Config::get_endpoints(bool ext)
                 return eps;
         }
 
-        for (Endpoints::const_iterator iter = endpoints_.begin(); iter != endpoints_.end(); iter++) {
+        for (Endpoints::const_iterator iter = endpoints_.begin();
+	     iter != endpoints_.end();
+	     iter++) {
                 if (iter->external_ == ext)
                         eps.push_back (*iter);
         }
@@ -706,9 +691,8 @@ Lorica::Config::null_eval_any (void) const
         if (!ids.empty())
                 return false;
 
-        std::string eval_any = this->get_value ("Null_Evaluator_Any");
+        return this->get_bool_value ("Null_Evaluator_Any");
 
-        return (0 == eval_any.compare("yes"));
 }
 
 std::string
@@ -720,17 +704,13 @@ Lorica::Config::null_eval_type_ids (void) const
 bool
 Lorica::Config::generic_evaluator (void) const
 {
-        std::string gen_eval = this->get_value("Generic_Evaluator");
-
-        return (0 == gen_eval.compare("yes"));
+        return this->get_bool_value("Generic_Evaluator");
 }
 
 bool
 Lorica::Config::collocate_ifr (void) const
 {
-        std::string coll_ifr = this->get_value("Collocate_IFR");
-
-        return (0 != coll_ifr.compare("no"));
+        return this->get_bool_value("Collocate_IFR");
 }
 
 bool

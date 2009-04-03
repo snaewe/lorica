@@ -124,7 +124,7 @@ Lorica::FileConfig::load(void)
 		std::string cur_val = line.substr(pos+1); // "cur_val"
 
 		// get any value currently assocuated with this token.
-		std::string accru_val = this->get_value(token);
+		std::string accru_val = this->get_value (token);
 
 		// Add new value in.
 		if (accru_val.empty())
@@ -147,23 +147,39 @@ Lorica::FileConfig::unload(void)
 }
 
 std::string
-Lorica::FileConfig::get_value(const std::string & token) const
+Lorica::FileConfig::get_value(const std::string & token,
+			      const std::string & def) const
 {
-	return this->extract(token);
+	return this->extract(token, def);
+}
+
+long
+Lorica::FileConfig::get_long_value(const std::string & token,
+				   long def) const
+{
+	std::string value = this->get_value(token);
+	long result = def;
+	if (value.length()) {
+		char *ptr;
+		long temp = ACE_OS::strtol(value.c_str(),&ptr,10);
+		if (*ptr != 0)
+			result = temp;
+	}
+	return result;
 }
 
 bool
-Lorica::FileConfig::getBooleanValue(const std::string & token,
-				    bool default_flag)
+Lorica::FileConfig::get_bool_value(const std::string & token,
+				   bool def) const
 {
-	std::string result_string = this->get_value(token);
-	bool result = default_flag;
+	std::string value = this->get_value(token);
+	bool result = def;
 
-	if (ACE_OS::strcasecmp(result_string.c_str(), "yes")
-	    || ACE_OS::strcasecmp(result_string.c_str(), "true"))
+	if (ACE_OS::strcasecmp(value.c_str(), "yes") == 0
+	    || ACE_OS::strcasecmp(value.c_str(), "true") == 0)
 		result = true;
-	else if (ACE_OS::strcasecmp(result_string.c_str(), "no")
-		 || ACE_OS::strcasecmp(result_string.c_str(), "false"))
+	else if (ACE_OS::strcasecmp(value.c_str(), "no") == 0
+		 || ACE_OS::strcasecmp(value.c_str(), "false") == 0)
 		result = false;
 
 	return result;
@@ -188,12 +204,14 @@ Lorica::FileConfig::insert(const std::string & token,
 }
 
 std::string
-Lorica::FileConfig::extract(const std::string& token) const
+Lorica::FileConfig::extract(const std::string& token,
+			    const std::string& def) const
 {
 	std::string value;
 
 	if (configs_.find(ACE::hash_pjw(token.c_str())) != configs_.end())
 		value = configs_.find(ACE::hash_pjw(token.c_str()))->second;
+	else value = def;
 
 	return value;
 }

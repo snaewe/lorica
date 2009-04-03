@@ -62,8 +62,13 @@ namespace Lorica
 		virtual ~Config(void);
 
 		/// Get associated configuration option.
-		virtual std::string get_value(const std::string& token) const = 0;
-		virtual bool getBooleanValue(const std::string& token, bool default_flag) = 0;
+		virtual std::string get_value(const std::string& token,
+					      const std::string& def = "") const = 0;
+		virtual long get_long_value(const std::string& token, 
+					    long def = 0L) const = 0;
+
+		virtual bool get_bool_value(const std::string& token, 
+					    bool def = false) const = 0;
 
 		void secure_available(bool sa);
 		bool secure_available(void) const;

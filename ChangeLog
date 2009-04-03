@@ -1,3 +1,39 @@
+Fri Apr  3 21:51:47 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ConfigBase.h:
+        * src/lorica/ConfigBase.cpp:
+        * src/lorica/FileConfig.h:
+        * src/lorica/FileConfig.cpp:
+        * src/lorica/ProxyMapper.cpp:
+
+          Clean up the interface related to getting values. The method
+	  names are more consistent, default values are given. Also fixed
+	  the implementation for obtaining booling values, since it would
+	  give the opposite result. Added a method for getting integer
+	  config values.
+
+	* src/lorica/MapperRegistry.h:
+        * src/lorica/MapperRegistry.cpp:
+
+	  Added a finalizer method to help satisfy valgrind.
+
+        * src/proxy/UNIX_svc_loader.h:
+        * src/proxy/UNIX_svc_loader.cpp:
+        * src/proxy/Win32_svc_loader.cpp:
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/proxy.h:
+        * src/proxy/proxy.cpp:
+        * src/proxy/svc_loader_base.h:
+        * src/proxy/svc_loader_base.cpp:
+
+	  More functional refactoring. Pulled the process-level details
+	  out of the proxy class and moved them to the *svc_loader
+	  classes. Also added the ability to run the proxy with more than
+	  1 thread to enable a threadpool for the ORB. This doesn't work
+	  for the case when lorica is run as an NT svc though. That is
+	  because the NT svc method calls proxy->svc() directly rather
+	  than proxy->activate().
+
 2009-04-01  Jules Colding  <colding@42tools.com>
 
 	* src/proxy/Win32_svc_loader.h (~Win32_Service_Loader):
@@ -12,7 +48,8 @@ Tue Mar 31 19:58:35 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/Win32_svc_loader.cpp:
         * src/proxy/ntsvc.cpp:
-        fix for crash when run in debug mode and ctrl-C is pressed.
+
+          fix for crash when run in debug mode and ctrl-C is pressed.
 
 Tue Mar 31 19:26:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
@@ -21,11 +58,11 @@ Tue Mar 31 19:26:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/main.cpp:
         * src/proxy/svc_loader_base.h:
         * src/proxy/svc_loader_base.cpp:
-        fix for build on win32
 
+          fix for build on win32 platform.
 Tue Mar 31 14:49:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
-	    * src/proxy/Makefile.am:
+        * src/proxy/Makefile.am:
         * src/proxy/UNIX_svc_loader.h:
         * src/proxy/UNIX_svc_loader.cpp:
         * src/proxy/Win32_svc_loader.h:
@@ -35,9 +72,10 @@ Tue Mar 31 14:49:28 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
         * src/proxy/proxy.mpc:
         * src/proxy/svc_loader_base.h:
         * src/proxy/svc_loader_base.cpp:
-	  Refactoring the service loader behavior to get rid of the
-	  excessive use of #ifdef ACE_WIN32 which made the code very
-	  confusing and error prone.
+
+          Refactoring the service loader behavior to get rid of the
+          excessive use of #ifdef ACE_WIN32 which made the code very
+          confusing and error prone.
 
 2009-03-27  Jules Colding  <colding@42tools.com>
 

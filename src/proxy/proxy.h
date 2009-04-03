@@ -55,13 +55,9 @@ namespace Lorica
 
 		virtual ~Proxy(void);
 
-		// override the local pid/log files if the commandline 
-		// indicates use of alternate paths.
-		void local_pid_file (const std::string &lpf);
-		void local_ior_file (const std::string &lif);
-
 		// load configuration based on supplied config file
-		virtual void configure(Config & config)
+		virtual void configure(Config & config,
+													 const std::string &def_ior_file = "")
 			throw (InitError);
 
 		// ACE Task base generic initializer - args[0] is config file name
@@ -77,12 +73,6 @@ namespace Lorica
     void destroy(void);
 
 	private:
-		// Will ensure that only one instance of Lorica 
-		// is running at any one time by setting even if they
-		// were to be isolated and run by different users
-#ifndef ACE_WIN32
-		bool get_lock(const char *lock_file_path);
-#endif
 		bool setup_shutdown_handler(void);
 
 		static Proxy* this_;
@@ -97,13 +87,7 @@ namespace Lorica
 		IORTable::Table_var iorTable_;
 		PortableServer::POA_var admin_poa_;
 
-		// the pid file actually
-		int lock_fd;
-
-		std::string pid_file_;
 		std::string ior_file_;
-		std::string local_pid_file_;
-		std::string local_ior_file_;
 
 		bool must_shutdown_;
 		bool debug_;

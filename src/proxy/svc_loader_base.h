@@ -63,9 +63,22 @@ namespace Lorica
 		virtual int execute (void) = 0;
 
 	protected:
+		// Will ensure that only one instance of Lorica 
+		// is running at any one time by setting even if they
+		// were to be isolated and run by different users
+		virtual bool get_lock(const char *lock_file_path);
+
+		// the pid file actually
+		int lock_fd_;
+
+		std::string pid_file_;
+
 		std::string config_file_;
 		int corba_debug_level_;
 		bool debug_;
+
+		long proxy_thr_flags_;
+		int num_threads_;
 	};
 }
 

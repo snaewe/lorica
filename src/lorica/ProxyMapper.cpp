@@ -95,7 +95,7 @@ Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
 
 	Lorica::Config * configuration = FILECONFIG::instance();
 
-	if (configuration->getBooleanValue("CacheProxyReferences", false)) {
+	if (configuration->get_bool_value("CacheProxyReferences", false)) {
 		std::string gc_period = configuration->get_value("GC_Period_Seconds");
 		if (gc_period.length() == 0)
 			this->mapped_values_ = new RMVByMapped;

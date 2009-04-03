@@ -56,7 +56,13 @@ namespace Lorica
 		
 		virtual int execute (void);
 
+	protected:
+		virtual bool get_lock(const char *lock_file_path);
+
+
 	private:
+		int run_i (void);
+
 		bool no_fork_;
 	};
 }

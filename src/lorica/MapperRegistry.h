@@ -46,6 +46,9 @@ public:
 	// Shared object finalizer
 	int fini(void);
 
+	// explicitly clean up resources - fini not always called.
+	void destroy (void);
+
 	// Add a type to the list of types explicitly supported by the null
 	// prxoy mapper. This overrudes the default behavior of allowing any
 	// unknown type to be supported by the null proxy..
