@@ -18,13 +18,13 @@
  *  along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "defines/build-system-defs.h"
-
 #include <iostream>
 #include <ace/os_include/os_limits.h>
 #include <ace/OS_NS_stdlib.h>
 #include <ace/OS_NS_unistd.h>
 #include <ace/UUID.h>
+
+#include "defines/build-system-defs.h"
 
 #ifndef LORICA_LACKS_IFADDRS
 # include <string.h>

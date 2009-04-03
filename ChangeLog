@@ -1,8 +1,14 @@
+Fri Apr  3 22:35:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/ConfigBase.cpp:
+
+	  And one more hack to make the temporary build hack work.
+
 Fri Apr  3 22:29:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * defines/build-system-defs.h:
 
-	  Add a temporary build hack.
+          Add a temporary build hack.
 
 Fri Apr  3 21:51:47 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
