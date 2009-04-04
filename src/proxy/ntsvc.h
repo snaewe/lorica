@@ -51,6 +51,8 @@ namespace Lorica
 
 		void proxy(Proxy *p);
 
+		void proxy_activate_args(long flags, int nthreads);
+
 		// We override <handle_control> because it handles stop requests
 		// privately.
 		virtual void handle_control(DWORD control_code);
@@ -69,8 +71,9 @@ namespace Lorica
 	private:
 		typedef ACE_NT_Service inherited;
 		Proxy *proxy_;
-	private:
-		int stop_;
+		long   thr_flags_;
+		int    num_threads_;
+		int    stop_;
 	};
 
 

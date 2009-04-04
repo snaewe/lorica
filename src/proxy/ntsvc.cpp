@@ -93,6 +93,13 @@ Lorica::NT_Service::proxy(Proxy *p)
 	this->proxy_ = p;
 }
 
+void
+Lorica::NT_Service::proxy_activate_args (long flags, int nthreads)
+{
+        this->thr_flags_ = flags;
+	this->num_threads_ = nthreads;
+}
+
 // This is the main processing function for the Service.  It sets up
 // the initial configuration and runs the event loop until a shutdown
 // request is received.
@@ -102,7 +109,12 @@ Lorica::NT_Service::svc(void)
 	try {
 		AutoFinalizer af(*this);
 		report_status(SERVICE_RUNNING);
-		this->proxy_->svc();
+
+		this->proxy_->activate (this->thr_flags_, 
+					this->num_threads_);
+		this->proxy_->wait ();
+// 		this->proxy_->svc();
+		
 	}
 	catch (const CORBA::Exception & ex) {
 		ACE_DEBUG((LM_ERROR, 

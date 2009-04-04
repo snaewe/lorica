@@ -353,6 +353,13 @@ Lorica::Proxy::configure(Config & config,
 				   this->inside_pm_,
 				   this->orb_,
 				   config.secure_available());
+
+
+
+		// last thing to do, put both POAs in the active state.
+		outside_pm_->activate();
+		inside_pm_->activate();
+
 	}
 	catch (CORBA::Exception & ex) {
 		ACE_DEBUG((LM_ERROR, ACE_TEXT("(%T) %N:%l - %s\n"), ex._info().c_str()));
@@ -372,9 +379,6 @@ Lorica::Proxy::~Proxy(void)
 int
 Lorica::Proxy::svc(void)
 {
-	outside_pm_->activate();
-	inside_pm_->activate();
-
 	while (!this->must_shutdown_) {
 		ACE_Time_Value timeout(1,0);
 		this->orb_->run(timeout);

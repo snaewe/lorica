@@ -243,6 +243,9 @@ Lorica::Win32_Service_Loader::run_service(void)
 {
 	try {
 		Lorica::SERVICE::instance()->proxy(init_proxy());
+		Lorica::SERVICE::instance()->
+			proxy_activate_args(this->proxy_thr_flags_,
+					    this->num_threads_);
 	}
 	catch (...) {
 		ACE_ERROR((LM_ERROR,

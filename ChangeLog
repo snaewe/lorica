@@ -1,8 +1,21 @@
+Sat Apr  4 03:19:41 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/proxy/Win32_svc_loader.cpp:
+        * src/proxy/ntsvc.h:
+        * src/proxy/ntsvc.cpp:
+        * src/proxy/proxy.cpp:
+	* src/proxy/lorica.conf:
+	
+	  Now even the ntsvc can start on a configurable number of
+	  threads. Also moved the POA activation out the thread function
+	  and added documentation of the new Proxy_Threads config param to
+	  the lorica.conf.
+	
 Fri Apr  3 22:35:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ConfigBase.cpp:
 
-	  And one more hack to make the temporary build hack work.
+          And one more hack to make the temporary build hack work.
 
 Fri Apr  3 22:29:16 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
