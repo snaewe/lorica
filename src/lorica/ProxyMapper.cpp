@@ -93,20 +93,12 @@ Lorica::ProxyMapper::ProxyMapper(Lorica_MapperRegistry & mr,
 	}
 	delete [] host_addr_array;
 
-	Lorica::Config * configuration = FILECONFIG::instance();
+	Lorica::Config * config = FILECONFIG::instance();
 
-	if (configuration->get_bool_value("CacheProxyReferences", false)) {
-		std::string gc_period = configuration->get_value("GC_Period_Seconds");
-		if (gc_period.length() == 0)
-			this->mapped_values_ = new RMVByMapped;
-		else
-			{
-				char * bad;
-				time_t p = ACE_OS::strtol(gc_period.c_str(),&bad,10);
-				if (*bad != '\0')
-					p = 60; // default to 60 seconds, should we complain about param?
-				this->mapped_values_ = new RMVByMapped (p);
-			}
+	if (config->get_bool_value("CacheProxyReferences", false)) {
+		time_t gc_period = 
+			static_cast<time_t>(config->get_long_value("GC_Period_Seconds",60));
+		this->mapped_values_ = new RMVByMapped(gc_period);
 	}
 }
 

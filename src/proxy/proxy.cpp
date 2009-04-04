@@ -61,6 +61,7 @@ void
 Lorica::Proxy::shutdown(void)
 {
 	this->must_shutdown_ = true;
+	this->orb_->shutdown(true);
 }
 
 int
@@ -379,11 +380,11 @@ Lorica::Proxy::~Proxy(void)
 int
 Lorica::Proxy::svc(void)
 {
-	while (!this->must_shutdown_) {
-		ACE_Time_Value timeout(1,0);
-		this->orb_->run(timeout);
-	}
-
+// 	while (!this->must_shutdown_) {
+// 		ACE_Time_Value timeout(1,0);
+// 		this->orb_->run(timeout);
+// 	}
+	this->orb_->run();
 	return 0;
 }
 

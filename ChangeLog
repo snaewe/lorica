@@ -1,16 +1,34 @@
+Sat Apr  4 03:59:27 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
+
+        * src/lorica/FileConfig.cpp:
+	
+	  Fix a typo that prevented processing of numeric values.
+	
+        * src/lorica/ProxyMapper.cpp:
+
+	  Clean up the code to use the new int value retrieval.  
+	
+        * src/proxy/proxy.cpp:
+
+	  Further potential efficiency gain by allowing the ORB to stay in
+	  run() full time. The shutdown funtion still does what it needs
+	  to do. I'm not 100% sure about this if there is a need for the
+	  ORB to remain viable after the time when a shutdown is triggered.
+	  If such a need exists, we can surely revert this change.
+
 Sat Apr  4 03:19:41 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/proxy/Win32_svc_loader.cpp:
         * src/proxy/ntsvc.h:
         * src/proxy/ntsvc.cpp:
         * src/proxy/proxy.cpp:
-	* src/proxy/lorica.conf:
-	
-	  Now even the ntsvc can start on a configurable number of
-	  threads. Also moved the POA activation out the thread function
-	  and added documentation of the new Proxy_Threads config param to
-	  the lorica.conf.
-	
+        * src/proxy/lorica.conf:
+
+          Now even the ntsvc can start on a configurable number of
+          threads. Also moved the POA activation out the thread function
+          and added documentation of the new Proxy_Threads config param to
+          the lorica.conf.
+
 Fri Apr  3 22:35:00 UTC 2009  Phil Mesnier  <mesnier_p@ociweb.com>
 
         * src/lorica/ConfigBase.cpp:

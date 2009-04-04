@@ -162,7 +162,7 @@ Lorica::FileConfig::get_long_value(const std::string & token,
 	if (value.length()) {
 		char *ptr;
 		long temp = ACE_OS::strtol(value.c_str(),&ptr,10);
-		if (*ptr != 0)
+		if (*ptr == 0)
 			result = temp;
 	}
 	return result;
