@@ -37,15 +37,19 @@ ACE_STATIC_SVC_REQUIRE (TAO_IFR_Client_Adapter_Impl)
 #endif /* LORICA_STATIC */
 
 Lorica::GenericMapper::GenericMapper(const bool Debug,
-				     Lorica_MapperRegistry & mr)
-	: Lorica::ProxyMapper(mr, "_lorica_generic"),
-	  typeIdList(),
-	  debug_(Debug)
+																		 Lorica_MapperRegistry & mr)
+: Lorica::ProxyMapper(mr, "_lorica_generic"),
+	typeIdList (),
+	optable_ (0),
+  ifr_client_ (0),
+	debug_ (Debug)
 {
 }
 
 Lorica::GenericMapper::~GenericMapper(void)
 {
+	delete optable_;
+  ifr_.fini();
 }
 
 int

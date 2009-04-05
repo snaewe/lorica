@@ -27,7 +27,6 @@
 #include <orbsvcs/IOR_Multicast.h>
 #include <tao/IORTable/IORTable.h>
 #include <tao/ORB_Core.h>
-#include <ace/Auto_Ptr.h>
 
 #include "IFRService.h"
 #include "ConfigBase.h"
@@ -46,7 +45,7 @@ Lorica::IFRService::init(const bool Debug,
 		return 0;
 	}
 
-	ACE_ARGV *arguments = config->get_ifr_options(Debug);
+	std::auto_ptr<ACE_ARGV> arguments (config->get_ifr_options(Debug));
 	int argc = arguments->argc();
 
 	if (Lorica_debug_level > 0) {
@@ -85,6 +84,8 @@ Lorica::IFRService::fini(void)
 	try {
 		if (this->my_ifr_server_)
 			this->my_ifr_server_->fini();
+		delete this->my_ifr_server_;
+		this->my_ifr_server_ = 0;
 	}
 	catch (const CORBA::Exception& ex) {
 		if (Lorica_debug_level > 0)

@@ -62,7 +62,6 @@ Lorica_MapperRegistry::fini(void)
 void
 Lorica_MapperRegistry::destroy (void)
 {
-	ACE_DEBUG ((LM_DEBUG, "In Lorica_MapperRegistry::destroy\n"));
 	if (this->null_mapper_ != 0)
 		this->null_mapper_->decr_refcount();
 	this->null_mapper_ = 0;

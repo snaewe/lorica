@@ -53,18 +53,11 @@ typedef enum {
 } daemon_exit_t;
 
 static daemon_exit_t
-become_daemon(const bool NoFork,
-	      const bool Debug)
+become_daemon(const bool NoFork, const bool Debug)
 {
 	struct sigaction sig_act;
 	pid_t pid = -1;
-#if !defined (LORICA_DARWIN)
-	struct rlimit rl;
-	unsigned int n;
-	int fd0;
-	int fd1;
-	int fd2;
-#endif //LORICA_DARWIN
+
 	/* reset the file mode mask */
 	ACE_OS::umask(0);
 
@@ -142,41 +135,32 @@ become_daemon(const bool NoFork,
  * on darwin. See launchd.plist(5).
  */
 #if !defined(LORICA_DARWIN)
-	if (!Debug) { // change the working directory
-		if ((ACE_OS::chdir("/")) < 0)
-			return EXIT_ERROR;
-	}
+	if (!Debug && // change the working directory
+	    ACE_OS::chdir("/") < 0)
+		return EXIT_ERROR;
 
 	// close any and all open file descriptors
-	if (ACE_OS::getrlimit(RLIMIT_NOFILE, &rl))
-		return EXIT_ERROR;
-	if (RLIM_INFINITY == rl.rlim_max)
-		rl.rlim_max = 1024;
-	for (n = 0; n < rl.rlim_max; n++) {
-		if (Debug) {
-			if (STDOUT_FILENO == n)
-				continue;
-			if (STDERR_FILENO == n)
-				continue;
-		}
+	int last = Debug ? STDERR_FILENO+1 : 0;
+
+	for (int n = ACE::max_handles() -1; n >= last; n--) {
 		if (ACE_OS::close(n) && (EBADF != errno))
 			return EXIT_ERROR;
 	}
+	int fd0 = ACE_OS::open("/dev/null", O_RDWR);
+	if (0 != fd0)
+		return EXIT_ERROR;
 
 	if (!Debug) { // attach file descriptors STDIN_FILENO(0),
 		      // STDOUT_FILENO(1) and STDERR_FILENO(2) to
 		      // /dev/null
-		fd0 = ACE_OS::open("/dev/null", O_RDWR);
-		fd1 = ACE_OS::dup2(fd0, 1);
-		fd2 = ACE_OS::dup2(fd0, 2);
-	} else
-		fd0 = ACE_OS::open("/dev/null", O_RDWR);
-	if (0 != fd0)
-		return EXIT_ERROR;
+		ACE_OS::dup2(fd0, 1);
+		ACE_OS::dup2(fd0, 2);
+	}
+	
 #endif // LORICA_DARWIN
 	if (!Debug
 	    && (ACE_OS::mkdir(LORICA_CACHE_DIR, 0755))
-	    && (EEXIST != errno))
+	    && (EEXIST != errno)) 
 		return EXIT_ERROR;
 
 	return EXIT_DAEMON;

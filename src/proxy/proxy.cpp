@@ -391,9 +391,6 @@ Lorica::Proxy::svc(void)
 void
 Lorica::Proxy::destroy (void)
 {
-#if 0 
-// @@ Phil - this is still experimental. I would like to keep it
-// around for more testing, but not in production code.
 	if (this->orb_.ptr() == 0)
 		return;
 
@@ -405,5 +402,4 @@ Lorica::Proxy::destroy (void)
 
 	this->orb_->destroy();
 	this->orb_ = CORBA::ORB::_nil();
-#endif
 }
