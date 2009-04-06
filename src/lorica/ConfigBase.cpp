@@ -562,6 +562,9 @@ Lorica::Config::get_orb_options(void)
 ACE_ARGV*
 Lorica::Config::get_ifr_options(const bool Debug)
 {
+	if (Debug)
+		; // kill compiler warning
+
         if (ifr_args_.size() > 0)
                 return get_ifr_options_copy();
 
