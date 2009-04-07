@@ -162,6 +162,9 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 		     x5.2)
 			LORICA_DIST_RELEASE="CentOS%205.2"
 			;;
+		     x5.3)
+			LORICA_DIST_RELEASE="CentOS%205.3"
+			;;
 		     *)
 			AC_MSG_ERROR([[Unable to determine CentOS release]])
 			;;
