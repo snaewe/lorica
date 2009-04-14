@@ -1,3 +1,9 @@
+2009-04-15  Jules Colding  <colding@42tools.com>
+
+	* configure.ac:
+	* Makefile.am:
+	Added conditional to exclude tests from the build
+
 2009-04-07  Jules Colding  <colding@42tools.com>
 
 	* m4/platform_adapt.m4: CentOS 5.3 support added

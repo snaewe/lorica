@@ -136,6 +136,18 @@ else
 	msg_tao_build=no
 fi
 
+AC_ARG_ENABLE(tests-build,
+	      [AS_HELP_STRING([--enable-tests-build[[[[=no/yes]]]]], [Enable build of the tests [default=yes]])],
+ 	      [],						   
+ 	      enable_tests_build=yes)
+if test "x$enable_tests_build" = "xyes"; then
+	msg_tests_build=yes
+	AM_CONDITIONAL(DO_BUILD_TESTS, true)
+else
+	msg_tests_build=no
+	AM_CONDITIONAL(DO_BUILD_TESTS, false)
+fi
+
 AC_ARG_ENABLE(tao-svn-build,
 	      [AS_HELP_STRING([--enable-tao-svn-build[[[[=no/yes]]]]], [Enable download and local rebuild of ACE and TAO from svn[default=no]])],
  	      [],						   
