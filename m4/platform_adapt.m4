@@ -266,7 +266,13 @@ AC_DEFUN([AX_LORICA_CHECK_PLATFORM],
 		     "xhardy")
 			LORICA_DIST_RELEASE="Ubuntu%20Hardy"
 			;;
-	    	     *)
+                     "xintrepid")
+                        LORICA_DIST_RELEASE="Ubuntu%20Intrepid"
+                        ;;
+                     "xjaunty")
+                        LORICA_DIST_RELEASE="Ubuntu%20Jaunty"
+                        ;;
+ 	    	     *)
 			AC_MSG_ERROR([[Unable to determine Ubuntu release]])
 			;;
  		esac

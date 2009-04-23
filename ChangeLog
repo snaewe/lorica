@@ -1,3 +1,19 @@
+2009-04-23  Jules Colding  <colding@42tools.com>
+
+	* configure.ac:
+	Updated to ACETAO x.6.9
+
+	* acetao/Makefile.am ($(TAO_FILES)):
+	Simplify for easier maintenance
+
+	* m4/platform_adapt.m4:
+	* release.sh:
+	Added Ubuntu Intrepid and Jaunty distfiles support.
+
+2009-04-21  Jules Colding  <colding@42tools.com>
+
+	* configure.ac: Updated to ACETAO x.6.9
+
 2009-04-15  Jules Colding  <colding@42tools.com>
 
 	* configure.ac:
