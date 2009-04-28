@@ -1,3 +1,8 @@
+2009-04-28  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (Config::get_ifr_options):
+	Kill compiler warning (empty statement)
+
 2009-04-23  Jules Colding  <colding@42tools.com>
 
 	* configure.ac:

@@ -111,7 +111,8 @@ directory where the Lorica project is hosted, in our case
   %LORICA_ROOT%
 
 Also, for windows to be able to load the required libraries when running Lorica
-the PATH environment variable must include %LORICA_ROOT%\lib.
+the PATH environment variable must include %LORICA_ROOT%\lib, but only if you 
+intent to run Lorica from within he debugger.
 
 
 TAO/ACE project 
