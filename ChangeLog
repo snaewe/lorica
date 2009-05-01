@@ -1,3 +1,9 @@
+2009-05-01  Jules Colding  <colding@42tools.com>
+
+	* src/lorica/ConfigBase.cpp (get_ifr_options, null_eval_any, generic_evaluator, collocate_ifr):
+	Restore documented default behavior (IFR_PERSISTENT = yes)
+	and guarantee likewise for the other options
+
 2009-04-28  Jules Colding  <colding@42tools.com>
 
 	* src/lorica/ConfigBase.cpp (Config::get_ifr_options):

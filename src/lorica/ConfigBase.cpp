@@ -577,7 +577,7 @@ Lorica::Config::get_ifr_options(const bool Debug)
 					  IFR_SERVICE_IOR_FILE);
         this->ifr_args_.push_back(opt.c_str());
 
-        if (this->get_bool_value("IFR_PERSISTENT")) {
+	if (this->get_bool_value("IFR_PERSISTENT", true)) {
                 this->ifr_args_.push_back("-p");
 
                 this->ifr_args_.push_back("-b");
@@ -695,7 +695,7 @@ Lorica::Config::null_eval_any (void) const
         if (!ids.empty())
                 return false;
 
-        return this->get_bool_value ("Null_Evaluator_Any");
+        return this->get_bool_value ("Null_Evaluator_Any", false);
 
 }
 
@@ -708,13 +708,13 @@ Lorica::Config::null_eval_type_ids (void) const
 bool
 Lorica::Config::generic_evaluator (void) const
 {
-        return this->get_bool_value("Generic_Evaluator");
+        return this->get_bool_value("Generic_Evaluator", false);
 }
 
 bool
 Lorica::Config::collocate_ifr (void) const
 {
-        return this->get_bool_value("Collocate_IFR");
+        return this->get_bool_value("Collocate_IFR", true);
 }
 
 bool
